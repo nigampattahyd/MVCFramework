@@ -1,0 +1,169 @@
+﻿@import url(http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,400,300,600,700);
+body {
+    background: -webkit-linear-gradient(90deg, #FF512F 10%, #DD2476 90%);
+    background: -moz-linear-gradient(90deg, #FF512F 10%, #DD2476 90%);
+    background: -ms-linear-gradient(90deg, #FF512F 10%, #DD2476 90%);
+    background: -o-linear-gradient(90deg, #FF512F 10%, #DD2476 90%);
+    background: linear-gradient(90deg, #6F748F 10%, #3E48CE 90%);
+    font-family: 'Open Sans', sans-serif!important;
+}
+.well{
+    background-color:#fff!important;
+    border-radius:0!important;
+    border:none!important;
+}
+.container{margin:0 auto; }
+
+.well.login-box {
+   /*width:350px;  */
+    display:none; margin:0 auto;
+}
+.well.login-box legend {
+  font-size:26px;
+  text-align:center;
+  font-weight:300;
+}
+.well.login-box label {
+  font-weight:300;
+  font-size:16px;
+  
+}
+.well.login-box input[type="text"] {
+  box-shadow:none;
+ 
+  border-radius:0;
+}
+
+.well.welcome-text{
+    font-size:21px;
+}
+
+/* Notifications */
+
+.notification{
+  /*   position:fixed;
+    top: 20px;*/
+    right:0;
+    background-color:#FF4136;
+   
+    color: #fff;
+    font-size:19px;
+    display:none;
+}
+.notification-success{
+  background-color:#3D9970;
+}
+.widget-notifications .notification-ago, .widget-notifications .notification-description, .widget-notifications .notification-title {
+            margin-right: 0px !important;
+        }
+ .notification {
+            right: 0;
+            background-color: #fff;
+            color: #fff;
+            font-size: 19px;
+            display: block;
+        }
+
+.notification-show{
+    display:block!important;
+}
+
+/*Loged in*/
+.logged-in{
+  display:none;
+}
+.logged-in h1{
+  margin:0;
+  font-weight:300;
+}
+
+.blue_bg{background-color: #2c82ba; padding:20px 0px 20px 20px; color:#fff; width:100%}
+
+.login_ul{list-style-type: none; margin: 0px; padding: 0px; font-size: 14px; line-height: 30px;}
+.login_head{margin:20px 0px 23px 0px; font-size:16px; }
+
+
+#searbtn_margin{float:left; margin-left:3px; margin-bottom:2px;}
+#searbtn_margin a{color:#fff; text-decoration:none;}
+#searbtn_margin a:hover{color:#fff; text-decoration:underline;}
+
+#searbtn_margin1{float:left; margin-left:3px; margin-bottom:2px;}
+#searbtn_margin1 a{color:#fff; text-decoration:none;}
+#searbtn_margin1 a:hover{color:#fff; text-decoration:underline;}
+
+
+#searbtn_margin2{float:left; margin-left:3px; margin-bottom:2px;}
+#searbtn_margin2 a{color:#fff; text-decoration:none;}
+#searbtn_margin2 a:hover{color:#fff; text-decoration:underline;}
+
+
+#searbtn_margin3{float:left; margin-left:3px; margin-bottom:2px;}
+#searbtn_margin3 a{color:#fff; text-decoration:none;}
+#searbtn_margin3 a:hover{color:#fff; text-decoration:underline;}
+
+
+#searbtn_margin4{float:left; margin-left:3px; margin-bottom:2px;}
+#searbtn_margin4 a{color:#fff; text-decoration:none;}
+#searbtn_margin4 a:hover{color:#fff; text-decoration:underline;}
+
+
+.sear_btn1{color: #fff !important; text-decoration: none; padding: 0px; font-weight: normal}
+
+.btn {
+  display: inline-block;
+  margin-bottom: 0;
+  font-weight: normal;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+  background-image: none;
+  border: 1px solid transparent;
+  white-space: nowrap;
+  padding: 3px 12px !important;
+  font-size: 13px;
+  line-height: 1.42857143;
+  border-radius: 2px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+
+
+
+#facebook {
+    margin: -5px 6px -5px -13px !important;
+    padding: 6px 7px !important;
+}
+#twitter{margin:-5px 6px -5px -13px !important; padding:6px 9px !important;}
+
+#search_btn{margin-top:24px;}
+#btnmargin_top{float:left; margin:3px 0px 0px 3px;}
+
+#white_bg {
+    background-color: #f5f5f5;
+    padding-top: 6px;
+}
+
+.wrapword{
+            white-space: -moz-pre-wrap !important;  /* Mozilla, since 1999 */
+            white-space: -pre-wrap;      /* Opera 4-6 */
+            white-space: -o-pre-wrap;    /* Opera 7 */
+            white-space: pre-wrap;       /* css-3 */
+            word-wrap: break-word;       /* Internet Explorer 5.5+ */
+            white-space: -webkit-pre-wrap; /* Newer versions of Chrome/Safari*/
+            word-break: break-all;
+            white-space: normal;
+
+            -webkit-hyphens: auto;
+               -moz-hyphens: auto;
+                    hyphens: auto;
+        }  
+
+/************** BR - 07/Oct/2016 **********/
+.theme-default #main-navbar .navbar-nav > li > a {
+    color: #555;
+    line-height: 49px;
+}
+

@@ -1,0 +1,1137 @@
+﻿@model CRMHub.ViewModel.CalenderEventsViewModel
+
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+}
+
+<link href="~/Content/MutlipleCheckbox/sumoselect.css" rel="stylesheet" />
+
+<style type="text/css">
+    .datepicker {
+        z-index: 99999 !important;
+    }
+
+    .panel-heading {
+        padding: 6px;
+        background: #f3f3f3 !important;
+        text-align: right;
+        height: 44px;
+    }
+
+    .panel-body {
+        padding: 0px !important;
+    }
+
+    .form-group {
+        margin-bottom: 6px !important;
+    }
+
+    .modal-dialog {
+        width: 800px !important;
+        margin: 0 !important;
+        float: right !important;
+    }
+
+    .modal-open .modal {
+        width: 60% !important;
+        left: auto !important;
+        right: 0 !important;
+        overflow-x: hidden;
+        overflow-y: hidden;
+        padding: 0 !important;
+    }
+    .SelectBox {
+        padding: 2px 8px;
+    }
+    .SumoSelect.open > .optWrapper{top:28px;}
+</style>
+
+<div class="widget">
+    <div class="widget-header bordered-bottom bordered-themesecondary">
+        <i class="widget-icon fa fa-tags themesecondary"></i>
+        <span class="widget-caption themesecondary">Scheduler</span>
+    </div>
+    <div class="widget-body  no-padding">
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="panel panel-success panel-dark">
+                                <div class="panel-heading">
+                                    @*<span class="btn btn-flat btn-labeled btn-primary">
+
+                                            <a style="color: #fff; text-decoration: none; padding: 0px; font-weight: normal" href="@Url.Action("CreateMentor", "Mentor")" id="lnkAddnew">
+                                                <span class="btn-label icon  fa fa-plus-circle" style="margin-right:6px;"> </span>
+                                                Request Appointment
+                                            </a>
+                                        </span>*@
+                                    <span class="panel-title"></span>
+                                    @*<button class="btn btn-flat btn-labeled btn-primary" data-toggle="modal" data-target="#modal-warning" id="btnrequestappointment" style="display:none;" ><span class="btn-label icon  fa fa-calendar" style="margin-right:6px;"> </span>Schedular Meeting</button>*@
+                                    <button class="btn btn-flat btn-labeled btn-primary" data-toggle="modal" data-target="#modal-warning" id="btnrequestappointment"><span class="btn-label icon  fa fa-plus-circle" style="margin-right:6px;"> </span>Request Appointment</button>
+                                    <div class="panel-heading-controls">
+                                        <div class="panel-heading-icon"></div>
+                                    </div>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="row">
+                                        @*<div id="scheduler_here" class="dhx_cal_container" style=" height:700px; width:800px; margin:0 auto;overflow:hidden">
+                                                <div class="dhx_cal_navline">
+                                                    <div class="dhx_cal_prev_button">&nbsp;</div>
+                                                    <div class="dhx_cal_next_button">&nbsp;</div>
+                                                    <div class="dhx_cal_today_button"></div>
+                                                    <div class="dhx_cal_date"></div>
+                                                    <div class="dhx_cal_tab" name="day_tab" style="right:204px;"></div>
+                                                    <div class="dhx_cal_tab" name="week_tab" style="right:140px;"></div>
+                                                    <div class="dhx_cal_tab" name="month_tab" style="right:76px;"></div>
+                                                </div>
+                                                <div class="dhx_cal_header">
+                                                </div>
+                                                <div class="dhx_cal_data">
+                                                </div>
+
+                                            </div>*@
+
+                                        <div class="col-sm-12" id="calendarblock" style="overflow:hi">
+                                            <div id='calendar'></div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@using (Html.BeginForm("AddAppointments", "Scheduler", FormMethod.Post, new { @id = "RequestApp" }))
+{
+    @Html.ValidationSummary(true)
+    <!--Small Modal Templates-->
+
+    <div id="modal-warning" class="bootbox modal fade modal-darkorange" style="display: none; padding:0 !important;" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true" onclick="RemoveValidate()">×</button>
+                    <h4 class="modal-title" id="mySmallModalLabel">Request Appointment</h4>
+                </div>
+                <div class="modal-body" style="height: 536.76px; overflow: auto;">
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="panel-body">
+                                <div class="col-sm-12 ">
+                                    <div class="col-sm-8" style="border-right: 1px solid #ccc;">
+
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="form-group no-margin-hr">
+                                                    <label class="control-label">Title :<span style="color: red">*</span></label>
+                                                    @Html.TextBoxFor(m => m.objcalenderevent.Title, new { @class = "form-control input-sm", @id = "txtTile", @validate = "Required", @data_val_required = "Please Enter Title" })
+                                                    @Html.ValidationMessageFor(m => m.objcalenderevent.Title, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="form-group no-margin-hr">
+                                                    <label class="control-label">Date 1:<span style="color: red">*</span></label>
+                                                    <div class="input-group datepicker1">
+                                                        @Html.TextBoxFor(m => m.objcalenderevent.Date1, new { @id = "txtDate11", @class = "form-control input-sm", @MaxLength = "20", @validate = "Required", @data_val_required = "Please Select  Date 1" })
+
+                                                        <span class="input-group-addon">
+                                                            <i class="fa fa-calendar"></i>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                @Html.ValidationMessageFor(m => m.objcalenderevent.Date1, "", new { @class = "text-danger" })
+                                            </div>
+
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="row">
+
+                                                    <div class="col-sm-4">
+                                                        <div class="form-group no-margin-hr">
+
+                                                            <label class="control-label">Time 1:<span style="color: red">*</span></label>
+                                                            <div class="input-group timepicker1">
+                                                                @Html.TextBoxFor(m => m.objcalenderevent.DT1Time1, new { @id = "txtDT1Time1", @class = "form-control input-sm", @MaxLength = "20", @validate = "Required", @data_val_required = "Please Select  Time 1 of Date 1" })
+
+                                                                <span class="input-group-addon">
+                                                                    <i class="fa fa-clock-o"></i>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                        @Html.ValidationMessageFor(m => m.objcalenderevent.DT1Time1, "", new { @class = "text-danger" })
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        <div class="form-group no-margin-hr">
+
+                                                            <label class="control-label">Time 2:<span style="color: red">*</span></label>
+                                                            <div class="input-group timepicker1">
+                                                                @Html.TextBoxFor(m => m.objcalenderevent.DT1Time2, new { @id = "txtDT1Time2", @class = "form-control input-sm", @MaxLength = "20", @validate = "Required", @data_val_required = "Please Select  Time 2 of Date 1" })
+
+                                                                <span class="input-group-addon">
+                                                                    <i class="fa fa-clock-o"></i>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                        @Html.ValidationMessageFor(m => m.objcalenderevent.DT1Time2, "", new { @class = "text-danger" })
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        <div class="form-group no-margin-hr">
+
+                                                            <label class="control-label">Time 3:<span style="color: red">*</span></label>
+                                                            <div class="input-group timepicker1">
+                                                                @Html.TextBoxFor(m => m.objcalenderevent.DT1Time3, new { @id = "txtDT1Time3", @class = "form-control input-sm", @MaxLength = "20", @validate = "Required", @data_val_required = "Please Select  Time 3 of Date 1" })
+
+                                                                <span class="input-group-addon">
+                                                                    <i class="fa fa-clock-o"></i>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                        @Html.ValidationMessageFor(m => m.objcalenderevent.DT1Time3, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-12">
+                                                <div class="form-group no-margin-hr">
+
+                                                    <label class="control-label">Date 2:<span style="color: red">*</span></label>
+                                                    <div class="input-group datepicker2">
+                                                        @Html.TextBoxFor(m => m.objcalenderevent.Date2, new { @id = "txtDate2", @class = "form-control input-sm", @MaxLength = "20", @validate = "Required", @data_val_required = "Please Select  Date 2" })
+
+                                                        <span class="input-group-addon">
+                                                            <i class="fa fa-calendar"></i>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                @Html.ValidationMessageFor(m => m.objcalenderevent.Date2, "", new { @class = "text-danger" })
+                                            </div>
+
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="row">
+
+                                                    <div class="col-sm-4">
+                                                        <div class="form-group no-margin-hr">
+
+                                                            <label class="control-label">Time 1:<span style="color: red">*</span></label>
+                                                            <div class="input-group timepicker1">
+                                                                @Html.TextBoxFor(m => m.objcalenderevent.DT2Time1, new { @id = "txtDT2Time1", @class = "form-control input-sm", @MaxLength = "20", @validate = "Required", @data_val_required = "Please Select  Time 1 of Date 2" })
+
+                                                                <span class="input-group-addon">
+                                                                    <i class="fa fa-clock-o"></i>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                        @Html.ValidationMessageFor(m => m.objcalenderevent.DT2Time1, "", new { @class = "text-danger" })
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        <div class="form-group no-margin-hr">
+
+                                                            <label class="control-label">Time 2:<span style="color: red">*</span></label>
+                                                            <div class="input-group timepicker1">
+                                                                @Html.TextBoxFor(m => m.objcalenderevent.DT2Time2, new { @id = "txtDT2Time2", @class = "form-control input-sm", @MaxLength = "20", @validate = "Required", @data_val_required = "Please Select  Time 2 of Date 2" })
+
+                                                                <span class="input-group-addon">
+                                                                    <i class="fa fa-clock-o"></i>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                        @Html.ValidationMessageFor(m => m.objcalenderevent.DT2Time2, "", new { @class = "text-danger" })
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        <div class="form-group no-margin-hr">
+
+                                                            <label class="control-label">Time 3:<span style="color: red">*</span></label>
+                                                            <div class="input-group timepicker1">
+                                                                @Html.TextBoxFor(m => m.objcalenderevent.DT2Time3, new { @id = "txtDT2Time3", @class = "form-control input-sm", @MaxLength = "20", @validate = "Required", @data_val_required = "Please Select  Time 3 of Date 2" })
+
+                                                                <span class="input-group-addon">
+                                                                    <i class="fa fa-clock-o"></i>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                        @Html.ValidationMessageFor(m => m.objcalenderevent.DT2Time3, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+
+                                            <div class="col-sm-12">
+                                                <div class="form-group no-margin-hr">
+                                                    <label class="control-label">Date 3:<span style="color: red">*</span></label>
+                                                    <div class="input-group datepicker3">
+                                                        @Html.TextBoxFor(m => m.objcalenderevent.Date3, new { @id = "txtDate3", @class = "form-control input-sm", @MaxLength = "20", @validate = "Required", @data_val_required = "Please Select  Date 3" })
+
+                                                        <span class="input-group-addon">
+                                                            <i class="fa fa-calendar"></i>
+                                                        </span>
+                                                    </div>
+
+                                                </div>
+                                                @Html.ValidationMessageFor(m => m.objcalenderevent.Date3, "", new { @class = "text-danger" })
+                                            </div>
+
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="row">
+
+                                                    <div class="col-sm-4">
+                                                        <div class="form-group no-margin-hr">
+
+                                                            <label class="control-label">Time 1:<span style="color: red">*</span></label>
+                                                            <div class="input-group timepicker1">
+                                                                @Html.TextBoxFor(m => m.objcalenderevent.DT3Time1, new { @id = "txtDT3Time1", @class = "form-control input-sm", @MaxLength = "20", @validate = "Required", @data_val_required = "Please Select  Time 1 of Date 3" })
+
+                                                                <span class="input-group-addon">
+                                                                    <i class="fa fa-clock-o"></i>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                        @Html.ValidationMessageFor(m => m.objcalenderevent.DT3Time1, "", new { @class = "text-danger" })
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        <div class="form-group no-margin-hr">
+
+                                                            <label class="control-label">Time 2:<span style="color: red">*</span></label>
+                                                            <div class="input-group timepicker1">
+                                                                @Html.TextBoxFor(m => m.objcalenderevent.DT3Time2, new { @id = "txtDT3Time2", @class = "form-control input-sm", @MaxLength = "20", @validate = "Required", @data_val_required = "Please Select  Time 2 of Date 3" })
+
+                                                                <span class="input-group-addon">
+                                                                    <i class="fa fa-clock-o"></i>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                        @Html.ValidationMessageFor(m => m.objcalenderevent.DT3Time2, "", new { @class = "text-danger" })
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        <div class="form-group no-margin-hr">
+
+                                                            <label class="control-label">Time 3:<span style="color: red">*</span></label>
+                                                            <div class="input-group timepicker1">
+                                                                @Html.TextBoxFor(m => m.objcalenderevent.DT3Time3, new { @id = "txtDT3Time3", @class = "form-control input-sm", @MaxLength = "20", @validate = "Required", @data_val_required = "Please Select  Time 3 of Date 3" })
+                                                                <span class="input-group-addon">
+                                                                    <i class="fa fa-clock-o"></i>
+                                                                </span>
+                                                            </div>
+
+                                                        </div>
+                                                        @Html.ValidationMessageFor(m => m.objcalenderevent.DT3Time3, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="form-group no-margin-hr">
+                                                    <label class="control-label">Location :<span style="color: red">*</span></label>
+                                                    @Html.TextBoxFor(m => m.objcalenderevent.Location, new { @id = "txtLocation", @class = "form-control input-sm", @cols = 38, @rows = 5, @MaxLength = "200", @style = "resize: none;" })
+                                                    @Html.ValidationMessageFor(m => m.objcalenderevent.Location, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="form-group no-margin-hr">
+                                                    <label class="control-label">Comment :</label>
+                                                    @Html.TextAreaFor(m => m.objcalenderevent.Description, new { @id = "txtComment", @class = "form-control input-sm", @cols = 38, @rows = 5, @MaxLength = "200", @style = "resize: none;" })
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-sm-4 ">
+
+                                        <div class="row" style="display:none;" id="ddlventures">
+                                            <div class="col-sm-12">
+                                                <div class="form-group no-margin-hr">
+                                                    <label class="control-label">Venture :<span style="color: red">*</span></label>
+                                                    @Html.DropDownListFor(m => m.objcalenderevent.Venture, new SelectList(Model.objlstventure, "VentureId", "VentureName"), "Please Select Venture", new { @placeholder = "Please Select Venture", @id = "ddlventuredrp", @data_val_required = "Please Select Venture", @class = "ddlSingleSlectBox" })
+                                                    @Html.ValidationMessageFor(m => m.objcalenderevent.Venture, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="form-group no-margin-hr">
+                                                    <label class="control-label">Attendees :<span style="color: red">*</span></label>
+                                                    @Html.DropDownListFor(m => m.objcalenderevent.MentorsList, new SelectList(Model.listMentors, "MentorId", "Name"), new { @multiple = "multiple", @placeholder = "Please Select Attendee", @class = "ddlMultiSlectBox", @data_val_required = "Please Select Attendees", @id = "ddlmentors" })
+                                                    @Html.ValidationMessageFor(m => m.objcalenderevent.MentorsList, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-flat btn-labeled btn-primary" id="btnsave">
+                            <span class="btn-label icon fa fa-save"></span>Submit
+                        </button>
+                        <a class="btn btn-flat btn-labeled btn-primary" href="#" data-dismiss="modal" onclick="RemoveValidate()">
+                            <i class="btn-label icon fa fa-times"> </i>
+                            Cancel
+                        </a>
+
+                       
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div>
+    </div>
+
+}
+
+<script src="~/Content/AssetsNew/js/fullcalendar/moment.min.js"></script>
+@*<script src="~/Content/AssetsNew/js/jquery.min.js"></script>*@
+<script src="~/Content/AssetsNew/js/fullcalendar/fullcalendar.min.js"></script>
+<script src="~/Content/AssetsNew/js/fullcalendar/jquery-ui.custom.min.js"></script>
+
+<script src="~/Scripts/Multiplecheckbox/jquery.sumoselect.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+
+        var datearray = "";
+        /* initialize the external events
+        -----------------------------------------------------------------*/
+        $('#external-events .external-event').each(function () {
+
+            // store data so the calendar knows to render an event upon drop
+            $(this).data('event', {
+                title: $.trim($(this).text()), // use the element's text as the event title
+                stick: true // maintain when user navigates (see docs on the renderEvent method)
+            });
+
+            // make the event draggable using jQuery UI
+            $(this).draggable({
+                zIndex: 999,
+                revert: true,      // will cause the event to go back to its
+                revertDuration: 0  //  original position after the drag
+            });
+
+        });
+
+        $(".ddlMultiSlectBox").change(function () {
+            //alert("1");
+            //  alert($("#spandata").text());
+        });
+        /* Multiple check box*/
+        window.ddlMultiSlectBox = $('.ddlMultiSlectBox').SumoSelect({ csvDispCount: 4 }, { captionFormatAllSelected: true, selectAll: true });
+        //window.ddlSingleSlectBox = $('.ddlSingleSlectBox').SumoSelect({ csvDispCount: 4 }, { captionFormatAllSelected: true });
+        //$('.ddlMultiSlectBox').SumoSelect({
+           
+        //    selectAll: false
+        //});
+        
+        /* initialize the calendar
+
+     
+        -----------------------------------------------------------------*/
+        var date = new Date();
+        var d = date.getDate();
+        var m = date.getMonth();
+        var y = date.getFullYear();
+        jsonObj = [];
+        $.ajax({
+            url: "getEvents",
+            type: "GET",
+            async: false,
+            dataType: "JSON",
+            success: function (data) {
+                
+                for (var i = 0; i < data.length; i++) {
+                    
+                    item = {}
+                    item["title"] = data[i].Title;
+                    var evtDate = JSON.parse(JSON.stringify(data[i].EventDate), dateTimeReviver);
+                    //var year = evtDate.getFullYear();
+                    //var month = (evtDate.getMonth().toString() + 1);
+                    //var day = evtDate.getDate();
+                    dte = evtDate.getFullYear() + "-" + (evtDate.getMonth().toString() + 1) + "-" + (evtDate.getDate());
+                    var evtTime = data[i].EventTime;
+                    item["start"] = dte+'T'+evtTime;
+                    item["textColor"] = '#262626';
+                    item["borderColor"] = '#A0D50' + i;
+                    jsonObj.push(item);
+                }
+                $('#calendar').fullCalendar({
+                    header: {
+                        left: 'prev,next today',
+                        center: 'title',
+                        right: 'month,agendaWeek,agendaDay'
+                    },
+                    editable: false,
+                    droppable: false, // this allows things to be dropped onto the calendar
+                    drop: function () {
+                        // is the "remove after drop" checkbox checked?
+                        if ($('#drop-remove').is(':checked')) {
+                            // if so, remove the element from the "Draggable Events" list
+                            $(this).remove();
+                        }
+                    },
+                    events: jsonObj
+
+                });
+
+                //console.log(jsonObj);
+            },
+            error: function () {
+
+            }
+        })
+
+        function dateTimeReviver(key, value) {
+            var a;
+            if (typeof value === 'string') {
+                a = /\/Date\((\d*)\)\//.exec(value);
+                if (a) {
+                    return new Date(+a[1]);
+                }
+            }
+            return value;
+        }
+
+        $('#modal-warning').on('show.bs.modal', function () {
+            $('.modal-body').css('height', $(window).height() * 0.87);
+        });
+
+
+        var roleid = JSON.parse('@Html.Raw(Json.Encode(ViewData["RoleId"]))');
+        if (roleid == 4) {
+            $("#btnrequestappointment").hide();
+        }
+        else {
+            $("#btnrequestappointment").show();
+        }
+
+        if (roleid == "1") {
+            $("#ddlventures").show();
+        }
+        else {
+            $("#ddlventures").hide();
+
+        }
+
+
+        $(function () {
+            var dt1time1 = $('#txtDT1Time1').val();
+            var dt1time2 = $('#txtDT1Time2').val();
+            var dt1time3 = $('#txtDT1Time3').val();
+            $('#txtDT1Time1').timepicker();
+
+            $('#txtDT1Time1').on('changeTime', function () {
+                
+                dt1time1 = $('#txtDT1Time1').val();
+                dt1time2 = $('#txtDT1Time2').val();
+                dt1time3 = $('#txtDT1Time3').val();
+                timeOptions = {
+
+                    'disableTimeRanges': [[dt1time2, dt1time3]]
+                };
+                // alert(timeOptions);
+                $('#txtDT1Time1').timepicker(timeOptions)
+            });
+
+
+            //$('#txtDT1Time1').on('changeTime', function () {
+            //
+            //    dt1time1 = $('#txtDT1Time1').val();
+            //    dt1time2 = $('#txtDT1Time2').val();
+            //    dt1time3 = $('#txtDT1Time3').val();
+            //    timeOptions = {
+
+            //        'disableTimeRanges': [[dt1time2, dt1time3]]
+            //    };
+            //    alert(timeOptions);
+            //    $('#txtDT1Time1').timepicker(timeOptions)
+            //});
+
+            $('#txtDT1Time2').timepicker({
+                'disableTimeRanges': [[$('#txtDT1Time2').val(), $('#txtDT1Time3').val()]]
+
+            });
+            $('#txtDT1Time3').timepicker();
+            $('#txtDT2Time1').timepicker();
+            $('#txtDT2Time2').timepicker();
+            $('#txtDT2Time3').timepicker();
+            $('#txtDT3Time1').timepicker();
+            $('#txtDT3Time2').timepicker();
+            $('#txtDT3Time3').timepicker();
+
+            var dateToday = new Date();
+
+            dateToday.setDate(dateToday.getDate() + 1);
+            var currentDate = (dateToday.getMonth() + 1) + '/' + dateToday.getDate() + '/' + dateToday.getFullYear();
+
+
+            var date1 = $("#txtDate11").val();
+            var date2 = $("#txtDate2").val();
+            var date3 = $("#txtDate3").val();
+            $(".datepicker1").datetimepicker({
+                format: 'L',
+
+            }).on('dp.change', function (e) {
+
+                date1 = $("#txtDate11").val();
+                date2 = $("#txtDate2").val();
+                date3 = $("#txtDate3").val();
+                var date11 = "";
+                var date22 = "";
+                var date33 = "";
+                if (e.date != false) {
+                    date11 = new Date(e.date.format('l'));
+                }
+                if (date2 != "") {
+                    date22 = new Date(date2);
+                }
+                if (date3 != "") {
+                    date33 = new Date(date3);
+                }
+
+
+
+                $('.datepicker1').data("DateTimePicker").minDate(currentDate);
+                if (date2 != "") {
+
+                    date22.setDate(date22.getDate() - 1);
+                    var maxdate = (date22.getMonth() + 1) + '/' + date22.getDate() + '/' + date22.getFullYear();
+
+                    $('.datepicker1').data("DateTimePicker").maxDate(maxdate);
+                }
+                else {
+                    if (date3 != "") {
+                        date33.setDate(date33.getDate() - 1);
+                        var maxdate = (date33.getMonth() + 1) + '/' + date33.getDate() + '/' + date33.getFullYear();
+
+                        $('.datepicker1').data("DateTimePicker").maxDate(maxdate);
+                    }
+
+                }
+
+            })
+
+            $(".datepicker2").datetimepicker({
+                format: 'L',
+
+            }).on('change  dp.change', function (e) {
+
+
+                date1 = $("#txtDate11").val();
+                date2 = $("#txtDate2").val();
+                date3 = $("#txtDate3").val();
+
+
+                var date11 = "";
+                var date22 = "";
+                var date33 = "";
+                if (date1 != "") {
+                    date11 = new Date(date1);
+                }
+                if (e.date != false) {
+                    date22 = new Date(e.date.format('l'));
+                }
+                if (date3 != "") {
+                    date33 = new Date(date3);
+                }
+                if (date2 != "") {
+                    if (date1 != "") {
+                        currentDate = new Date(currentDate);
+                        if (date22 > currentDate) {
+                            if (date11 > date22) {
+                                $('.datepicker2').data("DateTimePicker").minDate(date1);
+                            }
+                            else {
+                                $('.datepicker2').data("DateTimePicker").minDate(date2);
+                            }
+
+                        }
+                        else {
+                            newcurrentdate = new Date(currentDate);
+                            if (date11 > newcurrentdate || date11 == newcurrentdate) {
+                                date11.setDate(date11.getDate() + 1);
+                                var mindate = (date11.getMonth() + 1) + '/' + date11.getDate() + '/' + date11.getFullYear();
+                                $('.datepicker2').data("DateTimePicker").minDate(mindate);
+                            }
+                            else {
+                                newcurrentdate.setDate(newcurrentdate.getDate() + 1);
+                                var mindate = (newcurrentdate.getMonth() + 1) + '/' + newcurrentdate.getDate() + '/' + newcurrentdate.getFullYear();
+                                $('.datepicker2').data("DateTimePicker").minDate(mindate);
+                            }
+                        }
+                    }
+                    else {
+                        $('.datepicker2').data("DateTimePicker").minDate(currentDate);
+                    }
+
+                }
+
+
+                if (date3 != "") {
+
+                    $('.datepicker2').data("DateTimePicker").maxDate(date3);
+                }
+
+            });
+            $(".datepicker3").datetimepicker({
+                format: 'L',
+
+
+            }).on('dp.change', function (e) {
+
+                $('.datepicker3').data("DateTimePicker").minDate(currentDate);
+                date1 = $("#txtDate11").val();
+                date2 = $("#txtDate2").val();
+                date3 = $("#txtDate3").val();
+
+                var date11 = "";
+                var date22 = "";
+                var date33 = "";
+                if (date1 != "") {
+                    date11 = new Date(date1);
+                }
+                if (date2 != "") {
+                    date22 = new Date(date2);
+                }
+                if (e.date != false) {
+                    date33 = new Date(e.date.format('l'));
+                }
+
+                if (date3 != "") {
+                    if (date2 != "") {
+                        if (date22 > date33) {
+                            date22.setDate(date22.getDate() + 1);
+                            var mindate = (date22.getMonth() + 1) + '/' + date22.getDate() + '/' + date22.getFullYear();
+                            $('.datepicker3').data("DateTimePicker").minDate(mindate);
+                        }
+                        else {
+                            if (date1 != "") {
+
+                                if (date11 > date33) {
+                                    date11.setDate(date11.getDate() + 1);
+                                    var mindate = (date11.getMonth() + 1) + '/' + date11.getDate() + '/' + date11.getFullYear();
+                                    $('.datepicker3').data("DateTimePicker").minDate(mindate);
+                                }
+                                else {
+                                    $('.datepicker3').data("DateTimePicker").minDate(date3);
+                                }
+
+                            }
+
+                        }
+                    }
+                    else if (date1 != "") {
+                        if (date11 > date33) {
+                            date11.setDate(date11.getDate() + 1);
+                            var mindate = (date11.getMonth() + 1) + '/' + date11.getDate() + '/' + date11.getFullYear();
+                            $('.datepicker3').data("DateTimePicker").minDate(mindate);
+                        }
+                        else {
+                            $('.datepicker3').data("DateTimePicker").minDate(date3);
+                        }
+                    }
+                    else {
+                        $('.datepicker3').data("DateTimePicker").minDate(currentDate);
+                    }
+
+                }
+
+
+
+
+            });
+
+        });
+
+    });
+
+    $(".datepicker1").click(function () {
+
+        date1 = $("#txtDate11").val();
+        date2 = $("#txtDate2").val();
+        date3 = $("#txtDate3").val();
+
+        var date11 = "";
+        var date22 = "";
+        var date33 = "";
+        if (date1 != "") {
+            date11 = new Date(date1);
+        }
+        if (date2 != "") {
+            date22 = new Date(date2);
+        }
+        if (date3 != "") {
+            date33 = new Date(date3);
+        }
+
+        var dateToday = new Date();
+
+        dateToday.setDate(dateToday.getDate() + 1);
+        var currentDate = (dateToday.getMonth() + 1) + '/' + dateToday.getDate() + '/' + dateToday.getFullYear();
+
+        $('.datepicker1').data("DateTimePicker").minDate(currentDate);
+        if (date2 != "") {
+
+            date22.setDate(date22.getDate() - 1);
+            var maxdate = (date22.getMonth() + 1) + '/' + date22.getDate() + '/' + date22.getFullYear();
+
+            $('.datepicker1').data("DateTimePicker").maxDate(maxdate);
+        }
+        else {
+            if (date3 != "") {
+                date33.setDate(date33.getDate() - 1);
+                var maxdate = (date33.getMonth() + 1) + '/' + date33.getDate() + '/' + date33.getFullYear();
+
+                $('.datepicker1').data("DateTimePicker").maxDate(maxdate);
+            }
+
+        }
+    })
+
+    $(".datepicker3").click(function () {
+
+        var dateToday = new Date();
+
+        dateToday.setDate(dateToday.getDate() + 1);
+        var currentDate = (dateToday.getMonth() + 1) + '/' + dateToday.getDate() + '/' + dateToday.getFullYear();
+        $('.datepicker3').data("DateTimePicker").minDate(currentDate);
+        date1 = $("#txtDate11").val();
+        date2 = $("#txtDate2").val();
+        date3 = $("#txtDate3").val();
+
+        var date11 = "";
+        var date22 = "";
+        var date33 = "";
+        if (date1 != "") {
+            date11 = new Date(date1);
+        }
+        if (date2 != "") {
+            date22 = new Date(date2);
+        }
+        if (date3 != "") {
+            date33 = new Date(date3);
+        }
+
+        if (date3 != "") {
+            if (date2 != "") {
+                if (date22 > date33) {
+                    date22.setDate(date22.getDate() + 1);
+                    var mindate = (date22.getMonth() + 1) + '/' + date22.getDate() + '/' + date22.getFullYear();
+                    $('.datepicker3').data("DateTimePicker").minDate(mindate);
+                }
+                else {
+                    if (date1 != "") {
+
+                        if (date11 > date33) {
+                            date11.setDate(date11.getDate() + 1);
+                            var mindate = (date11.getMonth() + 1) + '/' + date11.getDate() + '/' + date11.getFullYear();
+                            $('.datepicker3').data("DateTimePicker").minDate(mindate);
+                        }
+                        else {
+                            $('.datepicker3').data("DateTimePicker").minDate(date3);
+                        }
+
+                    }
+
+                }
+            }
+            else if (date1 != "") {
+                if (date11 > date33) {
+                    date11.setDate(date11.getDate() + 1);
+                    var mindate = (date11.getMonth() + 1) + '/' + date11.getDate() + '/' + date11.getFullYear();
+                    $('.datepicker3').data("DateTimePicker").minDate(mindate);
+                }
+                else {
+                    $('.datepicker3').data("DateTimePicker").minDate(date3);
+                }
+            }
+            else {
+                $('.datepicker3').data("DateTimePicker").minDate(currentDate);
+            }
+
+        }
+        else {
+
+            if (date2 != "") {
+                if (date22 > date33) {
+                    date22.setDate(date22.getDate() + 1);
+                    var mindate = (date22.getMonth() + 1) + '/' + date22.getDate() + '/' + date22.getFullYear();
+                    $('.datepicker3').data("DateTimePicker").minDate(mindate);
+                }
+                else {
+                    if (date1 != "") {
+
+                        if (date11 > date33) {
+                            date11.setDate(date11.getDate() + 1);
+                            var mindate = (date11.getMonth() + 1) + '/' + date11.getDate() + '/' + date11.getFullYear();
+                            $('.datepicker3').data("DateTimePicker").minDate(mindate);
+                        }
+                        else {
+                            $('.datepicker3').data("DateTimePicker").minDate(currentDate);
+                        }
+
+                    }
+
+                }
+            }
+            else if (date1 != "") {
+                if (date11 > date33) {
+                    date11.setDate(date11.getDate() + 1);
+                    var mindate = (date11.getMonth() + 1) + '/' + date11.getDate() + '/' + date11.getFullYear();
+                    $('.datepicker3').data("DateTimePicker").minDate(mindate);
+                }
+                else {
+                    $('.datepicker3').data("DateTimePicker").minDate(currentDate);
+                }
+            }
+            else {
+                $('.datepicker3').data("DateTimePicker").minDate(currentDate);
+            }
+
+        }
+
+
+    });
+    $(".datepicker2").click(function () {
+
+        var dateToday = new Date();
+
+        dateToday.setDate(dateToday.getDate() + 1);
+        var currentDate = (dateToday.getMonth() + 1) + '/' + dateToday.getDate() + '/' + dateToday.getFullYear();
+        date1 = $("#txtDate11").val();
+        date2 = $("#txtDate2").val();
+        date3 = $("#txtDate3").val();
+
+        var date11 = "";
+        var date22 = "";
+        var date33 = "";
+        if (date1 != "") {
+            date11 = new Date(date1);
+        }
+        if (date2 != "") {
+            date22 = new Date(date2);
+        }
+        if (date3 != "") {
+            date33 = new Date(date3);
+        }
+
+        if (date2 != "") {
+            if (date1 != "") {
+                currentDate = new Date(currentDate);
+                if (date22 > currentDate) {
+                    if (date11 > date22) {
+                        $('.datepicker2').data("DateTimePicker").minDate(date1);
+                    }
+                    else {
+                        date11.setDate(date11.getDate() + 1);
+                        var mindate = (date11.getMonth() + 1) + '/' + date11.getDate() + '/' + date11.getFullYear();
+                        $('.datepicker2').data("DateTimePicker").minDate(mindate);
+                    }
+
+                }
+                else {
+                    newcurrentdate = new Date(currentDate);
+                    if (date11 > newcurrentdate || date11 == newcurrentdate) {
+                        date11.setDate(date11.getDate() + 1);
+                        var mindate = (date11.getMonth() + 1) + '/' + date11.getDate() + '/' + date11.getFullYear();
+                        $('.datepicker2').data("DateTimePicker").minDate(mindate);
+                    }
+                    else {
+                        newcurrentdate.setDate(newcurrentdate.getDate() + 1);
+                        var mindate = (newcurrentdate.getMonth() + 1) + '/' + newcurrentdate.getDate() + '/' + newcurrentdate.getFullYear();
+                        $('.datepicker2').data("DateTimePicker").minDate(mindate);
+                    }
+                }
+            }
+            else {
+                $('.datepicker2').data("DateTimePicker").minDate(currentDate);
+            }
+
+        }
+        else {
+            if (date1 != "") {
+                currentDate = new Date(currentDate);
+                if (date22 > currentDate) {
+                    if (date11 > date22) {
+                        $('.datepicker2').data("DateTimePicker").minDate(date1);
+                    }
+                    else {
+                        date11.setDate(date11.getDate() + 1);
+                        var mindate = (date11.getMonth() + 1) + '/' + date11.getDate() + '/' + date11.getFullYear();
+                        $('.datepicker2').data("DateTimePicker").minDate(mindate);
+                    }
+
+                }
+                else {
+                    newcurrentdate = new Date(currentDate);
+                    if (date11 > newcurrentdate || date11 == newcurrentdate) {
+                        date11.setDate(date11.getDate() + 1);
+                        var mindate = (date11.getMonth() + 1) + '/' + date11.getDate() + '/' + date11.getFullYear();
+                        $('.datepicker2').data("DateTimePicker").minDate(mindate);
+                    }
+                    else {
+                        newcurrentdate.setDate(newcurrentdate.getDate() + 1);
+                        var mindate = (newcurrentdate.getMonth() + 1) + '/' + newcurrentdate.getDate() + '/' + newcurrentdate.getFullYear();
+                        $('.datepicker2').data("DateTimePicker").minDate(mindate);
+                    }
+                }
+            }
+        }
+
+
+        if (date3 != "") {
+
+            newcurrentdate = new Date(date3);
+            newcurrentdate.setDate(newcurrentdate.getDate() - 1);
+            var maxdate = (newcurrentdate.getMonth() + 1) + '/' + newcurrentdate.getDate() + '/' + newcurrentdate.getFullYear();
+            $('.datepicker2').data("DateTimePicker").maxDate(maxdate);
+        }
+        else {
+            $('.datepicker2').data("DateTimePicker").maxDate(false);
+        }
+    });
+
+    function getDateRange(startDate, endDate, dateFormat) {
+
+        var dates = [],
+            end = moment(endDate),
+             start = moment(startDate),
+            diff = end.diff(startDate, 'days');
+
+        if (!start.isValid() || !end.isValid() || diff <= 0) {
+            return;
+        }
+
+        for (var i = 0; i < diff; i++) {
+            dates.push(end.subtract(1, 'd').format(dateFormat));
+        }
+
+        return dates;
+    };
+
+    $("#ddlventuredrp").change(function () {
+        
+        var postData = $("#ddlventuredrp").val();
+
+        //var url = "ListofMentors";
+        //$.post(url, function (postData) {
+
+        //});
+        if (postData != "" && postData != "0") {
+            $.ajax({
+                url: "ListofMentorsbyId",
+                type: "POST",
+                contentType: 'application/json',
+                dataType: 'json',
+                async: false,
+                data: '{ventureid: "' + postData + '" }',
+                success: function (data) {
+
+
+                    document.getElementById("ddlmentors").options.length = 0;
+                    $('select.ddlMultiSlectBox')[0].sumo.unload();
+
+                    $.each(data, function (index, item) {
+
+                        $.each(item, function (key, value) {
+
+                            // $(".options").append($('<li class="opt"><span><i></i></span><label>' + value.Name  + '</label></option>'));//.val(value.MentorId).text(value.Name));
+                            $(".ddlMultiSlectBox").append($('<option></option>').val(value.MentorId).text(value.Name));
+                        });
+                        $(".ddlMultiSlectBox").SumoSelect();
+                    }
+
+                            );
+
+                },
+                error: function (data) {
+
+                }
+            });
+        }
+        else {
+            //var num = $('option').length;
+            //for (var i = 0; i < num; i++) {
+            //    $('.ddlMultiSlectBox')[0].sumo.unSelectItem(i);
+            //}
+            
+            $(".options").empty();
+            var num = $('option').length;
+            for (var i = 0; i < num; i++) {
+                $('.ddlMultiSlectBox')[0].sumo.unSelectItem(i);
+            }
+            //    $('select.ddlMultiSlectBox')[0].sumo.reload();
+
+        }
+    });
+
+
+    $("#txtDT1Time1").click(function () {
+        
+        var dt1time1 = $('#txtDT1Time1').val();
+        var dt1time2 = $('#txtDT1Time2').val();
+        var dt1time3 = $('#txtDT1Time3').val();
+       
+        var dt1t1 = dt1time2.split(':')
+        timeOptions = {
+
+            'disableTimeRanges': [[dt1time2, dt1time3]]
+        };
+        // alert(timeOptions);
+        $('#txtDT1Time1').timepicker({
+            'disableTimeRanges': [
+                ['1am', '2am'],
+               
+            ]
+        });
+    })
+    function RemoveValidate() {
+
+
+        $('.field-validation-error').each(function () {
+            $(this).html("");
+
+        });
+        var frm = $('#RequestApp')[0];
+
+        frm.reset();  // Reset
+
+    }
+
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $(".activemenu").removeClass("open active")
+        $(".activemenu").eq(0).addClass("open active");
+        $('.mm-text').closest('li').each(function () {
+            $(this).removeClass('active');
+        })
+        $('.mm-text').eq(0).closest('li').addClass('active');
+
+    });
+</script>
+
+

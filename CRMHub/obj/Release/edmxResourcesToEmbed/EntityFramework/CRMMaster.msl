@@ -1,0 +1,153 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="CRMClientsModelStoreContainer" CdmEntityContainer="CRMMasterClientsEntities">
+    <FunctionImportMapping FunctionImportName="USP_VALIDATE_CLIENT_EXPIRY_BY_TYPE" FunctionName="CRMClientsModel.Store.USP_VALIDATE_CLIENT_EXPIRY_BY_TYPE" />
+    <FunctionImportMapping FunctionImportName="VALIDATE_CLIENT_BY_TYPE" FunctionName="CRMClientsModel.Store.VALIDATE_CLIENT_BY_TYPE">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="CRMClientsModel.VALIDATE_CLIENT_BY_TYPE_Result">
+          <ScalarProperty Name="CLIENTID" ColumnName="CLIENTID" />
+          <ScalarProperty Name="Result" ColumnName="Result" />
+          <ScalarProperty Name="active" ColumnName="active" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="CRM_GetLogin" FunctionName="CRMClientsModel.Store.CRM_GetLogin">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="CRMClientsModel.CRM_GetLogin_Result">
+          <ScalarProperty Name="Userid" ColumnName="Userid" />
+          <ScalarProperty Name="Username" ColumnName="Username" />
+          <ScalarProperty Name="password" ColumnName="password" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="CRM_CheckifUserExists" FunctionName="CRMClientsModel.Store.CRM_CheckifUserExists" />
+    <FunctionImportMapping FunctionImportName="CRM_Getclients" FunctionName="CRMClientsModel.Store.CRM_Getclients">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="CRMClientsModel.CRM_Getclients_Result">
+          <ScalarProperty Name="ClientNumber" ColumnName="ClientNumber" />
+          <ScalarProperty Name="ClientID" ColumnName="ClientID" />
+          <ScalarProperty Name="ConnectionString" ColumnName="ConnectionString" />
+          <ScalarProperty Name="ServerName" ColumnName="ServerName" />
+          <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+          <ScalarProperty Name="Country" ColumnName="Country" />
+          <ScalarProperty Name="Timesheet_Type" ColumnName="Timesheet_Type" />
+          <ScalarProperty Name="Timesheet" ColumnName="Timesheet" />
+          <ScalarProperty Name="address1" ColumnName="address1" />
+          <ScalarProperty Name="address2" ColumnName="address2" />
+          <ScalarProperty Name="city" ColumnName="city" />
+          <ScalarProperty Name="companyphone" ColumnName="companyphone" />
+          <ScalarProperty Name="fax" ColumnName="fax" />
+          <ScalarProperty Name="companywebsite" ColumnName="companywebsite" />
+          <ScalarProperty Name="companylogo" ColumnName="companylogo" />
+          <ScalarProperty Name="state" ColumnName="state" />
+          <ScalarProperty Name="zipcode" ColumnName="zipcode" />
+          <ScalarProperty Name="createddate" ColumnName="createddate" />
+          <ScalarProperty Name="companytype" ColumnName="companytype" />
+          <ScalarProperty Name="expirydate" ColumnName="expirydate" />
+          <ScalarProperty Name="active" ColumnName="active" />
+          <ScalarProperty Name="site_type" ColumnName="site_type" />
+          <ScalarProperty Name="AttachmentUrl" ColumnName="AttachmentUrl" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="CRM_InsertClientDetails" FunctionName="CRMClientsModel.Store.CRM_InsertClientDetails" />
+    <EntitySetMapping Name="Clients">
+      <EntityTypeMapping TypeName="CRMClientsModel.Client">
+        <MappingFragment StoreEntitySet="Clients">
+          <ScalarProperty Name="AttachmentUrl" ColumnName="AttachmentUrl" />
+          <ScalarProperty Name="site_type" ColumnName="site_type" />
+          <ScalarProperty Name="active" ColumnName="active" />
+          <ScalarProperty Name="expirydate" ColumnName="expirydate" />
+          <ScalarProperty Name="companytype" ColumnName="companytype" />
+          <ScalarProperty Name="createddate" ColumnName="createddate" />
+          <ScalarProperty Name="zipcode" ColumnName="zipcode" />
+          <ScalarProperty Name="state" ColumnName="state" />
+          <ScalarProperty Name="companylogo" ColumnName="companylogo" />
+          <ScalarProperty Name="companywebsite" ColumnName="companywebsite" />
+          <ScalarProperty Name="fax" ColumnName="fax" />
+          <ScalarProperty Name="companyphone" ColumnName="companyphone" />
+          <ScalarProperty Name="city" ColumnName="city" />
+          <ScalarProperty Name="address2" ColumnName="address2" />
+          <ScalarProperty Name="address1" ColumnName="address1" />
+          <ScalarProperty Name="Timesheet" ColumnName="Timesheet" />
+          <ScalarProperty Name="Timesheet_Type" ColumnName="Timesheet_Type" />
+          <ScalarProperty Name="Country" ColumnName="Country" />
+          <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+          <ScalarProperty Name="ServerName" ColumnName="ServerName" />
+          <ScalarProperty Name="ConnectionString" ColumnName="ConnectionString" />
+          <ScalarProperty Name="ClientID" ColumnName="ClientID" />
+          <ScalarProperty Name="ClientNumber" ColumnName="ClientNumber" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Custom_DbError">
+      <EntityTypeMapping TypeName="CRMClientsModel.Custom_DbError">
+        <MappingFragment StoreEntitySet="Custom_DbError">
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="ErrorMessage" ColumnName="ErrorMessage" />
+          <ScalarProperty Name="ProcedureName" ColumnName="ProcedureName" />
+          <ScalarProperty Name="ErrorLine" ColumnName="ErrorLine" />
+          <ScalarProperty Name="ErrorState" ColumnName="ErrorState" />
+          <ScalarProperty Name="ErrorSeverity" ColumnName="ErrorSeverity" />
+          <ScalarProperty Name="ErrorNo" ColumnName="ErrorNo" />
+          <ScalarProperty Name="ErrorId" ColumnName="ErrorId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="CRM_UpdateClientDetailsByClientId" FunctionName="CRMClientsModel.Store.CRM_UpdateClientDetailsByClientId" />
+    <EntitySetMapping Name="UserMasters">
+      <EntityTypeMapping TypeName="CRMClientsModel.UserMaster">
+        <MappingFragment StoreEntitySet="UserMaster">
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="password" ColumnName="password" />
+          <ScalarProperty Name="Username" ColumnName="Username" />
+          <ScalarProperty Name="Userid" ColumnName="Userid" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ExcelImportFiles">
+      <EntityTypeMapping TypeName="CRMClientsModel.ExcelImportFile">
+        <MappingFragment StoreEntitySet="ExcelImportFiles">
+          <ScalarProperty Name="ActualFName" ColumnName="ActualFName" />
+          <ScalarProperty Name="UId" ColumnName="UId" />
+          <ScalarProperty Name="ClientId" ColumnName="ClientId" />
+          <ScalarProperty Name="Importoption" ColumnName="Importoption" />
+          <ScalarProperty Name="Module" ColumnName="Module" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="Excelfile" ColumnName="Excelfile" />
+          <ScalarProperty Name="Fileid" ColumnName="Fileid" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ImportHistories">
+      <EntityTypeMapping TypeName="CRMClientsModel.ImportHistory">
+        <MappingFragment StoreEntitySet="ImportHistory">
+          <ScalarProperty Name="Filepath" ColumnName="Filepath" />
+          <ScalarProperty Name="ClientId" ColumnName="ClientId" />
+          <ScalarProperty Name="FailedRecords" ColumnName="FailedRecords" />
+          <ScalarProperty Name="TotalRecords" ColumnName="TotalRecords" />
+          <ScalarProperty Name="ExcelFile" ColumnName="ExcelFile" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="CRM_UpdateImportExcel" FunctionName="CRMClientsModel.Store.CRM_UpdateImportExcel" />
+    <FunctionImportMapping FunctionImportName="CRM_GetExcelfilesbasedonstatus" FunctionName="CRMClientsModel.Store.CRM_GetExcelfilesbasedonstatus">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="CRMClientsModel.CRM_GetExcelfilesbasedonstatus_Result">
+          <ScalarProperty Name="Fileid" ColumnName="Fileid" />
+          <ScalarProperty Name="Excelfile" ColumnName="Excelfile" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="Module" ColumnName="Module" />
+          <ScalarProperty Name="Importoption" ColumnName="Importoption" />
+          <ScalarProperty Name="ClientId" ColumnName="ClientId" />
+          <ScalarProperty Name="UId" ColumnName="UId" />
+          <ScalarProperty Name="ActualFName" ColumnName="ActualFName" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+  </EntityContainerMapping>
+</Mapping>

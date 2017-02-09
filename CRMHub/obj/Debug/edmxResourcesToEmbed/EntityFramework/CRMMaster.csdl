@@ -1,0 +1,182 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="CRMClientsModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="CRMMasterClientsEntities" annotation:LazyLoadingEnabled="true">
+    <FunctionImport Name="USP_VALIDATE_CLIENT_EXPIRY_BY_TYPE" ReturnType="Collection(String)">
+      <Parameter Name="CLIENTID" Mode="In" Type="String" />
+      <Parameter Name="SITE_TYPE" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="VALIDATE_CLIENT_BY_TYPE" ReturnType="Collection(CRMClientsModel.VALIDATE_CLIENT_BY_TYPE_Result)">
+      <Parameter Name="CLIENTID" Mode="In" Type="String" />
+      <Parameter Name="SITE_TYPE" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="CRM_GetLogin" ReturnType="Collection(CRMClientsModel.CRM_GetLogin_Result)">
+      <Parameter Name="Username" Mode="In" Type="String" />
+      <Parameter Name="Password" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="CRM_CheckifUserExists" ReturnType="Collection(Int32)">
+      <Parameter Name="Username" Mode="In" Type="String" />
+      <Parameter Name="password" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="CRM_Getclients" ReturnType="Collection(CRMClientsModel.CRM_Getclients_Result)" />
+    <FunctionImport Name="CRM_InsertClientDetails">
+      <Parameter Name="ClientID" Mode="In" Type="String" />
+      <Parameter Name="ClientName" Mode="In" Type="String" />
+      <Parameter Name="companytype" Mode="In" Type="String" />
+      <Parameter Name="Country" Mode="In" Type="String" />
+      <Parameter Name="address1" Mode="In" Type="String" />
+      <Parameter Name="address2" Mode="In" Type="String" />
+      <Parameter Name="city" Mode="In" Type="String" />
+      <Parameter Name="companywebsite" Mode="In" Type="String" />
+      <Parameter Name="ConnectionString" Mode="In" Type="Binary" />
+      <Parameter Name="ServerName" Mode="In" Type="String" />
+      <Parameter Name="CompanyLogo" Mode="In" Type="String" />
+    </FunctionImport>
+    <EntitySet Name="Clients" EntityType="CRMClientsModel.Client" />
+    <EntitySet Name="Custom_DbError" EntityType="CRMClientsModel.Custom_DbError" />
+    <FunctionImport Name="CRM_UpdateClientDetailsByClientId">
+      <Parameter Name="ClientID" Mode="In" Type="String" />
+      <Parameter Name="ClientName" Mode="In" Type="String" />
+      <Parameter Name="companytype" Mode="In" Type="String" />
+      <Parameter Name="Country" Mode="In" Type="String" />
+      <Parameter Name="address1" Mode="In" Type="String" />
+      <Parameter Name="address2" Mode="In" Type="String" />
+      <Parameter Name="city" Mode="In" Type="String" />
+      <Parameter Name="CompanyLogo" Mode="In" Type="String" />
+      <Parameter Name="companywebsite" Mode="In" Type="String" />
+    </FunctionImport>
+    <EntitySet Name="UserMasters" EntityType="CRMClientsModel.UserMaster" />
+    <EntitySet Name="ExcelImportFiles" EntityType="CRMClientsModel.ExcelImportFile" />
+    <EntitySet Name="ImportHistories" EntityType="CRMClientsModel.ImportHistory" />
+    <FunctionImport Name="CRM_UpdateImportExcel">
+      <Parameter Name="FieldId" Mode="In" Type="String" />
+      <Parameter Name="Status" Mode="In" Type="String" />
+      <Parameter Name="Module" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="CRM_GetExcelfilesbasedonstatus" ReturnType="Collection(CRMClientsModel.CRM_GetExcelfilesbasedonstatus_Result)">
+      <Parameter Name="Status" Mode="In" Type="String" />
+      <Parameter Name="Module" Mode="In" Type="String" />
+    </FunctionImport>
+  </EntityContainer>
+  <ComplexType Name="VALIDATE_CLIENT_BY_TYPE_Result">
+    <Property Type="String" Name="CLIENTID" Nullable="false" MaxLength="100" />
+    <Property Type="String" Name="Result" Nullable="false" MaxLength="1" />
+    <Property Type="Boolean" Name="active" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="CRM_GetLogin_Result">
+    <Property Type="Int32" Name="Userid" Nullable="false" />
+    <Property Type="String" Name="Username" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="password" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="Name" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="Email" Nullable="true" MaxLength="100" />
+  </ComplexType>
+  <ComplexType Name="CRM_Getclients_Result">
+    <Property Type="Int64" Name="ClientNumber" Nullable="false" />
+    <Property Type="String" Name="ClientID" Nullable="false" MaxLength="100" />
+    <Property Type="Binary" Name="ConnectionString" Nullable="true" MaxLength="500" />
+    <Property Type="String" Name="ServerName" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="CompanyName" Nullable="false" MaxLength="200" />
+    <Property Type="String" Name="Country" Nullable="true" MaxLength="3" />
+    <Property Type="String" Name="Timesheet_Type" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="Timesheet" Nullable="true" MaxLength="10" />
+    <Property Type="String" Name="address1" Nullable="true" MaxLength="150" />
+    <Property Type="String" Name="address2" Nullable="true" MaxLength="150" />
+    <Property Type="String" Name="city" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="companyphone" Nullable="true" MaxLength="12" />
+    <Property Type="String" Name="fax" Nullable="true" MaxLength="15" />
+    <Property Type="String" Name="companywebsite" Nullable="true" MaxLength="150" />
+    <Property Type="String" Name="companylogo" Nullable="true" MaxLength="500" />
+    <Property Type="String" Name="state" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="zipcode" Nullable="true" MaxLength="50" />
+    <Property Type="DateTime" Name="createddate" Nullable="true" Precision="23" />
+    <Property Type="String" Name="companytype" Nullable="true" MaxLength="50" />
+    <Property Type="DateTime" Name="expirydate" Nullable="true" Precision="23" />
+    <Property Type="Boolean" Name="active" Nullable="true" />
+    <Property Type="String" Name="site_type" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="AttachmentUrl" Nullable="true" MaxLength="200" />
+  </ComplexType>
+  <EntityType Name="Client">
+    <Key>
+      <PropertyRef Name="ClientNumber" />
+    </Key>
+    <Property Name="ClientNumber" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ClientID" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="ConnectionString" Type="Binary" MaxLength="500" FixedLength="false" />
+    <Property Name="ServerName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="CompanyName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="Country" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+    <Property Name="Timesheet_Type" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Timesheet" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="address1" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="address2" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="city" Type="String" MaxLength="50" FixedLength="true" Unicode="false" />
+    <Property Name="companyphone" Type="String" MaxLength="12" FixedLength="false" Unicode="true" />
+    <Property Name="fax" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+    <Property Name="companywebsite" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="companylogo" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="state" Type="String" MaxLength="50" FixedLength="true" Unicode="false" />
+    <Property Name="zipcode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="createddate" Type="DateTime" Precision="3" />
+    <Property Name="companytype" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="expirydate" Type="DateTime" Precision="3" />
+    <Property Name="active" Type="Boolean" />
+    <Property Name="site_type" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="AttachmentUrl" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="Custom_DbError">
+    <Key>
+      <PropertyRef Name="ErrorId" />
+    </Key>
+    <Property Name="ErrorId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ErrorNo" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="ErrorSeverity" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="ErrorState" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="ErrorLine" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="ProcedureName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="ErrorMessage" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="CreatedOn" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="UserMaster">
+    <Key>
+      <PropertyRef Name="Userid" />
+    </Key>
+    <Property Name="Userid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Username" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="password" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="ExcelImportFile">
+    <Key>
+      <PropertyRef Name="Fileid" />
+    </Key>
+    <Property Name="Fileid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Excelfile" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+    <Property Name="Status" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Module" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Importoption" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ClientId" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+    <Property Name="UId" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="ActualFName" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="ImportHistory">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ExcelFile" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="TotalRecords" Type="Int32" />
+    <Property Name="FailedRecords" Type="Int32" />
+    <Property Name="ClientId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Filepath" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <ComplexType Name="CRM_GetExcelfilesbasedonstatus_Result">
+    <Property Type="Int32" Name="Fileid" Nullable="false" />
+    <Property Type="String" Name="Excelfile" Nullable="true" MaxLength="150" />
+    <Property Type="String" Name="Status" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="Module" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="Importoption" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="ClientId" Nullable="true" MaxLength="150" />
+    <Property Type="String" Name="UId" Nullable="true" MaxLength="200" />
+    <Property Type="String" Name="ActualFName" Nullable="true" MaxLength="200" />
+  </ComplexType>
+</Schema>

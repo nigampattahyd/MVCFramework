@@ -1,0 +1,101 @@
+--- Web.config
++++ Web.config
+@@ -10,6 +10,5 @@
+   </configSections>
+ 
+ 
+-
+-  <!--Production Connection- New-->
++  <!--QA Connection-->
+   <!--<connectionStrings>
+@@ -15,6 +14,6 @@
+   <!--<connectionStrings>
+-    <add name="CRMDevEntities" connectionString="metadata=res://*/EntityFramework.CRM.csdl|res://*/EntityFramework.CRM.ssdl|res://*/EntityFramework.CRM.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=priyanet.us\sql2014;initial catalog=CRM;User ID=sa;Password=pspl!2015;MultipleActiveResultSets=True;App=EntityFramework&quot;" providerName="System.Data.EntityClient" />
+-    <add name="CRMMasterClientsEntities" connectionString="metadata=res://*/EntityFramework.CRMMaster.csdl|res://*/EntityFramework.CRMMaster.ssdl|res://*/EntityFramework.CRMMaster.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=priyanet.us\sql2014;initial catalog=CRMClients;persist security info=True;User ID=sa;Password=pspl!2015;MultipleActiveResultSets=True;App=EntityFramework&quot;" providerName="System.Data.EntityClient" />
+-    <add name="ImportCompanies" connectionString="Data Source=priyanet.us\sql2014;Initial Catalog=CRM;User ID=sa;Password=pspl!2015; MultipleActiveResultSets=True;Application Name=EntityFramework" />
++    <add name="CRMDevEntities" connectionString="metadata=res://*/EntityFramework.CRM.csdl|res://*/EntityFramework.CRM.ssdl|res://*/EntityFramework.CRM.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=qasite.psplhyd.in\SQL2014;initial catalog=CRM;user id=sa;password=pspl!2015;MultipleActiveResultSets=True;App=EntityFramework&quot;" providerName="System.Data.EntityClient" />
++    <add name="CRMMasterClientsEntities" connectionString="metadata=res://*/EntityFramework.CRMMaster.csdl|res://*/EntityFramework.CRMMaster.ssdl|res://*/EntityFramework.CRMMaster.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=qasite.psplhyd.in\SQL2014;initial catalog=CRMClients;persist security info=True;user id=sa;password=pspl!2015;MultipleActiveResultSets=True;App=EntityFramework&quot;" providerName="System.Data.EntityClient" />
++    <add name="ImportCompanies" connectionString="Data Source=qasite.psplhyd.in\SQL2014;Initial Catalog=CRM;user id=sa;password=sa!2015; MultipleActiveResultSets=True;Application Name=EntityFramework" />
+   </connectionStrings>-->
+   <!--QA Connection End-->
+@@ -24,12 +45,4 @@
+   <!--<connectionStrings>
+-    <add name="CRMDevEntities" connectionString="metadata=res://*/EntityFramework.CRM.csdl|res://*/EntityFramework.CRM.ssdl|res://*/EntityFramework.CRM.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=developer.priyanets.com\SQL2014Express;initial catalog=CRM;User ID=sa;Password=sa!2015;MultipleActiveResultSets=True;App=EntityFramework&quot;" providerName="System.Data.EntityClient" />
+-    <add name="CRMMasterClientsEntities" connectionString="metadata=res://*/EntityFramework.CRMMaster.csdl|res://*/EntityFramework.CRMMaster.ssdl|res://*/EntityFramework.CRMMaster.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=developer.priyanets.com\SQL2014Express;initial catalog=CRMClients;persist security info=True;User ID=sa;Password=sa!2015;MultipleActiveResultSets=True;App=EntityFramework&quot;" providerName="System.Data.EntityClient" />
+-    <add name="ImportCompanies" connectionString="Data Source=developer.priyanets.com\SQL2014Express;Initial Catalog=CRM;User ID=sa;Password=sa!2015; MultipleActiveResultSets=True;Application Name=EntityFramework" />
+-  </connectionStrings>-->
+-  <!--QA Connection End-->
+-
+-  <!--Sql Server Connection-->
+-  <connectionStrings>
+     <add name="CRMDevEntities" connectionString="metadata=res://*/EntityFramework.CRM.csdl|res://*/EntityFramework.CRM.ssdl|res://*/EntityFramework.CRM.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=Sqlserver;initial catalog=CRM;User ID=sa;Password=sa!2014;MultipleActiveResultSets=True;App=EntityFramework&quot;" providerName="System.Data.EntityClient" />
+     <add name="CRMMasterClientsEntities" connectionString="metadata=res://*/EntityFramework.CRMMaster.csdl|res://*/EntityFramework.CRMMaster.ssdl|res://*/EntityFramework.CRMMaster.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=Sqlserver;initial catalog=CRMClients;persist security info=True;User ID=sa;Password=sa!2014;MultipleActiveResultSets=True;App=EntityFramework&quot;" providerName="System.Data.EntityClient" />
+     <add name="ImportCompanies" connectionString="Data Source=Sqlserver;Initial Catalog=CRM;User ID=sa;Password=sa!2014; MultipleActiveResultSets=True;Application Name=EntityFramework" />
+@@ -33,6 +46,15 @@
+     <add name="CRMDevEntities" connectionString="metadata=res://*/EntityFramework.CRM.csdl|res://*/EntityFramework.CRM.ssdl|res://*/EntityFramework.CRM.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=Sqlserver;initial catalog=CRM;User ID=sa;Password=sa!2014;MultipleActiveResultSets=True;App=EntityFramework&quot;" providerName="System.Data.EntityClient" />
+     <add name="CRMMasterClientsEntities" connectionString="metadata=res://*/EntityFramework.CRMMaster.csdl|res://*/EntityFramework.CRMMaster.ssdl|res://*/EntityFramework.CRMMaster.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=Sqlserver;initial catalog=CRMClients;persist security info=True;User ID=sa;Password=sa!2014;MultipleActiveResultSets=True;App=EntityFramework&quot;" providerName="System.Data.EntityClient" />
+     <add name="ImportCompanies" connectionString="Data Source=Sqlserver;Initial Catalog=CRM;User ID=sa;Password=sa!2014; MultipleActiveResultSets=True;Application Name=EntityFramework" />
+-  </connectionStrings>
+-  <!--Sql Server Connection End-->
++  </connectionStrings>-->
++<!--Sql Server Connection End--> 
++  
++  
++<!-- Priya Net Server-->
++  <!--<connectionStrings>
++    <add name="CRMDevEntities" connectionString="metadata=res://*/EntityFramework.CRM.csdl|res://*/EntityFramework.CRM.ssdl|res://*/EntityFramework.CRM.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=priyanet.net;initial catalog=CRM;user id=sa;password=sa!2008;MultipleActiveResultSets=True;App=EntityFramework&quot;" providerName="System.Data.EntityClient" />
++    <add name="CRMMasterClientsEntities" connectionString="metadata=res://*/EntityFramework.CRMMaster.csdl|res://*/EntityFramework.CRMMaster.ssdl|res://*/EntityFramework.CRMMaster.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=priyanet.net;initial catalog=CRMClients;persist security info=True;user id=sa;password=sa!2008;MultipleActiveResultSets=True;App=EntityFramework&quot;" providerName="System.Data.EntityClient" />
++    <add name="ImportCompanies" connectionString="Data Source=priyanet.net;Initial Catalog=CRM;User ID=sa;Password=sa!2008; MultipleActiveResultSets=True;Application Name=EntityFramework" />
++  </connectionStrings>-->
++  <!-- Priya Net Server Connection End-->
+ 
+@@ -40,3 +77,2 @@
+ 
+-  <!--System Local Connection-->
+   <!--<connectionStrings>
+@@ -42,5 +78,5 @@
+   <!--<connectionStrings>
+-    <add name="CRMDevEntities" connectionString="metadata=res://*/EntityFramework.CRM.csdl|res://*/EntityFramework.CRM.ssdl|res://*/EntityFramework.CRM.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=PSPL-W8-PC1;initial catalog=CRM;User ID=sa;Password=sa!2015;MultipleActiveResultSets=True;App=EntityFramework&quot;" providerName="System.Data.EntityClient" />
+-    <add name="CRMMasterClientsEntities" connectionString="metadata=res://*/EntityFramework.CRMMaster.csdl|res://*/EntityFramework.CRMMaster.ssdl|res://*/EntityFramework.CRMMaster.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=PSPL-W8-PC1;initial catalog=CRMClients;persist security info=True;User ID=sa;Password=sa!2015;MultipleActiveResultSets=True;App=EntityFramework&quot;" providerName="System.Data.EntityClient" />
+-    <add name="ImportCompanies" connectionString="Data Source=PSPL-W8-PC1;Initial Catalog=CRM;User ID=sa;Password=sa!2015; MultipleActiveResultSets=True;Application Name=EntityFramework" />
++    <add name="CRMDevEntities" connectionString="metadata=res://*/EntityFramework.CRM.csdl|res://*/EntityFramework.CRM.ssdl|res://*/EntityFramework.CRM.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=dev.psplhyd.in;initial catalog=CRM;user id=sa;password=dev!2014;pooling=true; Max Pool Size=32767;MultipleActiveResultSets=True;App=EntityFramework&quot;" providerName="System.Data.EntityClient" />
++    <add name="CRMMasterClientsEntities" connectionString="metadata=res://*/EntityFramework.CRMMaster.csdl|res://*/EntityFramework.CRMMaster.ssdl|res://*/EntityFramework.CRMMaster.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=dev.psplhyd.in;initial catalog=CRMClients;persist security info=True;user id=sa;password=dev!2014;pooling=true; Max Pool Size=32767;MultipleActiveResultSets=True;App=EntityFramework&quot;" providerName="System.Data.EntityClient" />
++    <add name="ImportCompanies" connectionString="Data Source=dev.psplhyd.in;Initial Catalog=CRM;User ID=sa;Password=dev!2014;pooling=true; Max Pool Size=32767;MultipleActiveResultSets=True;Application Name=EntityFramework" />
+   </connectionStrings>-->
+@@ -46,3 +82,2 @@
+   </connectionStrings>-->
+-  <!--System Local Connection-->
+   
+@@ -48,6 +83,30 @@
+   
+-  
+-  
++  <!--sqlserver-->
++  <!--<connectionStrings>
++    <add name="CRMDevEntities" connectionString="metadata=res://*/EntityFramework.CRM.csdl|res://*/EntityFramework.CRM.ssdl|res://*/EntityFramework.CRM.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=qasite.psplhyd.in\SQL2014;initial catalog=CRM;user id=sa;password=pspl!2015;pooling=true; Max Pool Size=32767;MultipleActiveResultSets=True;App=EntityFramework&quot;" providerName="System.Data.EntityClient" />
++    <add name="CRMMasterClientsEntities" connectionString="metadata=res://*/EntityFramework.CRMMaster.csdl|res://*/EntityFramework.CRMMaster.ssdl|res://*/EntityFramework.CRMMaster.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=qasite.psplhyd.in\SQL2014;initial catalog=CRMClients;persist security info=True;user id=sa;password=pspl!2015;pooling=true; Max Pool Size=32767;MultipleActiveResultSets=True;App=EntityFramework&quot;" providerName="System.Data.EntityClient" />
++    <add name="ImportCompanies" connectionString="Data Source=qasite.psplhyd.in\SQL2014;Initial Catalog=CRM;User ID=sa;Password=pspl!2015;pooling=true; Max Pool Size=32767;MultipleActiveResultSets=True;Application Name=EntityFramework" />
++    --><!--connection string="data source=sqlserver;initial catalog=CRMClients;persist security info=True;user id=sa;password=sa!2014;pooling=true; Max Pool Size=32767;MultipleActiveResultSets=True;App=EntityFramework"--><!--
++
++    --><!--<add name="getconnstr" connectionString="Data Source=SRV;Initial Catalog=CRMClients;User ID=sa;Password=sa!2015; MultipleActiveResultSets=True;Application Name=EntityFramework"/>--><!--
++
++  </connectionStrings>-->
++  <!--prod -->
++  <!--
++  <connectionStrings>
++    <add name="CRMDevEntities" connectionString="metadata=res://*/EntityFramework.CRM.csdl|res://*/EntityFramework.CRM.ssdl|res://*/EntityFramework.CRM.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=developer.psplhyd.in\SQL2008R2;initial catalog=CRM;user id=sa;password=sa!2012;pooling=true; Max Pool Size=32767;MultipleActiveResultSets=True;App=EntityFramework&quot;" providerName="System.Data.EntityClient" />
++    <add name="CRMMasterClientsEntities" connectionString="metadata=res://*/EntityFramework.CRMMaster.csdl|res://*/EntityFramework.CRMMaster.ssdl|res://*/EntityFramework.CRMMaster.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=developer.psplhyd.in\SQL2008R2;initial catalog=CRMClients;persist security info=True;user id=sa;password=sa!2012;pooling=true; Max Pool Size=32767;MultipleActiveResultSets=True;App=EntityFramework&quot;" providerName="System.Data.EntityClient" />
++    <add name="ImportCompanies" connectionString="Data Source=developer.psplhyd.in\SQL2008R2;Initial Catalog=CRM;User ID=sa;Password=sa!2012;pooling=true; Max Pool Size=32767;MultipleActiveResultSets=True;Application Name=EntityFramework" />
++  qasite.psplhyd.in\SQL2014 ,sa,sa!2012
++  </connectionStrings>-->
++
++  <!--<connectionStrings>
++    -->
++  <!--<add name="CRMDevEntities" connectionString="metadata=res://*/EntityFramework.CRM.csdl|res://*/EntityFramework.CRM.ssdl|res://*/EntityFramework.CRM.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=PSPL-HYD-SRV1;initial catalog=CRMDev;user id=pspl;password=pspl!2013;MultipleActiveResultSets=True;App=EntityFramework&quot;" providerName="System.Data.EntityClient" />-->
++  <!--
++  <add name="CRMMasterClientsEntities" connectionString="metadata=res://*/EntityFramework.CRMMaster.csdl|res://*/EntityFramework.CRMMaster.ssdl|res://*/EntityFramework.CRMMaster.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=developer.psplhyd.in\SQL2008R2;initial catalog=CRMClients;persist security info=True;user id=sa;password=sa!2012;MultipleActiveResultSets=True;App=EntityFramework&quot;" providerName="System.Data.EntityClient" />
++ <add name="ImportCompanies" connectionString="Data Source=developer.psplhyd.in\SQL2008R2;Initial Catalog=CRM;User ID=sa;Password=sa!2012; MultipleActiveResultSets=True;Application Name=EntityFramework"/>
++  </connectionStrings>-->
+   <appSettings>
+     <add key="webpages:Version" value="3.0.0.0" />
+     <add key="webpages:Enabled" value="false" />

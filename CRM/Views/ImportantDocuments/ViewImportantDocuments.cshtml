@@ -1,0 +1,333 @@
+﻿@model CRMHub.ViewModel.ImportantDocumentsModel
+@{
+    ViewBag.Title = "Important Documents";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+ 
+<style>
+    .DT-search, .DT-search input {
+        width: 0px !important; /**/
+    }
+
+    .DT-per-page {
+        border-right: 0px solid #eee;
+        margin-right: 0px;
+        height: 23px;
+        padding-right: 0px;
+        white-space: nowrap;
+    }
+</style>
+
+
+    
+ 
+
+@using (Html.BeginForm("ViewImportantDocuments", "ImportantDocuments", FormMethod.Post))
+{
+
+  
+        <div id="content-wrapper">
+            <div id="CustomBootstrapAlertBox">
+            </div>
+            <div class="row">
+              
+
+
+                    <div class="panel">
+
+                        <div class="panel-heading">
+                            <div class="row">
+                                <!-- Page header, center on small screens -->
+                                <h1 class="col-xs-6 col-sm-4 text-left text-left-sm panel-title"><i class="fa fa-users page-header-icon"></i>&nbsp;<label id="lblHeading"> Important Documents</label></h1>
+                                <div class="col-xs-6 col-sm-8">
+                                    <div class="row">
+                                        <div class="pull-right">
+                                            @*<a href="#" class="btn btn-flat btn-labeled btn-primary" tabindex="-1"
+                                               data-toggle="modal" data-target="#uidemo-modals-alerts-info"><span class="btn-label icon fa fa-question-circle"></span>Help</a>*@
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="panel-body">
+
+                           
+
+                            <div class="row">
+                               
+
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group no-margin-hr">
+                                            <label class="control-label">Office:</label>
+                                            @Html.DropDownListFor(model => model.impDocsEntity.DocShareToOffice, new SelectList(Model.branchList, "branchid", "branchName"), new { @class = "form-control", @id = "ddlBranches" })
+
+                                        </div>
+                                    </div>
+                                    <!-- Tabs -->
+
+
+                                    <div class="tab-pane" id="bs-tabdrop-tab3">
+
+                                        <div class="row" >
+                                            <div class="col-xs-12 col-sm-12 text-right text-right-sm" >
+                                                 
+                                                <div class="col-xs-12 col-sm-12 text-right text-right-sm" id="divtohide" style="background-color: #f5f5f5; padding-top: 6px; padding-bottom: 6px; text-align:right; ">
+
+
+                                                    <span class="btn btn-flat btn-labeled btn-primary" id="btnmargin_top" style="float:right">
+
+                                                        @*@Html.ActionLink("Create", "CreateNewImportantDoc", "ImportantDocuments", new { @id = "AddNewDoc", @style = "color:#fff; text-decoration:none;" })<span class="btn-label icon  fa  fa-plus-circle" style="margin-right:6px; "> </span>*@
+                                                        <a style="color: #fff; text-decoration: none; padding: 0px; font-weight: normal" href="@Url.Action("CreateNewImportantDoc", "ImportantDocuments")">
+                                                            <span class="btn-label icon  fa  fa-plus-circle" style="margin-right:6px;"> </span>
+                                                            Create
+                                                        </a>
+
+                                                    </span>
+                                                    <span class="btn btn-flat btn-labeled btn-primary" id="btnmargin_top" style="float:right">
+                                                        
+                                                        <a style="color: #fff; text-decoration: none; padding: 0px; font-weight: normal" id="DeleteImpDoc" onclick="deleteSelectedDocument()"> 
+                                                            <span class="btn-label icon  fa fa-trash-o" style="margin-right:6px;"> </span>
+                                                        Delete </a>
+                                                  
+                                                    </span>
+
+                                                </div>
+                                            </div>
+                                            </div>
+
+                                        <div class="row">
+                                            <div class="col-sm-12 col-xs-12">
+
+                                                <div class="table-primary table-striped" id="divGrid">
+
+                                                    <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="tblImportantDocs" width="100%">
+                                                        <thead>
+                                                            <tr>
+                                                                <th><input type="checkbox" name="chkAll" id="selectall" /></th>
+                                                                <th>&nbsp;</th>
+                                                                <th data-hide="tabletlandscape,phone">DocId</th>
+                                                                <th data-class="expand">Document Name</th>
+                                                                <th data-hide="tablet,tabletlandscape,phone">Document Description</th>
+                                                                <th data-hide="tablet,tabletlandscape,phone">File</th>
+                                                                <th data-hide="tablet,tabletlandscape,phone">Status</th>
+                                                                <th data-hide="tablet,tabletlandscape,phone">Created Date</th>
+
+                                                            </tr>
+                                                        </thead>
+                                                      
+
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                 
+            </div>
+        </div>
+    
+}
+ 
+
+
+
+<script language="javascript" type="text/javascript">
+    $(document).ready(function () {
+        //$('#loading').css('display', 'block');
+        $("#tblImportantDocs").dataTable().fnDestroy();
+        BindImportantDocuments();
+        $('#tblImportantDocs').on('length.dt', function (e, settings, len) {
+            $('#loading').css('display', 'block');
+        });
+
+        $('#tblImportantDocs').on('page.dt', function () {
+            $('#loading').css('display', 'block');
+        });
+
+    });
+
+    function BindImportantDocuments() {
+        var responsiveHelper = undefined;
+        var breakpointDefinition = {
+            tablet: 1024,
+            tabletlandscape: 768,
+            phone: 480
+        };
+        var tableElement = $('#tblImportantDocs');
+        tableElement.dataTable({
+            autoWidth: false,
+            preDrawCallback: function () {
+                if (!responsiveHelper) {
+                    responsiveHelper = new ResponsiveDatatablesHelper(tableElement, breakpointDefinition);
+                }
+            },
+            rowCallback: function (nRow) {
+                
+                responsiveHelper.createExpandIcon(nRow);
+            },
+            drawCallback: function (oSettings) {
+                responsiveHelper.respond();
+            },
+            //"order": [[$("#HD_SortValue").val(), "" + $("#HD_SortDirection").val() + ""]],
+            "aLengthMenu": [[10, 25, 50, 100], [10, 25, 50, 100]],
+            //"iDisplayStart": parseInt($("#HD_PageIndex").val()),
+            //"iDisplayLength": parseInt($("#HD_PageSize").val()),
+            "pagingType": "full_numbers",
+            //"processing": true,
+            "serverSide": true,
+            "bFilter": false,
+            "sAjaxSource": "getImportantDocuments",
+            "fnServerParams": function (aoData) {
+                aoData.push(
+                    { "name": "ImpDocBranch", "value": "" + $("#ddlBranches").val() + "" },
+                    { "name": "ImpDocFilterString", "value": "" }
+                    );
+            },
+            "fnServerData": function (sSource, aoData, fnCallback) {
+                $.ajax({
+                    "dataType": 'json',
+                    "contentType": "application/json; charset=utf-8",
+                    "type": "GET",
+                    "url": sSource,
+                    "data": aoData,
+                    "success":
+                                function (msg) {
+
+                                    fnCallback(msg);
+                                    $("#tblImportantDocs").show();
+
+                                }
+                });
+            },
+            "asStripeClasses": ['odd gradeX', 'even gradeC'],
+            "aoColumnDefs": [
+
+                         {
+                             "targets": [0], "visible": true, "bSortable": false, "mDataProp": "DocId",
+                             "render": function (data, type, row) {
+                                 return "<input type=\"checkbox\" data-DocId=" + row["DocId"] + " class =\"case\" name=\"chkItem\" id=\"chkRow_" + row["DocId"] + "\" />";
+                             }
+                         },
+                           {
+                               "targets": [1], "visible": true, "bSortable": false, "mDataProp": "DocId",
+                               "render": function (data, type, row) {
+
+                                   return "<span class=\"fa fa-times\" onclick=\"deleteDocument('" + row["DocId"] + "');\"></span>";
+                               }
+                           },
+
+                           { "targets": [2], "visible": true, "bSortable": true, "mDataProp": "DocId" },
+                             {
+                                 "targets": [3], "visible": true, "bSortable": true, "mDataProp": "DocName",
+                                 "render": function (data, type, row) {
+                                     return "<a style=\"cursor:pointer\" onclick=\"OpenDocumentDetail('" + row["DocId"] + "')\">" + row["DocName"] + "</a>";
+                                 }
+                             },
+
+               { "targets": [4], "visible": true, "bSortable": true, "mDataProp": "DocDescription" },
+               { "targets": [5], "visible": true, "bSortable": true, "mDataProp": "DocFileNameOriginal" },
+               { "targets": [6], "visible": true, "bSortable": true, "mDataProp": "IsActive" },
+               {
+                   "targets": [7], "visible": true, "bSortable": true, "mDataProp": "CreatedDate",
+                   "render": function (data, type, row) {
+                       var jsDate1 = data;
+                       if (jsDate1 == null) {
+                           return jsDate1 = "";
+                       }
+                       else if (jsDate1.value != "") {
+                           var jsDate = new Date(parseInt(row["CreatedDate"].substr(6)));
+                           return (jsDate.getMonth() + 1) + '/' + jsDate.getDate() + '/' + jsDate.getFullYear();
+                       }
+                   }
+               },
+
+            ],
+            "fnDrawCallback": function (oSettings) {
+                $('#loading').css('display', 'none');
+            },
+        }).api();
+    }
+
+    function OpenDocumentDetail(DocId) {
+        
+        window.location = "EditNewImportantDoc?Docid=" + DocId;
+    }
+
+    $('#ddlBranches').change(function () {
+        $('#loading').css('display', 'block');
+        $("#tblImportantDocs").dataTable().fnDestroy();
+        BindImportantDocuments();
+
+    });
+</script>
+
+<script type="text/javascript">
+    function deleteDocument(DocId) {
+        
+        var flag = confirm('You are about to delete permanently.Are you sure you want to delete this record?');
+        if (flag) {
+            deleteEachDocument(DocId);
+            document.location.href = document.location.href;
+            alert("Deleted Successfully!!!");
+        }
+    }
+    function deleteEachDocument(DocId) {
+        
+        $.ajax({
+            url: "DeleteImportantDocument",
+            type: "POST",
+            async: false,
+            data: { docIds: DocId },
+            success: function (data) {
+            },
+            error: function () {
+
+            }
+        });
+    }
+    function deleteSelectedDocument() {
+        if ($('#tblImportantDocs input[name="chkItem"]:checked').length > 0) {
+            var flag = confirm('You are about to delete permanently.Are you sure you want to delete these records?');
+            if (flag) {
+                $('#tblImportantDocs input[name="chkItem"]:checked').each(function () {
+                    var id = $(this).attr('data-DocId');
+                    deleteEachDocument(id);
+                });
+                document.location.href = document.location.href;
+                alert("Deleted Successfully");
+            }
+        }
+        else {
+            alert("Please select item(s) to delete.");
+        }
+    }
+
+</script>
+
+<script type="text/javascript">
+
+    $(function () {
+        
+        $("#selectall").click(function () {
+            
+            $('.case').prop("checked", this.checked);
+        });
+        // if all checkbox are selected, check the selectall checkbox
+        // and viceversa
+        $('#tblImportantDocs tbody').click(function () {
+            
+            if ($('#tblImportantDocs input[name="chkItem"]:checked').length == $('#tblImportantDocs input[name="chkItem"]').length) {
+                $("#selectall").prop("checked", true);
+            } else {
+                $("#selectall").prop("checked", false);
+            }
+        });
+    });
+</script>
+

@@ -1,0 +1,501 @@
+﻿@model CRMHub.EntityFramework.Venture
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+}
+
+
+<div class="widget">
+    <div class="widget-header bordered-bottom bordered-themesecondary">
+        <i class="widget-icon fa fa-tags themesecondary"></i>
+        <span class="widget-caption themesecondary">Ventures</span>
+    </div><!--Widget Header-->
+    <div class="widget-body  no-padding">
+        <div class="tickets-container">
+            <div class="row">
+                <!-- col-sm-6 -->
+                <div id="pnlSrchCriteria">
+                    <div class="col-sm-3">
+                        <div class="input-group">
+                            @*<input type="text" class="form-control" placeholder="Search these ventures">*@
+
+                            @Html.TextBoxFor(m => m.Keyword, new { @id = "txtVentures", @class = "form-control", @placeholder = "Search these Ventures", @maxlength = "100" })
+                            <span class="input-group-btn">
+                                <span id="searchclear" class="glyphicon glyphicon-remove-circle" title="Clear Search"></span>
+                                <button class="btn btn-default" type="button" id="btnSearchVenture"><i class="glyphicon glyphicon-search"></i></button>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-sm-9" style="text-align:right;">
+                        <ul>
+                            <li class="btn btn-flat btn-labeled btn-primary">
+
+                                <a style="color: #fff; text-decoration: none; padding: 0px; font-weight: normal" href="@Url.Action("CreateVenture", "Venture")" id="lnkAddnew">
+                                    <span class="btn-label icon  fa fa-plus-circle" style="margin-right:6px;"> </span>
+                                    Add New
+                                </a>
+                            </li>
+                            <li class="btn btn-flat btn-labeled btn-primary">
+                                <a style="color: #fff; text-decoration: none; padding: 0px; font-weight: normal" id="DeleteCompanies" onclick="deleteSelectedVenture()">
+                                    <span class="btn-label icon  fa  fa-trash-o" style="margin-right:6px;"> </span>
+                                    Delete
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+
+                </div>
+                <div class="col-sm-12 col-xs-12">
+                    <div class="table-primary table-striped">
+                        <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="tblVentures" style="width:100%;">
+                            <thead>
+                                <tr>
+                                    <th width="21">
+                                        <input type="checkbox" id="chkHeader" onclick="SelectAll()" />
+                                    </th>
+                                    <th data-class="expand"><i class="fa fa-briefcase"></i> Venture Name</th>
+                                    <th data-hide="phone"><i class="fa fa-user-secret"></i> Primary Contact Name</th>
+                                    <th data-hide="tablet,phone"><i class="fa fa-envelope-o"></i> Primary Contact Email</th>
+                                    @*<th data-hide="phone,tabletlandscape,tablet,desktop"><i class="fa fa-user-secret"></i> Secondary Contact</th>
+                                        <th data-hide="tablet,tabletlandscape,phone,desktop"><i class="fa fa-envelope-o"></i> Secondary Email</th>
+                                        <th data-hide="phone,tabletlandscape,tablet,desktop"><i class="fa fa-user-secret"></i> Website</th>
+                                        <th data-hide="tablet,tabletlandscape,phone,desktop"><i class="fa fa-envelope-o"></i> MITLink</th>
+                                        <th data-hide="phone,tabletlandscape,tablet,desktop"><i class="fa fa-user-secret"></i> SignUpReturned</th>
+                                        <th data-hide="tablet,tabletlandscape,phone,desktop"><i class="fa fa-envelope-o"></i> FirstMentorMeeting</th>*@
+                                    @*<th data-hide="tablet,tabletlandscape,phone"><i class="fa  fa-align-center"></i> Is Enrolled</th>*@
+                                    @*<th data-hide="tablet,tabletlandscape,phone"><i class="fa  fa-align-center"></i> Is Active</th>*@
+                                    <th data-hide="tablet,tabletlandscape,phone"><i class="fa fa-hand-o-right"></i> VMS Status</th>
+                                    <th data-hide="tablet,tabletlandscape,phone"><i class="fa  fa-calendar"></i> First Contact Date</th>
+                                    <th data-hide="tablet,tabletlandscape,phone"><i class="fa  fa-calendar"></i> Active Date</th>
+                                    <th data-hide="tablet,tabletlandscape,phone"><i class="fa fa-calendar"></i> InActive Date</th>
+                                    <th><i class="fa fa fa-cog"></i>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var _alphabetSearch;
+    if (_alphabetSearch == undefined) {
+        _alphabetSearch = "";
+    }
+    $(document).ready(function () {
+
+
+        var _alphabetSearch;
+        BindVentures();
+
+        $.fn.dataTable.ext.search.push(function (settings, searchData) {
+            if (!_alphabetSearch) { // No search term - all results shown
+                return true;
+            }
+
+            if (searchData[0].charAt(0) === _alphabetSearch) {
+                return true;
+            }
+
+            return false;
+        });
+
+
+    });
+
+    function BindVentures() {
+       
+        var responsiveHelper = undefined;
+        var breakpointDefinition = {
+            desktop: Infinity,
+            tablet: 1024,
+            tabletlandscape: 768,
+            phone: 480
+        };
+        var tableElement = $('#tblVentures');
+        tableElement.dataTable({
+            autoWidth: false,
+            preDrawCallback: function () {
+                if (!responsiveHelper) {
+                    responsiveHelper = new ResponsiveDatatablesHelper(tableElement, breakpointDefinition);
+                }
+            },
+            rowCallback: function (nRow) {
+                responsiveHelper.createExpandIcon(nRow);
+            },
+            drawCallback: function (oSettings) {
+                responsiveHelper.respond();
+
+            },
+            //"order": [[$("#HD_SortValue").val(), "" + $("#HD_SortDirection").val() + ""]],
+            "aLengthMenu": [[10, 25, 50, 100], [10, 25, 50, 100]],
+            //"iDisplayStart": parseInt($("#HD_PageIndex").val()),
+            //"iDisplayLength": parseInt($("#HD_PageSize").val()),   txtOwnership
+            "pagingType": "full_numbers",
+            //"processing": true,
+            "serverSide": true,
+            "bFilter": false,
+            "sAjaxSource": "../Venture/getVenture",
+            'columnDefs': [{ 'orderable': false, 'targets': 0 }], // hide sort icon on header of first column
+            'aaSorting': [[4, 'desc']], // start to sort data in second column
+            "fnInitComplete": function () {
+                this.css("visibility", "visible");
+            },
+
+
+            "fnServerParams": function (aoData) {
+
+                aoData.push({ "name": "Keyword_VentureName", "value": "" + $("#txtVentures").val() + "" });
+                aoData.push({ "name": "Keyword_AlphabetLetter", "value": "" + _alphabetSearch + "" });
+                //Keyword_AlphabetLetter
+            },
+            "fnServerData": function (sSource, aoData, fnCallback) {
+                $.ajax({
+                    "dataType": 'json',
+                    "contentType": "application/json; charset=utf-8",
+                    "type": "GET",
+                    "url": sSource,
+                    "data": aoData,
+                    "success":
+                                function (msg) {
+                                    fnCallback(msg);
+                                }
+                });
+            },
+            "asStripeClasses": ['odd gradeX', 'even gradeC'],
+            "aoColumnDefs": [
+              {
+                  "targets": [0], "visible": true, "bSortable": false, "mDataProp": "VentureId",
+                  "render": function (data, type, row) {
+                      return "<input name=\"chkItem\" class =\"case\" type=\"checkbox\" onclick=\"SelectIndividual()\" id=\"chkRow_" + row["VentureId"] + "\"data-val-1=\"" + row["VentureId"] + "\"data-val-2=\"" + row["Status"] + "\"  />";
+                  }
+              },
+
+                {
+                    "targets": [1], "visible": true, "bSortable": true, "mDataProp": "VentureName",
+                    "render": function (data, type, row) {
+                        return "<a href=\"#\" onclick=\"return OpenVentureDetail('" + row["VentureId"] + "," + row["Status"] + "')\">" + row["VentureName"] + "</a>";
+                    }
+                },
+                 { "targets": [2], "visible": true, "bSortable": true, "mDataProp": "PrimaryContact" },
+               {
+                   "targets": [3], "visible": true, "bSortable": true, "mDataProp": "PrimaryEmail ",
+                   "render": function (data, type, row) {
+
+                       return "<a href=mailto:" + row["PrimaryEmail"] + ">" + row["PrimaryEmail"] + "</a>";
+                   }
+               },
+
+                //{ "targets": [4], "visible": true, "bSortable": true, "mDataProp": "SecondaryContact" },
+                //{
+                //    "targets": [5], "visible": true, "bSortable": true, "mDataProp": "SecondaryEmail",
+                //    "render": function (data, type, row) {
+                //        return "<a href=mailto:" + row["SecondaryEmail"] + ">" + row["SecondaryEmail"] + "</a>";
+                //    }
+                //},
+                //  {
+                //      "targets": [6], "visible": true, "bSortable": true, "mDataProp": "WebSite",
+                //      "render": function (data, type, row) {
+                //          return '<a href=\"#\" style=\"text-decoration: underline\;" ' + row["WebSite"] + '">' + row["WebSite"] + '</a>';
+                //      }
+                //  },
+                //  { "targets": [7], "visible": true, "bSortable": true, "mDataProp": "MITLink",
+                //  "render": function (data, type, row) {
+                //      return '<a href=\"#\" style=\"text-decoration: underline\;" ' + row["MITLink"] + '">' + row["MITLink"] + '</a>';
+                //  }
+                //  },
+                //  { "targets": [8], "visible": true, "bSortable": true, "mDataProp": "SignUpReturned" },
+                //      { "targets": [9], "visible": true, "bSortable": true, "mDataProp": "FirstMentorMeeting" },
+
+                { "targets": [4], "visible": true, "bSortable": true, "mDataProp": "Status" },
+                { "targets": [5], "visible": true, "bSortable": true, "mDataProp": "strVenCreatedDate" },
+                { "targets": [6], "visible": true, "bSortable": true, "mDataProp": "strActiveDate" },
+                   { "targets": [7], "visible": true, "bSortable": true, "mDataProp": "strInactiveDate" },
+                {
+                    "targets": [8], "visible": true, "bSortable": false,
+                    "render": function (data, type, row) {
+                        return "<span class=\"fa fa-trash\" style='font-size: 15px;cursor:pointer;title=Delete Venture' onclick=\"deleteVenture('" + row["VentureId"] + "','" + row["Status"] + "');\"></span>";
+                    }
+                },
+
+            ],
+
+
+            "fnDrawCallback": function (oSettings) {
+
+                var api = this.api();
+                var rows = api.rows({ page: 'current' }).nodes();
+                var last = null;
+
+                api.column(4, { page: 'current' }).data().each(function (group, i) {
+
+                    if (last != group) {
+                        $(rows).eq(i).before(
+                            '<tr class="group"><td colspan="9" style="text-align:left;"><i class="fa fa-arrow-circle-down"> <span style="font-family:Open Sans;">' + group + '</span></td></tr>'
+                        );
+                        last = group;
+                    }
+                });
+
+                $('#tblVentures  tr.group').each(function () {
+
+                    var rowCount = $(this).nextUntil('tr.group').length;
+                    if (rowCount == 1) {
+                        var rowtext = '(' + rowCount + ' Venture)'
+                    }
+                    else {
+                        var rowtext = '(' + rowCount + ' Ventures)'
+                    }
+
+                    $(this).find('td').append($('<span style="margin-left: 6px;font-weight:600;font-size:13px;" />', { 'class': 'rowCount-grid' }).append($('<b />', { 'text': rowtext })));
+                });
+            }
+        }).api();
+
+        $('#tblVentures tbody').on('click', 'tr.group', function () {
+
+            var tableElement = $('#tblVentures').DataTable();
+            var currentOrder = tableElement.order()[0];
+            if (currentOrder[0] === 4 && currentOrder[1] === 'desc') {
+                tableElement.order([4, 'asc']).draw();
+            }
+            else {
+                tableElement.order([4, 'desc']).draw();
+            }
+        });
+        var table = $('#tblVentures').DataTable();
+
+        var alphabet = $('<div class="alphabet"/>').append('');
+        if ($(".alphabet").length <= 0) {
+            
+                $('<span class="clear active"/>')
+        .data('letter', '')
+        .html('All')
+        .appendTo(alphabet);
+
+
+            for (var i = 0 ; i < 10 ; i++) {
+                var letter = i;
+                $('<span/>')
+                    .data('letter', letter)
+                    .html(letter)
+                    .appendTo(alphabet);
+            }
+
+        //$('<span/>')
+        //        .data('letter', letter)
+        //        .html('|')
+        //        .appendTo(alphabet);
+
+            for (var i = 0 ; i < 26 ; i++) {
+                var letter = String.fromCharCode(65 + i);
+
+                $('<span/>')
+                    .data('letter', letter)
+                    .html(letter)
+                    .appendTo(alphabet);
+            }
+            alphabet.insertBefore($("#tblVentures_wrapper"));
+        }
+
+        // $("#tblVentures_length").append(alphabet);
+
+        alphabet.on('click', 'span', function () {
+            alphabet.find('.active').removeClass('active');
+            $(this).addClass('active');
+
+            _alphabetSearch = $(this).data('letter');
+
+            table.draw();
+            //$("#txtVentures").val(_alphabetSearch);
+            //$("#tblVentures").dataTable().fnDestroy();
+            //BindVentures();
+        });
+
+        $('.DT-per-page').append($('.alphabet'));
+    }
+
+
+
+
+    function SelectIndividual() {
+
+        if ($('#tblVentures input[name="chkItem"]:checked').length == $('#tblVentures input[name="chkItem"]').length) {
+            $("#chkHeader").prop("checked", true);
+        } else {
+            $("#chkHeader").prop("checked", false);
+        }
+    }
+
+    function SelectAll() {
+
+        if ($("#chkHeader").prop("checked") == true) {
+            $('.case').prop("checked", true);
+        }
+        else if ($("#chkHeader").prop("checked") == false) {
+            $('.case').prop("checked", false);
+        }
+
+    }
+    function deleteVenture(VentureId, Status) {
+
+        var isvalid = false;
+        var Alertmsg = 'Are you sure you want to delete this Venture?';
+        bootbox.confirm(Alertmsg, function (flag) {
+
+            if (flag == true) {
+
+                isvalid = true;
+                $.ajax({
+                    url: "deleteVenture",
+                    type: "POST",
+                    async: false,
+                    data: { ventureIds: VentureId.toString(), status: Status },
+                    success: function (data) {
+                        // alert(data);
+                        if (data == "True") {
+                            $.growl.notice({ title: "Success", message: "Venture Deleted Successfully", size: 'large' });
+                            $("#tblVentures").dataTable().fnDestroy();
+                            document.location.href = document.location.href;
+                            //location.reload();
+                            BindVentures();
+                        }
+                        else {
+                            $.growl.error({ title: "Fail", message: "Activities Not Deleted .", size: 'large' });
+                        }
+                    },
+                    error: function () {
+
+                    }
+                });
+                return isvalid;
+            }
+
+            else if (flag == false) {
+                return isvalid = true;
+            }
+            return isvalid;
+        });
+        return isvalid;
+    }
+
+    function deleteSelectedVenture() {
+
+        if ($('#tblVentures input[name="chkItem"]:checked').length > 0) {
+            var isvalid = false;
+            var Alertmsg = 'Are you sure you want to delete selected Venture(s)?';
+            bootbox.confirm(Alertmsg, function (flag) {
+                debugger;
+                if (flag == true) {
+                    var VentureDelete = [];
+
+                    $("#tblVentures input:checkbox:checked").each(function (i) {
+                        if (this.id != "chkHeader") {
+                            var ventureId = $(this).attr("data-val-1");
+                            var Status = $(this).attr("data-val-2");
+                            VentureDelete.push(new VenturesList(ventureId + '|' + Status));
+                        }
+                    });
+                    debugger;
+                    var postData = JSON.stringify(VentureDelete);
+                    $.ajax({
+                        url: "DeleteVentures",
+                        type: "POST",
+                        contentType: 'application/json',
+                        dataType: 'json',
+                        async: false,
+                        data: postData,
+                        success: function (data) {
+
+                            if (data == true) {
+                                $.growl.notice({ title: "Success", message: "Delete Successful", size: 'large' });
+                                $("#tblVentures").dataTable().fnDestroy();
+                                document.location.href = document.location.href;
+                                // location.reload();
+                                BindVentures();
+
+                            }
+                            else {
+                                $.growl.error({ title: "Fail", message: "Ventures Not Deleted .", size: 'large' });
+                            }
+                        },
+                        error: function () {
+
+                        }
+                    });
+                    return isvalid;
+                }
+
+
+
+                else if (flag == false) {
+
+                    return isvalid = true;
+                }
+                return isvalid;
+            });
+            return isvalid;
+
+
+        }
+        else
+            $.growl.error({ title: "Fail", message: "no venture selected!.", size: 'large' });
+    }
+
+    function VenturesList(venturedata) {
+        var datadetails = venturedata.split('|');
+        var ventureId = datadetails[0];
+        var status = datadetails[1];
+        this.VentureId = ventureId;
+        this.Status = status;
+    }
+
+    $('#btnSearchVenture').click(function () {
+
+        $('#searchclear').show();
+        $('#loading').css('display', 'block');
+        $("#tblVentures").dataTable().fnDestroy();
+        BindVentures();
+
+        $('#tblVentures').on('length.dt', function (e, settings, len) {
+
+            $('#loading').css('display', 'block');
+        });
+
+        $('#tblVentures').on('page.dt', function () {
+
+            $('#loading').css('display', 'block');
+        });
+
+        $("#searchclear").click(function () {
+            $("#txtVentures").val('');
+            $('#btnSearchVenture').click();
+            $('#searchclear').hide();
+        });
+    });
+
+</script>
+<script type="text/javascript">
+    function OpenVentureDetail(venturedetails) {
+        //Showloading();
+
+        var details = venturedetails.split(',');
+        var ventureId = details[0];
+        var vmsstatus = details[1];
+        if (vmsstatus == "1" || vmsstatus == "Pending") {
+            window.location = "../Venture/PendingVentureDetails?VentureId=" + ventureId + "&Module=Venture";
+        }
+        else {
+            window.location = "../Venture/getVenturedetails?VentureId=" + ventureId + "&Module=Venture";
+        }
+
+    }
+    $(document).ready(function () {
+        $("#Ventures").addClass("active");
+    });
+</script>

@@ -1,0 +1,732 @@
+﻿@*@model CRMHub.ViewModel.CompanyModel*@
+@*@model  IEnumerable<CRMHub.EntityFramework.Company>*@
+@model CRMHub.EntityFramework.Company
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+}
+
+<div class="widget">
+    <div class="widget-header bordered-bottom bordered-themesecondary">
+        <i class="widget-icon fa fa-tags themesecondary"></i>
+        <span class="widget-caption themesecondary">Ventures</span>
+    </div><!--Widget Header-->
+    <div class="widget-body  no-padding">
+        <div class="tickets-container">
+            <div class="row">
+                <!-- col-sm-6 -->
+                <div id="pnlSrchCriteria">
+                    <div class="col-sm-3">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Search these ventures">
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" type="button"><i class="glyphicon glyphicon-search"></i></button>
+                            </span>
+                        </div>
+                        @**@<div class="form-group no-margin-hr" style="display:none;">
+                            <label class="control-label">Keyword :</label>
+                            @Html.TextBoxFor(m => m.Keyword, new { @id = "txtKeyWord", @class = "form-control input-sm", @maxlength = "100" })
+
+                        </div>
+                    </div>
+                    <div class="col-sm-9" style="text-align:right;">
+                        <ul>
+                            <li class="btn btn-flat btn-labeled btn-primary">
+
+                                <a style="color: #fff; text-decoration: none; padding: 0px; font-weight: normal" href="@Url.Action("CreateNewCompany", "ManageCompany")">
+                                    <span class="btn-label icon  fa fa-plus-circle" style="margin-right:6px;"> </span>
+                                    Add New
+                                </a>
+                            </li>
+                            <li class="btn btn-flat btn-labeled btn-primary">
+                                <a style="color: #fff; text-decoration: none; padding: 0px; font-weight: normal" id="DeleteCompanies" onclick="deleteSelectedCompany()">
+                                    <span class="btn-label icon  fa  fa-trash-o" style="margin-right:6px;"> </span>
+                                    Delete
+                                </a>
+                            </li>
+                        </ul>
+                        @**@<div class="form-group no-margin-hr" style="display:none;">
+                            <label class="control-label">Owner :</label>
+                            @Html.TextBoxFor(m => m.Ownership, new { @id = "txtOwnership", @class = "form-control input-sm", @maxlength = "100" })
+
+                        </div>
+                    </div>
+                    @**@<div class="col-sm-4" style="display:none;">
+                        <ul style="padding:0;">
+                            <li class="btn btn-flat btn-labeled btn-primary" id="btnmargin_top">
+
+                                <a style="color: #fff; text-decoration: none; padding: 0px; font-weight: normal" id="btnClear">
+                                    <span class="btn-label icon fa fa-eraser" style="margin-right:6px;"> </span>
+                                    Clear
+                                </a>
+                            </li>
+                            <li class="btn btn-flat btn-labeled btn-primary" id="btnmargin_top">
+                                <a style="color: #fff; text-decoration: none; padding: 0px; font-weight: normal" id="btnSearchCompanies">
+                                    <span class="btn-label icon fa fa-search" style="margin-right:6px;"> </span>
+                                    Search
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+                <div class="col-sm-12 col-xs-12">
+                    <div class="table-primary table-striped">
+                        <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="tblCompanies" style="width:100%;">
+                            <thead>
+                                <tr>
+
+                                    <th width="39">
+                                        <input class="fa fa-square-o" type="checkbox" id="chkHeader" />
+                                        <span class="text"></span>
+                                    </th>
+                                    <th data-class="expand"><i class="fa fa-briefcase"></i> Venture Name</th>
+                                    <th data-hide="phone"><i class="fa fa-phone"></i> Phone</th>
+                                    <th data-hide="tablet,tabletlandscape,phone"><i class="	fa fa-external-link"></i> Site</th>
+                                    <th data-hide="tablet,tabletlandscape,phone"><i class="fa fa-group"></i> Owner</th>
+                                    <th><i class="fa fa fa-cog"></i> Action</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-sm-6" style="display:none;">
+                    <ul style="padding:0; padding-top:30px;">
+                        <li class="btn btn-flat btn-labeled btn-primary">
+                            <a style="color: #fff; text-decoration: none; padding: 0px; font-weight: normal" href="@Url.Action("GetHistory", "Import")">
+                                <span class="btn-label icon  fa fa-anchor" style="margin-right:6px;"> </span>
+                                History
+                            </a>
+                        </li>
+                        <li class="btn btn-flat btn-labeled btn-primary">
+                            <a style="color: #fff; text-decoration: none; padding: 0px; font-weight: normal" href="@Url.Action("ImportCompanies", "Import")">
+                                <span class="btn-label icon  fa fa-cloud-upload" style="margin-right:6px;"> </span>
+                                Import Companies
+                            </a>
+                        </li>
+                        <li class="btn btn-flat btn-labeled btn-primary">
+
+                            <a style="color: #fff; text-decoration: none; padding: 0px; font-weight: normal" href="@Url.Action("CreateNewCompany", "ManageCompany")">
+                                <span class="btn-label icon  fa fa-plus-circle" style="margin-right:6px;"> </span>
+                                Add New
+                            </a>
+                        </li>
+                        <li class="btn btn-flat btn-labeled btn-primary">
+                            <a style="color: #fff; text-decoration: none; padding: 0px; font-weight: normal" id="DeleteCompanies" onclick="deleteSelectedCompany()">
+                                <span class="btn-label icon  fa  fa-trash-o" style="margin-right:6px;"> </span>
+                                Delete
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="ExportSection" style="visibility:hidden">
+
+    <a id="linkExportCsv" href="@Url.Action("ExportToCsv", "ManageCompany")"<span>Export to Csv</span></a>
+    <a id="linkExportExcel" href="@Url.Action("ExportToExcel", "ManageCompany")"<span>Export to Excel</span></a>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+
+
+        var CreateCompany = '@ViewBag.CreateCompany';
+        if (CreateCompany != "") {
+            //$('#ErrorMessages').html('Lead Details Updated Successfully.');
+            $.growl.notice({ title: "Success", message: "Company Details Created Successfully.", size: 'large' });
+
+        }
+
+        BindCompanies();
+
+        $('#tblCompanies').on('length.dt', function (e, settings, len) {
+
+            $('#loading').css('display', 'block');
+        });
+
+        $('#tblCompanies').on('page.dt', function () {
+
+            $('#loading').css('display', 'block');
+        });
+    });
+
+
+
+    function BindCompanies() {
+        
+        $('#loading').css('display', 'block');
+        var responsiveHelper = undefined;
+        var breakpointDefinition = {
+            desktop: Infinity,
+            tablet: 1024,
+            tabletlandscape: 768,
+            phone: 480
+        };
+        var tableElement = $('#tblCompanies');
+        tableElement.dataTable({
+            autoWidth: false,
+            preDrawCallback: function () {
+                if (!responsiveHelper) {
+                    responsiveHelper = new ResponsiveDatatablesHelper(tableElement, breakpointDefinition);
+                }
+            },
+            rowCallback: function (nRow) {
+                responsiveHelper.createExpandIcon(nRow);
+            },
+            drawCallback: function (oSettings) {
+                responsiveHelper.respond();
+            },
+            //"order": [[$("#HD_SortValue").val(), "" + $("#HD_SortDirection").val() + ""]],
+            "aLengthMenu": [[10, 25, 50, 100], [10, 25, 50, 100]],
+            //"iDisplayStart": parseInt($("#HD_PageIndex").val()),
+            //"iDisplayLength": parseInt($("#HD_PageSize").val()),   txtOwnership
+            "pagingType": "full_numbers",
+            //"processing": true,
+            "serverSide": true,
+            "bFilter": false,
+            "sAjaxSource": "ManageCompany/getCompanies",
+            "columnDefs": [{ 'orderable': false, 'targets': 0 }],
+            "aaSorting": [[1, 'asc']],
+
+            "fnServerParams": function (aoData) {
+
+                aoData.push(
+
+                    { "name": "CompanyList_Keyword", "value": "" + $("#txtKeyWord").val() + "" },
+
+                     { "name": "Company_Owner", "value": "" + $("#txtOwnership").val() + "" },
+
+                    { "name": "CompanyFilterString_ActualQueryCondition", "value": "" }
+                    );
+            },
+            "fnServerData": function (sSource, aoData, fnCallback) {
+                $.ajax({
+                    "dataType": 'json',
+                    "contentType": "application/json; charset=utf-8",
+                    "type": "GET",
+                    "url": sSource,
+                    "data": aoData,
+                    "success":
+                                function (msg) {
+
+
+                                    $('#loading').css('display', 'none');
+                                    //var json = jQuery.parseJSON(msg.d);
+                                    fnCallback(msg);
+                                    //$("#jq-datatables-example").show();
+                                }
+                });
+            },
+            "asStripeClasses": ['odd gradeX', 'even gradeC'],
+            "aoColumnDefs": [
+              {
+                  "targets": [0], "visible": true, "bSortable": false, "mDataProp": "ID",
+                  "render": function (data, type, row) {
+                      return "<input name=\"chkItem\" class =\"case\" type=\"checkbox\"  id=\"chkRow_" + row["ID"] + "\"data-accountid=\"" + row["ID"] + "\" /><span class='text'></span>";
+                  }
+              },
+
+                {
+                    "targets": [1], "visible": true, "bSortable": true, "mDataProp": "Name",
+                    "render": function (data, type, row) {
+                        return "<a href=\"#\" onclick=\"return OpenCompanyDetail('" + row["ID"] + "')\">" + row["Name"] + "</a>";
+                    }
+                },
+                 { "targets": [2], "visible": true, "bSortable": true, "mDataProp": "Phone" },
+                { "targets": [3], "visible": true, "bSortable": true, "mDataProp": "Website" },
+
+                { "targets": [4], "visible": true, "bSortable": true, "mDataProp": "Ownership" },
+                {
+                    "targets": [5], "visible": true, "bSortable": false,
+                    "render": function (data, type, row) {
+                        return "<span class=\"fa fa-trash\" style='font-size: 15px;' onclick=\"deleteCompany('" + row["ID"] + "');\"></span>";
+                    }
+                },
+                //{ "targets": [7], "visible": true, "bSortable": true, "mDataProp": "Shippingzip" },
+                //{
+                //    "targets": [8], "visible": true, "bSortable": true, "mDataProp": "CreatedDate",
+                //    "render": function (data, type, row) {
+                //        var jsDate1 = data;
+                //        if (jsDate1 == null) {
+                //            return jsDate1 = "";
+                //        }
+                //        else if (jsDate1.value != "") {
+                //            var jsDate = new Date(parseInt(row["CreatedDate"].substr(6)));
+                //            return (jsDate.getMonth() + 1) + '/' + jsDate.getDate() + '/' + jsDate.getFullYear();
+                //        }
+
+                //    }
+                //},
+                // { "targets": [9], "visible": true, "bSortable": true, "mDataProp": "Account_type" }
+                //{
+                //    "targets": [10], "visible": true, "bSortable": false, "mDataProp": "AccountId",
+                //    "render": function (data, type, row) {
+                //        return "<a href=\"#\" onclick=\"return OpenActivityPopUp('" + row["AccountId"] + "','" + row["Account_Name"] + "')\">Activity</a>";
+                //    }
+                //}
+            ],
+            "fnDrawCallback": function (oSettings) {
+
+                //$("#HD_PageIndex").val(oSettings._iDisplayStart);
+                //$("#HD_PageSize").val(oSettings._iDisplayLength);
+                //if ($("#HD_IsFromBack").val() == 'YES') {
+                //    $("#HD_IsFromBack").val('NO');
+                //}
+                // $('#loading').hide();
+                $('#loading').css('display', 'none');
+            }
+        }).api();
+    }
+
+    $("#chkHeader").click(function () {
+        $('.case').prop("checked", this.checked);
+    });
+    // if all checkbox are selected, check the selectall checkbox
+    // and viceversa
+    $('#tblCompanies tbody').click(function () {
+
+        if ($('#tblCompanies input[name="chkItem"]:checked').length == $('#tblCompanies input[name="chkItem"]').length) {
+            $("#chkHeader").prop("checked", true);
+        } else {
+            $("#chkHeader").prop("checked", false);
+        }
+    });
+
+    $('#btnSearchCompanies').click(function () {
+
+        $('#loading').css('display', 'block');
+        $("#tblCompanies").dataTable().fnDestroy();
+        BindCompanies();
+
+        $('#tblCompanies').on('length.dt', function (e, settings, len) {
+
+            $('#loading').css('display', 'block');
+        });
+
+        $('#tblCompanies').on('page.dt', function () {
+
+            $('#loading').css('display', 'block');
+        });
+
+    });
+
+    $('#btnClear').click(function () {
+
+        $('#txtOwnerName').val('');
+        $('#txtKeyWord').val('');
+
+        $('#loading').css('display', 'block');
+        $("#tblCompanies").dataTable().fnDestroy();
+        BindCompanies();
+
+
+    });
+
+
+    //function ClearSelection() {
+
+    //    $('#drpOffice option:first-child').attr("selected", "selected");
+    //    $('#drpSalesRep option:first-child').attr("selected", "selected");
+    //    // $('#jq-datatables-example_wrapper .dataTables_filter input').val('');
+    //    //$('#txtEmail').val('');
+    //    $('#txtKeyWord').val('');
+    //    //$("#filter").html('');
+    //    //Get_LeadFilterString();
+    //    $('#tblCompanies').dataTable().fnDestroy();
+    //    BindCompanies();
+    //}
+    function OpenActivityPopUp(AccountID, AccountName) {
+
+        var URL = "ManageCompany/ActivityPopUp";
+        $.ajax({
+            url: URL,
+            type: "GET",
+            async: false,
+            data: { AccountID: AccountID },
+            success: function (data) {
+
+                if (data != null) {
+                    $('#tblCompanyList').empty();
+                    $('#tblCompanyList').empty().append(data);
+                }
+            },
+            error: function (error) {
+
+
+            }
+        });
+
+        var URL1 = "ManageCompany/ActivityHistoryPopUp";
+        $.ajax({
+            url: URL1,
+            type: "GET",
+            async: false,
+            data: { AccountID: AccountID },
+            success: function (data) {
+
+                if (data != null) {
+                    $('#tblActivityHistory').empty();
+                    $('#tblActivityHistory').empty().append(data);
+                }
+            },
+            error: function (error) {
+
+
+            }
+        });
+
+        $('#myModal').modal("show");
+    }
+
+    function AddActivity() {
+
+        var URL = "ManageCompany/NewCompanyActivityPopUp";
+        $.ajax({
+            url: URL,
+            type: "GET",
+            async: false,
+            success: function (data) {
+
+                if (data != null) {
+                    $('#tblActivityList').empty();
+                    $('#tblActivityList').empty().append(data);
+                }
+            },
+            error: function (error) {
+
+
+            }
+        });
+        $('#myModalAdd').modal("show");
+    }
+
+    function EditActivity() {
+
+        if ($('#jq-datatables-ActivityPopup input[name="chkItem"]:checked').length > 0) {
+            if ($('#jq-datatables-ActivityPopup input[name="chkItem"]:checked').length > 1) {
+                alert("Please Select One Record Only.");
+            }
+            else {
+                var id = $('#jq-datatables-ActivityPopup input[name="chkItem"]:checked').attr('data-activity');
+                var URL = "ManageCompany/EditCompanyActivityPopUp";
+                $.ajax({
+                    url: URL,
+                    type: "GET",
+                    data: { HistoryId: id },
+                    async: false,
+                    success: function (data) {
+
+                        if (data != null) {
+                            $('#tblEditActivityList').empty();
+                            $('#tblEditActivityList').empty().append(data);
+                        }
+                    },
+                    error: function (error) {
+
+                    }
+                });
+                $('#myModalEdit').modal("show");
+            }
+        }
+        else
+            alert("Please Select atleast One Record Only.");
+    }
+
+    function EditActivityHistory() {
+        if ($('#jq-datatables-ActivityHistoryPopup input[name="chkItem"]:checked').length > 0) {
+            if ($('#jq-datatables-ActivityHistoryPopup input[name="chkItem"]:checked').length > 1) {
+                alert("Please Select One Record Only.");
+            }
+            else {
+                var id = $('#jq-datatables-ActivityHistoryPopup input[name="chkItem"]:checked').attr('data-activity');
+                var URL = "ManageCompany/EditCompanyActivityPopUp";
+                $.ajax({
+                    url: URL,
+                    type: "GET",
+                    data: { HistoryId: id },
+                    async: false,
+                    success: function (data) {
+
+                        if (data != null) {
+                            $('#tblEditActivityList').empty();
+                            $('#tblEditActivityList').empty().append(data);
+                        }
+                    },
+                    error: function (error) {
+
+                    }
+                });
+                $('#myModalEdit').modal("show");
+            }
+        }
+        else
+            alert("Please Select atleast One Record Only.");
+    }
+
+    function DeleteActivity() {
+        if ($('#jq-datatables-ActivityPopup input[name="chkItem"]:checked').length > 0) {
+            var flag = confirm('You are about to delete permanently.Are you sure you want to delete these records?');
+            if (flag) {
+                $('#jq-datatables-ActivityPopup input[name="chkItem"]:checked').each(function () {
+                    var id = $(this).attr('data-activity');
+
+                    deleteEachActivity(id);
+                });
+
+                document.location.href = document.location.href;
+                alert("Deleted Successfully");
+            }
+        }
+        else
+            alert('Please select atleast one record to delete');
+    }
+
+    function deleteEachActivity(historyId) {
+        $.ajax({
+            url: "ManageCompany/DeleteCompanyActivity",
+            type: "GET",
+            async: false,
+            data: { historyId: historyId },
+            success: function (data) {
+
+
+            },
+            error: function () {
+
+            }
+        });
+    }
+
+    function CompleteActivity() {
+        if ($('#jq-datatables-ActivityPopup input[name="chkItem"]:checked').length > 0) {
+            var flag = confirm('Are you sure you want to Complete the Activity?');
+            if (flag) {
+                $('#jq-datatables-ActivityPopup input[name="chkItem"]:checked').each(function () {
+                    var id = $(this).attr('data-activity');
+                    completeEachActivity(id);
+                });
+                document.location.href = document.location.href;
+                alert("Activity Updated Successfully");
+            }
+        }
+        else
+            alert("Please Select atleast One Record Only.");
+    }
+
+    function completeEachActivity(historyId) {
+        $.ajax({
+            url: "ManageCompany/CompleteCompanyActivity",
+            type: "GET",
+            async: false,
+            data: { historyId: historyId },
+            success: function (data) {
+            },
+            error: function () {
+
+            }
+        });
+    }
+
+    function OpenCompanyDetail(accountid) {
+        //Showloading();
+        window.location = "ManageCompany/getCompanydetails?CompanyId=" + accountid;
+    }
+
+    function deleteCompany(AccountId) {
+
+        var flag = confirm('You are about to delete permanently.Are you sure you want to delete this record?');
+        if (flag) {
+            deleteEachCompany(AccountId);
+
+            //alert("Deleted Successfully!!!");
+            //document.location.href = document.location.href;
+        }
+    }
+
+    function deleteEachCompany(AccountId) {
+
+        $.ajax({
+            url: "ManageCompany/DeleteCompanies",
+            type: "POST",
+            async: false,
+            data: { Compids: AccountId.toString() },
+            success: function (data) {
+                if (data == "True") {
+                    $.growl.notice({ title: "Success", message: "Companies Deleted Successfully.", size: 'large' });
+                    $("#tblCompanies").dataTable().fnDestroy();
+                    BindCompanies();
+                }
+                else {
+                    //  $.growl.notice({ title: "Fail", message: "Companies Not Deleted .", size: 'large' });
+                    $.growl.error({ title: "Fail", message: "Can't  Deleted !!!  Companies is in use.", size: 'large' });
+                }
+            },
+            error: function (request, status, error) {
+            }
+        });
+    }
+
+
+    $("#btnclose").click(function () {
+        $("#myModal").modal("hide");
+    });
+
+
+
+
+
+    function deleteSelectedCompany() {
+
+
+        if ($('#tblCompanies input[name="chkItem"]:checked').length > 0) {
+            var flag = confirm('You are about to delete permanently.Are you sure you want to delete these records?');
+            if (flag) {
+
+                var searchIDs = $("#tblCompanies input:checkbox:checked").map(function () {
+                    return $(this).attr("data-accountid");
+                }).get();
+
+                deleteEachCompany(searchIDs)
+            }
+        }
+        else {
+            alert("Please select item(s) to delete.");
+        }
+    }
+
+    function ExportCsv() {
+
+        $('#loading').css('display', 'block');
+        $("#linkExportCsv")[0].click();
+        alert("Companies Exported succesfully");
+        $('#loading').css('display', 'none');
+    }
+
+    function ExportExcel() {
+
+        $('#loading').css('display', 'block');
+        $("#linkExportExcel")[0].click();
+        alert("Companies Exported succesfully");
+        $('#loading').css('display', 'none');
+
+    }
+
+
+</script>
+
+
+
+<div class="modal fade" id="myModal">
+    <div class="modal-dialog">
+        <div class="modal-content" width="100%">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Activity</h4>
+            </div>
+            <div class="modal-body">
+
+                <div class="row">
+                    <div class="col-sm-12">
+
+                        <button class="btn btn-flat btn-labeled btn-primary" onclick="AddActivity()" id="btnAddActivity" editactivityhistory style="margin-bottom:5px;">
+                            <span class="btn-label icon fa  fa-plus-circle"></span>Add
+                        </button>
+
+                        <button class="btn btn-flat btn-labeled btn-primary" onclick="EditActivity()" id="btnEditActivity" style="margin-bottom:5px;">
+
+                            <span class="btn-label icon fa fa-check-square-o"></span>Edit
+                        </button>
+
+                        <button class="btn btn-flat btn-labeled btn-primary" onclick="DeleteActivity()" id="btnDeleteActivity" style="margin-bottom:5px;">
+
+                            <span class="btn-label icon fa  fa-trash-o"></span>Delete
+                        </button>
+
+                        <button class="btn btn-flat btn-labeled btn-primary" onclick="CompleteActivity()" id="btnCompleteActivity" style="margin-bottom:5px;">
+                            <span class="btn-label icon fa  fa-check-circle"></span>Complete
+                        </button>
+
+
+
+                        <div class="table-primary table-striped" id="tblCompanyList" style="margin-top:5px;">
+                        </div>
+
+                        <div class="col-sm-12" style="padding-left:0px; margin-bottom:5px;">
+                            <button class="btn btn-flat btn-labeled btn-primary" onclick="EditActivityHistory()" id="btnEditActivityHistory">
+                                <span class=" btn-label icon fa fa-check-square-o">
+                                </span>Edit
+                            </button>
+                            <div class="table-primary table-striped" id="tblActivityHistory" style="margin-top:5px;">
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div>
+                <table cellpadding="0" cellspacing="0" border="0" width="100%">
+                    <tr>
+                        <td colspan="3" align="center">
+                            <input type="button" id="btnclose" value="Close" style="margin-bottom:15px;" class="btn btn-flat btn-labeled btn-primary" data-dismiss="modal" aria-label="Close" />
+                        </td>
+                    </tr>
+
+                </table>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="myModalAdd">
+    <div class="modal-dialog" id="newactivity_modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">New Activity</h4>
+            </div>
+            <div class="modal-body">
+                <div class="table-primary table-striped" id="tblActivityList">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="myModalEdit">
+    <div class="modal-dialog" id="newactivity_modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Edit Activity</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div style="text-align:left;font-size:12px;padding:5px">
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="table-primary table-striped" id="tblEditActivityList">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#activemenu").addClass("open active");
+        $('.mm-text').closest('li').each(function () {
+            $(this).removeClass('active');
+        });
+        $('.mm-text').eq(0).closest('li').addClass('active');
+    });
+</script>

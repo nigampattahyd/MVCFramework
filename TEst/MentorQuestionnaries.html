@@ -1,0 +1,540 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <title>Mentor Questionnaries Form</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="Scripts/jquery-1.10.2.js"></script>
+    <script src="Scripts/MentorQuestionnaries.js"></script>
+    <style>
+        h3 {
+            background-color: #50ba4c;
+            color: #fff;
+            text-align: center;
+            padding: 10px;
+            margin: 0px;
+            font-size: 20px;
+        }
+
+        h4 {
+            border-bottom: 1px solid #aaa;
+            padding-bottom: 10px;
+            margin-bottom: 10px;
+            color: #50ba4c;
+            font-weight: bold;
+        }
+
+        .width-sm-2 {
+            width: 20% !important;
+        }
+
+        .smalltext {
+            font-size: 9px;
+            margin-top: 5px;
+            color: #666;
+        }
+
+        @media (min-width: 768px) and (max-width:1024px) {
+        }
+
+        @media only screen and (min-width:480px) and (max-width:768px) {
+            .width-sm-2 {
+                width: 100% !important;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .width-sm-2 {
+                width: 100% !important;
+            }
+        }
+
+        @media only screen and (max-width:479px) {
+            .width-sm-2 {
+                width: 100% !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h3>
+            NextTech Mentor Questionnaire
+        </h3>
+        <form style="padding:15px; border:1px solid #a8c0c9;">
+            <h4> MENTOR DETAILS</h4>
+            <div class="row">
+                <label class="col-sm-12">Name</label>
+                <div class="form-group">
+                    <div class="col-sm-2 width-sm-2">
+                        <select id="Prefix" class="form-control">
+                            <option value="" disabled="disabled" selected="selected"> --select-- </option>
+                            <option value="Mr.">Mr.</option>
+                            <option value="Mrs.">Mrs.</option>
+                            <option value="Miss">Miss</option>
+                            <option value="Ms.">Ms.</option>
+                            <option value="Dr.">Dr.</option>
+                            <option value="Prof.">Prof.</option>
+                            <option value="Rev.">Rev.</option>
+
+                        </select>
+                        <label class="smalltext">Prefix</label>
+                    </div>
+                </div>
+                <div class="col-sm-2 width-sm-2">
+                    <div class="form-group">
+                        <input type="text" id="FirstName" name="FirstName" class="form-control" disabled="disabled"> <label class="smalltext">First</label>
+                    </div>
+                </div>
+                <div class="col-sm-2 width-sm-2">
+                    <div class="form-group">
+                        <input type="text" id="MiddleName" name="MiddleName" class="form-control"><label class="smalltext">Middle</label>
+                    </div>
+                </div>
+                <div class="col-sm-2 width-sm-2">
+                    <div class="form-group">
+                        <input type="text" id="LastName" name="LastName" class="form-control" disabled="disabled"><label class="smalltext">Last</label>
+                    </div>
+                </div>
+                <div class="col-sm-2 width-sm-2">
+                    <div class="form-group">
+                        <input type="text" id="Suffix" name="Suffix" class="form-control"><label class="smalltext">Suffix</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label>Nick Name</label>
+                        <input type="text" id="NickName" name="NickName" class="form-control">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label>Organization</label>
+                        <input type="text" id="Organization" name="Organization" class="form-control" >
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label>Title</label>
+                        <input type="text" id="Title" name="Title" class="form-control">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <label>Address #1</label>
+                        <input type="text" id="Street1" name="Street1" class="form-control">
+                        <label class="smalltext">Street Address</label>
+                    </div>
+                    <div class="form-group">
+
+                        <input type="text" id="AddressLine1" name="AddressLine1" class="form-control" >
+                        <label class="smalltext">Address Line 2</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <input type="text" id="City1" name="City1" class="form-control">
+                        <label class="smalltext">City</label>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <input type="text" id="StateProvinceRegion1" name="NickName" class="form-control">
+                        <label class="smalltext">State / Province / Region</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <input type="text" id="ZIP1" name="ZIP1" class="form-control">
+                        <label class="smalltext"> ZIP / Postal Code</label>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <select class="form-control" id="Country1"><option>--Select-- </option></select>
+                        <label class="smalltext">Country</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <label>Address #2</label>
+                        <input type="text" id="Street2" name="Street2" class="form-control">
+                        <label class="smalltext">Street Address</label>
+                    </div>
+                    <div class="form-group">
+
+                        <input type="text" id="AddressLine2" name="AddressLine2" class="form-control">
+                        <label class="smalltext">Address Line 2</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <input type="text" id="City2" name="City2" class="form-control">
+                        <label class="smalltext">City</label>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <input type="text" id="StateProvinceRegion2" name="StateProvinceRegion2" class="form-control">
+                        <label class="smalltext">State / Province / Region</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <input type="text" id="ZIP2" name="ZIP2" class="form-control">
+                        <label class="smalltext"> ZIP / Postal Code</label>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <select class="form-control" id="Country2"><option>--Select-- </option></select>
+                        <label class="smalltext">Country</label>
+                    </div>
+                </div>
+            </div>
+
+            <h4> CONTACT DETAILS</h4>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label>Primary Email Address</label>
+                        <input type="text" id="PrimaryEmail" name="PrimaryEmail" class="form-control" disabled="disabled">
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label>Secondary Email Address</label>
+                        <input type="text" id="SecondaryEmail" name="SecondaryEmail" class="form-control">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label>Skype Address</label>
+                        <input type="text" id="SkypeAddress" name="SkypeAddress" class="form-control">
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label>  Twitter Address</label>
+                        <input type="text" id="TwitterAddress" name="TwitterAddress" class="form-control">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label>Linked In</label>
+                        <input type="text" id="LinkedIn" name="LinkedIn" class="form-control" disabled="disabled">
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label>Telephone #1</label>
+                        <input type="text" id="Telephone1" name="Telephone1" class="form-control" disabled="disabled" maxlength="14">
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label>  Telephone #2</label>
+                        <input type="text" id="Telephone2" name="Telephone2" class="form-control"  maxlength="14">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label>Telephone #3</label>
+                        <input type="text" id="Telephone3" name="Telephone3" class="form-control" maxlength="14">
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <label>Public Profile</label>
+                        <textarea class="form-control" rows="8" id="publicprofile" name="PublicProfile"> </textarea>
+                    </div>
+                </div>
+
+            </div>
+            <h4> MENTOR EXPERIENCE QUESTIONNAIRE </h4>
+            <h4>
+                SECTION 1 - NEW MENTOR CREATION <br />
+                <label class="smalltext">Please check the topics that you are comfortable mentoring and advising entrepreneurs on.</label>
+            </h4>
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label> Startups </label>
+                        <div class="checkbox">
+                            <label><input type="checkbox" id="Startups1" name="Startups" value="First Steps">First Steps</label>
+                        </div>
+                        <div class="checkbox">
+                            <label><input type="checkbox" id="Startups2" name="Startups" value="Founders Issues">Founders Issues</label>
+                        </div>
+                        <div class="checkbox">
+                            <label><input type="checkbox" id="Startups3" name="Startups" value="Team Formation">Team Formation</label>
+                        </div>
+                        <div class="checkbox">
+                            <label><input type="checkbox" id="Startups4" name="Startups" value="IP / Licensing Issues + Strategy">IP / Licensing Issues + Strategy</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label> Business Model </label>
+                        <div class="checkbox">
+                            <label><input type="checkbox" id="BusinessModel1" name="BusinessModel" value="Product - Market Fit">Product - Market Fit</label>
+                        </div>
+                        <div class="checkbox">
+                            <label><input type="checkbox" id="BusinessModel2" name="BusinessModel" value="Distribuitoon Channels">Distribuitoon Channels</label>
+                        </div>
+                        <div class="checkbox">
+                            <label><input type="checkbox" id="BusinessModel3" name="BusinessModel" value="customer acquisition">customer acquisition</label>
+                        </div>
+                        <div class="checkbox">
+                            <label><input type="checkbox" id="BusinessModel4" name="BusinessModel" value="Revenue Streams and Strategies">Revenue Streams and Strategies</label>
+                        </div>
+                        <div class="checkbox">
+                            <label><input type="checkbox" id="BusinessModel5" name="BusinessModel" value="Market Research / Competitive Analysys">Market Research / Competitive Analysys</label>
+                        </div>
+                        <div class="checkbox">
+                            <label><input type="checkbox" id="BusinessModel6" name="BusinessModel" value="Business Model Validation">Business Model Validation</label>
+                        </div>
+                        <div class="checkbox">
+                            <label><input type="checkbox" id="BusinessModel7" name="BusinessModel" value="Review Of Financials">Review Of Financials</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label> Funding </label>
+                        <div class="checkbox">
+                            <label><input type="checkbox" id="Funding1" name="Funding" value="Angels">Angels</label>
+                        </div>
+                        <div class="checkbox">
+                            <label><input type="checkbox" id="Funding2" name="Funding" value="VCs">VCs</label>
+                        </div>
+                        <div class="checkbox">
+                            <label><input type="checkbox" id="Funding3" name="Funding" value="Crowdfunding">Crowdfunding</label>
+                        </div>
+                        <div class="checkbox">
+                            <label><input type="checkbox" id="Funding4" name="Funding" value="SBIR / Other grants">SBIR / Other grants</label>
+                        </div>
+                        <div class="checkbox">
+                            <label><input type="checkbox" id="Funding5" name="Funding" value="Bootstrapping">Bootstrapping</label>
+                        </div>
+                        <div class="checkbox">
+                            <label><input type="checkbox" id="Funding6" name="Funding" value="TeamSheets: Review + negotiation">TeamSheets: Review + negotiation</label>
+                        </div>
+                        <div class="checkbox">
+                            <label><input type="checkbox" id="Funding7" name="Funding" value="Board Formation">Board Formation</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+
+                        <input type="text" id="Others1" name="Others1" class="form-control" placeholder="Other">
+                    </div>
+                </div>
+
+            </div>
+
+
+            <h4>
+                SECTION 2 - INDUSTRIES / TECHNOLOGIES <br />
+                <label class="smalltext">Please check the areas that you have experience or knowledge about</label>
+            </h4>
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label> Software </label>
+                        <div class="checkbox">
+                            <label><input type="checkbox" id="Software1" name="Software" value="Enterprise">Enterprise</label>
+                        </div>
+                        <div class="checkbox">
+                            <label><input type="checkbox" id="Software2" name="Software" value="Cloud Computing">Cloud Computing</label>
+                        </div>
+                        <div class="checkbox">
+                            <label><input type="checkbox" id="Software3" name="Software" value="Consumer">Consumer</label>
+                        </div>
+                        <div class="checkbox">
+                            <label><input type="checkbox" id="Software4" name="Software" value="Web/Mobile">Web/Mobile</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label> Life Sciences </label>
+                        <div class="checkbox">
+                            <label><input type="checkbox" id="LifeSciences1" name="LifeSciences" value="Pharma">Pharma</label>
+                        </div>
+                        <div class="checkbox">
+                            <label><input type="checkbox" id="LifeSciences2" name="LifeSciences" value="Medical Device">Medical Device</label>
+                        </div>
+                        <div class="checkbox">
+                            <label><input type="checkbox" id="LifeSciences3" name="LifeSciences" value="Software (incl healthcare IT)">Software (incl healthcare IT)</label>
+                        </div>
+                        <div class="checkbox">
+                            <label><input type="checkbox" id="LifeSciences4" name="LifeSciences" value="Other Biotech">Other Biotech</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label> Other </label>
+                        <div class="checkbox">
+                            <label><input type="checkbox" id="IndustryOther1" name="IndustryOther" value="Hardware - Computer / Electronics">Hardware - Computer / Electronics</label>
+                        </div>
+                        <div class="checkbox">
+                            <label><input type="checkbox" id="IndustryOther2" name="IndustryOther" value="Process Industries / Manufacturing">Process Industries / Manufacturing</label>
+                        </div>
+                        <div class="checkbox">
+                            <label><input type="checkbox" id="IndustryOther3" name="IndustryOther" value="Communications (data, telecom, wireless)">Communications (data, telecom, wireless)</label>
+                        </div>
+                        <div class="checkbox">
+                            <label><input type="checkbox" id="IndustryOther4" name="IndustryOther" value="Media and Entertainment">Media and Entertainment</label>
+                        </div>
+                        <div class="checkbox">
+                            <label><input type="checkbox" id="IndustryOther5" name="IndustryOther" value="Energy">Energy</label>
+                        </div>
+                        <div class="checkbox">
+                            <label><input type="checkbox" id="IndustryOther6" name="IndustryOther" value="Services">Services</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+
+                        <input type="text" id="Others2" name="Others2" class="form-control" placeholder="Other">
+                    </div>
+                </div>
+
+            </div>
+
+            <h4>
+                SECTION 3 - FUNCTIONAL AREAS <br />
+                <label class="smalltext">Please check the areas that you have experience in or knowledge about</label>
+            </h4>
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="form-group">
+
+                        <div class="checkbox">
+                            <label><input type="checkbox" id="FunctionalAreas1" name="FunctionalAreas" value="Startup Founder / Team member">Startup Founder / Team member</label>
+                        </div>
+                        <div class="checkbox">
+                            <label><input type="checkbox" id="FunctionalAreas2" name="FunctionalAreas" value="General Management">General Management</label>
+                        </div>
+                        <div class="checkbox">
+                            <label><input type="checkbox" id="FunctionalAreas3" name="FunctionalAreas" value="Product Development">Product Development</label>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-group">
+
+                        <div class="checkbox">
+                            <label><input type="checkbox" id="FunctionalAreas4" name="FunctionalAreas" value="Sales">Sales</label>
+                        </div>
+                        <div class="checkbox">
+                            <label><input type="checkbox" id="FunctionalAreas5" name="FunctionalAreas" value="Marketing">Marketing</label>
+                        </div>
+                        <div class="checkbox">
+                            <label><input type="checkbox" id="FunctionalAreas6" name="FunctionalAreas" value="Finance">Finance</label>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-group">
+
+                        <div class="checkbox">
+                            <label><input type="checkbox" id="FunctionalAreas7" name="FunctionalAreas" value="Operations">Operations</label>
+                        </div>
+                        <div class="checkbox">
+                            <label><input type="checkbox" id="FunctionalAreas8" name="FunctionalAreas" value="Manufacturing">Manufacturing</label>
+                        </div>
+                        <div class="checkbox">
+                            <label><input type="checkbox" id="FunctionalAreas9" name="FunctionalAreas" value="Legal">Legal</label>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+
+                        <input type="text" id="Others3" name="Others3" class="form-control" placeholder="Other">
+                    </div>
+                </div>
+
+            </div>
+          
+            <div class="row">
+                <div class="col-sm-12">
+                    <label> CAPTCHA<span style="color: red">*</span></label>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <input type="text" id="maincaptcha" disabled="disabled">
+                            <input type="button" id="refresh" value="Refresh" />
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="form-group">
+                            <input type="text" id="Captcha" name="Captcha" maxlength="10">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-2">
+                    <div class="form-group">
+                        <button type="submit" id="btnsubmit" class="btn btn-primary" style="background-color:#50ba4c;border:#50ba4c;margin: 5px;">Submit</button>
+                        <button type="button" id="btnclear" class="btn btn-default" style="background-color:#50ba4c;border:#50ba4c; color:#fff;">Clear</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</body><body>
+
+</body>
+</html>

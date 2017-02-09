@@ -1,0 +1,84 @@
+--- CRM.edmx
++++ CRM.edmx
+@@ -2321,6 +2439,8 @@
+           <EntitySet Name="Events" EntityType="Self.Events" Schema="dbo" store:Type="Tables" />
+           <EntitySet Name="Mentor" EntityType="Self.Mentor" Schema="dbo" store:Type="Tables" />
+           <EntitySet Name="MentorAcceptedDateTime" EntityType="Self.MentorAcceptedDateTime" Schema="dbo" store:Type="Tables" />
++          <EntitySet Name="MentorDetails" EntityType="Self.MentorDetails" Schema="dbo" store:Type="Tables" />
++          <EntitySet Name="MentorQuestionaries" EntityType="Self.MentorQuestionaries" Schema="dbo" store:Type="Tables" />
+           <EntitySet Name="MentorType" EntityType="Self.MentorType" Schema="dbo" store:Type="Tables" />
+           <EntitySet Name="ModuleType" EntityType="Self.ModuleType" Schema="dbo" store:Type="Tables" />
+           <EntitySet Name="Priority" EntityType="Self.Priority" Schema="dbo" store:Type="Tables" />
+@@ -3772,7 +3893,71 @@
+             <Parameter Name="Alphanumericsort" Mode="In" Type="String" />
+             <Parameter Name="TotalRecordsCount" Mode="InOut" Type="Int32" />
+           </FunctionImport>
+-          <EntitySet Name="Mentors" EntityType="CRMModel.Mentor" />
++          <EntitySet Name="MentorDetails" EntityType="CRMModel.MentorDetail" />
++          <EntitySet Name="MentorQuestionaries" EntityType="CRMModel.MentorQuestionary" />
++          <FunctionImport Name="Mentor_CreateMentorDetails">
++            <Parameter Name="FirstName" Mode="In" Type="String" />
++            <Parameter Name="LastName" Mode="In" Type="String" />
++            <Parameter Name="Organization" Mode="In" Type="String" />
++            <Parameter Name="Title" Mode="In" Type="String" />
++            <Parameter Name="Street1" Mode="In" Type="String" />
++            <Parameter Name="AddressLine1" Mode="In" Type="String" />
++            <Parameter Name="City1" Mode="In" Type="String" />
++            <Parameter Name="StateProvinceRegion1" Mode="In" Type="String" />
++            <Parameter Name="ZIP1" Mode="In" Type="String" />
++            <Parameter Name="Telephone1" Mode="In" Type="String" />
++            <Parameter Name="Telephone2" Mode="In" Type="String" />
++            <Parameter Name="PrimaryEmail" Mode="In" Type="String" />
++            <Parameter Name="LinkedIn" Mode="In" Type="String" />
++            <Parameter Name="Resume" Mode="In" Type="String" />
++            <Parameter Name="UserName" Mode="In" Type="String" />
++            <Parameter Name="Password" Mode="In" Type="String" />
++          </FunctionImport>
++          <FunctionImport Name="Mentor_Questionnaries">
++            <Parameter Name="Prefix" Mode="In" Type="String" />
++            <Parameter Name="FirstName" Mode="In" Type="String" />
++            <Parameter Name="MiddleName" Mode="In" Type="String" />
++            <Parameter Name="LastName" Mode="In" Type="String" />
++            <Parameter Name="Suffix" Mode="In" Type="String" />
++            <Parameter Name="NickName" Mode="In" Type="String" />
++            <Parameter Name="Organization" Mode="In" Type="String" />
++            <Parameter Name="Title" Mode="In" Type="String" />
++            <Parameter Name="Street1" Mode="In" Type="String" />
++            <Parameter Name="AddressLine1" Mode="In" Type="String" />
++            <Parameter Name="City1" Mode="In" Type="String" />
++            <Parameter Name="StateProvinceRegion1" Mode="In" Type="String" />
++            <Parameter Name="ZIP1" Mode="In" Type="String" />
++            <Parameter Name="Country1" Mode="In" Type="String" />
++            <Parameter Name="Street2" Mode="In" Type="String" />
++            <Parameter Name="AddressLine2" Mode="In" Type="String" />
++            <Parameter Name="City2" Mode="In" Type="String" />
++            <Parameter Name="StateProvinceRegion2" Mode="In" Type="String" />
++            <Parameter Name="ZIP2" Mode="In" Type="String" />
++            <Parameter Name="Country2" Mode="In" Type="String" />
++            <Parameter Name="PrimaryEmail" Mode="In" Type="String" />
++            <Parameter Name="SecondaryEmail" Mode="In" Type="String" />
++            <Parameter Name="SkypeAddress" Mode="In" Type="String" />
++            <Parameter Name="TwitterAddress" Mode="In" Type="String" />
++            <Parameter Name="LinkedIn" Mode="In" Type="String" />
++            <Parameter Name="Telephone1" Mode="In" Type="String" />
++            <Parameter Name="Telephone2" Mode="In" Type="String" />
++            <Parameter Name="Telephone3" Mode="In" Type="String" />
++            <Parameter Name="PublicProfile" Mode="In" Type="String" />
++            <Parameter Name="Resume" Mode="In" Type="String" />
++            <Parameter Name="Startups" Mode="In" Type="String" />
++            <Parameter Name="BusinessModel" Mode="In" Type="String" />
++            <Parameter Name="Funding" Mode="In" Type="String" />
++            <Parameter Name="Others1" Mode="In" Type="String" />
++            <Parameter Name="Software" Mode="In" Type="String" />
++            <Parameter Name="LifeSciences" Mode="In" Type="String" />
++            <Parameter Name="IndustryOther" Mode="In" Type="String" />
++            <Parameter Name="Others2" Mode="In" Type="String" />
++            <Parameter Name="FunctionalAreas" Mode="In" Type="String" />
++            <Parameter Name="Others3" Mode="In" Type="String" />
++            <Parameter Name="UserName" Mode="In" Type="String" />
++            <Parameter Name="Password" Mode="In" Type="String" />
++            <Parameter Name="MentorId" Mode="In" Type="Int64" />
++          </FunctionImport>
+          
+         </EntityContainer>
+         <ComplexType Name="CRM_GET_ACTIVTY_TYPE_Result">

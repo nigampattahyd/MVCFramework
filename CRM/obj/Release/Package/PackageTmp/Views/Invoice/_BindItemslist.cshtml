@@ -1,0 +1,406 @@
+﻿@model CRMHub.ViewModel.InvoiceModel
+<style>
+    .table > tbody > tr > td, .table > tbody > tr > th, .table > tfoot > tr > td, .table > tfoot > tr > th, .table > thead > tr > td, .table > thead > tr > th {
+        border-top: 0;
+    }
+</style>
+<div class="row">
+    <table cellpadding="0" cellspacing="0" border="0" class="table table-striped" id="jq-datatables-itemPopup" width="100%">
+        <thead>
+            <tr>
+                <th data-hide="phone">Item<span style="color: red">*</span></th>
+                <th data-class="expand">Item Code</th>
+                <th data-hide="phone">Quantity<span style="color: red">*</span></th>
+                <th data-hide="phone">Rate&nbsp;($)</th>
+
+                <th data-hide="phone">Total Amount&nbsp;($)</th>
+                <th></th>
+
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td width="25%">
+                    <div class="input-group" id="tblitem" runat="server" style="width:90%">
+                        @Html.TextBoxFor(m => m.itemsobj.ItemName, new { @class = "form-control input-sm", Name = "listinvoiceitems[" + 0 + "].ItemName", @id = "ItemName", @Placeholder = "Select Item", @readonly = false, @validate = "Required", @data_val_required = "Item Name" })
+                        <span class="input-group-btn" id="Popupspan">
+                            <a class="btn" href="#" id="ImageButton4" title="Select Items"
+                               onclick="return show_NewitemsPopUp(580, 420);" style="cursor: pointer"><i class="fa fa-search"></i></a>
+
+
+                        </span>
+                        @Html.HiddenFor(m => m.itemsobj.ItemID, new { @id = "hditemtId", Name = "listinvoiceitems[" + 0 + "].ItemId" })
+                    </div>
+                    @*@Html.DropDownListFor(m => m.itemsobj.ItemName, new SelectList(Model.itemslist, "ItemID", "ItemName"), new { @class = "form-control input-sm", @name = "'itemslist['" + 1 + "'].ItemName'", @id = "ItemName" })*@
+                </td>
+
+                <td>
+                    @Html.TextBoxFor(m => m.itemsobj.ItemCode, new { @id = "ItemCode", Name = "listinvoiceitems[" + 0 + "].ItemCode", @class = "form-control input-sm", @readonly = false })
+                </td>
+                <td>@Html.TextBoxFor(m => m.itemsobj.QtyCommitted, new { @id = "QtyCommitted", Name = "listinvoiceitems[" + 0 + "].Quantity", @class = "form-control input-sm calcamount", type = "number", @min = "0" })</td>
+                <td>
+                    @Html.TextBoxFor(m => m.itemsobj.RateperUnit, new { @id = "RateperUnit", Name = "listinvoiceitems[" + 0 + "].RatePerUnit", @class = "form-control input-sm calcamount", @style = "text-align:right" })
+                @Html.Hidden("hidTaxPercent", null, new { @id = "hidTaxPercent", @class = "form-control input-sm Taxsumtot" })
+
+            </td>
+            @*<td>@Html.DropDownListFor(m => m.itemsobj.TaxPercent, new List<SelectListItem>
+                {
+                new SelectListItem{Text="Select",Value="0"},
+                new SelectListItem{Text="Term 15",Value="1"},
+                new SelectListItem{Text="Term 30",Value="2"},
+                new SelectListItem{Text="Term 45",Value="3"}
+
+                }, new { id = "ddl_Tax_Percent", @class = "form-control input-sm", @TabIndex = "14" })</td>*@
+            <td>@Html.TextBoxFor(m => m.itemsobj.ItemTotal, new { @id = "ItemTotal", Name = "listinvoiceitems[" + 0 + "].ItemTotal", @class = "form-control input-sm sumtot", @readonly = false, @style = "text-align:right" })</td>
+            @*<td>Add</td>*@
+            <td>
+                <button class="btn btn-flat btn-labeled btn-primary" id="btnadd" style=" margin:0px 3px 0px 10px;" onclick="appendrow()" name="button" type="button">
+                    Add
+
+                </button>
+
+                @*<button name="button" id="btnadd" type="button" onclick="appendrow()">Add</button>*@
+
+            </td>
+
+
+
+        </tr>
+    </tbody>
+</table>
+</div>
+<div class="row">
+    <div class="col-sm-5">
+        <div class="col-sm-12">
+            <div class="form-group no-margin-hr">
+
+
+            </div>
+        </div>
+
+    </div>
+
+    <div class="col-sm-4">
+        <div class="col-sm-12">
+            <div class="form-group no-margin-hr">
+                @*<label class="control-label col-sm-4">Discount Amount :</label>*@
+                <div class="col-sm-8">
+
+                    @*@Html.TextBoxFor(m => m.invoice.Discount, new { @class = "form-control input-sm", @id = "txtDiscount", @validate = "Required", @data_val_required = "Project Name" })*@
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="modal fade" id="myitemModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+
+                <h4 class="modal-title">Items List</h4>
+            </div>
+            <div class="modal-body">
+
+                <div class="row">
+                    <div style="text-align:left;font-size:12px;padding:5px">Note : Click Item Name To Select Record.</div>
+                    <div class="col-sm-12">
+
+                        <div class="table-primary table-striped" id="tblitemsList">
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<script>
+    var CheckItems = [];
+
+
+    var index = 0;
+    var r = index;
+    var spanid;
+    function appendrow() {
+       // var Quantityval = $(QtyCommitted).val();
+        if ($(ItemName).val() == "") {
+            $.growl.error({ title: "Error", message: "Please Select Item", size: 'large' });
+            return false;
+        }
+        else if (($(QtyCommitted).val() == "") || ($(QtyCommitted).val() == 0)) {
+            $.growl.error({ title: "Error", message: "Please Enter Quantity", size: 'large' });
+            $(QtyCommitted).val('');
+            return false;
+        }
+        else {
+
+
+
+            var tempDiv = $("#jq-datatables-itemPopup tbody tr:eq(0)").clone(true);
+            $("input,select,button,span", tempDiv).each(function (i, v) {
+                var actid = $(v).attr("id");
+                //alert(actid);
+                var id = actid + "-" + (index + 1);
+                //alert(id);
+                if (actid == "hditemtId") {
+                    var name = "listinvoiceitems[" + (index + 1) + "].ItemId";
+                }
+                else if (actid == "QtyCommitted") {
+                    var name = "listinvoiceitems[" + (index + 1) + "].Quantity";
+                }
+                else var name = "listinvoiceitems[" + (index + 1) + "]." + actid;
+                if (actid == "Popupspan") {
+                    spanid = id;
+                }
+                $(v).attr("id", id);
+                $(v).attr("Name", name);
+                if ($(v).is("button")) {
+                  
+                    var btnTd = $(v).find("button");
+                    $(btnTd).text("Delete");
+                    $(btnTd).bind("click", function () {
+                        $(this).closest("tr").hide();
+                    })
+                }
+
+            });
+            var tempDiv1 = $("#jq-datatables-itemPopup tbody tr:eq(0)");
+            $('input:hidden', tempDiv1).each(function (i, v) {
+                var actid = $(v).attr("id");
+                document.getElementById(actid).value = 0;
+            });
+
+            var btnTd = $(tempDiv).find("button");
+            $(btnTd).text("Delete");
+            var actid = $(btnTd).attr("id");
+            var id = actid + "-" + (index + 1);
+            var name = "listinvoiceitems[" + index + 1 + "]";
+
+            $(btnTd).attr("id", id);
+            $(btnTd).attr("Name", name);
+            $(btnTd).removeAttr("onclick");
+            $(btnTd).bind("click", function () {
+                $("input,select,button", tempDiv).each(function (i, v) {
+                    var actids = $(v).attr("id");
+                    //alert(actids);
+                    var spid = actids.split("-");
+                    var stringid = spid[0];
+                    
+                    if (stringid == "ItemName") {
+                        document.getElementById(actids).value = "DeletedRow";
+                    }
+
+                    else if (stringid == "ItemCode") {
+
+                        document.getElementById(actids).value = "";
+                    }
+                    else if (stringid == "QtyCommitted") {
+
+                        document.getElementById(actids).value = "";
+                    }
+                    else if (stringid == "RateperUnit") {
+
+                        document.getElementById(actids).value = "";
+                    }
+                    else if (stringid == "hidTaxPercent") {
+
+                        document.getElementById(actids).value = "";
+                    }
+                    else if (stringid == "ItemTotal") {
+
+                        document.getElementById(actids).value = "";
+                    }
+                    else if (stringid == "hditemtId") {
+                        itemiddel = document.getElementById(actids).value;
+                        for (i = CheckItems.length; i--;) {
+                            if (CheckItems[i] === itemiddel) {
+                                CheckItems.splice($.inArray(itemiddel, CheckItems), 1);
+                            }
+                        }
+
+
+                        document.getElementById(actids).value = "";
+                    }
+
+                    //if (stringid == "hditemId") {
+                    //    actids = "ItemId";
+                    //    document.getElementById(actids).value = 0;
+                    //}
+                    //if (stringid == "ItemName") {
+                    //    document.getElementById(actids).value = "DeletedRow";
+                    //}
+                    //else {
+                    //    document.getElementById(actids).value = "";
+                    //}
+
+                });
+
+                calculateSum();
+                $(this).closest("tr").hide();
+               
+                r--;            
+            });
+
+
+
+            $('#ItemCode').val('');
+            $('#QtyCommitted').val('');
+            $('#RateperUnit').val('');
+            $('#ItemTotal').val('');
+            $('#ItemName').val('');
+
+            tempDiv.insertAfter("#jq-datatables-itemPopup tbody tr:last");
+            var spanobj = document.getElementById(spanid);
+            spanobj.style.display = 'none';
+            index++;
+            r++;
+        }
+
+    }
+    //$(document).ready(function () {
+    //    $('.sumtot').each(function () {
+    //        alert(this.value);
+    //        calculateSum();
+    //    });
+    //});
+    function calculateSum() {
+       
+        var sum = 0;
+        var taxsum = 0;
+        //iterate through each td based on class and add the values
+        $(".sumtot").each(function () {
+
+            //add only if the value is number
+            if (!isNaN(this.value) && this.value.length != 0) {
+                sum += parseFloat(this.value);
+            }
+
+        });
+        $('#txttotal').val(sum);
+        $('#txtGrdTotal').val(sum);
+
+        updateamount();
+
+
+    };
+
+    @*$('#ItemName').change(function () {
+        var itemid = $('#ItemName').val();
+
+        $.ajax({
+            url: '@Url.Action("getItemDetails", "Invoice")',
+            //url: "getItemDetails",
+            type: "GET",
+            async: false,
+            data: { ItemId: itemid.toString() },
+            success: function (data) {
+
+                //alert(data);
+                if (data != null) {
+
+                    $('#ItemCode').val(data.ItemCode);
+                    $('#RateperUnit').val(data.RateperUnit);
+
+                }
+            },
+            error: function () {
+
+            }
+        });
+
+
+
+    });*@
+
+
+    $(".calcamount").blur(function () {
+        var curid = this.id;
+       // alert(curid);
+        calamount(curid)
+    });
+
+    function calamount(curid)
+    {
+
+        var idspilt = curid.split("-");
+        // var stringid = idspilt[0];
+        var numid = idspilt[1];
+        var Quantity = "QtyCommitted";
+        var ratePunit = "RateperUnit";
+        var itemtotal = "ItemTotal";
+        var taxAmtper = "hidTaxPercent";
+
+        if (numid == undefined) {
+            Quantity = Quantity;
+            ratePunit = ratePunit;
+            itemtotal = itemtotal;
+            taxAmtper = taxAmtper;
+        }
+        else {
+            Quantity = Quantity + "-" + numid;
+            ratePunit = ratePunit + "-" + numid;
+            itemtotal = itemtotal + "-" + numid;
+            taxAmtper = taxAmtper + "-" + numid;
+        }
+
+        var Qele = document.getElementById(Quantity);
+        var Rele = document.getElementById(ratePunit);
+        var Tele = document.getElementById(itemtotal);
+        var taxid = document.getElementById(taxAmtper);
+
+        var Qval = document.getElementById(Qele.id).value;
+        var Rval = document.getElementById(Rele.id).value;
+        var Tval = document.getElementById(Tele.id).value;
+
+        var totalprice = Qval * Rval;
+        var taxpercent = "18%";
+        var taxrate = 18 / 100;
+
+        var taxamount = totalprice * taxrate;
+
+        document.getElementById(taxid.id).value = taxamount;
+        document.getElementById(Tele.id).value = totalprice;
+        calculateSum();
+    }
+
+
+
+    // show_NewitemsPopUp
+    function show_NewitemsPopUp() {
+
+        $('#loading').css('display', 'block');
+
+        $.ajax({
+            url: '@Url.Action("_GetItemsList", "Invoice")',
+
+            type: "GET",
+            async: false,
+            // data: { companyid: companyid },
+            success: function (data) {
+              
+
+                if (data != null) {
+                    $('#tblitemsList').empty();
+                    $('#tblitemsList').empty().append(data);
+                }
+            },
+            error: function (n, y, p) {
+                alert("error");
+            }
+        });
+        $('#myitemModal').modal("show");
+    }
+
+</script>

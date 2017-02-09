@@ -1,0 +1,483 @@
+﻿@model CRMHub.EntityFramework.tbl_Leadhistory
+@{
+    ViewBag.Title = "NewLeadActivity";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<link href="~/Content/assets/css/pixel-admin.min.css" rel="stylesheet" />
+<script type="text/javascript">
+    $(document).ready(function () {
+        
+        //$("#txtReminder").datepicker({
+        //    changeMonth: true,
+        //    changeYear: true,
+        //    yearRange: '1900:+15'
+        //});
+    });
+
+</script>
+<style type="text/css">
+    .pfi-clear {
+        display: none !important;
+    }
+</style>
+
+<script type="text/javascript" language="javascript">
+    $(document).ready(function () {
+        var param1 = new Date();
+        var param2 = param1.getDate() + '/' + (param1.getMonth() + 1) + '/' + param1.getFullYear() + ' ' + param1.getHours() + ':' + param1.getMinutes() + ':' + param1.getSeconds();
+        $('#lblCreatedDate').text(param2)
+    })
+</script>
+@using (Html.BeginForm("NewLeadActivity", "Leads", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken();
+    @Html.ValidationSummary(true)
+    <div id="content-wrapper">
+        <div id="CustomBootstrapAlertBox">
+        </div>
+        <div class="row">
+         
+                <script>
+                    init.push(function () {
+                        $('ul.bs-tabdrop-example').tabdrop();
+                    });
+                </script>
+                <div class="panel">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <!-- Page header, center on small screens -->
+                            <h1 class="col-xs-6 col-sm-4 text-left text-left-sm panel-title">
+                                <i class="fa fa-user page-header-icon"></i>&nbsp; Activity Detail
+                            </h1>
+                            <div class="col-xs-6 col-sm-8">
+
+
+                                <div class="row">
+                                    <div class="pull-right">
+                                        @*<a href="#" class="btn btn-flat btn-labeled btn-primary" tabindex="-1"
+                                           data-toggle="modal" data-target="#uidemo-modals-alerts-info"><span class="btn-label icon fa fa-question-circle"></span>Help</a>*@
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                         
+
+                        <div class="row">
+                            <div class="col-sm-12 col-xs-12 text-right text-right-xs">
+                                <div class="row">
+                                    <label id="Label1" class="control-label" runat="server">
+                                        <asp:Label ID="lblMessage" runat="server" Font-Bold="true" ForeColor="red"></asp:Label>
+                                        <asp:Label ID="Label2" runat="server" ForeColor="Red"></asp:Label>
+                                    </label>
+
+
+                                    <button class="btn btn-flat btn-labeled btn-primary" id="btnSave">
+                                        <span class="btn-label icon fa fa-save"></span>Save
+                                    </button>
+
+
+                                    <span>
+                                        <asp:LinkButton ID="btnCreateFollowup" Text="Follow Up" runat="server"
+                                                        OnClick="btnFollowUp1_Click" />
+                                    </span>
+                                   
+                                    <a style="color: #fff; text-decoration: none; padding: 0px; font-weight: normal" class="btn btn-flat btn-labeled btn-primary" href="@Url.Action("RedirectLeadActivityGrid", "Leads")">
+                                        <span class="btn-label icon fa fa-backward" style="margin-right:6px;"> </span>
+                                        Back
+                                    </a>
+
+
+
+
+                                </div>
+
+                            </div>
+                        </div>
+
+
+                        <span id="errorsymbol" style="color:red;display:none;margin-left:5px;" class="fa fa-exclamation-circle"></span><div id="ErrorMessages" style="margin-left:20px;color:red;font-size:15px; ">
+
+
+                        </div>
+
+                        <div class="row">
+                       
+                                <!-- Tabs -->
+                                <div class="tab-content">
+                                    <div class="tab-pane active" id="pvAccounts">
+
+
+                                        <div class="row">
+                                            <asp:Label ID="lblErrorMsg" runat="server" ForeColor="red"></asp:Label>
+                                            <div class="col-sm-12">
+                                                <div class="panel-group" id="accordion-example">
+                                                    <!-- / .panel -->
+                                                    <div class="panel">
+                                                        <div class="panel-heading">
+                                                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion-example" href="#collapse1">Activity Detail </a>
+
+                                                        </div>
+                                                        <!-- / .panel-heading -->
+                                                        <div id="collapse1" class="panel-collapse collapse in" style="height: auto;">
+                                                            <div class="panel-body">
+                                                                <div class="row no-padding-hr">
+                                                                    <div class="row">
+
+                                                                        <div class="col-sm-12" style="text-align: right">
+                                                                            <a id="a1" runat="server" class="buttonclass" style="text-decoration: none; color: white; cursor: pointer" href="#" title="Get Map" onclick="openMap();return false;">Get Map</a>
+                                                                            &nbsp;
+                                                                            <a id="aMail" runat="server" class="buttonclass" style="text-decoration: none; color: white; cursor: pointer" href="#" title="Email">Email</a>
+                                                                        </div>
+                                                                    </div>
+                                                                    @*<div class="row">
+
+                                                                        <div class="col-sm-3">
+                                                                            <div class="form-group no-margin-hr">
+                                                                                <label class="control-label">Date :</label>
+                                                                                @Html.LabelFor(m => m.CreatedDate, new { @id = "lblCreatedDate" })
+                                                                                <asp:Label ID="lblCreatedDate" runat="server" class="control-label"></asp:Label>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>*@
+                                                                    <div class="row">
+
+                                                                        <div class="col-sm-3">
+                                                                            <div class="form-group no-margin-hr">
+                                                                                <label class="control-label">Type :<span style="color:Red">*</span></label>
+
+                                                                                @Html.DropDownListFor(m => m.HistoryType, new SelectList(Model.TypeList, "name", "name"), new { @id = "ddlHistoryType", @class = "form-control input-sm", @validate = "dropdown", @data_val_required = "Type" })
+                                                                                @Html.ValidationMessageFor(m => m.HistoryType, "", new { @class = "text-danger" })
+
+                                                                            </div>
+                                                                           
+                                                                        </div>
+                                                                        <div class="col-sm-3">
+                                                                            <div class="form-group no-margin-hr">
+                                                                                <label class="control-label">Priority :<span style="color: red">*</span></label>
+                                                                                @Html.DropDownListFor(m => m.Priority, new List<SelectListItem>
+                                                                          {
+                                                                              new SelectListItem{Text="Select",Value="Select"},
+                                                                              new SelectListItem{Text="High",Value="High"},
+                                                                              new SelectListItem{Text="Low",Value="Low"},
+                                                                              new SelectListItem{Text="Medium",Value="Medium"},
+                                                                          }, new { @class = "form-control input-sm", @id = "ddlPriority", @validate = "dropdown", @data_val_required = "Priority" })
+                                                                            </div>
+                                                                        </div>
+
+
+                                                                        <div class="col-sm-3">
+                                                                            <div class="form-group no-margin-hr">
+                                                                                <label class="control-label">Due Date :<span style="color: red">*</span></label>
+                                                                                <div class="col-sm-13">
+                                                                                    <div style="padding-left: 0px" class="col-sm-12">
+                                                                                        @Html.TextBoxFor(m => m.StartDate, new { @class = "form-control input-sm", @maxlength = 12, @id = "txtDate", @validate = "Required", @data_val_required = "Due Date" })
+
+                                                                                    </div>
+                                                                                   
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <div class="col-sm-3">
+                                                                            <div class="form-group no-margin-hr">
+                                                                                <label class="control-label"> Reminder :<span style="color: red">*</span></label>
+                                                                                <div class="col-sm-13">
+                                                                                    <div style="padding-left: 0px" class="col-sm-12">
+                                                                                        @Html.TextBoxFor(m => m.RemindDate, new { @class = "form-control input-sm", @id = "txtReminder", @validate = "Required", @data_val_required = "Remind Date" })
+
+                                                                                    </div>
+                                                                                  
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+
+                                                                    </div>
+
+
+                                                                    <div class="row">
+                                                                        <div class="col-sm-3">
+                                                                            <div class="form-group no-margin-hr">
+                                                                                <label class="control-label">Status :<span style="color: red">*</span></label>
+                                                                                @Html.DropDownListFor(m => m.Status, new List<SelectListItem>
+                                                                          {
+                                                                              new SelectListItem{Text="Select",Value="Select"},
+                                                                              new SelectListItem{Text="Open",Value="Open"},
+                                                                              new SelectListItem{Text="Completed",Value="Completed"},
+
+                                                                          }, new { @class = "form-control input-sm", @id = "ddlStatus", @validate = "dropdown", @data_val_required = "Status" })
+                                                                            </div>
+                                                                        </div>
+
+
+
+                                                                        <div class="col-sm-3">
+                                                                            <div class="form-group no-margin-hr" id="Td12">
+                                                                                <label class="control-label" id="lblAssignTo">Assigned to :</label>
+                                                                                @Html.DropDownListFor(m => m.AssignedTo, new SelectList(Model.userList, "userId", "first_Name"), new { @class = "form-control input-sm", @id = "ddlAssignedTo" })
+
+                                                                            </div>
+                                                                        </div>
+
+
+                                                                        <div class="col-sm-3">
+                                                                            <div class="form-group no-margin-hr">
+                                                                                <label class="control-label">Attachment : </label>
+
+                                                                                <script>
+                                                                                    init.push(function () {
+                                                                                        $('.styled-finputs-example').pixelFileInput({ placeholder: 'No file selected...' });
+                                                                                    })
+                                                                                </script>
+                                                                                <input type="file" name="uploadFile" id="uploadFile" class="styled-finputs-example">
+
+                                                                            </div>
+                                                                        </div>
+
+                                                                    
+                                                                        </div>
+
+                                                                    <div class="row">
+                                                                        <div class="col-sm-6">
+                                                                            <div class="form-group no-margin-hr">
+                                                                                <label class="control-label">Comment :</label>
+
+                                                                                @Html.TextAreaFor(m => m.Details, new { @id = "txtHistoryDetail", @class = "form-control", @maxlength = "5000" })
+                                                                            </div>
+                                                                        </div>
+
+                                                                        @Html.HiddenFor(m => m.Leadid)
+
+                                                                    </div>                                                                   
+                                                                    @*<div class="row">
+
+                                                                        <div class="col-sm-3">
+                                                                            <div class="form-group no-margin-hr">
+                                                                                <label class="control-label">Date :</label>
+                                                                                @Html.LabelFor(m => m.CreatedDate, new { @id = "lblCreatedDate" })
+                                                                                <asp:Label ID="lblCreatedDate" runat="server" class="control-label"></asp:Label>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>*@
+                                                                    <div class="row">
+                                                                        <div class="col-sm-12 ">
+                                                                            <div class="pull-right">Date:&nbsp;@Html.LabelFor(m => m.CreatedDate, new { @id = "lblCreatedDate" })</div>
+
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- / .panel -->
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                          
+                        </div>
+                    </div>
+                </div>
+
+            
+
+        </div>
+    </div>
+
+}
+<script type="text/javascript">
+    $("#ddlReminderTime").prop("disabled", true);
+    $("#ddlStartTime").prop("disabled", true);
+
+
+    $("#txtDate").datepicker({
+        changeMonth: true,
+        changeYear: true,
+        yearRange: '1900:+15',
+        autoclose: true,
+        onSelect: function () {
+            var Isvalid = true;
+            var duedate = $("#txtDate").val();
+            var reminderdate = $("#txtReminder").val();
+            var startDay = new Date(duedate);
+            var endDay = new Date(reminderdate);
+            var millisecondsPerDay = 1000 * 60 * 60 * 24;
+            var millisBetween = startDay.getTime() - endDay.getTime();
+            var days = millisBetween / millisecondsPerDay;
+            var diffdate = Math.floor(days);
+            if (duedate < reminderdate) {
+                $.growl.error({ title: "Error", message: "Due Date Must be greater than Reminder date.", size: 'large' });
+                Isvalid = false;
+            }
+            if (diffdate > 15) {
+                $.growl.error({ title: "Error", message: "Due Date should be 15 day Prior to Reminder Date.", size: 'large' });
+                Isvalid = false;
+            }
+            if (new Date(duedate) <= new Date()) {
+
+                $.growl.error({ title: "Error", message: "DueDate Should be greaterthan the CurrentDate.", size: 'large' });
+                $("#txtDate").val('');
+                Isvalid = false;
+            }
+            if (duedate == reminderdate) {
+                $.growl.error({ title: "Error", message: "Due Date should be 24hours greater Reminder Date.", size: 'large' });
+                Isvalid = false;
+            }
+            else {
+                Isvalid = true;
+            }
+            return Isvalid;
+        }
+    });
+
+    //function remaindertimeCheck(control) {
+        
+    //    var remainderdate = $("#txtReminder").val();
+    //    var duedate = $("#txtDate").val();
+    //    var Isvalid = true;
+    //    if (duedate != "") {
+    //        if (remainderdate > duedate) {
+    //            alert("Remainder Date Must be less than Due date");
+    //            $("#txtReminder").focus();
+    //            $("#txtReminder").val('');
+    //            return Isvalid = false;
+    //        }
+    //        else {
+    //            return Isvalid = true;
+    //        }
+    //    }
+    //    return Isvalid;
+    //}
+    $("#txtReminder").datepicker({
+        changeMonth: true,
+        changeYear: true,
+        yearRange: '1900:+15',
+        autoclose: true,
+        onSelect: function (date) {
+            var reminderdate1 = date;
+            var Isvalid = true;
+            var duedate = $("#txtDate").val();
+            var reminderdate = reminderdate1;
+            var startDay = new Date(duedate);
+            var endDay = new Date(reminderdate);
+            var millisecondsPerDay = 1000 * 60 * 60 * 24;
+            var millisBetween = startDay.getTime() - endDay.getTime();
+            var days = millisBetween / millisecondsPerDay;
+            var diffdate = Math.floor(days);
+            if (reminderdate > duedate) {
+                $.growl.error({ title: "Error", message: "Reminder Date Must be less than Due date.", size: 'large' });
+                $("#txtReminder").val('');
+                return Isvalid = false;
+            }
+            if (diffdate <= 0 || diffdate > 15) {
+                $.growl.error({ title: "Error", message: "Reminder Date should be 15 day Prior to DueDate.", size: 'large' });
+                $("#txtReminder").val('');
+                return Isvalid = false;
+            }
+            else {
+                return Isvalid = true;
+            }
+            return Isvalid;
+        }
+    });
+
+    function Timecheck(control) {
+        
+        var remainderdate = $("#txtReminder").val();
+        var duedate = $("#txtDate").val();
+
+        var Isvalid = true;
+        //getHour24(control);
+        var starttime = ($("#ddlStartTime").val());
+        var remaindertime = ($("#ddlReminderTime").val());
+
+        //var time = document.getElementById('txttime').value;
+        var hrs = Number(remaindertime.match(/^(\d+)/)[1]);
+        var mnts = Number(remaindertime.match(/:(\d+)/)[1]);
+        var format = remaindertime.match(/\s(.*)$/)[1];
+        if (format == "PM" && hrs < 12) hrs = hrs + 12;
+        if (format == "AM" && hrs == 12) hrs = hrs - 12;
+        var hours = hrs.toString();
+        var minutes = mnts.toString();
+        if (hrs < 10) hours = "0" + hours;
+        if (mnts < 10) minutes = "0" + minutes;
+        if (duedate != "" && remainderdate != "") {
+            if (duedate == remainderdate) {
+                
+                if (starttime < hours) {
+                    alert("Remainder time must be less than start time");
+                    $("#ddlReminderTime").focus();
+                    return Isvalid = false;
+                }
+            }
+        }
+        else {
+            return Isvalid = true;
+        }
+        return Isvalid;
+    }
+    $("#btnSave").click(function (e) {
+        if ($("#ddlStatus").val() == "select") {
+            alert("Please Select Status");
+            e.preventDefault();
+        }
+        if ($("#ddlPriority").val() == "select") {
+            alert("Please Select Priority");
+            e.preventDefault();
+        }
+        var duedate = $("#txtDate").val();
+        var reminderdate = $("#txtReminder").val();
+        if (duedate == "") {
+            $("#txtReminder").val('');
+        }
+        if (duedate != "" && reminderdate == "") {
+            //alert("please set reminder date");
+            $.growl.error({ title: "Error", message: "Please Set Reminder Date.", size: 'large' });
+            e.preventDefault();
+        }
+        if (duedate == "" && reminderdate != "") {
+            // alert("please set due date");
+            $.growl.error({ title: "Error", message: "Please Set Due Date.", size: 'large' });
+            e.preventDefault();
+        }
+        Isvalid = true;
+        return Validate(this.form);
+
+
+    });
+</script>
+
+
+@*<script language="javascript" type="text/javascript">
+
+
+    $(document).on("click", "#btnSave", function (e) {
+        
+        IsFormValid();
+        if (!IsFormValid()) {
+            e.preventDefault();
+            e.stopPropagation();
+            alert("Please Provide Complete Details");
+        }
+
+    })
+    function IsFormValid() {
+
+        var isValid = true;
+        if ($("#ddlHistoryType").val() == "") {
+            $("#ddlHistoryType").parent().addClass("state-error");
+            isValid = false;
+        } else {
+            $("#ddlHistoryType").parent().removeClass("state-error");
+            $("#ddlHistoryType").parent().addClass("state-success");
+        }
+
+        return isValid;
+    }
+    </script>*@

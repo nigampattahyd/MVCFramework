@@ -1,0 +1,362 @@
+﻿@model CRMHub.EntityFramework.role
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+}
+
+<div class="widget">
+    <div class="widget-header bordered-bottom bordered-themesecondary">
+        <i class="widget-icon fa fa-tags themesecondary"></i>
+        <span class="widget-caption themesecondary">Roles</span>
+    </div><!--Widget Header-->
+    <div class="widget-body  no-padding">
+        <div class="tickets-container">
+            <div class="row">
+                <!-- col-sm-6 -->
+                <div id="pnlSrchCriteria">
+                    <div class="col-sm-3">
+                        <div class="input-group">
+                            @*<input type="text" class="form-control" placeholder="Search these ventures">*@
+                            @Html.TextBoxFor(m => m.Keyword, new { @id = "txtRoles", @class = "form-control", @placeholder = "Search these Roles", @maxlength = "100" })
+                            <span class="input-group-btn">
+                                <span id="searchclear" class="glyphicon glyphicon-remove-circle" title="Clear Search"></span>
+                                <button class="btn btn-default" type="button" id="btnSearchRole"><i class="glyphicon glyphicon-search"></i></button>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-sm-9" style="text-align:right;">
+                        <ul>
+                            <li class="btn btn-flat btn-labeled btn-primary">
+
+                                <a style="color: #fff; text-decoration: none; padding: 0px; font-weight: normal" href="@Url.Action("CreateRole", "Roles")" id="lnkAddnew">
+                                    <span class="btn-label icon  fa fa-plus-circle" style="margin-right:6px;"> </span>
+                                    Add New
+                                </a>
+                            </li>
+                            <li class="btn btn-flat btn-labeled btn-primary">
+                                <a style="color: #fff; text-decoration: none; padding: 0px; font-weight: normal" id="DeleteRoles" onclick="deleteSelectedRole()">
+                                    <span class="btn-label icon  fa  fa-trash-o" style="margin-right:6px;"> </span>
+                                    Delete
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-xs-12">
+                    <div class="table-primary table-striped">
+                        <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="tblRoles" style="width:100%;">
+                            <thead>
+                                <tr>
+                                    <th width="39">
+                                        <input type="checkbox" id="chkHeader" onclick="SelectAll()" />
+                                    </th>
+                                    <th data-class="expand"><i class="fa fa-user-secret"></i> Role</th>
+                                    <th data-hide="phone"><i class="fa fa-info-circle"></i> Description</th>
+                                    <th data-hide="phone"><i class="fa fa-hand-o-right"></i> Status</th>
+                                    <th><i class="fa fa fa-cog"></i>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        var x = '@ViewBag.Created';
+        var y = '@ViewBag.Updated';
+        if (x == 'Created') {
+            $.growl.notice({ title: "Success", message: "Role Created Successfully", size: 'large' });
+        }
+        if (y == 'Updated') {
+            $.growl.notice({ title: "Success", message: "Role Updated Successfully", size: 'large' });
+        }
+        BindRoles();
+        $('html').keyup(function (e) {
+            if (e.keyCode == 8) {
+                $('#btnSearchRole').click();
+                if ($("#txtRoles").val() == "") {
+                    $('#searchclear').hide();
+                }
+            }
+        });
+    });
+
+
+    function BindRoles() {
+        var responsiveHelper = undefined;
+        var breakpointDefinition = {
+            desktop: Infinity,
+            tablet: 1024,
+            tabletlandscape: 768,
+            phone: 480
+        };
+        var tableElement = $('#tblRoles');
+        tableElement.dataTable({
+            autoWidth: false,
+            preDrawCallback: function () {
+                if (!responsiveHelper) {
+                    responsiveHelper = new ResponsiveDatatablesHelper(tableElement, breakpointDefinition);
+                }
+            },
+            rowCallback: function (nRow) {
+                responsiveHelper.createExpandIcon(nRow);
+            },
+            drawCallback: function (oSettings) {
+                responsiveHelper.respond();
+            },
+            //"order": [[$("#HD_SortValue").val(), "" + $("#HD_SortDirection").val() + ""]],
+            "aLengthMenu": [[10, 25, 50, 100], [10, 25, 50, 100]],
+            //"iDisplayStart": parseInt($("#HD_PageIndex").val()),
+            //"iDisplayLength": parseInt($("#HD_PageSize").val()),   txtOwnership
+            "pagingType": "full_numbers",
+            //"processing": true,
+            "serverSide": true,
+            "bFilter": false,
+            "sAjaxSource": "../Roles/getRoles",
+            'columnDefs': [{ 'orderable': false, 'targets': 0 }], // hide sort icon on header of first column
+            'aaSorting': [[1, 'asc']], // start to sort data in second column
+
+            "fnServerParams": function (aoData) {
+
+                aoData.push(
+
+                    { "name": "Keyword_RoleName", "value": "" + $("#txtRoles").val() + "" }
+                    );
+            },
+            "fnServerData": function (sSource, aoData, fnCallback) {
+                $.ajax({
+                    "dataType": 'json',
+                    "contentType": "application/json; charset=utf-8",
+                    "type": "GET",
+                    "url": sSource,
+                    "data": aoData,
+                    "success":
+                                function (msg) {
+                                    fnCallback(msg);
+                                }
+                });
+            },
+            "asStripeClasses": ['odd gradeX', 'even gradeC'],
+            "aoColumnDefs": [
+              {
+                  "targets": [0], "visible": true, "bSortable": false, "mDataProp": "RoleId",
+                  "render": function (data, type, row) {
+                      return "<input name=\"chkItem\" class =\"case\" type=\"checkbox\" onclick=\"SelectIndividual()\"  id=\"chkRow_" + row["RoleId"] + "\"data-val-1=\"" + row["RoleId"] + "\" />";
+                  }
+              },
+
+                {
+                    "targets": [1], "visible": true, "bSortable": true, "mDataProp": "RoleName",
+                    "render": function (data, type, row) {
+                        return "<a href=\"#\" onclick=\"return OpenRolesDetail('" + row["RoleId"] + "')\">" + row["RoleName"] + "</a>";
+                    }
+                },
+
+                  { "targets": [2], "visible": true, "bSortable": true, "mDataProp": "Description" },
+                { "targets": [3], "visible": true, "bSortable": true, "mDataProp": "ActiveStatus" },
+
+                {
+                    "targets": [4], "visible": true, "bSortable": false,
+                    "render": function (data, type, row) {
+                        return "<span class=\"fa fa-trash\" style='font-size: 15px;cursor:pointer;' onclick=\"deleteRole('" + row["RoleId"] + "');\"></span>";
+                    }
+                },
+
+            ],
+            "fnDrawCallback": function (oSettings) {
+            }
+        }).api();
+    }
+
+    //$("#chkHeader").click(function () {
+    //    $('.case').prop("checked", this.checked);
+    //});
+
+    //$('#tblRoles tbody').click(function () {
+    //    if ($('#tblUsers input[name="chkItem"]:checked').length == $('#tblUsers input[name="chkItem"]').length) {
+    //        $("#chkHeader").prop("checked", true);
+    //    } else {
+    //        $("#chkHeader").prop("checked", false);
+    //    }
+    //});
+
+    function SelectIndividual() {
+        
+        if ($('#tblRoles input[name="chkItem"]:checked').length == $('#tblRoles input[name="chkItem"]').length) {
+            $("#chkHeader").prop("checked", true);
+        } else {
+            $("#chkHeader").prop("checked", false);
+        }
+    }
+
+    function SelectAll() {
+        
+        if ($("#chkHeader").prop("checked") == true) {
+            $('.case').prop("checked", true);
+        }
+        else if ($("#chkHeader").prop("checked") == false) {
+            $('.case').prop("checked", false);
+        }
+
+    }
+
+    function deleteSelectedRole() {
+
+        if ($('#tblRoles input[name="chkItem"]:checked').length > 0) {
+            var isvalid = false;
+            var Alertmsg = 'Are you sure you want to delete this Role(s)?';
+            bootbox.confirm(Alertmsg, function (flag) {
+                
+                if (flag == true) {
+                    var RoleDelete = [];
+
+                    $("#tblRoles input:checkbox:checked").each(function (i) {
+                        if (this.id != "chkHeader") {
+                            var RoleId = $(this).attr("data-val-1");
+
+                            RoleDelete.push(new RolesList(RoleId));
+                        }
+                    });
+                    var postData = JSON.stringify(RoleDelete);
+                    $.ajax({
+                        url: "../Roles/DeleteRoles",
+                        type: "POST",
+                        contentType: 'application/json',
+                        dataType: 'json',
+                        async: false,
+                        data: postData,
+                        success: function (data) {
+
+                            if (data == true) {
+                                $.growl.notice({ title: "Success", message: "Roles Deleted Successfully", size: 'large' });
+                                $("#tblRoles").dataTable().fnDestroy();
+                                document.location.href = document.location.href;
+                                // location.reload();
+                                BindUsers();
+                            }
+                            else {
+                                $.growl.error({ title: "Fail", message: "Roles Not Deleted .", size: 'large' });
+                            }
+                        },
+                        error: function () {
+
+                        }
+                    });
+                    return isvalid;
+                }
+
+
+
+                else if (flag == false) {
+
+                    return isvalid = true;
+                }
+                return isvalid;
+            });
+            return isvalid;
+        }
+        else
+            $.growl.error({ title: "Fail", message: "No Role selected!.", size: 'large' });
+    }
+
+    $('#btnSearchRole').click(function () {
+
+        $('#searchclear').show();
+        $('#loading').css('display', 'block');
+        $("#tblRoles").dataTable().fnDestroy();
+        BindRoles();
+
+        $('#tblRoles').on('length.dt', function (e, settings, len) {
+
+            $('#loading').css('display', 'block');
+        });
+
+        $('#tblRoles').on('page.dt', function () {
+
+            $('#loading').css('display', 'block');
+        });
+
+        $("#searchclear").click(function () {
+            $("#txtRoles").val('');
+            $('#btnSearchRole').click();
+            $('#searchclear').hide();
+        });
+
+    });
+
+
+
+    function RolesList(RoleId) {
+        this.RoleId = RoleId;
+    }
+
+
+    function deleteRole(RoleId) {
+
+        var isvalid = false;
+        var Alertmsg = 'Are you sure you want to delete this Role ?';
+        bootbox.confirm(Alertmsg, function (flag) {
+            
+            if (flag == true) {
+                
+                isvalid = true;
+                $.ajax({
+                    url: "../Roles/DeleteRole",
+                    type: "POST",
+                    async: false,
+                    data: { RoleId: RoleId },
+                    success: function (data) {
+                        // alert(data);
+                        if (data == true) {
+                            $.growl.notice({ title: "Success", message: "Role Deleted Successfully", size: 'large' });
+                            $("#tblRoles").dataTable().fnDestroy();
+                            document.location.href = document.location.href;
+                            //location.reload();
+                            BindRoles();
+                        }
+                        else {
+                            $.growl.error({ title: "Fail", message: "Role Not Deleted .", size: 'large' });
+                        }
+                    },
+                    error: function () {
+
+                    }
+                });
+                return isvalid;
+            }
+
+            else if (flag == false) {
+                return isvalid = true;
+            }
+            return isvalid;
+        });
+        return isvalid;
+      
+    }
+
+
+</script>
+
+@*<script type="text/javascript">
+
+        function OpenRolesDetail(RoleId) {
+            //Showloading();
+            window.location = "EditRole?RoleId=" + RoleId;
+        }
+    </script>*@
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $("#Manage").addClass("open active");
+        $('.mm-text').closest('li').each(function () {
+            $(this).removeClass('active');
+        });
+        $('.mm-text').eq(2).closest('li').addClass('active');
+    });
+</script>

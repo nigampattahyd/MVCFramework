@@ -1,0 +1,368 @@
+﻿@model CRMHub.ViewModel.ActivityModel
+@{
+    ViewBag.Title = "CompanyActivity";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+}
+
+
+
+
+@using (Html.BeginForm("CompanyActivity", "ManageCompany", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+
+
+    <div class="widget">
+        <div class="widget-header bordered-bottom bordered-themesecondary">
+            <i class="widget-icon fa fa-user themesecondary"></i>
+            <span class="widget-caption themesecondary">Create Activity</span>
+        </div><!--Widget Header-->
+        <div class="widget-body">
+
+
+
+            <div class="row">
+                <div class="col-sm-6">
+                    <label class="control-label">
+                        <asp:Label ID="lblMessage" runat="server" ForeColor="Red"></asp:Label>
+                    </label>
+
+
+                </div>
+                <div class="col-sm-6" style="text-align:right; padding-bottom:10px;">
+                    <button class="btn btn-flat btn-labeled btn-primary" id="btnSave">
+                        <i class="btn-label icon fa fa-save"></i>Save
+                    </button>
+                    <a class="btn btn-flat btn-labeled btn-primary" href="@Url.Action("ActivitygridBind", "ManageCompany")">
+                        <i class="btn-label icon fa fa-backward"> </i>
+                        Back
+                    </a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="col-sm-4">
+                        <div class="form-group no-margin-hr">
+                            <label class="control-label">Module :<span style="color: red">*</span></label>
+                            @Html.DropDownListFor(m => m.activity.ModuleID, new SelectList(Model.ListModuletype, "ID", "AccountTypeName"), new { @id = "ddlModule", @class = "form-control input-sm", @data_val_required = "Module Type" })
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+
+                    <div class=" col-sm-4">
+                        <div class="form-group no-margin-hr">
+                            <label class="control-label">Type :<span style="color: red">*</span></label>
+                            @Html.DropDownListFor(m => m.activity.ActivityTypeID, new SelectList(Model.TypeList, "Aid", "name"),"Select", new { @id = "ddlHistoryType", @class = "form-control input-sm", @data_val_required = "Select Type" })
+                            @Html.ValidationMessageFor(m => m.activity.ActivityTypeID, "", new { @class = "text-danger" })
+                        </div>
+
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group no-margin-hr">
+                            <label class="control-label">Priority :<span style="color: red">*</span></label>
+                            @Html.DropDownListFor(m => m.activity.PriorityID, new SelectList(Model.ListPriority, "ID", "PriorityName"),"Select", new { @id = "ddlPriority", @class = "form-control input-sm", @data_val_required = "Select Priority" })
+                            @Html.ValidationMessageFor(m => m.activity.PriorityID, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group no-margin-hr">
+                            <label class="control-label">Status :<span style="color: red">*</span></label>
+                            @Html.DropDownListFor(m => m.activity.StatusID, new SelectList(Model.StatusList, "ID", "StatusName"),"Select", new { @id = "ddlStatus", @class = "form-control input-sm", @data_val_required = "Select Status" })
+                            @Html.ValidationMessageFor(m => m.activity.StatusID, "", new { @class = "text-danger" })
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="col-sm-4">
+                        <div class="form-group no-margin-hr">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <label class="control-label">Due Date :<span style="color: red">*</span></label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="input-group datepicker1">
+                                        @Html.TextBoxFor(m => m.activity.DueDate, "{0:MM/dd/yyyy}", new { @class = "form-control input-sm", @maxlength = 12, @id = "txtDate", @validate = "Required", @data_val_required = "Select Due Date" })
+                                        <span class="input-group-addon">
+                                            <i class="fa fa-calendar"></i>
+                                        </span>
+                                    </div>
+                                    @Html.ValidationMessageFor(m => m.activity.DueDate, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group no-margin-hr">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <label class="control-label">Reminder Date :<span style="color: red">*</span></label>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="input-group datepicker2">
+                                        @Html.TextBoxFor(m => m.activity.RemindDate, new { @class = "form-control input-sm", @id = "txtReminder", @validate = "Required", @data_val_required = "Select Reminder Date" })
+                                        <span class="input-group-addon">
+                                            <i class="fa fa-calendar"></i>
+                                        </span>
+                                    </div>
+                                    @Html.ValidationMessageFor(m => m.activity.RemindDate, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group no-margin-hr" id="Td12">
+                            <label class="control-label" id="lblAssignTo">Assigned to :<span style="color: red">*</span></label>
+                            <div id="Table1" class="input-group">
+                                @Html.HiddenFor(m => m.activity.AssignedTo, new { @id = "hdassignedId" })
+                                @Html.TextBoxFor(m => m.activity.AssignedName, new { @id = "txtAssignedname", @class = "form-control input-sm", @maxlength = "50", @data_val_required = "Select Assigned To", @placeholder = "Type to search Users" })
+                                <span class="input-group-addon" type=" button" style="cursor:pointer;">
+                                    <i class="fa fa-search"></i>
+                                </span>
+                            </div>
+                            @Html.ValidationMessageFor(m => m.activity.AssignedName, "", new { @class = "text-danger" })
+                            <span class="text-danger" id="spnInvalidVenture" style="display:none;">Invalid User</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+
+                <div class="col-sm-12">
+                    <div class="form-group no-margin-hr">
+                        <label class="control-label">Comment :</label>
+                        @Html.TextAreaFor(m => m.activity.Notes, new { @id = "txtHistoryDetail", @class = "textEditor" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+
+
+
+<div class="modal fade" id="myModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+
+                <h4 class="modal-title">Contact List</h4>
+            </div>
+            <div class="modal-body">
+
+                <div class="row">
+                    <div style="text-align:left;font-size:12px;padding:5px">Note : Click Contact Name To Select Record.</div>
+                    <div class="col-sm-12">
+
+                        <div class="table-primary table-striped" id="tblContactList">
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="myCompanyModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Company List</h4>
+            </div>
+            <div class="modal-body">
+
+                <div class="row">
+                    <div style="text-align:left;font-size:12px;padding:5px">Note : Click Company Name To Select Record.</div>
+                    <div class="col-sm-12">
+
+                        <div class="table-primary table-striped" id="tblCompanyList">
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    var dateToday = new Date();
+
+    var currentDate = (dateToday.getMonth() + 1) + '/' + dateToday.getDate() + '/' + dateToday.getFullYear();
+    $(function () {
+        var dateToday = new Date();
+
+        var currentDate = (dateToday.getMonth() + 1) + '/' + dateToday.getDate() + '/' + dateToday.getFullYear();
+        
+        var remainderdate = $("#txtReminder").val();
+        var duedate = $("#txtDate").val();
+        $(".datepicker1").datetimepicker({
+            format: 'L',
+        }).on('dp.change', function (e) {
+            
+            remainderdate = $("#txtReminder").val();
+            $('.datepicker1').data("DateTimePicker").minDate(currentDate);
+            var date1 = new Date(remainderdate);
+            var date2="";
+            if (e.date != false) {
+                date2 = new Date(e.date.format('l'));
+            }
+          
+            if (date1 > date2) {
+                if (date2 != "") {
+                    $('.datepicker2').data("DateTimePicker").maxDate(date2);
+                }
+                else {
+                    $('.datepicker2').data("DateTimePicker").maxDate(false);
+                }
+                
+                $('.datepicker2').data("DateTimePicker").minDate(currentDate);
+
+            }
+
+        });
+
+        $(".datepicker2").datetimepicker({
+            format: 'L',
+        }).on('dp.change', function (e) {
+            
+            remainderdate = $("#txtReminder").val();
+            duedate = $("#txtDate").val();
+            if (duedate == "") {
+                //$('.datepicker2').data("DateTimePicker").maxDate(duedate);
+                $('.datepicker2').data("DateTimePicker").minDate(currentDate);
+                $('.datepicker2').data("DateTimePicker").maxDate(false);
+         
+            }
+            else {
+                $('.datepicker2').data("DateTimePicker").maxDate(duedate);
+                $('.datepicker2').data("DateTimePicker").minDate(currentDate);
+            }
+
+
+        });
+    });
+    $(".datepicker2").click(function () {
+        
+        remainderdate = $("#txtReminder").val();
+        duedate = $("#txtDate").val();
+        if (duedate != "") {
+            $('.datepicker2').data("DateTimePicker").maxDate(duedate);
+        }
+       
+        $('.datepicker2').data("DateTimePicker").minDate(currentDate);
+        $(".datepicker2").datetimepicker({
+            format: 'L',
+        }).on('dp.change', function (e) {
+            
+            remainderdate = $("#txtReminder").val();
+            duedate = $("#txtDate").val();
+            if (duedate == "") {
+                //$('.datepicker2').data("DateTimePicker").maxDate(duedate);
+                $('.datepicker2').data("DateTimePicker").minDate(currentDate);
+            }
+            else {
+                $('.datepicker2').data("DateTimePicker").maxDate(duedate);
+                $('.datepicker2').data("DateTimePicker").minDate(currentDate);
+            }
+        });
+    })
+
+    $("#ddlReminderTime").prop("disabled", true);
+    $("#ddlStartTime").prop("disabled", true);
+    $(".textEditor").jqte();
+
+    $(document).ready(function () {
+
+        $("#Activities").addClass("active");
+     
+        $("#ddlStatus").val("1");
+    });
+    $("#ddlStatus").change(function () {
+        if ($("#ddlStatus").val() != "1" || $("#ddlStatus").val()!=0) {
+            $("#ddlStatus").val("1");
+            $.growl.warning({ title: "Warning!", message: "Completed not allowed", size: 'small' });
+        }
+    })
+    $(function () {
+
+        $("#txtAssignedname").autocomplete({
+            source: function (request, response) {
+                var moduleid = $("#ddlModule").val();
+                var moduleobj = {};
+                moduleobj.prefix = request.term;
+                moduleobj.moduleid = moduleid;
+                $.ajax({
+                    url: '../ManageCompany/AutoComplete/',
+                    data: JSON.stringify(moduleobj),
+                    dataType: "json",
+                    type: "POST",
+                    contentType: "application/json; charset=utf-8",
+                    success: function (data) {
+
+                        response($.map(data, function (item) {
+                            if (item.LastName != null) {
+                                return { label: item.FirstName + ' ' + item.LastName, value: item.FirstName + ' ' + item.LastName, value1: item.UserId };
+                            }
+                            else {
+                                return { label: item.FirstName, value: item.FirstName, value1: item.UserId };
+                            }
+
+                        }))
+                    },
+                    error: function (response) {
+                        //alert(response.responseText);
+                    },
+                    failure: function (response) {
+                        //alert(response.responseText);
+                    }
+                });
+            },
+            select: function (e, i) {
+
+                //$("#txtVentureName").val(i.item.label);
+                $("#hdassignedId").val(i.item.value1);
+                //alert($("#objMentor_VentureId").val());
+            },
+            minLength: 1,
+            change: function (event, ui) {
+
+                if (!ui.item) {
+                    this.value = '';
+                    $('#spnInvalidVenture').show();
+                } else {
+                    // Populate your hidden input.
+                    $('#spnInvalidVenture').hide();
+                }
+            }
+        });
+    });
+
+
+</script>
+
+
+
+
+
+
+
+

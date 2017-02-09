@@ -1,0 +1,155 @@
+﻿@model CRMHub.ViewModel.InvoiceModel
+
+
+@using (Html.BeginForm("MakeInvoicePayment", "Invoice", FormMethod.Post))
+{
+    <html>
+    <body>
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+
+            @*<h5 class="modal-title">Payment&nbsp;Details&nbsp;of&nbsp;@TempData["InvoiceNo"]</h5>*@
+
+            <h5 class="modal-title">Customer&nbsp;:&nbsp;@TempData["Customer"]</h5>
+        </div>
+
+
+
+        <div class="modal-body">
+
+            <div class="row">
+                <div class="col-sm-12 col-xs-12">
+                    <div class="page-header-breadcrumb">
+                        <label class="control-label" id="lblMessage"></label>
+                        <ul class="table-nav-item" style="float: right; margin-bottom:5px;">
+
+
+                            <li>
+                                <button class="btn btn-flat btn-labeled btn-primary" type="submit" id="btnPay">
+                                    <span class="btn-label icon fa fa-save"></span>Pay&nbsp;Now
+                                </button>
+                            </li>
+
+                     
+
+
+                        </ul>
+
+                    </div>
+                </div>
+            </div>
+            <span id="errorsymbol" style="color:red;display:none;margin-left:5px;" class="fa fa-exclamation-circle"></span><div id="ErrorMessages" style="margin-left:20px;color:red;font-size:15px;margin-top:-19px">
+
+            </div>
+
+            <div class="row">
+
+                <div class="col-sm-12">
+                    @Html.HiddenFor(m => m.PaymentObj.InvoiceID, new { @id = "hdInvoiceId" })
+
+                    @Html.Hidden("hdLocation", (string)ViewBag.location)
+                    <div style="width:100px;">
+                        <div id="loading" style="display:none">
+                            <img id="loading-image" src="~/Content/assets/images/loader.gif" />
+                        </div>
+                        @*<h4 class="modal-title">@ViewBag.MessageInvNo</h4>*@
+                    </div>
+                    @*<table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="jq-datatables-ContactPopup" style="width:100%">*@
+                    <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="jq-datatables-PaymentPopup" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th data-hide="phone">Invoice&nbsp;No</th>
+                                <th data-class="expand" style="text-align:left">Invoice&nbsp;Amount&nbsp;($)</th>
+                                <th data-hide="phone" style="text-align:left">Balance&nbsp;Amount&nbsp;($)</th>
+                                <th data-hide="phone">Due&nbsp;Date</th>
+
+                                <th data-hide="phone">Payment&nbsp;Type</th>
+                                <th data-hide="phone">Amount&nbsp;Pay&nbsp;($)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(m => m.invoice.InvoiceNo)
+                                    @Html.HiddenFor(m => m.invoice.InvoiceNo)
+                                    @Html.HiddenFor(m => m.invoice.CustomerID)
+                                </td>
+                                <td style="text-align: right;">
+                                    @Html.DisplayFor(m => m.invoice.GrandTotal)
+                                    @Html.HiddenFor(m => m.invoice.GrandTotal)
+                                </td>
+                                <td style="text-align: right;">
+                                    @Html.DisplayFor(m => m.invoice.BalanceAmount)
+                                    @Html.HiddenFor(m => m.invoice.BalanceAmount, new { @id = "hdBalAmount" })
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(m => m.invoice.DueDate, "{0:MM/dd/yyyy}")
+                                    @Html.HiddenFor(m => m.invoice.DueDate)
+                                </td>
+
+                                <td>
+                                    @Html.DropDownListFor(m => m.invoice.Paymenttype, new List<SelectListItem>
+                                                                    {
+                                                                    new SelectListItem{Text="Cash",Value="1"},
+                                                                    new SelectListItem{Text="Cheque",Value="2"}
+                                                                    }, new { id = "ddl_PaymentType", @class = "form-control input-sm", @TabIndex = "14" })
+                                </td>
+                                <td style="width: 15%;">
+                                    @Html.TextBoxFor(m => m.invoice.AmountPaid, new { @id = "txtiAmtPaid", @class = "form-control input-sm", @MaxLength = "50",@title="Please enter Amount", @placeholder = Model.invoice.BalanceAmount,onkeypress = "return onlynumbers(event,this);" })
+                                </td>
+                                @Html.HiddenFor(m => m.invoice.InvoiceID, new { @id = "hdInvoiceId" })
+                            </tr>
+
+
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
+}
+
+<script>
+    $("#btnPay").click(function (e) {       
+        var resultreturn = true;
+        var balamount = $('#hdBalAmount').val();
+        var AmountPay = $('#txtiAmtPaid').val();
+        if (AmountPay != "")
+        {
+            if (parseFloat(AmountPay) > parseFloat(balamount)) {
+                $.growl.error({ title: "Error", message: "Paying Amount Should be Less than Balance Amount", size: 'large' });
+                $(txtiAmtPaid).val('');
+                resultreturn = false;
+                e.preventDefault();
+                //return false;
+            }
+        }
+        else
+        {
+            $.growl.error({ title: "Error", message: "Please Enter alteast one Invoice Amount to pay", size: 'large' });
+            resultreturn = false;
+            e.preventDefault();
+        }
+        return resultreturn;
+
+       // return false;
+    });
+
+
+    function onlynumbers(evt) {
+        var charCode = (evt.which) ? evt.which : event.keyCode
+        if (charCode == 43 || charCode == 32 || charCode == 40 || charCode == 41 || charCode == 46)
+            return true;
+        else if (charCode > 31 && (charCode < 45 || charCode > 57 || charCode == 47 ))
+            return false;
+
+        return true;
+    }
+
+
+
+</script>

@@ -1,0 +1,974 @@
+﻿@model CRMHub.EntityFramework.Custom_Manage_Master
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#txtDefaultValue').bind("cut copy paste", function (e) {
+            e.preventDefault();
+        });
+
+
+        $('#tblCustomFields').dataTable();
+    }
+    );
+</script>
+
+
+
+@using (Html.BeginForm("AddEditCustomFields", "CustomFields", FormMethod.Post, new { id = "PostFormId" }))
+{
+
+
+    <div id="content-wrapper">
+
+        <div id="CustomBootstrapAlertBox">
+        </div>
+        <div class="row">
+
+            <div class="panel">
+
+                <div class="panel-heading">
+                    <div class="row">
+                        <!-- Page header, center on small screens -->
+                        <h1 class="col-xs-6 col-sm-4 text-left text-left-sm panel-title"><i class="fa fa-users page-header-icon"></i>&nbsp; Custom Field Detail</h1>
+                        <div class="col-xs-6 col-sm-8">
+                            <div class="row">
+                                <div class="pull-right">
+                                    @*<a href="#" class="btn btn-flat btn-labeled btn-primary" tabindex="-1"
+                                        data-toggle="modal" data-target="#uidemo-modals-alerts-info"><span class="btn-label icon fa fa-question-circle"></span>Help</a>*@
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+
+
+                <!--   <hr class=" visible-xs no-grid-gutter-h">-->
+                <div class="panel-body">
+                    <div class="row">
+
+                        <div class="row" id="divtohide" style="text-align:right">
+
+                            <div class="col-sm-12">
+                                <button class="btn btn-flat btn-labeled btn-primary" id="btnSave">
+                                    <span class="btn-label icon fa fa-save"></span>
+                                    Save
+                                </button>
+
+
+                                @*<div class="btn btn-flat btn-labeled btn-primary">
+                                        @Html.ActionLink("Back", "ViewCustomFields", "CustomFields", new { @id = "LnkBack", @style = "color:#fff; text-decoration:none;" })
+                                        <span class="btn-label icon fa fa-backward"> </span>
+                                    </div>*@
+                                <a style="color: #fff; text-decoration: none; padding: 0px; font-weight: normal" class="btn btn-flat btn-labeled btn-primary" href="@Url.Action("ViewCustomFields", "CustomFields")">
+                                    <span class="btn-label icon fa fa-backward" style="margin-right:6px;"> </span>
+                                    Back
+                                </a>
+                            </div>
+                        </div>
+
+
+                        <span id="errorsymbol" style="color:red;display:none;margin-left:5px;" class="fa fa-exclamation-circle"></span><div id="ErrorMessages" style="margin-left:20px;color:red;font-size:15px;">
+
+                        </div>
+
+                        <div class="panel">
+
+                            <div class="row">
+
+
+                                <!-- Tabs -->
+                                <div class="col-sm-12" id="bs-tabdrop-tab3" style="padding-top:10px;">
+
+
+                                    <asp:Label ID="lblmessage" runat="server" Visible="false"></asp:Label>
+                                    <div class="col-sm-3">
+                                        <div class="form-group no-margin-hr">
+                                            <label class="control-label">Module :</label>
+                                            <span style="color:red">*</span>
+                                            @Html.TextBoxFor(m => m.Module, new { @id = "txtModule", @class = "form-control input-sm", @maxlength = "50", @validate = "Required", @data_val_required = "Module Name" })
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group no-margin-hr">
+                                            <label class="control-label">Column Id :</label>
+
+                                            @Html.TextBoxFor(m => m.Column_Id, new { @id = "txtColumnId", @class = "form-control input-sm", @maxlength = "50", @readonly = "true" })
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group no-margin-hr">
+                                            <label class="control-label">Actual Column Name :</label>
+
+                                            @Html.TextBoxFor(m => m.ActualColumnName, new { @id = "txtActualColumnName", @class = "form-control input-sm", @maxlength = "50", @readonly = "true" })
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group no-margin-hr">
+                                            <label class="control-label">Column Label : <span style="color:red">*</span></label>
+
+                                            @Html.TextBoxFor(m => m.Column_Label, new { @id = "txtColumnLabel", @class = "form-control input-sm", @maxlength = "50", @validate = "Required", @data_val_required = "Column Label", @onblur = "return ColumnLabelexists(this);" })
+                                        @Html.HiddenFor(m => m.Column_Label, new { @id = "HidColumnLabel" })
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group no-margin-hr">
+                                            <label class="control-label">Column Type :</label>
+                                            @Html.DropDownListFor(m => m.Column_Type, new List<SelectListItem>
+                                                 {
+                                                   new SelectListItem{Text="Text Box",Value="textbox"},  
+                                                  new SelectListItem{ Text="Text Area", Value = "textarea" },
+                                                  new SelectListItem{ Text="Numeric", Value = "numeric" },
+                                                  new SelectListItem{ Text="Date", Value = "date" },
+                                                  //new SelectListItem{ Text="Check Box", Value = "checkbox" },
+                                                  new SelectListItem{ Text="Radio Button", Value = "radiobutton" },
+                                                  new SelectListItem{ Text="Drop Down", Value = "dropdown" },
+
+                                                 }, new { @id = "ddlColumnType", @class = "form-control input-sm" })
+
+
+                                        </div>
+                                        @*<a id="anhrAddOption" href="#" onclick="return OpenOptions();" title="Add/Edit Options" style="display: none;">Options</a>*@
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group no-margin-hr">
+                                            <label class="control-label">Column Description :</label>
+                                            @Html.TextBoxFor(m => m.Column_Description, new { @id = "txtDescription", @class = "form-control input-sm", @maxlength = "50" })
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group no-margin-hr">
+                                            <label class="control-label">Is Required :</label>
+                                            @Html.DropDownListFor(m => m.RequiredField, new List<SelectListItem>
+                                                 {
+                                                  new SelectListItem{ Text="YES", Value = "True" },
+                                                  new SelectListItem{ Text="NO", Value = "False",Selected = true  }
+                                                 }, new { @id = "ddlFieldRequiredorNot", @class = "form-control input-sm" })
+
+
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group no-margin-hr">
+                                            <label class="control-label">Mouse Hover Text:</label>
+
+                                            @Html.TextBoxFor(m => m.HoverText, new { @id = "txtHoverText", @class = "form-control input-sm", @maxlength = "50" })
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group no-margin-hr">
+                                            <label class="control-label">Status :</label>
+                                            @Html.DropDownListFor(m => m.IsActive, new List<SelectListItem>
+                                                 {
+                                                  new SelectListItem{ Text="Active", Value = "True" },
+                                                  new SelectListItem{ Text="In-Active", Value = "False" }
+                                                 }, new { @id = "ddlStatus", @class = "form-control input-sm" })
+
+
+                                        </div>
+                                    </div>
+
+                                    
+                                    
+                                    <div class="col-sm-3" id="defaultdivdate" style="display: none;">
+                                        <div class="input-group date">
+                                            <label class="control-label">Default Value :</label>
+                                            @Html.TextBoxFor(m => m.DefaultValue, new { @id = "txtDefaultValueDate", @class = "form-control", Name = "txtcustomdefaultdate", @placeholder = "Select Date", @readonly = true })
+                                        </div>
+                                    </div>
+                                 
+                                  
+                                    <div class="col-sm-3">
+                                        <div class="form-group no-margin-hr" id="defaultdiv">
+                                            <label class="control-label">Default Value :</label>
+
+                                            @Html.TextBoxFor(m => m.DefaultValue, new { @id = "txtDefaultValue", @class = "form-control", @maxlength = "50" })
+                                        </div>
+                                    </div>
+                                    @*<div class="col-sm-3" id="defaultdivdate" style="display: none;">
+                                        <div class="input-group date">
+                                            <label class="control-label">Default Value :</label>
+                                            @Html.TextBoxFor(m => m.DefaultValue, new { @id = "txtDefaultValueDate", @class = "form-control", Name = "txtcustomdefaultdate", @placeholder = "Select Date", @readonly = true })
+                                        </div>
+                                    </div>
+                                      
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group no-margin-hr" id="defaultdiv">
+                                            <label class="control-label">Default Value :</label>
+
+                                            @Html.TextBoxFor(m => m.DefaultValue, new { @id = "txtDefaultValue", @class = "form-control", @maxlength = "50" })
+                                        </div>
+                                    </div>*@
+
+
+
+
+                                    @*<div class="col-sm-3" id="defaultdivdate" style="display: none;">
+                                            <div class="input-group date">
+                                                <label class="control-label">Default Value :</label>
+                                                @Html.TextBoxFor(m => m.DefaultValue, new { @id = "txtDefaultValueDate", @class = "form-control", @placeholder = "Select Date" })
+                                            </div>
+                                        </div>*@
+                                    <div class="col-sm-3">
+                                        <div class="form-group no-margin-hr" id="maxdiv">
+                                            <label class="control-label">MaxLength:</label>
+
+                                            @Html.TextBoxFor(m => m.MaxLength, new { @id = "txtMaxLength", @class = "form-control numericmask", @maxlength = "50" })
+                                        </div>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                    <div class="col-sm-12" id="filter"></div>
+                                    @Html.HiddenFor(m => m.FieldId, new { @id = "HidFieldVal" })
+                                    <!-- col-sm-6 -->
+                                    <!-- col-sm-6 -->
+                                </div>
+                            </div>
+                        </div>
+                        @*To Load DropDown Options*@
+                        <div id="Loadoptions">
+
+                        </div>
+                        @*End Of DropDown Options*@
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+   
+
+}
+
+@*<script language="javascript" type="text/javascript">
+    $(window).load(function () {
+        $('#loading').hide();
+    });
+    $(document).ready(function () {
+
+        $('#txtDefaultValue').bind("cut copy paste", function (e) {
+            e.preventDefault();
+        });
+        var ColumnTypeVal = $('#ddlColumnType').val();
+        var FieldIdval = $('#HidFieldVal').val();
+        if (FieldIdval != "0") {
+            if (ColumnTypeVal == 'dropdown' || ColumnTypeVal == "checkbox" || ColumnTypeVal == "radiobutton") {
+                OpenOptions();
+            }
+        }
+        if (ColumnTypeVal == 'dropdown' || ColumnTypeVal == "checkbox" || ColumnTypeVal == "radiobutton") {
+            
+            $('#defaultdiv').attr("style", "display:none;");
+            $('#maxdiv').attr("style", "display:none;");
+          
+        }
+        if (ColumnTypeVal == 'date') {
+            $("#defaultdiv").hide();
+            $("#maxdiv").hide();
+            $("#defaultdivdate").attr("style", "display:block;");
+            $("#txtDefaultValueDate").datepicker();
+            $('#anhrAddOption').attr("style", "display:none;");
+        }
+        if (ColumnTypeVal == "numeric") {
+            var numeric = "true";
+            addnumbersonly(numeric);
+            $("#defaultdivdate").attr("style", "display:none;");
+            $('#anhrAddOption').attr("style", "display:none;");
+            $("#defaultdiv").attr("style", "display:block;");
+            $("#maxdiv").attr("style", "display:block;");
+        }
+        var FieldIdval = $('#HidFieldVal').val();
+    })
+    
+    function IsFormValid() {
+     
+
+        var isValid = true;
+        if ($("#txtModule").val() == "") {
+            $("#txtModule").parent().addClass("state-error");
+            isValid = false;
+        } else {
+            $("#txtModule").parent().removeClass("state-error");
+            $("#txtModule").parent().addClass("state-success");
+        }
+
+        return isValid;
+    }
+
+
+    $('#ddlColumnType').change(function () {;
+        
+        $('#txtDefaultValue').val("");
+
+
+        $('#txtDefaultValue').unbind("keypress");
+
+
+        $('#Loadoptions').empty();
+        var ColumnTypeVal = $('#ddlColumnType').val();
+        alert($('#ddlColumnType').val());
+        if (ColumnTypeVal == "textbox") {
+            $("#defaultdiv").attr("style", "display:block;");
+            $("#defaultdivdate").attr("style", "display:none;");
+            $("#maxdiv").attr("style", "display:block;");
+            $('#anhrAddOption').attr("style", "display:none;");
+
+        }       
+        if (ColumnTypeVal == "textarea") {
+            $("#defaultdiv").attr("style", "display:block;");
+            $("#defaultdivdate").attr("style", "display:none;");
+            $("#maxdiv").attr("style", "display:block;");
+            $('#anhrAddOption').attr("style", "display:none;");
+        }
+
+        if (ColumnTypeVal == 'dropdown' || ColumnTypeVal == "radiobutton") {
+            $('#anhrAddOption').attr("style", "display:block;");
+            $("#defaultdivdate").attr("style", "display:none;");
+            $("#defaultdiv").hide();
+            $("#maxdiv").hide();
+        }
+        if (ColumnTypeVal == "checkbox") {
+            $('#anhrAddOption').attr("style", "display:block;");
+            $("#defaultdivdate").attr("style", "display:none;");
+        }
+        //if (ColumnTypeVal == "numeric") {
+        //    $("#defaultdivdate").attr("style", "display:none;");
+        //    $('#anhrAddOption').attr("style", "display:none;");
+        //    $("#defaultdiv").attr("style", "display:block;");
+        //    $("#maxdiv").attr("style", "display:block;");
+        //}
+        if (ColumnTypeVal == "numeric") {
+            var numeric = "true";
+            addnumbersonly(numeric);
+            $("#defaultdivdate").attr("style", "display:none;");
+            $('#anhrAddOption').attr("style", "display:none;");
+            $("#defaultdiv").attr("style", "display:block;");
+            $("#maxdiv").attr("style", "display:block;");
+        }
+        if (ColumnTypeVal == 'date') {
+            $("#defaultdiv").hide();
+            $("#maxdiv").hide();
+            $("#defaultdivdate").attr("style", "display:block;");
+            $("#txtDefaultValueDate").datepicker();
+            $('#anhrAddOption').attr("style", "display:none;");
+        }
+
+
+        if (ColumnTypeVal == "textarea" || ColumnTypeVal == "numeric" || ColumnTypeVal == "textbox") {
+            $('#defaultdiv').attr("style", "display:block;");
+            $('#maxdiv').attr("style", "display:block;");
+        }
+        if (ColumnTypeVal == 'dropdown' || ColumnTypeVal == "checkbox" || ColumnTypeVal == "radiobutton") {
+            //$('#anhrAddOption').attr("style", "display:block;");
+            OpenOptions();
+        }
+        //else {
+        //    $('#anhrAddOption').attr("style", "display:none;");
+        //}
+    });
+
+
+
+   
+
+    function OpenOptions() {
+        
+        $('#Loadoptions').empty();
+        if (ColumnTypeVal == "dropdown" || ColumnTypeVal == "radiobutton") {
+            $('#Defdiv').attr("style", "display:none;");
+            $('#Maxdiv').attr("style", "display:none;");
+        }
+        var fid = $('#HidFieldVal').val();
+        //alert("fid = " + fid);
+        var ColumnTypeVal = $('#ddlColumnType').val();
+
+
+
+        //  var url = 'frmCustomDrpChkValues.aspx?fid=' + fid;  radiobutton checkbox
+
+        //if (fid == 0)
+        //    alert("Please Save this first.");
+        //else {
+        $.ajax({
+            url: "_BindDrpOptions",
+            type: "GET",
+            async: false,
+            data: { Fieldid: fid },
+            success: function (data) {
+
+                if (data != null) {
+
+                    $('#Loadoptions').empty();
+                    $('#Loadoptions').empty().append(data);
+
+                }
+            },
+            error: function () {
+
+            }
+        });
+        //   $('#myModalOptions').modal("show");
+        // }
+        //window.open(url, "Add/Edit Options", "resizable=0,width=700,height=750");
+
+        return false;
+    }
+
+
+   
+    $("#btnSave").click(function (e) {
+        var columnLabel = $('#HidColumnLabel').val();
+        var AccountName = $("#txtColumnLabel").val();
+        if ($('#ddlColumnType').val() == "date") {
+         
+            $("#txtDefaultValue").val($("#txtDefaultValueDate").val());
+        }
+        //else
+        //{
+        //    $("#txtDefaultValueDate").prop("disabled ", true)
+        //}
+        if (AccountName != "") {
+            var Columnlabel = $("#txtColumnLabel").val();
+            Columnlabel = jQuery.trim(Columnlabel);
+            var ModuleName = $("#txtModule").val();
+           // ModuleName = jQuery.trim(ModuleName);
+             var isValid = true;
+            $.ajax({
+                url: "IsColumnLabelExists",
+                type: "POST",
+                async: false,
+                data: { Columnlabel: Columnlabel, ModuleName: ModuleName },
+               // data: { Columnlabel: Columnlabel },
+                success: function (data) {
+
+                    if (data == true) {
+                        if (columnLabel != AccountName)
+                        {
+
+                            alert("This ColumnLabel Already Exists");
+                            $("#txtColumnLabel").val('');
+                            Isvalid = false;
+                        }
+                       
+                    }
+                    else {
+
+                        $("#lblErrormessage").hide();
+                        $("#txtColumnLabel").removeAttr("style");
+                        $("#errorsymbol").hide();
+                        $("#ErrorMessages").hide();
+                        Isvalid = true;
+                       
+                        checkisvalid();
+
+                    }
+                },
+            });
+        }
+        else {
+            Isvalid = true;
+            return Validate(this.form);
+        }
+    });
+
+    function checkisvalid(e)
+    {
+       
+        if ('@TempData["colcount"]' === '50') {
+            alert('Custom fields count should not be more than 50');
+            e.preventDefault();
+            e.stopPropagation();
+        }
+        else {
+
+            
+            IsFormValid();
+            ValidateStandardfields();
+
+
+
+
+            if (!IsFormValid()) {
+                e.preventDefault();
+                e.stopPropagation();
+                alert("Please Mention the Module Name");
+            }
+        }
+
+        return Validate(this.form);
+    }
+    $("#btnSave").click(function (e) {
+
+        Isvalid = true;
+        return Validate(this.form);
+
+
+    });
+    
+
+    $('#txtColumnLabel').blur(function () {
+     
+        return ValidateStandardfields();
+        //var Module = $('#txtModule').val();
+        //var ColumnLabel = $(this).val();
+        //$.ajax({
+        //    url: "IsColumnLabelUnique",
+        //    type: "GET",
+        //    async: false,
+        //    data: { Module: Module, Column_Label: ColumnLabel },
+        //    success: function (data) {
+
+        //        if (data == "True")
+        //        {
+        //            alert("Field Label Already Exists ");
+        //            $('#txtColumnLabel').val("");
+        //        }
+
+
+        //    },
+        //    error: function () {
+
+        //    }
+        //});
+
+
+
+
+    });
+
+
+    function ValidateStandardfields() {
+      
+        var columnLabel = $('#HidColumnLabel').val();
+        //alert(columnLabel);
+
+        var Module = $('#txtModule').val();
+        var ColumnLabel = $('#txtColumnLabel').val();
+        $.ajax({
+            url: "IsColumnLabelUnique",
+            type: "GET",
+            async: false,
+            data: { Module: Module, Column_Label: ColumnLabel },
+            success: function (data) {
+
+                if (data == "True") {
+                    alert("Field Label Already Exists ");
+                    $('#txtColumnLabel').val(columnLabel);
+                    return false;
+                }
+                else {
+                    return true;
+                }
+
+
+            },
+            error: function () {
+
+            }
+        });
+
+    }
+    function addnumbersonly(checknumber) {;
+        if (checknumber == "true") {
+            $("#txtDefaultValue").keypress(function (evt) {
+                var charCode = (evt.which) ? evt.which : event.keyCode
+                //if (charCode == 43 || charCode == 32 || charCode == 40 || charCode == 41)
+                if (charCode == 46)
+                    return true;
+                    // else if (charCode > 31 && (charCode < 45 || charCode > 57 || charCode == 47 || charCode == 46))
+                else if (charCode > 31 && (charCode < 46 || charCode > 57 || charCode == 47 || charCode == 46))
+                    return false;
+
+                return true;
+            });
+        }
+            });
+        }
+    }
+</script>*@
+
+
+<script language="javascript" type="text/javascript">
+    $(window).load(function () {
+        $('#loading').hide();
+    });
+    $(document).ready(function () {
+
+        var ColumnTypeVal = $('#ddlColumnType').val();
+        var FieldIdval = $('#HidFieldVal').val();
+        if (FieldIdval != "0") {
+            if (ColumnTypeVal == 'dropdown' || ColumnTypeVal == "checkbox" || ColumnTypeVal == "radiobutton") {
+                OpenOptions();
+            }
+        }
+        if (ColumnTypeVal == 'dropdown' || ColumnTypeVal == "checkbox" || ColumnTypeVal == "radiobutton") {
+
+            $('#defaultdiv').attr("style", "display:none;");
+            $('#maxdiv').attr("style", "display:none;");
+
+        }
+        if (ColumnTypeVal == 'date') {
+            $("#defaultdiv").hide();
+            $("#maxdiv").hide();
+            $("#defaultdivdate").attr("style", "display:block;");
+            $("#txtDefaultValueDate").datepicker();
+            $('#anhrAddOption').attr("style", "display:none;");
+        }
+        if (ColumnTypeVal == "numeric") {
+            var numeric = "true";
+            addnumbersonly(numeric);
+            $("#defaultdivdate").attr("style", "display:none;");
+            $('#anhrAddOption').attr("style", "display:none;");
+            $("#defaultdiv").attr("style", "display:block;");
+            $("#maxdiv").attr("style", "display:block;");
+        }
+        var FieldIdval = $('#HidFieldVal').val();
+    })
+
+    function IsFormValid() {
+
+
+        var isValid = true;
+        if ($("#txtModule").val() == "") {
+            $("#txtModule").parent().addClass("state-error");
+            isValid = false;
+        } else {
+            $("#txtModule").parent().removeClass("state-error");
+            $("#txtModule").parent().addClass("state-success");
+        }
+
+        return isValid;
+    }
+
+
+    $('#ddlColumnType').change(function () {
+
+        $('#txtDefaultValue').val("");
+
+
+        $('#txtDefaultValue').unbind("keypress");
+
+
+        $('#Loadoptions').empty();
+        var ColumnTypeVal = $('#ddlColumnType').val();
+        if (ColumnTypeVal == "textbox") {
+            $("#defaultdiv").attr("style", "display:block;");
+            $("#defaultdivdate").attr("style", "display:none;");
+            $("#maxdiv").attr("style", "display:block;");
+            $('#anhrAddOption').attr("style", "display:none;");
+
+        }
+        if (ColumnTypeVal == "textarea") {
+            $("#defaultdiv").attr("style", "display:block;");
+            $("#defaultdivdate").attr("style", "display:none;");
+            $("#maxdiv").attr("style", "display:block;");
+            $('#anhrAddOption').attr("style", "display:none;");
+        }
+
+        if (ColumnTypeVal == 'dropdown' || ColumnTypeVal == "radiobutton") {
+            $('#anhrAddOption').attr("style", "display:block;");
+            $("#defaultdivdate").attr("style", "display:none;");
+            $("#defaultdiv").hide();
+            $("#maxdiv").hide();
+        }
+        if (ColumnTypeVal == "checkbox") {
+            $('#anhrAddOption').attr("style", "display:block;");
+            $("#defaultdivdate").attr("style", "display:none;");
+        }
+        //if (ColumnTypeVal == "numeric") {
+        //    $("#defaultdivdate").attr("style", "display:none;");
+        //    $('#anhrAddOption').attr("style", "display:none;");
+        //    $("#defaultdiv").attr("style", "display:block;");
+        //    $("#maxdiv").attr("style", "display:block;");
+        //}
+        if (ColumnTypeVal == "numeric") {
+            var numeric = "true";
+            addnumbersonly(numeric);
+            $("#defaultdivdate").attr("style", "display:none;");
+            $('#anhrAddOption').attr("style", "display:none;");
+            $("#defaultdiv").attr("style", "display:block;");
+            $("#maxdiv").attr("style", "display:block;");
+        }
+        if (ColumnTypeVal == 'date') {
+            $("#defaultdiv").hide();
+            $("#maxdiv").hide();
+            $("#defaultdivdate").attr("style", "display:block;");
+            $("#txtDefaultValueDate").datepicker();
+            $('#anhrAddOption').attr("style", "display:none;");
+        }
+
+
+
+
+        if (ColumnTypeVal == "textarea" || ColumnTypeVal == "numeric" || ColumnTypeVal == "textbox") {
+            $('#defaultdiv').attr("style", "display:block;");
+            $('#maxdiv').attr("style", "display:block;");
+        }
+        if (ColumnTypeVal == 'dropdown' || ColumnTypeVal == "checkbox" || ColumnTypeVal == "radiobutton") {
+            //$('#anhrAddOption').attr("style", "display:block;");
+            OpenOptions();
+        }
+        //else {
+        //    $('#anhrAddOption').attr("style", "display:none;");
+        //}
+    });
+
+
+
+
+
+    function OpenOptions() {
+
+        $('#Loadoptions').empty();
+        if (ColumnTypeVal == "dropdown" || ColumnTypeVal == "radiobutton") {
+            $('#Defdiv').attr("style", "display:none;");
+            $('#Maxdiv').attr("style", "display:none;");
+        }
+        var fid = $('#HidFieldVal').val();
+        //alert("fid = " + fid);
+        var ColumnTypeVal = $('#ddlColumnType').val();
+
+
+
+        //  var url = 'frmCustomDrpChkValues.aspx?fid=' + fid;  radiobutton checkbox
+
+        //if (fid == 0)
+        //    alert("Please Save this first.");
+        //else {
+        $.ajax({
+            url: "_BindDrpOptions",
+            type: "GET",
+            async: false,
+            data: { Fieldid: fid },
+            success: function (data) {
+
+                if (data != null) {
+
+                    $('#Loadoptions').empty();
+                    $('#Loadoptions').empty().append(data);
+
+                }
+            },
+            error: function () {
+
+            }
+        });
+        //   $('#myModalOptions').modal("show");
+        // }
+        //window.open(url, "Add/Edit Options", "resizable=0,width=700,height=750");
+
+        return false;
+    }
+
+
+    //To Save the dropdown and radio button with minimum 2 options    
+    $("#btnSave").click(function (e) {
+        var ColumnTypeVal = $('#ddlColumnType').val();
+        var Fieldid = $('#HidFieldVal').val();
+        var checkreturn = true;
+        if (Fieldid == 0) {
+            if (ColumnTypeVal == "dropdown" || ColumnTypeVal == "radiobutton") {
+                if (activefields > 1) {
+                    $(".CheckDuplication").each(function () {
+                        if (this.value != "Deleted_Row") {
+                            if (this.value == "") {
+                                alert("Please Enter Option Value");
+                                checkreturn = false;
+                            }
+                        }
+                    });
+                }
+                else {
+                    alert("Please Enter Minimum 2 Options");
+                    checkreturn = false;
+                }
+            }
+
+            return checkreturn;
+        }
+
+        var columnLabel = $('#HidColumnLabel').val();
+        var AccountName = $("#txtColumnLabel").val();
+       
+        if ($('#ddlColumnType').val() == "date") {
+            $("#txtDefaultValue").val($("#txtDefaultValueDate").val());
+        }
+        //else
+        //{
+        //    $("#txtDefaultValueDate").prop("disabled ", true)
+        //}
+        if (AccountName != "") {
+            var Columnlabel = $("#txtColumnLabel").val();
+            Columnlabel = jQuery.trim(Columnlabel);
+            var ModuleName = $("#txtModule").val();
+            // ModuleName = jQuery.trim(ModuleName);
+            var isValid = true;
+            $.ajax({
+                url: "IsColumnLabelExists",
+                type: "POST",
+                async: false,
+                data: { Columnlabel: Columnlabel, ModuleName: ModuleName },
+                // data: { Columnlabel: Columnlabel },
+                success: function (data) {
+
+                    if (data == true) {
+                        if (columnLabel != AccountName) {
+
+                            alert("This ColumnLabel Already Exists");
+                            $("#txtColumnLabel").val('');
+                            Isvalid = false;
+                        }
+
+                    }
+                    else {
+
+                        $("#lblErrormessage").hide();
+                        $("#txtColumnLabel").removeAttr("style");
+                        $("#errorsymbol").hide();
+                        $("#ErrorMessages").hide();
+                        Isvalid = true;
+
+                        checkisvalid();
+
+                    }
+                },
+            });
+        }
+        else {
+            Isvalid = true;
+            return Validate(this.form);
+        }
+    });
+
+    function checkisvalid(e) {
+
+        if ('@TempData["colcount"]' === '50') {
+            alert('Custom fields count should not be more than 50');
+            e.preventDefault();
+            e.stopPropagation();
+        }
+        else {
+
+
+            IsFormValid();
+            ValidateStandardfields();
+
+
+
+
+            if (!IsFormValid()) {
+                e.preventDefault();
+                e.stopPropagation();
+                alert("Please Mention the Module Name");
+            }
+        }
+
+        return Validate(this.form);
+    }
+    $("#btnSave").click(function (e) {
+
+        Isvalid = true;
+        return Validate(this.form);
+
+
+    });
+
+
+    $('#txtColumnLabel').blur(function () {
+
+        return ValidateStandardfields();
+        //var Module = $('#txtModule').val();
+        //var ColumnLabel = $(this).val();
+        //$.ajax({
+        //    url: "IsColumnLabelUnique",
+        //    type: "GET",
+        //    async: false,
+        //    data: { Module: Module, Column_Label: ColumnLabel },
+        //    success: function (data) {
+
+        //        if (data == "True")
+        //        {
+        //            alert("Field Label Already Exists ");
+        //            $('#txtColumnLabel').val("");
+        //        }
+
+
+        //    },
+        //    error: function () {
+
+        //    }
+        //});
+
+
+
+
+    });
+
+
+    function ValidateStandardfields() {
+
+        var columnLabel = $('#HidColumnLabel').val();
+        //alert(columnLabel);
+
+        var Module = $('#txtModule').val();
+        var ColumnLabel = $('#txtColumnLabel').val();
+        $.ajax({
+            url: "IsColumnLabelUnique",
+            type: "GET",
+            async: false,
+            data: { Module: Module, Column_Label: ColumnLabel },
+            success: function (data) {
+
+                if (data == "True") {
+                    alert("Field Label Already Exists ");
+                    $('#txtColumnLabel').val(columnLabel);
+                    return false;
+                }
+                else {
+                    return true;
+                }
+
+
+            },
+            error: function () {
+
+            }
+        });
+
+    }
+
+    //Added numeric validation
+    function addnumbersonly(checknumber) {
+        
+        if (checknumber == "true") {
+            $("#txtDefaultValue").keypress(function (evt) {
+                var charCode = (evt.which) ? evt.which : event.keyCode
+                //if (charCode == 43 || charCode == 32 || charCode == 40 || charCode == 41)
+                if (charCode == 46)
+                    return true;
+                    // else if (charCode > 31 && (charCode < 45 || charCode > 57 || charCode == 47 || charCode == 46))
+                else if (charCode > 31 && (charCode < 46 || charCode > 57 || charCode == 47 || charCode == 46))
+                    return false;
+
+                return true;
+            });
+        }
+    }
+</script>
+

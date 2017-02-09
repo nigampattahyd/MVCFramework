@@ -1,0 +1,1259 @@
+﻿@model CRMHub.ViewModel.LeadModel
+@{
+    ViewBag.Title = "Update Opportunity";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style type="text/css">
+    .DT-search {
+        display: none;
+    }
+
+    .DT-per-page {
+        border-right: none;
+    }
+</style>
+<html>
+<head>
+    @*<script type="text/javascript">
+            $(document).ready(function () {
+                $('#tblImportantDocs').dataTable();
+            }
+            );
+        </script>*@
+
+    <style>
+        button {
+            background: none !important;
+            border: none;
+            padding: 0 !important;
+            /*optional*/
+            font: bold;
+            color: #069;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    @*@using (Html.BeginForm("UpdateOpportunity", "Opportunities", FormMethod.Post))
+        {*@
+    @Html.ValidationSummary(true)
+    <div id="content-wrapper">
+        <div id="CustomBootstrapAlertBox">
+        </div>
+        <div class="row">
+            <script>
+                init.push(function () {
+                    $('ul.bs-tabdrop-example').tabdrop();
+                });
+            </script>
+
+            <div class="panel">
+
+                <div class="panel-heading">
+                    <div class="row">
+                        <!-- Page header, center on small screens -->
+                        <h1 class="col-xs-6 col-sm-4 text-left text-left-sm panel-title"><i class="fa fa-tasks page-header-icon"></i>&nbsp; Edit Opportunity</h1>
+                        <div class="col-xs-6 col-sm-8">
+                            <div class="row">
+                                <div class="pull-right">
+                                    @*<a href="#" class="btn btn-flat btn-labeled btn-primary" tabindex="-1"
+                                        data-toggle="modal" data-target="#uidemo-modals-alerts-info"><span class="btn-label icon fa fa-question-circle"></span>Help</a>*@
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body">
+
+
+
+
+                    <div class="row">
+
+
+                        <ul class="nav nav-tabs bs-tabdrop-example" id="TabMenu">
+                            <li id="TabStripOpportunityDetail" class="active"><a href="#Opportunitiesdiv" data-toggle="tab">Opportunity Detail</a></li>
+                            <li id="TabStripActivity"><a href="#Activitiesdiv" data-toggle="tab" onclick="BindOpportunityActivitiesGrid()">Activities</a></li>
+
+                        </ul>
+                        <div class="tab-content tab-content-bordered">
+
+                            <div class="tab-pane active" id="Opportunitiesdiv">
+                                @using (Html.BeginForm("UpdateOpportunity", "Opportunities", FormMethod.Post))
+                                {
+                                    <div class="row">
+
+                                        <div class="page-header-breadcrumb">
+                                            <div class="col-sm-8">
+                                                <label class="control-label">
+                                                    <asp:Label ID="lblMessage" runat="server" ForeColor="Red"></asp:Label>
+                                                </label>
+                                            </div>
+                                            <div class="col-xs-12 col-sm-4 text-right text-right-sm" style=" margin:0px 0px 10px 0px; padding:0px;">
+
+                                                <ul class="table-nav-item">
+
+
+                                                    <li style=" float:left; margin-left:5px;">
+
+                                                        @*<span id="liSaveContainer">*@
+                                                            <button class="btn btn-flat btn-labeled btn-primary" id="btnaddopportunity" style="background:#1b80c2 !important; text-decoration:none; "> <span class="btn-label icon fa fa-save"></span> Save</button>
+
+                                                        @*</span>*@
+
+                                                        @*<button class=" btn btn-flat btn-labeled btn-primary" id="btnSave">
+                                                            <span class="btn-label icon fa fa-save" style="margin-right:6px;"></span>Save
+                                                        </button>*@
+                                                    </li>
+                                                    <li class="btn btn-flat btn-labeled btn-primary" style=" float:right; margin-left:3px;">
+
+                                                        <a id="btnback" style="color:#fff; padding:0px; text-decoration:none; font-weight:normal" href="@Url.Action("ViewOpportunities", "Opportunities")">
+                                                            <span class="btn-label icon fa fa-backward" style="margin-right:6px;"> </span>
+
+                                                            Back
+                                                        </a>
+                                                    </li>
+
+                                                </ul>
+
+
+
+
+
+                                                @*<span id="liSaveContainer">
+                                                    <button class="btn btn-flat btn-labeled btn-primary" id="btnaddopportunity" style="background:#1b80c2 !important; text-decoration:none; "> <span class="btn-label icon fa fa-save"></span> Save</button>
+
+                                                </span>*@
+                                               
+
+                                                @*<span class="btn btn-flat btn-labeled btn-primary">
+                                                        @Html.ActionLink("Back", "ViewOpportunities", "", new { @style = "color:#fff; text-decoration:none;" })<span class="btn-label icon fa fa-backward" style="margin-right:6px; "> </span>
+                                                    </span>*@
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+
+                                        <div class="panel-group" id="accordion-example">
+
+                                            <div class="panel">
+                                                <div class="panel-heading">
+                                                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion-example"
+                                                       href="#collapse2">Opportunity Detail</a>
+                                                </div>
+                                                <!-- / .panel-heading -->
+                                                <div id="collapse2" class="panel-collapse collapse in" style="height: auto;">
+                                                    <div class="panel-body">
+                                                        <div class="col-sm-12 no-padding-hr">
+                                                            <div class="row">
+
+
+
+
+                                                                <div class="col-sm-3">
+                                                                    <div class="form-group no-margin-hr">
+
+                                                                        <label class="control-label">Company Name:<span style="color: red">*</span></label>
+                                                                        <div class="input-group">
+                                                                            @Html.TextBoxFor(m => m.leadEntity.AccountName, new { @class = "form-control input-sm", @id = "txtcompany" })
+                                                                            @Html.ValidationMessageFor(m => m.leadEntity.AccountName, "", new { @class = "text-danger" })
+
+                                                                            <span class="input-group-addon  type=" button" style="cursor:pointer;" onclick="return show_NewAccountPopUp(750, 450);">
+                                                                                <i class="fa fa-search"></i>
+                                                                            </span>
+                                                                            @Html.HiddenFor(m => m.leadEntity.AccountId, new { @id = "hdParentAccountId" })
+
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+                                                                <div class="col-sm-3">
+                                                                    <div class="form-group no-margin-hr">
+                                                                        <label class="control-label">Business Type :</label>
+
+                                                                        @Html.DropDownListFor(m => m.leadEntity.BusinessType, new List<SelectListItem>
+                                                     {
+                                                      new SelectListItem{ Text="Existing Business", Value = "existingbusiness" },
+                                                      new SelectListItem{ Text="New Business", Value = "newbusiness" }
+                                                     }, new { @id = "ddlbusinesstype", @class = "form-control input-sm" })
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-3">
+                                                                    <div class="form-group no-margin-hr">
+                                                                        <label class="control-label">Ownership :</label>
+                                                                        @Html.TextBoxFor(m => m.leadEntity.Ownership, new { @id = "txtownership", @class = "form-control input-sm", @MaxLength = "50" })
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-3">
+                                                                    <div class="form-group no-margin-hr">
+                                                                        <label class="control-label">Number of Employees :</label>
+
+                                                                        @Html.TextBoxFor(m => m.leadEntity.Employees, new { @id = "txtnoofemp", @class = "form-control numericmask", @MaxLength = "8" })
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-sm-3">
+                                                                    <div class="form-group no-margin-hr">
+                                                                        <label class="control-label">Industry : </label>
+
+                                                                        @Html.DropDownListFor(model => model.leadEntity.Industry, new SelectList(Model.IndustriesList, "id", "industry"), "None", new { @class = "form-control", @id = "ddlindustries" })
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-3">
+                                                                    <div class="form-group no-margin-hr">
+                                                                        <label class="control-label">Website :</label>
+
+                                                                        @Html.TextBoxFor(m => m.leadEntity.Website, new { @id = "txtWebsite", @class = "form-control input-sm", @MaxLength = "50" })
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-sm-3">
+                                                                    <div class="form-group no-margin-hr">
+                                                                        <label class="control-label">Opportunity Name :<span style="color: red">*</span></label>
+                                                                        @Html.TextBoxFor(m => m.leadEntity.LeadName, new { @id = "txtOpportunity", @class = "form-control input-sm", @MaxLength = "50" })
+                                                                        @Html.ValidationMessageFor(m => m.leadEntity.LeadName, "", new { @class = "text-danger" })
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-3">
+                                                                    <div class="form-group no-margin-hr">
+                                                                        <label class="control-label">Title :</label>
+                                                                        @Html.TextBoxFor(m => m.leadEntity.Title, new { @id = "txtTitle", @class = "form-control input-sm", @MaxLength = "50" })
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-3">
+                                                                    <div class="form-group no-margin-hr">
+                                                                        <label class="control-label">Phone :</label>
+
+                                                                        @Html.TextBoxFor(m => m.leadEntity.Phone, new { @id = "txtPhone",@MaxLength = "20", @class = "form-control input-sm",@onkeypress = "return onlynumbers(event,this);" })
+
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-3">
+                                                                    <div class="form-group no-margin-hr">
+                                                                        <label class="control-label">Mobile :</label>
+
+                                                                        @Html.TextBoxFor(m => m.leadEntity.Mobile, new { @id = "txtMobile",@MaxLength = "20", @class = "form-control input-sm",@onkeypress = "return onlynumbers(event,this);" })
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-sm-3">
+                                                                    <div class="form-group no-margin-hr">
+                                                                        <label class="control-label">Email :</label>
+
+                                                                        @Html.TextBoxFor(m => m.leadEntity.Email, new { @id = "txtEmail", @class = "form-control input-sm", @MaxLength = "100", @type = "email" })
+                                                                        @Html.ValidationMessageFor(m => m.leadEntity.Email, "", new { @class = "text-danger" })
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-sm-3">
+                                                                    <div class="form-group no-margin-hr">
+                                                                        <label class="control-label">Fax :</label>
+                                                                        @Html.TextBoxFor(m => m.leadEntity.Fax, new { @id = "txtFax", @class = "form-control input-sm", @MaxLength = "20",@onkeypress = "return onlynumbers(event,this);" })
+                                                                    </div>
+                                                                </div>
+
+
+
+
+
+
+                                                                <div class="col-sm-3">
+                                                                    <div class="form-group no-margin-hr">
+                                                                        <label class="control-label">Prefer Time to Contact :</label>
+
+                                                                        @Html.TextBoxFor(m => m.leadEntity.PreferTime, new { @id = "timepickercontrol", @class = "form-control input-sm", @MaxLength = "100" })
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-3">
+                                                                    <div class="form-group no-margin-hr">
+                                                                        <label class="control-label">Prefer Mode to Contact :</label>
+
+                                                                        @Html.DropDownListFor(m => m.leadEntity.PreferMode, new List<SelectListItem>
+                                                     {
+                                                      new SelectListItem{ Text="Select", Value = "select" },
+                                                      new SelectListItem{ Text="Phone", Value = "phone" },
+                                                       new SelectListItem{ Text="Email", Value = "email" }
+                                                     }, new { @id = "ddlPreferMode", @class = "form-control input-sm" })
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-sm-3">
+                                                                    <div class="form-group no-margin-hr">
+                                                                        <label class="control-label">Estimated Budget :($)</label>
+
+                                                                        @Html.TextBoxFor(m => m.leadEntity.AnnualRevenue, new { @id = "txtEstimatedBudget", @class = "form-control decimalmask" })
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-sm-3">
+                                                                    <div class="form-group no-margin-hr">
+                                                                        <label class="control-label">Estimated Close Date:</label>
+
+                                                                        @Html.TextBoxFor(m => m.leadEntity.EstimatedCloseDate, new { @id = "DatePickerControl", @class = "form-control input-sm" })
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-3">
+                                                                    <div class="form-group no-margin-hr">
+                                                                        <label class="control-label">Probability :</label>
+
+                                                                        @Html.TextBoxFor(m => m.leadEntity.Probability, new { @id = "txtProbability", @class = "form-control input-sm", @MaxLength = "100" })
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-3">
+                                                                    <div class="form-group no-margin-hr">
+                                                                        <label class="control-label">Email Opt-out :</label>
+                                                                        @Html.TextBoxFor(m => m.leadEntity.EmailOptOut, new { @id = "txtEmailOptout", @class = "form-control input-sm", @MaxLength = "100" })
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="panel">
+                                                <div class="panel-heading">
+                                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion-example"
+                                                       href="#collapse3">Opportunity Owner</a>
+                                                </div>
+                                                <!-- / .panel-heading -->
+                                                <div id="collapse3" class="panel-collapse collapse" style="height: auto;">
+                                                    <div class="panel-body">
+                                                        <div class="col-sm-12 no-padding-hr">
+
+                                                            <div class="row">
+
+                                                                <div class="col-sm-3">
+                                                                    <div class="form-group no-margin-hr">
+                                                                        <label class="control-label">CreatedBy :<span style="color: red">*</span></label>
+
+                                                                        @Html.DropDownListFor(model => model.leadEntity.SalesMgr1, new SelectList(Model.userList, "userId", "firstName"), "Choose", new { @class = "form-control", @id = "ddlAdmins" })
+                                                                        @Html.ValidationMessageFor(m => m.leadEntity.SalesMgr1, "", new { @class = "text-danger" })
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-3">
+                                                                    <div class="form-group no-margin-hr">
+                                                                        <label class="control-label">Rating :</label>
+                                                                        @Html.DropDownListFor(m => m.leadEntity.Rating, new List<SelectListItem>
+                                                     {
+                                                      new SelectListItem{ Text="None", Value = "none" },
+                                                      new SelectListItem{ Text="Acquired", Value = "acquired" },
+                                                       new SelectListItem{ Text="Active", Value = "active" },
+                                                       new SelectListItem{ Text="Market Failed", Value = "marketfailed" },
+                                                       new SelectListItem{ Text="Project Cancelled", Value = "projectcancelled" },
+                                                       new SelectListItem{ Text="ShutDown", Value = "shutdown" }
+                                                     }, new { @id = "ddlRating", @class = "form-control input-sm" })
+
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-3">
+                                                                    <div class="form-group no-margin-hr">
+                                                                        <label class="control-label">Opportunity Status :</label>
+
+                                                                        @Html.DropDownListFor(m => m.leadEntity.LeadStatus, new List<SelectListItem>
+                                                     {
+                                                       new SelectListItem{ Text="None", Value = "none" },
+                                                       new SelectListItem{ Text="Attempted to Contact", Value = "Attempted to Contact" },
+                                                       new SelectListItem{ Text="Contact In Future", Value = "Contact In Future" },
+                                                       new SelectListItem{ Text="Contacted", Value = "Contacted" },
+                                                       new SelectListItem{ Text="Junk Opportunity", Value = "Junk Opportunity" },
+                                                       new SelectListItem{ Text="Lost Opportunity", Value = "Lost Opportunity" },
+                                                       new SelectListItem{ Text="Not Contacted", Value = "Not Contacted" },
+                                                       new SelectListItem{ Text="Pre Qualified", Value = "Pre Qualified" }
+                                                     }, new { @id = "ddlOpportunityStatus", @class = "form-control input-sm" })
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-3">
+                                                                    <div class="form-group no-margin-hr">
+                                                                        <label class="control-label">Current System :</label>
+
+                                                                        @Html.TextBoxFor(m => m.leadEntity.CurrentApplication, new { @id = "txtcurrentsystem", @class = "form-control input-sm" })
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-sm-3">
+                                                                    <div class="form-group no-margin-hr">
+                                                                        <label class="control-label">Office :</label>
+
+
+                                                                        @Html.DropDownListFor(model => model.leadEntity.Office, new SelectList(Model.branchList, "branchid", "branchName"), new { @class = "form-control", @id = "ddlBranches" })
+
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-3">
+                                                                    <div class="form-group no-margin-hr">
+                                                                        <label class="control-label">Opportunity Source :</label>
+                                                                        @Html.DropDownListFor(m => m.leadEntity.Source, new List<SelectListItem>
+                                                     {
+                                                      new SelectListItem{ Text="Career Builder", Value = "careerbuilder" },
+                                                      new SelectListItem{ Text="Job Fair", Value = "jobfair" },
+                                                       new SelectListItem{ Text="Monster", Value = "monster" },
+                                                       new SelectListItem{ Text="NewsPaper", Value = "newspaper" },
+                                                       new SelectListItem{ Text="Walk In", Value = "walkin" },
+                                                       new SelectListItem{ Text="Word of Mouth", Value = "wordofmouth" },
+                                                       new SelectListItem{ Text="Yellow Pages", Value = "yellowpages" },
+                                                       new SelectListItem{ Text="Dice", Value = "dice" },
+                                                       new SelectListItem{ Text="Online Networking", Value = "onlinenetworking" },
+                                                       new SelectListItem{ Text="Employee Referral", Value = "employeereferral" },
+                                                       new SelectListItem{ Text="Kijiji", Value = "kijiji" },
+                                                       new SelectListItem{ Text="Workopolis", Value = "workopolis" },
+                                                       new SelectListItem{ Text="HRDC", Value = "hrdc" },
+                                                       new SelectListItem{ Text="Networking", Value = "networking" }
+                                                     }, new { @id = "ddlOpportunitySource", @class = "form-control input-sm" })
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-3">
+                                                                    <div class="form-group no-margin-hr">
+                                                                        <label class="control-label">Assigned To :</label>
+
+                                                                        @Html.DropDownListFor(model => model.leadEntity.LeadAssigned, new SelectList(Model.userList, "userId", "firstName"), "Choose", new { @class = "form-control", @id = "ddlAdmins" })
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-3">
+                                                                    <div class="form-group no-margin-hr">
+                                                                        <label class="control-label">Opportunity Stage :</label>
+                                                                        @Html.DropDownListFor(m => m.leadEntity.LeadStage, new List<SelectListItem>
+                                                     {
+                                                      new SelectListItem{ Text="Select", Value = "select" },
+                                                      new SelectListItem{ Text="New", Value = "new" },
+                                                       new SelectListItem{ Text="Cold", Value = "cold" },
+                                                       new SelectListItem{ Text="Warm", Value = "warm" },
+                                                       new SelectListItem{ Text="Hot", Value = "hot" },
+                                                       new SelectListItem{ Text="Closed", Value = "closed" }
+                                                     }, new { @id = "ddlOpportunityStage", @class = "form-control input-sm" })
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-sm-3">
+                                                                    <div class="form-group no-margin-hr">
+                                                                        <label class="control-label">Next Step :</label>
+
+                                                                        @Html.TextBoxFor(m => m.leadEntity.NextStep, new { @id = "txtNextStep", @class = "form-control input-sm", @MaxLength = "50" })
+
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="panel">
+                                                <div class="panel-heading">
+                                                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion-example"
+                                                       href="#collapse6">Address Detail</a>
+                                                </div>
+                                                <!-- / .panel-heading -->
+                                                <div id="collapse6" class="panel-collapse collapse" style="height: auto;">
+                                                    <div class="panel-body">
+                                                        <div class="col-sm-12 no-padding-hr">
+                                                            <div class="row">
+
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-sm-3">
+                                                                    <div class="form-group no-margin-hr">
+                                                                        <label class="control-label">Address&nbsp;1 :</label>
+
+                                                                        @Html.TextBoxFor(m => m.leadEntity.MailingAddress, new { @id = "txtAddressMailing", @class = "form-control input-sm", @MaxLength = "50" })
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-3">
+                                                                    <div class="form-group no-margin-hr">
+                                                                        <label class="control-label">
+                                                                            Address&nbsp;2 :
+                                                                        </label>
+
+                                                                        @Html.TextBoxFor(m => m.leadEntity.Mailingstreet, new { @id = "txtMailingStreet", @class = "form-control input-sm", @MaxLength = "50" })
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-3">
+                                                                    <div class="form-group no-margin-hr">
+                                                                        <label class="control-label">
+                                                                            City :
+                                                                        </label>
+
+                                                                        @Html.TextBoxFor(m => m.leadEntity.Mailingcity, new { @id = "txtMailingCity", @class = "form-control input-sm", @maxLength = "50" })
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-3">
+                                                                    <div class="form-group no-margin-hr">
+                                                                        <label class="control-label">
+                                                                            State :
+                                                                        </label>
+
+                                                                        @*@Html.DropDownListFor(model => model.leadEntity.Mailingstate, new SelectList(Model.stateList, "stateCode", "stateName"), new { @class = "form-control", @id = "ddlStates" })*@
+                                                                        @Html.TextBoxFor(m => m.leadEntity.Mailingstate, new { @id = "txtMailingstate", @class = "form-control input-sm", @maxLength = "50" })
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-sm-3">
+                                                                    <div class="form-group no-margin-hr">
+                                                                        <label class="control-label">
+                                                                            Zip Code :<span style="color: red">*</span>
+                                                                        </label>
+
+                                                                        @Html.TextBoxFor(m => m.leadEntity.Mailingzip, new { @id = "txtMailingZip", @class = "form-control input-sm zipmask", @maxLength = "10" })
+                                                                        @Html.ValidationMessageFor(m => m.leadEntity.Mailingzip, "", new { @class = "text-danger" })
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-3">
+                                                                    <div class="form-group no-margin-hr">
+                                                                        <label class="control-label">
+                                                                            Country :
+                                                                        </label>
+
+                                                                        @Html.TextBoxFor(m => m.leadEntity.Mailingcountry, new { @id = "txtMailingCountry", @class = "form-control input-sm", @MaxLength = "50" })
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- / .panel-body -->
+                                            </div>
+
+                                            <div class="panel">
+                                                <div class="panel-heading">
+                                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion-example"
+                                                       href="#collapse8">Social Integration</a>
+                                                </div>
+                                                <!-- / .panel-heading -->
+                                                <div id="collapse8" class="panel-collapse collapse">
+                                                    <div class="panel-body">
+                                                        <div class="col-sm-12 no-padding-hr">
+                                                            <div class="row">
+                                                                <div class="col-sm-3">
+                                                                    <div class="form-group no-margin-hr">
+                                                                        <label class="control-label">FaceBook User Name:</label>
+                                                                        @Html.TextBoxFor(m => m.leadEntity.FacebookUsername, new { @id = "txtFacebookUsername", @class = "form-control input-sm", @MaxLength = "50" })
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-3">
+                                                                    <div class="form-group no-margin-hr">
+                                                                        <label class="control-label">Twitter User Name :</label>
+                                                                        @Html.TextBoxFor(m => m.leadEntity.TwitterUsername, new { @id = "txtTwitterUsername", @class = "form-control input-sm", @MaxLength = "50" })
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-3">
+                                                                    <div class="form-group no-margin-hr">
+                                                                        <label class="control-label">Linkedin User Name :</label>
+                                                                        @Html.TextBoxFor(m => m.leadEntity.LinkedInUsername, new { @id = "txtLinkedInUsername", @class = "form-control input-sm", @MaxLength = "50" })
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-3">
+                                                                    <div class="form-group no-margin-hr">
+                                                                        <label class="control-label">Google+ User Name :</label>
+                                                                        @Html.TextBoxFor(m => m.leadEntity.GooglePlusUsername, new { @id = "txtGooglePlusUsername", @class = "form-control input-sm", @MaxLength = "50" })
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-sm-3">
+                                                                    <div class="form-group no-margin-hr">
+                                                                        <label class="control-label">Pinterset User Name:</label>
+                                                                        @Html.TextBoxFor(m => m.leadEntity.PinterestUsername, new { @id = "txtPinterestUsername", @class = "form-control input-sm", @MaxLength = "50" })
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-3">
+                                                                    <div class="form-group no-margin-hr">
+                                                                        <label class="control-label">Skype User Name :</label>
+                                                                        @Html.TextBoxFor(m => m.leadEntity.SkypeUsername, new { @id = "txtSkypeUsername", @class = "form-control input-sm", @MaxLength = "50" })
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="panel">
+                                                <div class="panel-heading">
+                                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion-example"
+                                                       href="#collapse10">Description</a>
+                                                </div>
+                                                <div id="collapse10" class="panel-collapse collapse">
+                                                    <div class="panel-body">
+                                                        @Html.TextAreaFor(m => m.leadEntity.Description, new { @id = "txtDescription", @class = "textEditor" })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            @Html.HiddenFor(m => m.leadEntity.LeadId)
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+
+
+                            <div class="tab-pane" id="Activitiesdiv">
+                                <div class="row">
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div class="row">
+                                                <div class="col-sm-3">
+                                                    <div class="form-group no-margin-hr">
+                                                        <label class="control-label">Keyword :</label>
+                                                        @Html.TextBoxFor(m => m.leadhistoryEntity.keyword, new { @id = "txtActivityKeyword", @class = "form-control input-sm", @MaxLength = "50" })
+                                                    </div>
+                                                    @Html.HiddenFor(m => m.leadhistoryEntity.Leadid)
+                                                    @Html.HiddenFor(m => m.leadhistoryEntity.LeadhistoryId)
+                                                    @Html.HiddenFor(m => m.leadEntity.AccountId)
+                                                    @Html.HiddenFor(m => m.leadEntity.AccountName)
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <div class="form-group no-margin-hr">
+                                                        <label class="control-label">Type :</label>
+
+                                                        @Html.DropDownListFor(m => m.leadhistoryEntity.HistoryType, new SelectList(Model.leadactivity, "name", "name"), new { @id = "ddlHistoryType", @class = "form-control input-sm" })
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <div class="form-group no-margin-hr">
+                                                        <label class="control-label">Priority :</label>
+                                                        @Html.DropDownListFor(m => m.leadhistoryEntity.Priority, new List<SelectListItem>
+                                                     {
+                                                      new SelectListItem{ Text="Select", Value = "select" },
+                                                      new SelectListItem{ Text="High", Value = "high" },
+                                                      new SelectListItem{ Text="Medium", Value = "medium" },
+                                                       new SelectListItem{ Text="Low", Value = "low" }
+                                                     }, new { @id = "ddlActivityPriority", @class = "form-control input-sm" })
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <div class="form-group no-margin-hr">
+                                                        <label class="control-label">Status :</label>
+                                                        @Html.DropDownListFor(m => m.leadhistoryEntity.Status, new List<SelectListItem>
+                                                     {
+                                                      new SelectListItem{ Text="Select", Value = "select" },
+                                                      new SelectListItem{ Text="Open", Value = "open" },
+                                                      new SelectListItem{ Text="Completed", Value = "completed" }
+                                                     }, new { @id = "ddlActivityStatus", @class = "form-control input-sm" })
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="col-xs-12 col-sm-12 text-right text-right-sm" style=" margin:0px 0px 10px 0px; padding:0px;">
+                                                <ul class="table-nav-item">
+                                                    @*@*<span id="liSaveContainer">
+                                                            <button class="btn btn-flat btn-labeled btn-primary" id="btnSearchActivity" style="background: #1b80c2 !important; text-decoration: none; margin: 3px 0px 0px 3px; "> <span class="btn-label icon fa fa-search"></span> Search</button>
+
+                                                        </span>
+                                                        <li class="btn btn-flat btn-labeled btn-primary" id="btnmargin_top">
+
+
+                                                            @Html.ActionLink("Add Activity", "NewOpportunityActivity", "Opportunities", new { @id = "AddNewOppActivity", @style = "color:#fff; text-decoration:none;" })
+                                                        </li>*@
+                                                    <li class="btn btn-flat btn-labeled btn-primary" id="btnmargin_top">
+
+                                                        <a style="color: #fff; text-decoration: none; padding: 0px; font-weight: normal" id="btnSearchActivity">
+                                                            <span class="btn-label icon fa fa-search"></span>
+                                                            Search
+                                                        </a>
+                                                    </li>
+                                                    <li class="btn btn-flat btn-labeled btn-primary" id="btnmargin_top" style="float:left; margin-left:3px;">
+                                                        <a style="color: #fff; text-decoration: none; padding: 0px; font-weight: normal" href="@Url.Action("NewOpportunityActivity", "Opportunities")">
+                                                            <span class="btn-label icon  fa  fa-plus-circle" style="margin-right:6px;"> </span>
+                                                            Add Activity
+                                                        </a>
+                                                    </li>
+                                                    <li class="btn btn-flat btn-labeled btn-primary" id="btnmargin_top">
+
+                                                        <a style="color: #fff; text-decoration: none; padding: 0px; font-weight: normal" id="EditOppActivityId" onclick="EditActivityDetail()">
+                                                            <span class="btn-label icon  fa  fa-plus-circle">
+                                                            </span>
+                                                            Edit Activity
+                                                        </a>
+                                                    </li>
+                                                    <li class="btn btn-flat btn-labeled btn-primary" id="btnmargin_top">
+
+                                                        <a style="color: #fff; text-decoration: none; padding: 0px; font-weight: normal" id="DeleteOppActivityId" onclick="DeleteSelectedOppActivity()">
+                                                            <span class="btn-label icon  fa fa-trash-o"> </span>
+                                                            Delete Activity
+                                                        </a>
+                                                    </li>
+                                                    <li class="btn btn-flat btn-labeled btn-primary" id="btnmargin_top">
+
+                                                        @*@Html.ActionLink("Complete Activity", "CompleteSelectedOppActivity", "", new { @id = "CompActivityStatus", @style = "color:#fff; text-decoration:none;" })<span class="btn-label icon fa fa-minus-circle" style="margin-right:6px; "> </span>*@
+                                                        <a style="color: #fff; text-decoration: none; padding: 0px; font-weight: normal" id="CompActivityStatus" onclick="CompActivityStatus()">
+                                                            <span class="btn-label icon fa fa-minus-circle"></span>
+                                                            Complete Activity
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+
+
+                                            <div class="col-sm-12 col-xs-12">
+                                                <div class="row">
+                                                    <div class="table-primary table-striped">
+                                                        <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="tblOppactivities" width="100%">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>
+                                                                        <input class="fa fa-square-o" type="checkbox" id="selectall" name="chkAll" />
+                                                                    </th>
+                                                                    <th>&nbsp;</th>
+                                                                    <th data-hide="phone">Created By</th>
+                                                                    <th data-class="expand">Created Date</th>
+                                                                    <th data-hide="phone">Due Date</th>
+                                                                    <th data-hide="tabletlandscape,phone">Type</th>
+                                                                    <th data-hide="tablet,tabletlandscape,phone">Company Name</th>
+                                                                    <th data-hide="tablet,tabletlandscape,phone,desktop">Status</th>
+                                                                    <th data-hide="tablet,tabletlandscape,phone,desktop">Comments</th>
+                                                                    <th data-hide="tablet,tabletlandscape,phone,desktop">Attachment</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody></tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <div id="MdlAlert" class="modal" tabindex="-1" role="dialog" style="display: none; overflow: hidden; padding-top: 0px; width: 100%; height: 100%;">
+        <div class="modal-dialog" style="width: 99%; margin-left: 537px; margin-top: 219px;">
+            <div class="modal-content" style="width: 22%; height:15%">
+                <div class="modal-header">
+                    <span style="float:right;margin-top:3px"><label id="XbtnClose">X</label></span>
+                    <h4 class="modal-title">In-Activate?</h4>
+                </div>
+                <div class="modal-body" style="display: inline-block; height: 73px">
+                    <p>Please Confirm to In-Activate the Field(s) </p>
+                </div>
+                <div class="modal-footer">
+                    <span><button id="btnCancel">Cancel</button></span>
+                    <span><button id="btnok">OK</button></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    @*}*@
+</body>
+</html>
+<div class="modal fade" id="myModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Company List</h4>
+            </div>
+            <div class="modal-body">
+
+                <div class="row">
+                    <div style="text-align:left;font-size:12px;padding:5px">Note : Click Company Name To Select Record.</div>
+                    <div class="col-sm-12">
+
+                        <div class="table-primary table-striped" id="tblCompanyList">
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="myModalAttachment">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Attachment</h4>
+            </div>
+            <div class="modal-body">
+
+                <div class="row">
+                    <div style="text-align:left;font-size:12px;padding:5px">
+                    </div>
+                    <div class="col-sm-12">
+
+                        <div class="table-primary table-striped" id="tblModalAttachment">
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+  </div>
+
+<script src="~/Scripts/jqte/jquery-te-1.4.0.min.js"></script>
+<script src="~/Scripts/DateTimePicker/bootstrap-timepicker.min.js"></script>
+<script src="~/Scripts/DateTimePicker/bootstrap-datetimepicker.min.js"></script>
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+
+        $('#txtPhone').bind("cut copy paste", function (e) {
+            e.preventDefault();
+        });
+
+        $('#txtMobile').bind("cut copy paste", function (e) {
+            e.preventDefault();
+        });
+        $('#txtFax').bind("cut copy paste", function (e) {
+            e.preventDefault();
+        });
+        $(".textEditor").jqte();
+    });
+</script>
+<script type="text/javascript">
+    $(function () {
+        $('#timepickercontrol').timepicker({
+            format: 'h:mm:ss'
+        });
+    });
+    $(function () {
+        $('#DatePickerControl').datepicker({
+            format: 'mm/dd/yyyy'
+        })
+    });
+</script>
+<script type="text/javascript">
+    function show_NewAccountPopUp() {
+
+        $.ajax({
+            url: "SelectCompany",
+            type: "GET",
+            async: false,
+            success: function (data) {
+
+                if (data != null) {
+
+                    $('#tblCompanyList').empty();
+                    $('#tblCompanyList').empty().append(data);
+                }
+            },
+            error: function () {
+
+            }
+        });
+        $('#myModal').modal("show");
+    }
+
+</script>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $("#tblOppactivities").dataTable().fnDestroy();
+        BindOpportunityActivities();
+
+        $('#TabStripOpportunityDetail').click(function () {
+            $('#Activitiesdiv').css("display", "none");
+            // $('#TabActivity').css("display", "block");
+            $('#TabStripActivity').removeClass('active');
+            $('#Opportunitiesdiv').css("display", "block");
+
+            $('#TabStripOpportunityDetail').addClass("active");
+            //$("#tblOppactivities").dataTable().fnDestroy();
+
+            // BindOpportunityActivitiesGrid();
+        });
+
+
+        $('#TabStripActivity').click(function () {
+            $('#Activitiesdiv').css("display", "block");
+            // $('#TabActivity').css("display", "block");
+            $('#TabStripActivity').addClass('active');
+            $('#Opportunitiesdiv').css("display", "none");
+
+            $('#TabStripOpportunityDetail').removeClass("active");
+            //$("#tblOppactivities").dataTable().fnDestroy();
+
+            // BindOpportunityActivitiesGrid();
+        });
+
+        var acttab = '@TempData["Opportunityactivity"]';
+        var edtoppt = '@TempData["EditActoppt"]';
+           
+        var actoppt = '@ViewBag.showActivitiesoppttab'
+        var edtoppt = '@ViewBag.EditActivitiesoppttab';
+        if (acttab == "True") {
+
+            //$('#tabActivity').css("display", "block");
+            //$('#tabActivity').addClass('active');
+         
+            $('#Activitiesdiv').css("display", "block");
+            // $('#TabActivity').css("display", "block");
+            $('#TabStripActivity').addClass('active');
+            $('#Opportunitiesdiv').css("display", "none");
+           
+            $('#TabStripOpportunityDetail').removeClass("active");
+            $("#tblOppactivities").dataTable().fnDestroy();
+
+            BindOpportunityActivitiesGrid();
+        }
+
+        // BindOpportunityActivities();
+           
+        if (edtoppt == "EditopptId") {
+            $('#Activitiesdiv').css("display", "block");
+            $('#TabStripActivity').addClass('active');
+            $('#Opportunitiesdiv').css("display", "none");
+               
+            $('#TabStripOpportunityDetail').removeClass("active");
+            $("#tblOppactivities").dataTable().fnDestroy();
+            BindOpportunityActivitiesGrid();
+            
+        }
+        if (acttab != "True" && edtoppt != "EditopptId") {
+
+            $('#TabMenu a:first').tab('show');
+        }
+
+    });
+
+    
+
+    function BindOpportunityActivitiesGrid() {
+        $('#tblOppactivities').dataTable().fnDestroy();
+        BindOpportunityActivities();
+    }
+
+    function BindOpportunityActivities() {
+
+        var responsiveHelper = undefined;
+        var breakpointDefinition = {
+            desktop: Infinity,
+            tablet: 1024,
+
+            phone: 480
+        };
+        var tableElement = $('#tblOppactivities');
+        tableElement.dataTable({
+            autoWidth: false,
+            preDrawCallback: function () {
+                if (!responsiveHelper) {
+                    responsiveHelper = new ResponsiveDatatablesHelper(tableElement, breakpointDefinition);
+                }
+            },
+            rowCallback: function (nRow) {
+                responsiveHelper.createExpandIcon(nRow);
+            },
+            drawCallback: function (oSettings) {
+                responsiveHelper.respond();
+            },
+            "aLengthMenu": [[10, 25, 50], [10, 25, 50]],
+            // "order": [1, "DESC"],
+            // "iDisplayLength": 10,
+            "pagingType": "full_numbers",
+            "processing": true,
+            "serverSide": true,
+            "sAjaxSource": "getOpportunitiesActivity",
+            "fnServerParams": function (aoData) {
+                aoData.push(
+                    { "name": "OppActKeyword", "value": "" + $("#txtActivityKeyword").val() + "" },
+                    { "name": "OppActType", "value": "" + $("#ddlHistoryType").val() + "" },
+                    { "name": "OppActPriority", "value": "" + $("#ddlActivityPriority").val() + "" },
+                    { "name": "OppActStatus", "value": "" + $("#ddlActivityStatus").val() + "" }
+                    );
+            },
+            "fnServerData": function (sSource, aoData, fnCallback) {
+                $.ajax({
+                    "dataType": 'json',
+                    "contentType": "application/json; charset=utf-8",
+                    "type": "GET",
+                    "url": sSource,
+                    "data": aoData,
+                    "success":
+                                function (msg) {
+                                    //var json = jQuery.parseJSON(msg.d);
+                                    fnCallback(msg);
+                                    // $("#jq-datatables-mails").show();
+                                }
+                });
+            },
+            "asStripeClasses": ['odd gradeX', 'even gradeC'],
+            "aoColumnDefs": [{
+                "targets": [0], "visible": true, "bSortable": false, "mDataProp": "LeadhistoryId",
+                "render": function (data, type, row) {
+                    //return "<input type=\"checkbox\"  data-LeadhistoryId=" + row["LeadhistoryId"] + " id=\"chkRow_" + row["LeadhistoryId"] + "\"  />";
+                    return "<input class=\"fa  fa-square-o\" input type=\"checkbox\" data-LeadhistoryId=" + row["LeadhistoryId"] + " value=" + row["LeadhistoryId"] + "  class =\"case\" name=\"chkItem\" id=\"chkRow_" + row["LeadhistoryId"] + "\" />";
+                }
+            },
+            {
+                "targets": [1], "visible": true, "bSortable": false, "mDataProp": "LeadhistoryId",
+                "render": function (data, type, row) {
+
+                    return "<span class=\"fa fa-times\" onclick=\"DeleteOppActivity('" + row["LeadhistoryId"] + "');\"></span>";
+                }
+            },
+                { "targets": [2], "visible": true, "bSortable": false, "mDataProp": "ActCreatedBy" },
+                {
+                    "targets": [3], "visible": true, "bSortable": true, "mDataProp": "CreatedDate",
+                    "render": function (data, type, row) {
+
+                        var jsDate1 = data;
+                        if (jsDate1 == null) {
+                            return jsDate1 = "";
+                        }
+                        else if (jsDate1.value != "") {
+                            var jsDate = new Date(parseInt(row["CreatedDate"].substr(6)));
+                            return (jsDate.getMonth() + 1) + '/' + jsDate.getDate() + '/' + jsDate.getFullYear();
+                        }
+
+                    }
+                },
+                {
+                    "targets": [4], "visible": true, "bSortable": true, "mDataProp": "StartDate",
+                    "render": function (data, type, row) {
+                        var jsDate1 = data;
+                        if (jsDate1 == null) {
+                            return jsDate1 = "";
+                        }
+                        else if (jsDate1.value != "") {
+                            var jsDate = new Date(parseInt(row["StartDate"].substr(6)));
+                            return (jsDate.getMonth() + 1) + '/' + jsDate.getDate() + '/' + jsDate.getFullYear();
+                        }
+
+                    }
+                },
+                            { "targets": [5], "visible": true, "bSortable": true, "mDataProp": "HistoryType" },
+                { "targets": [6], "visible": true, "bSortable": true, "mDataProp": "AccountName" },
+                { "targets": [7], "visible": true, "bSortable": true, "mDataProp": "Status" },
+                { "targets": [8], "visible": true, "bSortable": true, "mDataProp": "Details" },
+                {
+                    "targets": [9], "visible": true, "bSortable": false, "mDataProp": "LeadhistoryId",
+                    "render": function (data, type, row) {
+                        return "<a href=\"#\" onclick=\"return OpenAttachmentPopUp('" + row["LeadhistoryId"] + "')\">Attachment</a>";
+                    }
+                }
+            ],
+
+        }).api();
+    }
+    $('#btnSearchActivity').click(function (e) {
+
+        $("#tblOppactivities").dataTable().fnDestroy();
+        BindOpportunityActivities();
+
+        $('#tblOppactivities').on('length.dt', function (e, settings, len) {
+            $('#loading').css('display', 'block');
+        });
+
+        $('#tblOppactivities').on('page.dt', function () {
+            $('#loading').css('display', 'block');
+        });
+    });
+
+
+    //$("#selectall").click(function () {
+
+    //    $('.case').prop("checked", this.checked);
+    //});
+    // if all checkbox are selected, check the selectall checkbox
+    $('#tblOppactivities').on('click', 'th input:checkbox', function () {
+        var that = this;
+        $(this).closest('table').find('tr > td:first-child input:checkbox').each(function () {
+            this.checked = that.checked;
+            $(this).closest('tr').toggleClass('selected');
+        });
+    });
+    // for single  check box checked
+    $('#tblOppactivities tbody').click(function () {
+
+        if ($('#tblOppactivities input[name="chkItem"]:checked').length == $('#tblOppactivities input[name="chkItem"]').length) {
+            $("#selectall").prop("checked", true);
+        } else {
+            $("#selectall").prop("checked", false);
+        }
+    });
+
+
+    function OpenActivityDetail(LeadhistoryId) {
+
+        window.location = "EditOpportunityActivity?Leadhistid=" + LeadhistoryId;
+    }
+</script>
+<script type="text/javascript">
+    function DeleteOppActivity(LeadhistoryId) {
+
+        var flag = confirm('You are about to delete permanently.Are you sure you want to delete this record?');
+        if (flag) {
+            DeleteEachOppActivity(LeadhistoryId);
+            document.location.href = document.location.href;
+            alert("Deleted Successfully!!!");
+        }
+    }
+    function DeleteEachOppActivity(LeadhistoryId) {
+
+        $.ajax({
+            url: "DeleteOpportunityActivity",
+            type: "POST",
+            async: false,
+            data: { LeadhistId: LeadhistoryId },
+            success: function (data) {
+            },
+            error: function () {
+
+            }
+        });
+    }
+    function DeleteSelectedOppActivity() {
+        if ($('#tblOppactivities input[name="chkItem"]:checked').length > 0) {
+            var flag = confirm('You are about to delete permanently.Are you sure you want to delete these records?');
+            if (flag) {
+                $('#tblOppactivities input[name="chkItem"]:checked').each(function () {
+                    var id = $(this).attr('data-LeadhistoryId');
+                    DeleteEachOppActivity(id);
+                });
+                document.location.href = document.location.href;
+                alert("Deleted Successfully");
+            }
+        }
+        else {
+            alert("Please select item(s) to delete.");
+        }
+    }
+
+    $("#CompActivityStatus").click(function (e) {
+
+        var searchIDs = $("#tblOppactivities input:checkbox:checked").map(function () {
+
+            return $(this).attr("data-LeadhistoryId");
+        }).get();
+        if (searchIDs.toString().length == 0) {
+            alert("Please select item(s).");
+            e.preventDefault();
+            e.stopPropagation();
+        }
+        else
+            if (searchIDs.toString().length > 0) {
+                $('#loading').css('display', 'block');
+                $("#MdlAlert").show();
+                e.preventDefault();
+                e.stopPropagation();
+            }
+    });
+
+    $("#btnok").click(function (e) {
+
+        e.preventDefault();
+        e.stopPropagation();
+        $('#loading').css('display', 'block');
+        $("#MdlAlert").hide();
+        var searchIDs = $("#tblOppactivities input:checkbox:checked").map(function () {
+            return $(this).attr("data-LeadhistoryId");
+        }).get();
+
+        $.ajax({
+            url: "CompleteSelectedOppActivity",
+            type: "POST",
+            cache: "false",
+            data: { chkbxIds: searchIDs.toString() },
+            success: function (data) {
+
+                $('#loading').css('display', 'none');
+                $('#ConfirmModal').modal('show');
+                if (data === true) {
+                    window.location.href = window.location.href;
+                    $.growl.notice({ title: "Success", message: "Status Changed to Completed.", size: 'large' });
+                }
+                else {
+                    $.growl.notice({ title: "Fail", message: "Status Change Failed .", size: 'large' });
+                }
+            },
+            error: function (request, status, error) {
+            }
+        });
+    });
+
+    $("#btnCancel").click(function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        $('#loading').css('display', 'none');
+        $("#MdlAlert").hide();
+    });
+
+
+
+    function OpenAttachmentPopUp(LeadhistoryId) {
+
+        var URL = "AttachmentActivity";
+        $.ajax({
+            url: URL,
+            type: "GET",
+            async: false,
+            data: { LeadhistoryId: LeadhistoryId },
+            success: function (data) {
+
+                if (data != null) {
+                    $('#tblModalAttachment').empty();
+                    $('#tblModalAttachment').empty().append(data);
+                }
+            },
+            error: function (error) {
+
+
+            }
+        });
+        $('#myModalAttachment').modal("show");
+    }
+
+
+    function EditActivityDetail() {
+
+        if ($('#tblOppactivities input[name="chkItem"]:checked').length > 0) {
+            if ($('#tblOppactivities input[name="chkItem"]:checked').length > 1) {
+                alert("Please Select One Record Only.");
+            }
+            else {
+                var id = $('#tblOppactivities input[name="chkItem"]:checked').attr('data-LeadhistoryId');
+                window.location.href = "../Opportunities/EditOpportunityActivity?Leadhistid=" + id;
+            }
+        }
+        else
+            alert("Please Select atleast One Record Only.");
+
+    }
+
+    function onlynumbers(evt) {
+        var charCode = (evt.which) ? evt.which : event.keyCode
+        if (charCode == 43 || charCode == 32 || charCode == 40 || charCode == 41)
+            return true;
+        else if (charCode > 31 && (charCode < 45 || charCode > 57 || charCode == 47 || charCode == 46))
+            return false;
+
+        return true;
+    }
+
+</script>
+
+
+
+
+
+
+
+
+
+

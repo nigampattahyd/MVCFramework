@@ -1,0 +1,1562 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{7A6EBF04-CCD6-4D27-AC9D-0FCC25B9E465}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CRM</RootNamespace>
+    <AssemblyName>CRM</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>false</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="ClosedXML">
+      <HintPath>..\packages\ClosedXML.0.85.0\lib\net40\ClosedXML.dll</HintPath>
+    </Reference>
+    <Reference Include="DHTMLX, Version=3.3.5968.28932, Culture=neutral, PublicKeyToken=53f24791214eb8ac, processorArchitecture=MSIL">
+      <HintPath>..\packages\DHTMLX.Scheduler.NET.3.3.17.0\lib\DHTMLX.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DropboxRestAPI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DropboxRestAPI.1.2.1\lib\net45\DropboxRestAPI.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EASendMail45, Version=7.3.1.2, Culture=neutral, PublicKeyToken=88adb80ecd66540b, processorArchitecture=MSIL">
+      <HintPath>..\packages\EASendMail.7.3.1.2\lib\net45\EASendMail45.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Facebook">
+      <HintPath>..\packages\Facebook.7.0.6\lib\net45\Facebook.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Microsoft.Practices.ServiceLocation.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity, Version=1.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Microsoft.Practices.Unity.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Configuration, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Microsoft.Practices.Unity.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Interception, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Microsoft.Practices.Unity.Interception.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Interception.Configuration, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Microsoft.Practices.Unity.Interception.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Mvc, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Microsoft.Practices.Unity.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.RegistrationByConvention, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Microsoft.Practices.Unity.RegistrationByConvention.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.5.0.6\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Data">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Drawing">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Net.Http.Extensions, Version=2.2.29.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\DropboxRestAPI.1.2.1\lib\net45\System.Net.Http.Extensions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Net.Http.Formatting">
+      <HintPath>..\..\..\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.Primitives, Version=4.2.29.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\DropboxRestAPI.1.2.1\lib\net45\System.Net.Http.Primitives.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.DynamicData">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Entity">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.ApplicationServices">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.ComponentModel.DataAnnotations">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Core">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\CRMMVC\CRMMVC\bin\System.Web.Http.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml.Linq">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Extensions">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Abstractions">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Routing">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Configuration">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Services">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.EnterpriseServices">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.0.0\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.0.0\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Optimization">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.1\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.0.0\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.0.0\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.0.0\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.0.0\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="WebActivatorEx">
+      <HintPath>..\..\..\PsplCRM_Mvc_hg\CRMMVC\bin\WebActivatorEx.dll</HintPath>
+    </Reference>
+    <Reference Include="WebGrease">
+      <Private>True</Private>
+      <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
+    </Reference>
+    <Reference Include="Antlr3.Runtime">
+      <Private>True</Private>
+      <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.1.0.0\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Owin">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Owin.1.0.0\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.1.0.0\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin">
+      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin">
+      <HintPath>..\packages\Microsoft.Owin.2.0.0\lib\net45\Microsoft.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Host.SystemWeb">
+      <HintPath>..\packages\Microsoft.Owin.Host.SystemWeb.2.0.0\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security">
+      <HintPath>..\packages\Microsoft.Owin.Security.2.0.0\lib\net45\Microsoft.Owin.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Facebook">
+      <HintPath>..\packages\Microsoft.Owin.Security.Facebook.2.0.0\lib\net45\Microsoft.Owin.Security.Facebook.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Cookies">
+      <HintPath>..\packages\Microsoft.Owin.Security.Cookies.2.0.0\lib\net45\Microsoft.Owin.Security.Cookies.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.OAuth">
+      <HintPath>..\packages\Microsoft.Owin.Security.OAuth.2.0.0\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Google">
+      <HintPath>..\packages\Microsoft.Owin.Security.Google.2.0.0\lib\net45\Microsoft.Owin.Security.Google.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Twitter">
+      <HintPath>..\packages\Microsoft.Owin.Security.Twitter.2.0.0\lib\net45\Microsoft.Owin.Security.Twitter.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.MicrosoftAccount">
+      <HintPath>..\packages\Microsoft.Owin.Security.MicrosoftAccount.2.0.0\lib\net45\Microsoft.Owin.Security.MicrosoftAccount.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CommonClass\App_Start\BundleConfig.cs" />
+    <Compile Include="CommonClass\App_Start\FilterConfig.cs" />
+    <Compile Include="CommonClass\App_Start\RouteConfig.cs" />
+    <Compile Include="CommonClass\App_Start\Startup.Auth.cs" />
+    <Compile Include="CommonClass\App_Start\UnityConfig.cs" />
+    <Compile Include="CommonClass\App_Start\UnityMvcActivator.cs" />
+    <Compile Include="CommonClass\App_Start\WebApiConfig.cs" />
+    <Compile Include="CommonClass\CommonMethods.cs" />
+    <Compile Include="CommonClass\ErrorExceptionClass.cs" />
+    <Compile Include="Controllers\CalenderController.cs" />
+    <Compile Include="Controllers\ClientManagerController.cs" />
+    <Compile Include="Controllers\ControllerBase.cs" />
+    <Compile Include="Controllers\CreateClientsController.cs" />
+    <Compile Include="Controllers\CustomFieldsController.cs" />
+    <Compile Include="Controllers\DashBoardController.cs" />
+    <Compile Include="Controllers\DashboardHomeController.cs" />
+    <Compile Include="Controllers\DashBoardSetUpController.cs" />
+    <Compile Include="Controllers\DBoardController.cs" />
+    <Compile Include="Controllers\EditorController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
+    <Compile Include="Controllers\ExportController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ImportantDocumentsController.cs" />
+    <Compile Include="Controllers\ImportController.cs" />
+    <Compile Include="Controllers\InventoryController.cs" />
+    <Compile Include="Controllers\InvoiceController.cs" />
+    <Compile Include="Controllers\ItemsController.cs" />
+    <Compile Include="Controllers\LeadsController.cs" />
+    <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\MainHomeController.cs" />
+    <Compile Include="Controllers\ManageCompanyController.cs" />
+    <Compile Include="Controllers\MentorController.cs" />
+    <Compile Include="Controllers\MenusController.cs" />
+    <Compile Include="Controllers\NotificationsController.cs" />
+    <Compile Include="Controllers\OfficeController.cs" />
+    <Compile Include="Controllers\OfficelevelAccessController.cs" />
+    <Compile Include="Controllers\ProfileController.cs" />
+    <Compile Include="Controllers\ProjectController.cs" />
+    <Compile Include="Controllers\RolesController.cs" />
+    <Compile Include="Controllers\SchedulerController.cs" />
+    <Compile Include="Controllers\SMSProviderController.cs" />
+    <Compile Include="Controllers\SystemSetupController.cs" />
+    <Compile Include="Controllers\ToolsController.cs" />
+    <Compile Include="Controllers\UsersController.cs" />
+    <Compile Include="Controllers\VentureController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="CommonClass\GlobalVariables.cs" />
+    <Compile Include="Helper\dropbox.cs" />
+    <Compile Include="Helper\SendEmail.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="Startup.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="bin\Antlr3.Runtime.dll" />
+    <Content Include="bin\CRM.dll" />
+    <Content Include="bin\CRM.pdb" />
+    <Content Include="bin\CRMHub.dll" />
+    <Content Include="bin\CRMHub.pdb" />
+    <Content Include="bin\EntityFramework.dll" />
+    <Content Include="bin\EntityFramework.SqlServer.dll" />
+    <Content Include="bin\Microsoft.AspNet.Identity.Core.dll" />
+    <Content Include="bin\Microsoft.AspNet.Identity.EntityFramework.dll" />
+    <Content Include="bin\Microsoft.AspNet.Identity.Owin.dll" />
+    <Content Include="bin\Microsoft.Owin.dll" />
+    <Content Include="bin\Microsoft.Owin.Host.SystemWeb.dll" />
+    <Content Include="bin\Microsoft.Owin.Security.Cookies.dll" />
+    <Content Include="bin\Microsoft.Owin.Security.dll" />
+    <Content Include="bin\Microsoft.Owin.Security.Facebook.dll" />
+    <Content Include="bin\Microsoft.Owin.Security.Google.dll" />
+    <Content Include="bin\Microsoft.Owin.Security.MicrosoftAccount.dll" />
+    <Content Include="bin\Microsoft.Owin.Security.OAuth.dll" />
+    <Content Include="bin\Microsoft.Owin.Security.Twitter.dll" />
+    <Content Include="bin\Microsoft.Practices.ServiceLocation.dll" />
+    <Content Include="bin\Microsoft.Practices.Unity.Configuration.dll" />
+    <Content Include="bin\Microsoft.Practices.Unity.dll" />
+    <Content Include="bin\Microsoft.Practices.Unity.Interception.Configuration.dll" />
+    <Content Include="bin\Microsoft.Practices.Unity.Interception.dll" />
+    <Content Include="bin\Microsoft.Practices.Unity.Mvc.dll" />
+    <Content Include="bin\Microsoft.Practices.Unity.RegistrationByConvention.dll" />
+    <Content Include="bin\Microsoft.Web.Infrastructure.dll" />
+    <Content Include="bin\Newtonsoft.Json.dll" />
+    <Content Include="bin\Owin.dll" />
+    <Content Include="bin\System.Net.Http.dll" />
+    <Content Include="bin\System.Net.Http.Formatting.dll" />
+    <Content Include="bin\System.Web.Helpers.dll" />
+    <Content Include="bin\System.Web.Http.dll" />
+    <Content Include="bin\System.Web.Http.WebHost.dll" />
+    <Content Include="bin\System.Web.Mvc.dll" />
+    <Content Include="bin\System.Web.Optimization.dll" />
+    <Content Include="bin\System.Web.Razor.dll" />
+    <Content Include="bin\System.Web.WebPages.Deployment.dll" />
+    <Content Include="bin\System.Web.WebPages.dll" />
+    <Content Include="bin\System.Web.WebPages.Razor.dll" />
+    <Content Include="bin\WebActivatorEx.dll" />
+    <Content Include="bin\WebGrease.dll" />
+    <Content Include="Content\AssetsNew\css\4095-rtl.min.css" />
+    <Content Include="Content\AssetsNew\css\4095.min.css" />
+    <Content Include="Content\AssetsNew\css\animate.min.css" />
+    <Content Include="Content\AssetsNew\css\beyond-rtl.min.css" />
+    <Content Include="Content\AssetsNew\css\beyond.min.css" />
+    <Content Include="Content\AssetsNew\css\bootstrap-rtl.min.css" />
+    <Content Include="Content\AssetsNew\css\bootstrap.min.css" />
+    <Content Include="Content\AssetsNew\css\custom.css" />
+    <Content Include="Content\AssetsNew\css\dataTables.bootstrap.css" />
+    <Content Include="Content\AssetsNew\css\demo.min.css" />
+    <Content Include="Content\AssetsNew\css\font-awesome.min.css" />
+    <Content Include="Content\AssetsNew\css\img\tree-icons.html" />
+    <Content Include="Content\AssetsNew\css\jquery-ui.css" />
+    <Content Include="Content\AssetsNew\css\skins\azure.min.css" />
+    <Content Include="Content\AssetsNew\css\skins\black.min.css" />
+    <Content Include="Content\AssetsNew\css\skins\blue.min.css" />
+    <Content Include="Content\AssetsNew\css\skins\darkblue.min.css" />
+    <Content Include="Content\AssetsNew\css\skins\darkred.min.css" />
+    <Content Include="Content\AssetsNew\css\skins\deepblue.min.css" />
+    <Content Include="Content\AssetsNew\css\skins\gray.min.css" />
+    <Content Include="Content\AssetsNew\css\skins\green.min.css" />
+    <Content Include="Content\AssetsNew\css\skins\orange.min.css" />
+    <Content Include="Content\AssetsNew\css\skins\pink.min.css" />
+    <Content Include="Content\AssetsNew\css\skins\purple.min.css" />
+    <Content Include="Content\AssetsNew\css\skins\teal.min.css" />
+    <Content Include="Content\AssetsNew\css\typicons.min.css" />
+    <Content Include="Content\AssetsNew\css\weather-icons.min.css" />
+    <Content Include="Content\AssetsNew\css\zabuto_calendar.min.css" />
+    <Content Include="Content\AssetsNew\fonts\fontawesome-webfonte0a5.svg" />
+    <Content Include="Content\AssetsNew\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\AssetsNew\fonts\typicons.svg" />
+    <Content Include="Content\AssetsNew\fonts\weathericons-regular-webfont.svg" />
+    <Content Include="Content\AssetsNew\img\attach-blue.png" />
+    <Content Include="Content\AssetsNew\img\attach-green.png" />
+    <Content Include="Content\AssetsNew\img\attach-red.png" />
+    <Content Include="Content\AssetsNew\img\attach-yellow.png" />
+    <Content Include="Content\AssetsNew\img\avatars\adam-jansen.jpg" />
+    <Content Include="Content\AssetsNew\img\avatars\bing.png" />
+    <Content Include="Content\AssetsNew\img\avatars\divyia.jpg" />
+    <Content Include="Content\AssetsNew\img\avatars\Javi-Jimenez.jpg" />
+    <Content Include="Content\AssetsNew\img\avatars\John-Smith.jpg" />
+    <Content Include="Content\AssetsNew\img\avatars\Lee-Munroe.jpg" />
+    <Content Include="Content\AssetsNew\img\avatars\Matt-Cheuvront.jpg" />
+    <Content Include="Content\AssetsNew\img\avatars\Nicolai-Larson.jpg" />
+    <Content Include="Content\AssetsNew\img\avatars\Osvaldus-Valutis.jpg" />
+    <Content Include="Content\AssetsNew\img\avatars\Sergey-Azovskiy.jpg" />
+    <Content Include="Content\AssetsNew\img\avatars\Stephanie-Walter.jpg" />
+    <Content Include="Content\AssetsNew\img\Chat.png" />
+    <Content Include="Content\AssetsNew\img\favicon.png" />
+    <Content Include="Content\AssetsNew\img\jquery.minicolors.png" />
+    <Content Include="Content\AssetsNew\img\logo-inverted.png" />
+    <Content Include="Content\AssetsNew\img\logo-new1.png" />
+    <Content Include="Content\AssetsNew\img\logo-rtl.png" />
+    <Content Include="Content\AssetsNew\img\logo.png" />
+    <Content Include="Content\AssetsNew\img\sort_asc.png" />
+    <Content Include="Content\AssetsNew\img\sort_asc_disabled.png" />
+    <Content Include="Content\AssetsNew\img\sort_both.png" />
+    <Content Include="Content\AssetsNew\img\sort_desc.png" />
+    <Content Include="Content\AssetsNew\img\sort_desc_disabled.png" />
+    <Content Include="Content\AssetsNew\img\temp1.png" />
+    <Content Include="Content\AssetsNew\js\beyond.js" />
+    <Content Include="Content\AssetsNew\js\beyond.min.js" />
+    <Content Include="Content\AssetsNew\js\bootbox\bootbox.js" />
+    <Content Include="Content\AssetsNew\js\bootstrap.min.js" />
+    <Content Include="Content\AssetsNew\js\charts\chartjs\Chart.js" />
+    <Content Include="Content\AssetsNew\js\charts\chartjs\chartjs-init.js" />
+    <Content Include="Content\AssetsNew\js\charts\easypiechart\easypiechart-init.js" />
+    <Content Include="Content\AssetsNew\js\charts\easypiechart\jquery.easypiechart.js" />
+    <Content Include="Content\AssetsNew\js\charts\flot\flot-init.js" />
+    <Content Include="Content\AssetsNew\js\charts\flot\jquery.flot.crosshair.js" />
+    <Content Include="Content\AssetsNew\js\charts\flot\jquery.flot.js" />
+    <Content Include="Content\AssetsNew\js\charts\flot\jquery.flot.orderBars.js" />
+    <Content Include="Content\AssetsNew\js\charts\flot\jquery.flot.pie.js" />
+    <Content Include="Content\AssetsNew\js\charts\flot\jquery.flot.resize.js" />
+    <Content Include="Content\AssetsNew\js\charts\flot\jquery.flot.selection.js" />
+    <Content Include="Content\AssetsNew\js\charts\flot\jquery.flot.stack.js" />
+    <Content Include="Content\AssetsNew\js\charts\flot\jquery.flot.time.js" />
+    <Content Include="Content\AssetsNew\js\charts\flot\jquery.flot.tooltip.js" />
+    <Content Include="Content\AssetsNew\js\charts\morris\morris-init.js" />
+    <Content Include="Content\AssetsNew\js\charts\morris\morris.js" />
+    <Content Include="Content\AssetsNew\js\charts\morris\raphael-2.0.2.min.js" />
+    <Content Include="Content\AssetsNew\js\charts\sparkline\jquery.sparkline.js" />
+    <Content Include="Content\AssetsNew\js\charts\sparkline\sparkline-init.js" />
+    <Content Include="Content\AssetsNew\js\colorpicker\jquery.minicolors.js" />
+    <Content Include="Content\AssetsNew\js\datatable\datatables-init.js" />
+    <Content Include="Content\AssetsNew\js\datatable\dataTables.bootstrap.min.js" />
+    <Content Include="Content\AssetsNew\js\datatable\dataTables.tableTools.min.js" />
+    <Content Include="Content\AssetsNew\js\datatable\jquery.dataTables.min.js" />
+    <Content Include="Content\AssetsNew\js\datatable\ZeroClipboard.js" />
+    <Content Include="Content\AssetsNew\js\datetime\bootstrap-datepicker.js" />
+    <Content Include="Content\AssetsNew\js\datetime\bootstrap-timepicker.js" />
+    <Content Include="Content\AssetsNew\js\datetime\daterangepicker.js" />
+    <Content Include="Content\AssetsNew\js\datetime\moment.js" />
+    <Content Include="Content\AssetsNew\js\dropzone\dropzone.min.js" />
+    <Content Include="Content\AssetsNew\js\editors\summernote\summernote.js" />
+    <Content Include="Content\AssetsNew\js\editors\wysiwyg\bootstrap-wysiwyg.js" />
+    <Content Include="Content\AssetsNew\js\editors\wysiwyg\jquery.hotkeys.js" />
+    <Content Include="Content\AssetsNew\js\editors\wysiwyg\prettify.js" />
+    <Content Include="Content\AssetsNew\js\fuelux\spinbox\fuelux.spinbox.min.js" />
+    <Content Include="Content\AssetsNew\js\fuelux\treeview\tree-custom.min.js" />
+    <Content Include="Content\AssetsNew\js\fuelux\treeview\treeview-init.js" />
+    <Content Include="Content\AssetsNew\js\fuelux\wizard\wizard-custom.js" />
+    <Content Include="Content\AssetsNew\js\fullcalendar\fullcalendar.min.js" />
+    <Content Include="Content\AssetsNew\js\fullcalendar\jquery-ui.custom.min.js" />
+    <Content Include="Content\AssetsNew\js\fullcalendar\moment.min.js" />
+    <Content Include="Content\AssetsNew\js\inputmask\jasny-bootstrap.min.js" />
+    <Content Include="Content\AssetsNew\js\jquery-ui-1.10.4.custom.js" />
+    <Content Include="Content\AssetsNew\js\jquery.min.js" />
+    <Content Include="Content\AssetsNew\js\knob\jquery.knob.js" />
+    <Content Include="Content\AssetsNew\js\nestable\jquery.nestable.min.js" />
+    <Content Include="Content\AssetsNew\js\select2\select2.js" />
+    <Content Include="Content\AssetsNew\js\skins.min.js" />
+    <Content Include="Content\AssetsNew\js\slider\jQRangeSlider\jQAllRangeSliders-withRuler-min.js" />
+    <Content Include="Content\AssetsNew\js\slider\jquery.nouislider.js" />
+    <Content Include="Content\AssetsNew\js\slimscroll\jquery.slimscroll.min.js" />
+    <Content Include="Content\AssetsNew\js\tagsinput\bootstrap-tagsinput.js" />
+    <Content Include="Content\AssetsNew\js\textarea\jquery.autosize.js" />
+    <Content Include="Content\AssetsNew\js\toastr\toastr.js" />
+    <Content Include="Content\AssetsNew\js\validation\bootstrapValidator.js" />
+    <Content Include="Content\AssetsNew\sound\alert.mp3" />
+    <Content Include="Content\assets\css\32px.png" />
+    <Content Include="Content\assets\css\animate.css" />
+    <Content Include="Content\assets\css\bootstrap-datetimepicker.min.css" />
+    <Content Include="Content\assets\css\bootstrap-multiselect.css" />
+    <Content Include="Content\assets\css\bootstrap.min.css" />
+    <Content Include="Content\assets\css\custom-new.css" />
+    <Content Include="Content\assets\css\custom.css" />
+    <Content Include="Content\assets\css\DateTimePicker\bootstrap-datetimepicker.css" />
+    <Content Include="Content\assets\css\DateTimePicker\bootstrap-datetimepicker.min.css" />
+    <Content Include="Content\assets\css\DateTimePicker\jquery.timepicker.css" />
+    <Content Include="Content\assets\css\font-awesome.min.css" />
+    <Content Include="Content\assets\css\jquery-te-1.4.0.css" />
+    <Content Include="Content\assets\css\jquery-te.png" />
+    <Content Include="Content\assets\css\pages.min.css" />
+    <Content Include="Content\assets\css\pixel-admin.min.css" />
+    <Content Include="Content\assets\css\rtl.min.css" />
+    <Content Include="Content\assets\css\styleJSTree.css" />
+    <Content Include="Content\assets\css\themes.min.css" />
+    <Content Include="Content\assets\css\throbber.gif" />
+    <Content Include="Content\assets\css\UIRefresh.css" />
+    <Content Include="Content\assets\css\widgets.min.css" />
+    <Content Include="Content\assets\demo\avatars\1.jpg" />
+    <Content Include="Content\assets\demo\avatars\2.jpg" />
+    <Content Include="Content\assets\demo\avatars\3.jpg" />
+    <Content Include="Content\assets\demo\avatars\4.jpg" />
+    <Content Include="Content\assets\demo\avatars\5.jpg" />
+    <Content Include="Content\assets\demo\demo.js" />
+    <Content Include="Content\assets\demo\less-1.7.0.js" />
+    <Content Include="Content\assets\demo\logo-big.png" />
+    <Content Include="Content\assets\demo\pricing-bg.jpg" />
+    <Content Include="Content\assets\demo\signin-bg-1.jpg" />
+    <Content Include="Content\assets\demo\signin-bg-2.jpg" />
+    <Content Include="Content\assets\demo\signin-bg-3.jpg" />
+    <Content Include="Content\assets\demo\signin-bg-4.jpg" />
+    <Content Include="Content\assets\demo\signin-bg-5.jpg" />
+    <Content Include="Content\assets\demo\signin-bg-6.jpg" />
+    <Content Include="Content\assets\demo\signin-bg-7.jpg" />
+    <Content Include="Content\assets\demo\signin-bg-8.jpg" />
+    <Content Include="Content\assets\demo\signin-bg-9.jpg" />
+    <Content Include="Content\assets\demo\themes\adminflare.png" />
+    <Content Include="Content\assets\demo\themes\asphalt.png" />
+    <Content Include="Content\assets\demo\themes\clean.png" />
+    <Content Include="Content\assets\demo\themes\default.png" />
+    <Content Include="Content\assets\demo\themes\dust.png" />
+    <Content Include="Content\assets\demo\themes\fresh.png" />
+    <Content Include="Content\assets\demo\themes\frost.png" />
+    <Content Include="Content\assets\demo\themes\purple-hills.png" />
+    <Content Include="Content\assets\demo\themes\silver.png" />
+    <Content Include="Content\assets\demo\themes\white.png" />
+    <Content Include="Content\assets\fonts\font-awesome\fontawesome-webfont.svg" />
+    <Content Include="Content\assets\images\loader.gif" />
+    <Content Include="Content\assets\images\pixel-admin\avatar.png" />
+    <Content Include="Content\assets\images\pixel-admin\blank.png" />
+    <Content Include="Content\assets\images\pixel-admin\blur.svg" />
+    <Content Include="Content\assets\images\pixel-admin\main-menu-bg.png" />
+    <Content Include="Content\assets\images\pixel-admin\main-navbar-bg.png" />
+    <Content Include="Content\assets\images\pixel-admin\main-navbar-logo.png" />
+    <Content Include="Content\assets\images\plugins\bootstrap-editable\loading.gif" />
+    <Content Include="Content\assets\images\plugins\jquery.minicolors.png" />
+    <Content Include="Content\assets\logo.png" />
+    <Content Include="Content\CompanyLogos\Digital55-Logo.png" />
+    <Content Include="Content\CompanyLogos\logo.png" />
+    <Content Include="Content\ContactAttachment\309\download %281%29.tiff" />
+    <Content Include="Content\ContactAttachment\3189\images %284%29.jpg" />
+    <Content Include="Content\ContactAttachment\3196\images %283%29.jpg" />
+    <Content Include="Content\ContactAttachment\3213\images %284%29.jpg" />
+    <Content Include="Content\dashboardAssets\js\fusioncharts.charts.js" />
+    <Content Include="Content\dashboardAssets\js\fusioncharts.js" />
+    <Content Include="Content\dashboardAssets\js\themes\fusioncharts.theme.fint.js" />
+    <Content Include="Content\Files\2.jpg" />
+    <Content Include="Content\Files\Desert.jpg" />
+    <Content Include="Content\Files\listoftableswith Pk asNumeric.txt" />
+    <Content Include="Content\Files\Pspl girls bdays.txt" />
+    <Content Include="Content\Files\submitclaimsofmap.txt" />
+    <Content Include="Content\fonts\fontawesome-webfont.svg" />
+    <Content Include="Content\Opportunityattachment\145\Desert.jpg" />
+    <Content Include="Content\Opportunityattachment\147\Desert.jpg" />
+    <Content Include="Content\Site.css" />
+    <Content Include="Content\stylesheets\bootstrap.css" />
+    <Content Include="Content\MutlipleCheckbox\sumoselect.css" />
+    <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="Content\themes\base\images\ui-icons_222222_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_454545_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_888888_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Content\themes\base\jquery-ui.css" />
+    <Content Include="Content\themes\base\jquery.ui.accordion.css" />
+    <Content Include="Content\themes\base\jquery.ui.all.css" />
+    <Content Include="Content\themes\base\jquery.ui.autocomplete.css" />
+    <Content Include="Content\themes\base\jquery.ui.base.css" />
+    <Content Include="Content\themes\base\jquery.ui.button.css" />
+    <Content Include="Content\themes\base\jquery.ui.core.css" />
+    <Content Include="Content\themes\base\jquery.ui.datepicker.css" />
+    <Content Include="Content\themes\base\jquery.ui.dialog.css" />
+    <Content Include="Content\themes\base\jquery.ui.progressbar.css" />
+    <Content Include="Content\themes\base\jquery.ui.resizable.css" />
+    <Content Include="Content\themes\base\jquery.ui.selectable.css" />
+    <Content Include="Content\themes\base\jquery.ui.slider.css" />
+    <Content Include="Content\themes\base\jquery.ui.tabs.css" />
+    <Content Include="Content\themes\base\jquery.ui.theme.css" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="Content\themes\base\minified\images\ui-icons_222222_256x240.png" />
+    <Content Include="Content\themes\base\minified\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Content\themes\base\minified\images\ui-icons_454545_256x240.png" />
+    <Content Include="Content\themes\base\minified\images\ui-icons_888888_256x240.png" />
+    <Content Include="Content\themes\base\minified\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Content\themes\base\minified\jquery-ui.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.accordion.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.autocomplete.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.button.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.core.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.datepicker.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.dialog.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.progressbar.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.resizable.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.selectable.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.slider.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.tabs.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
+    <Content Include="Content\Timepicker\jquery.timepicker.css" />
+    <Content Include="Content\ui.dropdownchecklist.css" />
+    <Content Include="favicon.ico" />
+    <Content Include="Global.asax" />
+    <Content Include="Content\assets\demo\less\bootstrap-mixins.less" />
+    <Content Include="Content\assets\demo\less\bootstrap-variables.less" />
+    <Content Include="Content\assets\demo\less\colors.less" />
+    <Content Include="Content\assets\demo\less\mixins.less" />
+    <Content Include="Content\assets\demo\less\variables.less" />
+    <Content Include="Content\assets\fonts\font-awesome\fontawesome-webfont.eot" />
+    <Content Include="Content\assets\fonts\font-awesome\fontawesome-webfont.ttf" />
+    <Content Include="Content\assets\fonts\font-awesome\fontawesome-webfont.woff" />
+    <Content Include="Content\assets\fonts\font-awesome\FontAwesome.otf" />
+    <Content Include="Content\fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\fonts\footable.eot" />
+    <Content Include="Content\fonts\footable.ttf" />
+    <Content Include="Content\fonts\footable.woff" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Content\fonts\gothic.eot" />
+    <Content Include="Content\fonts\gothic.ttf" />
+    <Content Include="Content\fonts\gothic.woff" />
+    <Content Include="Content\fonts\ionicons.ttf" />
+    <Content Include="Content\fonts\OpenSans-Regular-webfont.eot" />
+    <Content Include="Content\fonts\OpenSans-Regular-webfont.ttf" />
+    <Content Include="Content\fonts\opensans-regular-webfont.woff" />
+    <Content Include="Images\ajax-loader.gif" />
+    <Content Include="Images\groupme.png" />
+    <Content Include="Images\icon-1.png" />
+    <Content Include="Images\icon-2.png" />
+    <Content Include="Images\icon-3.png" />
+    <Content Include="Images\icon-4.png" />
+    <Content Include="Images\icon-5.png" />
+    <Content Include="Images\icon-6.png" />
+    <Content Include="Images\lead_icon.png" />
+    <Content Include="Images\login-background1.jpg" />
+    <Content Include="Images\login-background1.png" />
+    <Content Include="Images\Logo\Digital55-Logo.png" />
+    <Content Include="Images\Logo\plus_icon.png" />
+    <Content Include="Images\Logo\PSPLCRM-Logo1.png" />
+    <Content Include="Images\Mentor.png" />
+    <Content Include="Images\no_image.png" />
+    <Content Include="Images\opportunity_icon.png" />
+    <Content Include="Images\plus.png" />
+    <Content Include="Images\Projects.png" />
+    <Content Include="Images\sales_icon.png" />
+    <Content Include="Images\User-Icon.jpg" />
+    <Content Include="Images\users.png" />
+    <Content Include="Images\user_icon.png" />
+    <Content Include="Images\venture.png" />
+    <Content Include="Content\assets\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="bin\CRM.dll.config" />
+    <Content Include="Content\Attachment\3189\901847.pdf" />
+    <Content Include="Content\AttachmentActivity\3189\901847.pdf" />
+    <Content Include="Content\LeadsExport\ExportLeads.csv" />
+    <Content Include="Content\LeadsExport\ExportLeads.xls" />
+    <Content Include="Content\OpportunitiesExport\ExportOpportunities.csv" />
+    <Content Include="Content\Attachment\3384\CRM issue-14th.xlsx" />
+    <Content Include="Content\ContactAttachment\3191\901847.pdf" />
+    <Content Include="Content\ContactAttachment\3391\CRM Issues-2nd.xlsx" />
+    <Content Include="Content\ContactAttachment\745\901847.pdf" />
+    <Content Include="Content\ContactAttachment\746\901847.pdf" />
+    <Content Include="Content\Files\901847.pdf" />
+    <Content Include="Content\Files\CRM issue-14th.xlsx" />
+    <Content Include="Content\Files\CRM issue-Feb11th.xlsx" />
+    <Content Include="Content\Files\CRM issues-13th %281%29.xlsx" />
+    <Content Include="Content\Files\CRM Issues-4th.xlsx" />
+    <Content Include="Content\Files\EMPLOYEE UPDATE.xlsx" />
+    <Content Include="Content\Files\My Study links.xlsx" />
+    <Content Include="Content\Files\CRM Issues-16th.xlsx" />
+    <Content Include="Content\Attachment\CRM Issues-19th.xlsx" />
+    <Content Include="Content\Attachment\CRM issue-14th.xlsx" />
+    <Content Include="Content\ContactAttachment\CRM Issues-17th.xlsx" />
+    <Content Include="Content\Attachment\CRM issues-28th.xlsx" />
+    <Content Include="Content\Attachment\CRM Issues-3rd.xlsx" />
+    <Content Include="Content\Attachment\CRM Issues-27th.xlsx" />
+    <Content Include="Content\DownloadImportFiles\ImportCompanies.csv" />
+    <Content Include="Content\DownloadImportFiles\ImportContact.csv" />
+    <Content Include="Content\AssetsNew\fonts\BYekan.woff" />
+    <Content Include="Content\AssetsNew\fonts\fontawesome-webfontd41d.eot" />
+    <Content Include="Content\AssetsNew\fonts\fontawesome-webfonte0a5.eot" />
+    <Content Include="Content\AssetsNew\fonts\fontawesome-webfonte0a5.ttf" />
+    <Content Include="Content\AssetsNew\fonts\fontawesome-webfonte0a5.woff" />
+    <Content Include="Content\AssetsNew\fonts\fontawesome-webfonte0a5.woff2" />
+    <Content Include="Content\AssetsNew\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\AssetsNew\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Content\AssetsNew\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Content\AssetsNew\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="Content\AssetsNew\fonts\glyphicons-halflings-regulard41d.eot" />
+    <Content Include="Content\AssetsNew\fonts\typicons.eot" />
+    <Content Include="Content\AssetsNew\fonts\typicons.ttf" />
+    <Content Include="Content\AssetsNew\fonts\typicons.woff" />
+    <Content Include="Content\AssetsNew\fonts\typiconsd41d.eot" />
+    <Content Include="Content\AssetsNew\fonts\weathericons-regular-webfont.eot" />
+    <Content Include="Content\AssetsNew\fonts\weathericons-regular-webfont.ttf" />
+    <Content Include="Content\AssetsNew\fonts\weathericons-regular-webfont.woff" />
+    <Content Include="Content\AssetsNew\fonts\weathericons-regular-webfontd41d.eot" />
+    <None Include="Properties\PublishProfiles\crm.pubxml" />
+    <None Include="Properties\PublishProfiles\CRM_MVC.pubxml" />
+    <None Include="Properties\PublishProfiles\crm_uday.pubxml" />
+    <None Include="Properties\PublishProfiles\Raghu.pubxml" />
+    <Content Include="Content\AssetsNew\js\zabuto_calendar.min.js" />
+    <Content Include="Scripts\APIscripts\Custom.js" />
+    <Content Include="Scripts\bootstrap\bootstrap-multiselect.js" />
+    <Content Include="Scripts\bootstrap\bootstrap.min.js" />
+    <Content Include="Scripts\Cookie\jquery.cookie.js" />
+    <Content Include="Scripts\CRM\Company.js" />
+    <Content Include="Scripts\datatable-responsive\dataTables.bootstrap.min.js" />
+    <Content Include="Scripts\datatable-responsive\datatables.responsive.css" />
+    <Content Include="Scripts\datatable-responsive\datatables.responsive.js" />
+    <Content Include="Scripts\datatable-responsive\img\minus.png" />
+    <Content Include="Scripts\datatable-responsive\img\plus.png" />
+    <Content Include="Scripts\datatable-responsive\img\plus1.png" />
+    <Content Include="Scripts\datatable-responsive\TableTools\css\dataTables.tableTools.css" />
+    <Content Include="Scripts\datatable-responsive\TableTools\dataTables.tableTools.js" />
+    <Content Include="Scripts\datatable-responsive\TableTools\swf\copy_csv_xls.swf" />
+    <Content Include="Scripts\datatable-responsive\TableTools\swf\copy_csv_xls_pdf.swf" />
+    <Content Include="Scripts\DataTable\css\dataTables.bootstrap.css" />
+    <Content Include="Scripts\DataTable\css\dataTables.bootstrap.min.css" />
+    <Content Include="Scripts\DataTable\css\dataTables.bootstrap4.css" />
+    <Content Include="Scripts\DataTable\css\dataTables.bootstrap4.min.css" />
+    <Content Include="Scripts\DataTable\css\dataTables.foundation.css" />
+    <Content Include="Scripts\DataTable\css\dataTables.foundation.min.css" />
+    <Content Include="Scripts\DataTable\css\dataTables.jqueryui.css" />
+    <Content Include="Scripts\DataTable\css\dataTables.jqueryui.min.css" />
+    <Content Include="Scripts\DataTable\css\dataTables.material.css" />
+    <Content Include="Scripts\DataTable\css\dataTables.material.min.css" />
+    <Content Include="Scripts\DataTable\css\dataTables.semanticui.css" />
+    <Content Include="Scripts\DataTable\css\dataTables.semanticui.min.css" />
+    <Content Include="Scripts\DataTable\css\dataTables.uikit.css" />
+    <Content Include="Scripts\DataTable\css\dataTables.uikit.min.css" />
+    <Content Include="Scripts\DataTable\css\jquery.dataTables.css" />
+    <Content Include="Scripts\DataTable\css\jquery.dataTables.min.css" />
+    <Content Include="Scripts\DataTable\css\jquery.dataTables_themeroller.css" />
+    <Content Include="Scripts\DataTable\images\favicon.ico" />
+    <Content Include="Scripts\DataTable\images\sort_asc.png" />
+    <Content Include="Scripts\DataTable\images\sort_asc_disabled.png" />
+    <Content Include="Scripts\DataTable\images\sort_both.png" />
+    <Content Include="Scripts\DataTable\images\sort_desc.png" />
+    <Content Include="Scripts\DataTable\images\sort_desc_disabled.png" />
+    <Content Include="Scripts\DataTable\js\dataTables.bootstrap.js" />
+    <Content Include="Scripts\DataTable\js\dataTables.bootstrap.min.js" />
+    <Content Include="Scripts\DataTable\js\dataTables.bootstrap4.js" />
+    <Content Include="Scripts\DataTable\js\dataTables.bootstrap4.min.js" />
+    <Content Include="Scripts\DataTable\js\dataTables.foundation.js" />
+    <Content Include="Scripts\DataTable\js\dataTables.foundation.min.js" />
+    <Content Include="Scripts\DataTable\js\dataTables.jqueryui.js" />
+    <Content Include="Scripts\DataTable\js\dataTables.jqueryui.min.js" />
+    <Content Include="Scripts\DataTable\js\dataTables.material.js" />
+    <Content Include="Scripts\DataTable\js\dataTables.material.min.js" />
+    <Content Include="Scripts\DataTable\js\dataTables.semanticui.js" />
+    <Content Include="Scripts\DataTable\js\dataTables.semanticui.min.js" />
+    <Content Include="Scripts\DataTable\js\dataTables.uikit.js" />
+    <Content Include="Scripts\DataTable\js\dataTables.uikit.min.js" />
+    <Content Include="Scripts\DataTable\js\jquery.dataTables.js" />
+    <Content Include="Scripts\DataTable\js\jquery.dataTables.min.js" />
+    <Content Include="Scripts\DataTable\js\jquery.js" />
+    <Content Include="Scripts\DateTimePicker\bootstrap-datepicker.js" />
+    <Content Include="Scripts\DateTimePicker\bootstrap-datetimepicker.js" />
+    <Content Include="Scripts\DateTimePicker\bootstrap-datetimepicker.min.js" />
+    <Content Include="Scripts\DateTimePicker\bootstrap-timepicker.min.js" />
+    <Content Include="Scripts\dhtmlxScheduler\dhtmlxscheduler.css" />
+    <Content Include="Scripts\dhtmlxScheduler\dhtmlxscheduler.js" />
+    <Content Include="Scripts\dhtmlxScheduler\dhtmlxscheduler_classic.css" />
+    <Content Include="Scripts\dhtmlxScheduler\dhtmlxscheduler_custom_lightbox.js" />
+    <Content Include="Scripts\dhtmlxScheduler\dhtmlxscheduler_flat.css" />
+    <Content Include="Scripts\dhtmlxScheduler\dhtmlxscheduler_glossy.css" />
+    <Content Include="Scripts\dhtmlxScheduler\ext\dhtmlxscheduler_active_links.js" />
+    <Content Include="Scripts\dhtmlxScheduler\ext\dhtmlxscheduler_agenda_view.js" />
+    <Content Include="Scripts\dhtmlxScheduler\ext\dhtmlxscheduler_all_timed.js" />
+    <Content Include="Scripts\dhtmlxScheduler\ext\dhtmlxscheduler_collision.js" />
+    <Content Include="Scripts\dhtmlxScheduler\ext\dhtmlxscheduler_container_autoresize.js" />
+    <Content Include="Scripts\dhtmlxScheduler\ext\dhtmlxscheduler_cookie.js" />
+    <Content Include="Scripts\dhtmlxScheduler\ext\dhtmlxscheduler_daytimeline.js" />
+    <Content Include="Scripts\dhtmlxScheduler\ext\dhtmlxscheduler_drag_between.js" />
+    <Content Include="Scripts\dhtmlxScheduler\ext\dhtmlxscheduler_editors.js" />
+    <Content Include="Scripts\dhtmlxScheduler\ext\dhtmlxscheduler_expand.js" />
+    <Content Include="Scripts\dhtmlxScheduler\ext\dhtmlxscheduler_grid_view.js" />
+    <Content Include="Scripts\dhtmlxScheduler\ext\dhtmlxscheduler_html_templates.js" />
+    <Content Include="Scripts\dhtmlxScheduler\ext\dhtmlxscheduler_key_nav.js" />
+    <Content Include="Scripts\dhtmlxScheduler\ext\dhtmlxscheduler_layer.js" />
+    <Content Include="Scripts\dhtmlxScheduler\ext\dhtmlxscheduler_limit.js" />
+    <Content Include="Scripts\dhtmlxScheduler\ext\dhtmlxscheduler_live_updates.js" />
+    <Content Include="Scripts\dhtmlxScheduler\ext\dhtmlxscheduler_map_view.js" />
+    <Content Include="Scripts\dhtmlxScheduler\ext\dhtmlxscheduler_minical.js" />
+    <Content Include="Scripts\dhtmlxScheduler\ext\dhtmlxscheduler_monthheight.js" />
+    <Content Include="Scripts\dhtmlxScheduler\ext\dhtmlxscheduler_multisection.js" />
+    <Content Include="Scripts\dhtmlxScheduler\ext\dhtmlxscheduler_multiselect.js" />
+    <Content Include="Scripts\dhtmlxScheduler\ext\dhtmlxscheduler_multisource.js" />
+    <Content Include="Scripts\dhtmlxScheduler\ext\dhtmlxscheduler_mvc.js" />
+    <Content Include="Scripts\dhtmlxScheduler\ext\dhtmlxscheduler_offline.js" />
+    <Content Include="Scripts\dhtmlxScheduler\ext\dhtmlxscheduler_outerdrag.js" />
+    <Content Include="Scripts\dhtmlxScheduler\ext\dhtmlxscheduler_pdf.js" />
+    <Content Include="Scripts\dhtmlxScheduler\ext\dhtmlxscheduler_quick_info.js" />
+    <Content Include="Scripts\dhtmlxScheduler\ext\dhtmlxscheduler_readonly.js" />
+    <Content Include="Scripts\dhtmlxScheduler\ext\dhtmlxscheduler_recurring.js" />
+    <Content Include="Scripts\dhtmlxScheduler\ext\dhtmlxscheduler_serialize.js" />
+    <Content Include="Scripts\dhtmlxScheduler\ext\dhtmlxscheduler_timeline.js" />
+    <Content Include="Scripts\dhtmlxScheduler\ext\dhtmlxscheduler_tooltip.js" />
+    <Content Include="Scripts\dhtmlxScheduler\ext\dhtmlxscheduler_treetimeline.js" />
+    <Content Include="Scripts\dhtmlxScheduler\ext\dhtmlxscheduler_units.js" />
+    <Content Include="Scripts\dhtmlxScheduler\ext\dhtmlxscheduler_url.js" />
+    <Content Include="Scripts\dhtmlxScheduler\ext\dhtmlxscheduler_week_agenda.js" />
+    <Content Include="Scripts\dhtmlxScheduler\ext\dhtmlxscheduler_wp.js" />
+    <Content Include="Scripts\dhtmlxScheduler\ext\dhtmlxscheduler_year_view.js" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs\blue_tab.png" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs\buttons.gif" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs\buttons.png" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs\but_repeat.gif" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs\calendar.gif" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs\clock_big.gif" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs\clock_small.gif" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs\colapce-expand-icon.gif" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs\collapse_expand_icon.gif" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs\controlls5.png" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs\controls.gif" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs\databg.png" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs\databg_now.png" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs\event-bg.png" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs\export_ical.png" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs\export_pdf.png" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs\icon.png" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs\images.png" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs\left-separator.png" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs\left-time-bg.png" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs\lightbox.png" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs\loading.gif" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs\move.png" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs\multi-days-bg.png" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs\resize_dots.png" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs\top-days-bg.png" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs\top-separator.gif" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs\white_tab.png" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs_dhx_terrace\arrow_left.png" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs_dhx_terrace\arrow_right.png" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs_dhx_terrace\but_repeat.gif" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs_dhx_terrace\calendar.gif" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs_dhx_terrace\clock_big.gif" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs_dhx_terrace\clock_small.gif" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs_dhx_terrace\close_icon.png" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs_dhx_terrace\collapse_expand_icon.gif" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs_dhx_terrace\controls.png" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs_dhx_terrace\databg.png" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs_dhx_terrace\databg_now.png" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs_dhx_terrace\export_ical.png" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs_dhx_terrace\export_pdf.png" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs_dhx_terrace\resize_dots.png" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs_dhx_terrace\resizing.png" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs_flat\agenda_bg.gif" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs_flat\arrow_left.png" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs_flat\arrow_right.png" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs_flat\but_repeat.gif" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs_flat\calendar.gif" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs_flat\clock.png" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs_flat\clock_big.gif" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs_flat\clock_small.gif" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs_flat\close_icon.png" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs_flat\collapse_expand_icon.gif" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs_flat\controls.png" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs_flat\databg.png" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs_flat\databg_now.png" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs_flat\export_ical.png" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs_flat\export_pdf.png" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs_flat\resize_dots.png" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs_flat\resizing.png" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs_glossy\blue_tab.png" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs_glossy\blue_tab_wide.png" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs_glossy\buttons.gif" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs_glossy\but_repeat.gif" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs_glossy\calendar.gif" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs_glossy\clock_big.png" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs_glossy\clock_small.png" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs_glossy\collapse_expand_icon.gif" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs_glossy\controlls5.png" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs_glossy\databg.png" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs_glossy\databg_now.png" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs_glossy\event-bg.png" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs_glossy\export_ical.png" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs_glossy\export_pdf.png" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs_glossy\icon.png" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs_glossy\left-separator.png" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs_glossy\left-time-bg.png" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs_glossy\lightbox.png" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs_glossy\loading.gif" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs_glossy\move.png" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs_glossy\multi-days-bg.png" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs_glossy\second-top-days-bg.png" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs_glossy\top-days-bg.png" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs_glossy\top-separator.gif" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs_glossy\white_tab.png" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs_glossy\white_tab_wide.png" />
+    <None Include="Scripts\dhtmlxScheduler\jquery-1.4.1-vsdoc.js" />
+    <Content Include="Scripts\dhtmlxScheduler\jquery-1.4.1.js" />
+    <Content Include="Scripts\dhtmlxScheduler\jquery-1.4.1.min.js" />
+    <None Include="Scripts\dhtmlxScheduler\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\dhtmlxScheduler\jquery.validate.js" />
+    <Content Include="Scripts\dhtmlxScheduler\jquery.validate.min.js" />
+    <Content Include="Scripts\dhtmlxScheduler\locale\locale_ar.js" />
+    <Content Include="Scripts\dhtmlxScheduler\locale\locale_be.js" />
+    <Content Include="Scripts\dhtmlxScheduler\locale\locale_ca.js" />
+    <Content Include="Scripts\dhtmlxScheduler\locale\locale_cn.js" />
+    <Content Include="Scripts\dhtmlxScheduler\locale\locale_cs.js" />
+    <Content Include="Scripts\dhtmlxScheduler\locale\locale_da.js" />
+    <Content Include="Scripts\dhtmlxScheduler\locale\locale_de.js" />
+    <Content Include="Scripts\dhtmlxScheduler\locale\locale_el.js" />
+    <Content Include="Scripts\dhtmlxScheduler\locale\locale_en.js" />
+    <Content Include="Scripts\dhtmlxScheduler\locale\locale_es.js" />
+    <Content Include="Scripts\dhtmlxScheduler\locale\locale_fi.js" />
+    <Content Include="Scripts\dhtmlxScheduler\locale\locale_fr.js" />
+    <Content Include="Scripts\dhtmlxScheduler\locale\locale_he.js" />
+    <Content Include="Scripts\dhtmlxScheduler\locale\locale_hu.js" />
+    <Content Include="Scripts\dhtmlxScheduler\locale\locale_id.js" />
+    <Content Include="Scripts\dhtmlxScheduler\locale\locale_it.js" />
+    <Content Include="Scripts\dhtmlxScheduler\locale\locale_jp.js" />
+    <Content Include="Scripts\dhtmlxScheduler\locale\locale_nb.js" />
+    <Content Include="Scripts\dhtmlxScheduler\locale\locale_nl.js" />
+    <Content Include="Scripts\dhtmlxScheduler\locale\locale_no.js" />
+    <Content Include="Scripts\dhtmlxScheduler\locale\locale_pl.js" />
+    <Content Include="Scripts\dhtmlxScheduler\locale\locale_pt.js" />
+    <Content Include="Scripts\dhtmlxScheduler\locale\locale_ro.js" />
+    <Content Include="Scripts\dhtmlxScheduler\locale\locale_ru.js" />
+    <Content Include="Scripts\dhtmlxScheduler\locale\locale_si.js" />
+    <Content Include="Scripts\dhtmlxScheduler\locale\locale_sk.js" />
+    <Content Include="Scripts\dhtmlxScheduler\locale\locale_sv.js" />
+    <Content Include="Scripts\dhtmlxScheduler\locale\locale_tr.js" />
+    <Content Include="Scripts\dhtmlxScheduler\locale\locale_ua.js" />
+    <Content Include="Scripts\dhtmlxScheduler\locale\recurring\locale_recurring_be.js" />
+    <Content Include="Scripts\dhtmlxScheduler\locale\recurring\locale_recurring_cn.js" />
+    <Content Include="Scripts\dhtmlxScheduler\locale\recurring\locale_recurring_cs.js" />
+    <Content Include="Scripts\dhtmlxScheduler\locale\recurring\locale_recurring_da.js" />
+    <Content Include="Scripts\dhtmlxScheduler\locale\recurring\locale_recurring_de.js" />
+    <Content Include="Scripts\dhtmlxScheduler\locale\recurring\locale_recurring_el.js" />
+    <Content Include="Scripts\dhtmlxScheduler\locale\recurring\locale_recurring_en.js" />
+    <Content Include="Scripts\dhtmlxScheduler\locale\recurring\locale_recurring_es.js" />
+    <Content Include="Scripts\dhtmlxScheduler\locale\recurring\locale_recurring_fi.js" />
+    <Content Include="Scripts\dhtmlxScheduler\locale\recurring\locale_recurring_fr.js" />
+    <Content Include="Scripts\dhtmlxScheduler\locale\recurring\locale_recurring_it.js" />
+    <Content Include="Scripts\dhtmlxScheduler\locale\recurring\locale_recurring_nb.js" />
+    <Content Include="Scripts\dhtmlxScheduler\locale\recurring\locale_recurring_nl.js" />
+    <Content Include="Scripts\dhtmlxScheduler\locale\recurring\locale_recurring_pl.js" />
+    <Content Include="Scripts\dhtmlxScheduler\locale\recurring\locale_recurring_pt.js" />
+    <Content Include="Scripts\dhtmlxScheduler\locale\recurring\locale_recurring_ro.js" />
+    <Content Include="Scripts\dhtmlxScheduler\locale\recurring\locale_recurring_ru.js" />
+    <Content Include="Scripts\dhtmlxScheduler\locale\recurring\locale_recurring_sk.js" />
+    <Content Include="Scripts\dhtmlxScheduler\locale\recurring\locale_recurring_sv.js" />
+    <Content Include="Scripts\dhtmlxScheduler\locale\recurring\locale_recurring_ua.js" />
+    <Content Include="Scripts\dhtmlxScheduler\locale\recurring\repeat_template_be.html" />
+    <Content Include="Scripts\dhtmlxScheduler\locale\recurring\repeat_template_cn.html" />
+    <Content Include="Scripts\dhtmlxScheduler\locale\recurring\repeat_template_de.html" />
+    <Content Include="Scripts\dhtmlxScheduler\locale\recurring\repeat_template_el.html" />
+    <Content Include="Scripts\dhtmlxScheduler\locale\recurring\repeat_template_en.html" />
+    <Content Include="Scripts\dhtmlxScheduler\locale\recurring\repeat_template_es.html" />
+    <Content Include="Scripts\dhtmlxScheduler\locale\recurring\repeat_template_fr.html" />
+    <Content Include="Scripts\dhtmlxScheduler\locale\recurring\repeat_template_it.html" />
+    <Content Include="Scripts\dhtmlxScheduler\locale\recurring\repeat_template_nl.html" />
+    <Content Include="Scripts\dhtmlxScheduler\locale\recurring\repeat_template_ro.html" />
+    <Content Include="Scripts\dhtmlxScheduler\locale\recurring\repeat_template_ru.html" />
+    <Content Include="Scripts\dhtmlxScheduler\locale\recurring\repeat_template_sk.html" />
+    <Content Include="Scripts\dhtmlxScheduler\MicrosoftAjax.debug.js" />
+    <Content Include="Scripts\dhtmlxScheduler\MicrosoftAjax.js" />
+    <Content Include="Scripts\dhtmlxScheduler\MicrosoftMvcAjax.debug.js" />
+    <Content Include="Scripts\dhtmlxScheduler\MicrosoftMvcAjax.js" />
+    <Content Include="Scripts\dhtmlxScheduler\MicrosoftMvcValidation.debug.js" />
+    <Content Include="Scripts\dhtmlxScheduler\MicrosoftMvcValidation.js" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\dhtmlxscheduler.js" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\ext\dhtmlxscheduler_active_links.js" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\ext\dhtmlxscheduler_agenda_view.js" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\ext\dhtmlxscheduler_all_timed.js" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\ext\dhtmlxscheduler_collision.js" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\ext\dhtmlxscheduler_container_autoresize.js" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\ext\dhtmlxscheduler_cookie.js" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\ext\dhtmlxscheduler_editors.js" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\ext\dhtmlxscheduler_expand.js" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\ext\dhtmlxscheduler_html_templates.js" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\ext\dhtmlxscheduler_key_nav.js" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\ext\dhtmlxscheduler_layer.js" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\ext\dhtmlxscheduler_limit.js" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\ext\dhtmlxscheduler_map_view.js" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\ext\dhtmlxscheduler_minical.js" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\ext\dhtmlxscheduler_monthheight.js" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\ext\dhtmlxscheduler_multiselect.js" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\ext\dhtmlxscheduler_multisource.js" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\ext\dhtmlxscheduler_mvc.js" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\ext\dhtmlxscheduler_offline.js" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\ext\dhtmlxscheduler_outerdrag.js" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\ext\dhtmlxscheduler_pdf.js" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\ext\dhtmlxscheduler_quick_info.js" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\ext\dhtmlxscheduler_readonly.js" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\ext\dhtmlxscheduler_recurring.js" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\ext\dhtmlxscheduler_serialize.js" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\ext\dhtmlxscheduler_tooltip.js" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\ext\dhtmlxscheduler_url.js" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\ext\dhtmlxscheduler_wp.js" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\ext\dhtmlxscheduler_year_view.js" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\locale\locale_ar.js" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\locale\locale_be.js" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\locale\locale_ca.js" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\locale\locale_cn.js" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\locale\locale_cs.js" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\locale\locale_da.js" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\locale\locale_de.js" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\locale\locale_el.js" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\locale\locale_en.js" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\locale\locale_es.js" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\locale\locale_fi.js" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\locale\locale_fr.js" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\locale\locale_he.js" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\locale\locale_hu.js" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\locale\locale_id.js" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\locale\locale_it.js" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\locale\locale_jp.js" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\locale\locale_nb.js" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\locale\locale_nl.js" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\locale\locale_no.js" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\locale\locale_pl.js" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\locale\locale_pt.js" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\locale\locale_ro.js" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\locale\locale_ru.js" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\locale\locale_si.js" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\locale\locale_sk.js" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\locale\locale_sv.js" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\locale\locale_tr.js" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\locale\locale_ua.js" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\locale\recurring\locale_recurring_be.js" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\locale\recurring\locale_recurring_cn.js" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\locale\recurring\locale_recurring_cs.js" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\locale\recurring\locale_recurring_da.js" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\locale\recurring\locale_recurring_de.js" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\locale\recurring\locale_recurring_el.js" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\locale\recurring\locale_recurring_en.js" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\locale\recurring\locale_recurring_es.js" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\locale\recurring\locale_recurring_fi.js" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\locale\recurring\locale_recurring_fr.js" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\locale\recurring\locale_recurring_it.js" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\locale\recurring\locale_recurring_nb.js" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\locale\recurring\locale_recurring_nl.js" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\locale\recurring\locale_recurring_pl.js" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\locale\recurring\locale_recurring_pt.js" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\locale\recurring\locale_recurring_ro.js" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\locale\recurring\locale_recurring_ru.js" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\locale\recurring\locale_recurring_sk.js" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\locale\recurring\locale_recurring_sv.js" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\locale\recurring\locale_recurring_ua.js" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\locale\recurring\repeat_template_be.html" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\locale\recurring\repeat_template_cn.html" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\locale\recurring\repeat_template_de.html" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\locale\recurring\repeat_template_el.html" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\locale\recurring\repeat_template_en.html" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\locale\recurring\repeat_template_es.html" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\locale\recurring\repeat_template_fr.html" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\locale\recurring\repeat_template_it.html" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\locale\recurring\repeat_template_nl.html" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\locale\recurring\repeat_template_ro.html" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\locale\recurring\repeat_template_ru.html" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\locale\recurring\repeat_template_sk.html" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\skins\dhtmlxscheduler.css" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\skins\dhtmlxscheduler_classic.css" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\skins\dhtmlxscheduler_flat.css" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\skins\dhtmlxscheduler_glossy.css" />
+    <Content Include="Scripts\DisableEnablejs\Helper.js" />
+    <Content Include="Scripts\fullcalendar\fullcalendar.js" />
+    <Content Include="Scripts\fullcalendar\fullcalendar.min.js" />
+    <Content Include="Scripts\fullcalendar\gcal.js" />
+    <Content Include="Scripts\fullcalendar\lang-all.js" />
+    <Content Include="Scripts\fullcalendar\lang\ar-ma.js" />
+    <Content Include="Scripts\fullcalendar\lang\ar-sa.js" />
+    <Content Include="Scripts\fullcalendar\lang\ar.js" />
+    <Content Include="Scripts\fullcalendar\lang\bg.js" />
+    <Content Include="Scripts\fullcalendar\lang\ca.js" />
+    <Content Include="Scripts\fullcalendar\lang\cs.js" />
+    <Content Include="Scripts\fullcalendar\lang\da.js" />
+    <Content Include="Scripts\fullcalendar\lang\de-at.js" />
+    <Content Include="Scripts\fullcalendar\lang\de.js" />
+    <Content Include="Scripts\fullcalendar\lang\el.js" />
+    <Content Include="Scripts\fullcalendar\lang\en-au.js" />
+    <Content Include="Scripts\fullcalendar\lang\en-ca.js" />
+    <Content Include="Scripts\fullcalendar\lang\en-gb.js" />
+    <Content Include="Scripts\fullcalendar\lang\es.js" />
+    <Content Include="Scripts\fullcalendar\lang\fa.js" />
+    <Content Include="Scripts\fullcalendar\lang\fi.js" />
+    <Content Include="Scripts\fullcalendar\lang\fr-ca.js" />
+    <Content Include="Scripts\fullcalendar\lang\fr.js" />
+    <Content Include="Scripts\fullcalendar\lang\hi.js" />
+    <Content Include="Scripts\fullcalendar\lang\hr.js" />
+    <Content Include="Scripts\fullcalendar\lang\hu.js" />
+    <Content Include="Scripts\fullcalendar\lang\id.js" />
+    <Content Include="Scripts\fullcalendar\lang\is.js" />
+    <Content Include="Scripts\fullcalendar\lang\it.js" />
+    <Content Include="Scripts\fullcalendar\lang\ja.js" />
+    <Content Include="Scripts\fullcalendar\lang\ko.js" />
+    <Content Include="Scripts\fullcalendar\lang\lt.js" />
+    <Content Include="Scripts\fullcalendar\lang\lv.js" />
+    <Content Include="Scripts\fullcalendar\lang\nl.js" />
+    <Content Include="Scripts\fullcalendar\lang\pl.js" />
+    <Content Include="Scripts\fullcalendar\lang\pt-br.js" />
+    <Content Include="Scripts\fullcalendar\lang\pt.js" />
+    <Content Include="Scripts\fullcalendar\lang\ro.js" />
+    <Content Include="Scripts\fullcalendar\lang\ru.js" />
+    <Content Include="Scripts\fullcalendar\lang\sk.js" />
+    <Content Include="Scripts\fullcalendar\lang\sl.js" />
+    <Content Include="Scripts\fullcalendar\lang\sr-cyrl.js" />
+    <Content Include="Scripts\fullcalendar\lang\sr.js" />
+    <Content Include="Scripts\fullcalendar\lang\sv.js" />
+    <Content Include="Scripts\fullcalendar\lang\th.js" />
+    <Content Include="Scripts\fullcalendar\lang\tr.js" />
+    <Content Include="Scripts\fullcalendar\lang\uk.js" />
+    <Content Include="Scripts\fullcalendar\lang\vi.js" />
+    <Content Include="Scripts\fullcalendar\lang\zh-cn.js" />
+    <Content Include="Scripts\fullcalendar\lang\zh-tw.js" />
+    <Content Include="Scripts\InputMask\jquery.inputmask.date.extensions.js" />
+    <Content Include="Scripts\InputMask\jquery.inputmask.date.extensions.min.js" />
+    <Content Include="Scripts\InputMask\jquery.inputmask.extensions.js" />
+    <Content Include="Scripts\InputMask\jquery.inputmask.extensions.min.js" />
+    <Content Include="Scripts\InputMask\jquery.inputmask.js" />
+    <Content Include="Scripts\InputMask\jquery.inputmask.min.js" />
+    <Content Include="Scripts\InputMask\jquery.inputmask.numeric.extensions.js" />
+    <Content Include="Scripts\InputMask\jquery.inputmask.numeric.extensions.min.js" />
+    <Content Include="Scripts\InputMask\jquery.inputmask.phone.extensions.js" />
+    <Content Include="Scripts\InputMask\jquery.inputmask.phone.extensions.min.js" />
+    <Content Include="Scripts\InputMask\jquery.inputmask.regex.extensions.js" />
+    <Content Include="Scripts\InputMask\jquery.inputmask.regex.extensions.min.js" />
+    <Content Include="Scripts\jqte\jquery-te-1.4.0.min.js" />
+    <Content Include="Scripts\jquery-1.10.2.js" />
+    <Content Include="Scripts\jquery-1.3.2.js" />
+    <Content Include="Scripts\jquery-1.4.1.min.js" />
+    <None Include="Scripts\jquery-2.1.1.intellisense.js" />
+    <Content Include="Scripts\jquery-2.1.1.js" />
+    <Content Include="Scripts\jquery-2.1.1.min.js" />
+    <Content Include="Scripts\jquery-ui-1.10.4.custom.js" />
+    <Content Include="Scripts\jquery-ui-1.10.4.js" />
+    <Content Include="Scripts\jquery-ui-1.11.2.js" />
+    <Content Include="Scripts\jquery-ui-1.11.2.min.js" />
+    <Content Include="Scripts\jquery.qtip-2.2.0.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\JsTree\jstree.js" />
+    <Content Include="Scripts\JsTree\tree-custom.min.js" />
+    <Content Include="Scripts\JsTree\treeview-init.js" />
+    <Content Include="Scripts\knockout-2.2.0.debug.js" />
+    <Content Include="Scripts\knockout-2.2.0.js" />
+    <Content Include="Scripts\less-1.7.0.js" />
+    <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\moment-with-locales.js" />
+    <Content Include="Scripts\moment-with-locales.min.js" />
+    <Content Include="Scripts\moment.js" />
+    <Content Include="Scripts\moment.min.js" />
+    <Content Include="Scripts\Multiplecheckbox\jquery.sumoselect.js" />
+    <Content Include="Scripts\Multiplecheckbox\ui.dropdownchecklist.js" />
+    <Content Include="Scripts\PixelAdmin\pixel-admin.min.js" />
+    <Content Include="Scripts\script.js" />
+    <Content Include="Scripts\Timepicker\jquery.timepicker.min.js" />
+    <Content Include="Scripts\UserValidations\Validation.js" />
+    <None Include="Scripts\_references.js" />
+    <Content Include="Views\ManageCompany\icon-6.png" />
+    <Content Include="Views\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Office\CreateOffice.cshtml" />
+    <Content Include="Views\Office\Index.cshtml" />
+    <Content Include="Views\Office\EditOffice.cshtml" />
+    <Content Include="Views\SystemSetup\SystemSetup.cshtml" />
+    <Content Include="Views\OfficelevelAccess\Index.cshtml" />
+    <Content Include="Views\OfficelevelAccess\EditUserDetail.cshtml" />
+    <Content Include="Views\DashBoardSetUp\Index.cshtml" />
+    <Content Include="Views\DashBoard\Index.cshtml" />
+    <Content Include="Views\Contact\CreateContact.cshtml" />
+    <Content Include="Views\CustomFields\AddEditCustomFields.cshtml" />
+    <Content Include="Views\CustomFields\PartialViewCustomFields.cshtml" />
+    <Content Include="Views\CustomFields\ViewCustomFields.cshtml" />
+    <Content Include="Views\Leads\Index.cshtml" />
+    <Content Include="Views\Leads\CreateLead.cshtml" />
+    <Content Include="Views\Login\Index.cshtml" />
+    <Content Include="Views\Import\ImportCompanies.cshtml" />
+    <Content Include="Views\Import\ImportContacts.cshtml" />
+    <Content Include="Views\Users\Index.cshtml" />
+    <Content Include="Views\ImportantDocuments\CreateNewImportantDoc.cshtml" />
+    <Content Include="Views\ImportantDocuments\EditNewImportantDoc.cshtml" />
+    <Content Include="Views\ImportantDocuments\PartialViewImportantDocuments.cshtml" />
+    <Content Include="Views\ImportantDocuments\ViewImportantDocuments.cshtml" />
+    <Content Include="Views\Users\CreateUser.cshtml" />
+    <Content Include="Views\Users\EditUserDetail.cshtml">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="Views\CompanyNews\Index.cshtml" />
+    <Content Include="Views\CompanyNews\PartialViewofCompanyNews.cshtml" />
+    <Content Include="Views\CompanyNews\CreateCompanyNews.cshtml" />
+    <Content Include="Views\CompanyNews\EditCompanyNewsDetails.cshtml" />
+    <Content Include="Views\SMSProvider\AddSMSProvider.cshtml" />
+    <Content Include="Views\SMSProvider\EditSMSProvider.cshtml" />
+    <Content Include="Views\SMSProvider\SMSServiceProviders.cshtml" />
+    <Content Include="Views\Error\NotFound.cshtml" />
+    <Content Include="Views\Error\SyntaxError.cshtml" />
+    <Content Include="Views\Opportunities\CreateNewOpportunity.cshtml" />
+    <Content Include="Views\Opportunities\SelectCompany.cshtml" />
+    <Content Include="Views\Opportunities\UpdateOpportunity.cshtml" />
+    <Content Include="Views\Opportunities\ViewOpportunities.cshtml" />
+    <Content Include="Views\Sales\CreateSales.cshtml" />
+    <Content Include="Views\Sales\SelectCompany.cshtml" />
+    <Content Include="Views\Sales\UpdateSales.cshtml" />
+    <Content Include="Views\Sales\ViewSales.cshtml" />
+    <Content Include="Views\Shared\NotFound.cshtml" />
+    <Content Include="Views\Tools\AccessMenus.cshtml" />
+    <Content Include="Views\Leads\ListParentComp.cshtml" />
+    <Content Include="Views\Leads\EditLead.cshtml" />
+    <Content Include="Views\Leads\NewLeadActivity.cshtml" />
+    <Content Include="Views\Leads\EditLeadActivity.cshtml" />
+    <Content Include="Views\Menus\Index.cshtml" />
+    <Content Include="Views\Menus\CreateMenus.cshtml" />
+    <Content Include="Views\Menus\EditMenu.cshtml" />
+    <Content Include="Views\Contact\SelectCompany.cshtml" />
+    <Content Include="Views\Contact\ContactActivityPopup.cshtml" />
+    <Content Include="Views\Contact\ContactActivityHistoryPopUp.cshtml" />
+    <Content Include="Views\Contact\NewContactActivityPopUp.cshtml" />
+    <Content Include="Views\Contact\EditContactActivityPopUp.cshtml" />
+    <Content Include="Views\Contact\ContactAttachment.cshtml" />
+    <Content Include="Views\Contact\EditContactActivity.cshtml" />
+    <Content Include="Views\Contact\CreateContactActivity.cshtml" />
+    <Content Include="Views\Opportunities\EditOpportunityActivity.cshtml" />
+    <Content Include="Views\Opportunities\NewOpportunityActivity.cshtml" />
+    <Content Include="Views\ManageCompany\ActivityHistoryPopUp.cshtml" />
+    <Content Include="Views\ManageCompany\ActivityPopUp.cshtml" />
+    <Content Include="Views\ManageCompany\Attachment.cshtml" />
+    <Content Include="Views\ManageCompany\AttachmentActivity.cshtml" />
+    <Content Include="Views\ManageCompany\CompanyList.cshtml" />
+    <Content Include="Views\ManageCompany\CreateCompany.cshtml" />
+    <Content Include="Views\ManageCompany\EditCompany.cshtml" />
+    <Content Include="Views\ManageCompany\EditCompanyActivity.cshtml" />
+    <Content Include="Views\ManageCompany\EditCompanyActivityPopUp.cshtml" />
+    <Content Include="Views\ManageCompany\Index.cshtml" />
+    <Content Include="Views\ManageCompany\ListParentComp.cshtml" />
+    <Content Include="Views\ManageCompany\NewCompanyActivity.cshtml" />
+    <Content Include="Views\ManageCompany\NewCompanyActivityPopUp.cshtml" />
+    <Content Include="Views\Export\ExportCompaniesData.cshtml" />
+    <Content Include="Views\Leads\AttachmentActivity.cshtml" />
+    <Content Include="Views\ManageCompany\ExportToCsv.cshtml" />
+    <Content Include="Views\ManageCompany\ExportToExcel.cshtml" />
+    <Content Include="Views\Opportunities\AttachmentActivity.cshtml" />
+    <Content Include="Views\Home\Home.cshtml" />
+    <Content Include="Views\Contact\MergeContacts.cshtml" />
+    <Content Include="Views\Contact\Index.cshtml" />
+    <Content Include="Views\Contact\ExportToCsv.cshtml" />
+    <Content Include="Views\Contact\ExportToExcel.cshtml" />
+    <Content Include="Views\Contact\EditContact.cshtml" />
+    <Content Include="Views\Editor\Index.cshtml" />
+    <Content Include="Views\ClientManager\ClientManager.cshtml" />
+    <Content Include="Views\Clientmaster\_LayoutClientsmaster.cshtml" />
+    <Content Include="Views\ClientManager\ClientManagerIndex.cshtml" />
+    <Content Include="Views\CreateClients\Index.cshtml" />
+    <Content Include="Views\DashBoard\Scheduler.cshtml" />
+    <Content Include="Views\DashBoard\ActivityDashBoardold.cshtml">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="Views\DashBoard\ActivityDashBoard.cshtml" />
+    <Content Include="Views\DashBoard\_ActivityDashBoard.cshtml" />
+    <Content Include="Views\DashBoard\_GetOpenCloseActivities.cshtml" />
+    <Content Include="Views\CustomFields\_BindDrpOptions.cshtml" />
+    <Content Include="Views\ManageCompany\ListContact.cshtml" />
+    <Content Include="Views\ManageCompany\CompanyActivity.cshtml" />
+    <Content Include="Views\ManageCompany\SelectCompany.cshtml" />
+    <Content Include="Views\ManageCompany\ListContactforactivity.cshtml" />
+    <Content Include="Views\Contact\AddContactActivity.cshtml" />
+    <Content Include="Views\Contact\ListGetContact.cshtml" />
+    <Content Include="Views\Leads\CreateLeadActivityfromHome.cshtml" />
+    <Content Include="Views\Leads\SelectLead.cshtml" />
+    <Content Include="Views\NewContact\Index.cshtml" />
+    <Content Include="Views\Opportunities\AddOpportunityActivity.cshtml" />
+    <Content Include="Views\Opportunities\_SelectOpportunity.cshtml" />
+    <Content Include="Views\ManageCompany\ActivitygridBind.cshtml" />
+    <Content Include="Views\Opportunities\EditOpportunityActivityGrid.cshtml" />
+    <Content Include="Views\ManageCompany\EditActivityCmpgrid.cshtml" />
+    <Content Include="Views\Contact\EditActivitygridContact.cshtml" />
+    <Content Include="Views\Leads\EditLeadActivityGrid.cshtml" />
+    <Content Include="Views\CreateClients\GenerateScript.cshtml" />
+    <Content Include="Views\DashBoard\GetNotificationList.cshtml" />
+    <Content Include="Views\Project\Index.cshtml" />
+    <Content Include="Views\Project\CreateProject.cshtml" />
+    <Content Include="Views\Project\Editprojectdetails.cshtml" />
+    <Content Include="Views\ManageCompany\GetContactListforProjects.cshtml" />
+    <Content Include="Views\Contact\ContactType.cshtml" />
+    <Content Include="Views\Contact\AddContactType.cshtml" />
+    <Content Include="Views\Contact\EditContacttypedetails.cshtml" />
+    <Content Include="Views\Items\Index.cshtml" />
+    <Content Include="Views\Items\InsertItems.cshtml" />
+    <Content Include="Views\Items\EditItemsDetail.cshtml" />
+    <Content Include="Views\Invoice\Index.cshtml" />
+    <Content Include="Views\Invoice\_GetCustomersList.cshtml" />
+    <Content Include="Views\Invoice\_GetItemsList.cshtml" />
+    <Content Include="Views\Invoice\_BindItemslist.cshtml" />
+    <Content Include="Views\Invoice\CreateInvoice.cshtml" />
+    <Content Include="Views\Invoice\EditInvoice.cshtml" />
+    <Content Include="Views\Invoice\_BindEditItemslist.cshtml" />
+    <Content Include="Views\Invoice\_BindPostedItemslist.cshtml" />
+    <Content Include="Views\Invoice\_GetEstimateInvoice.cshtml" />
+    <Content Include="Views\Invoice\EstimateInvoice.cshtml" />
+    <Content Include="Views\Invoice\CreateEstimateInvoice.cshtml" />
+    <Content Include="Views\Invoice\EditEstimateInvoice.cshtml" />
+    <Content Include="Views\Invoice\_BindEditEstimateItemslist.cshtml" />
+    <Content Include="Views\Invoice\_BindConvertedEstimateItemslist.cshtml" />
+    <Content Include="Views\Invoice\Payments.cshtml" />
+    <Content Include="Views\Invoice\_BindEstimateItemslist.cshtml" />
+    <Content Include="Views\Inventory\Index.cshtml" />
+    <Content Include="Views\Inventory\CreateItems.cshtml" />
+    <Content Include="Views\Inventory\EditItemsDetail.cshtml" />
+    <Content Include="Views\Invoice\_GetCustomersListForPayments.cshtml" />
+    <Content Include="Views\Invoice\_BindInvoiceslistforCustomer.cshtml" />
+    <Content Include="Views\Invoice\PaymentsIndex.cshtml" />
+    <Content Include="Views\Invoice\_GetListofPaymentsByInvoiceId.cshtml" />
+    <Content Include="Views\Invoice\_MakePaymentByInvoiceId.cshtml" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Views\Calender\Index.cshtml" />
+    <Content Include="Views\DashBoard\_DashBoardData.cshtml" />
+    <Content Include="Views\DashBoard\_ActivityDashBoardMain.cshtml" />
+    <Content Include="Views\Calender\_SchedularData.cshtml" />
+    <Content Include="Views\CreateClients\EditClient.cshtml" />
+    <Content Include="Views\DashBoard\GetUserNotifications.cshtml" />
+    <Content Include="Views\Leads\CreateNewLead.cshtml" />
+    <Content Include="Views\Leads\getLeaddetails.cshtml" />
+    <Content Include="Views\Leads\_EditLeadbyID.cshtml" />
+    <Content Include="Views\Leads\ConvertLead.cshtml" />
+    <Content Include="Views\Leads\GetallCompanies.cshtml" />
+    <Content Include="Views\Leads\GetallUsers.cshtml" />
+    <Content Include="Views\Leads\getUsersLookup.cshtml" />
+    <Content Include="Views\Contact\CreateNewContact.cshtml" />
+    <Content Include="Views\Contact\getContactdetails.cshtml" />
+    <Content Include="Views\Contact\_EditContactbyID.cshtml" />
+    <Content Include="Views\ManageCompany\CreateNewCompany.cshtml" />
+    <Content Include="Views\ManageCompany\getCompanydetails.cshtml" />
+    <Content Include="Views\ManageCompany\_EditCompanybyID.cshtml" />
+    <Content Include="Views\Opportunities\GetallContacts.cshtml" />
+    <Content Include="Views\Opportunities\getOpportunitydetails.cshtml" />
+    <Content Include="Views\Opportunities\_EditOpportunitybyID.cshtml" />
+    <Content Include="Views\DashboardHome\Index.cshtml" />
+    <Content Include="Views\Leads\LoadOpportunities.cshtml" />
+    <Content Include="Views\ManageCompany\GetallOwners.cshtml" />
+    <Content Include="Views\Opportunities\_GetAllOpportunitiesList.cshtml" />
+    <Content Include="Views\Contact\GetAllContacts.cshtml" />
+    <Content Include="Views\DashBoard\_GraphsData.cshtml" />
+    <Content Include="Views\Import\GetHistory.cshtml" />
+    <Content Include="Views\Users\RoleIndex.cshtml" />
+    <Content Include="Views\Users\AddRole.cshtml" />
+    <Content Include="Views\Users\EditRoledetails.cshtml" />
+    <Content Include="Views\Shared\_Layout1.cshtml" />
+    <Content Include="Views\MainHome\MainHome.cshtml" />
+    <Content Include="Views\Venture\Index.cshtml" />
+    <Content Include="Views\Venture\CreateVenture.cshtml" />
+    <Content Include="Views\Venture\getVenturedetails.cshtml" />
+    <Content Include="Views\Mentor\Index.cshtml" />
+    <Content Include="Views\Mentor\CreateMentor.cshtml" />
+    <Content Include="Views\Mentor\EditMentor.cshtml" />
+    <Content Include="Views\ManageCompany\GetUserNotifications.cshtml" />
+    <Content Include="Views\Notifications\Index.cshtml" />
+    <Content Include="Views\DBoard\Index.cshtml" />
+    <Content Include="Views\Scheduler\Index.cshtml" />
+    <Content Include="Views\Profile\Index.cshtml" />
+    <Content Include="Views\Scheduler\_AddEvent.cshtml" />
+    <Content Include="Views\Profile\CreateNewUser.cshtml" />
+    <Content Include="Views\Profile\GetAllUsers.cshtml" />
+    <Content Include="Views\Profile\EditUser.cshtml" />
+    <Content Include="Views\Scheduler\getUpComingEvents.cshtml" />
+    <Content Include="Views\Scheduler\EditVentureAppointment.cshtml" />
+    <Content Include="Views\Scheduler\EditAppointment.cshtml" />
+    <Content Include="Views\Shared\_AppointmentDetails.cshtml" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="Views\Roles\Index.cshtml" />
+    <Content Include="Views\Roles\CreateRole.cshtml" />
+    <Content Include="Views\Roles\EditRole.cshtml" />
+    <Content Include="Views\Shared\_MentorDetails.cshtml" />
+    <Content Include="Scripts\DataTable\images\Sorting icons.psd" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\dhtmlxscheduler.js.map" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\ext\dhtmlxscheduler_active_links.js.map" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\ext\dhtmlxscheduler_agenda_view.js.map" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\ext\dhtmlxscheduler_all_timed.js.map" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\ext\dhtmlxscheduler_collision.js.map" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\ext\dhtmlxscheduler_container_autoresize.js.map" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\ext\dhtmlxscheduler_cookie.js.map" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\ext\dhtmlxscheduler_editors.js.map" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\ext\dhtmlxscheduler_expand.js.map" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\ext\dhtmlxscheduler_html_templates.js.map" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\ext\dhtmlxscheduler_key_nav.js.map" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\ext\dhtmlxscheduler_layer.js.map" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\ext\dhtmlxscheduler_limit.js.map" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\ext\dhtmlxscheduler_map_view.js.map" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\ext\dhtmlxscheduler_minical.js.map" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\ext\dhtmlxscheduler_monthheight.js.map" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\ext\dhtmlxscheduler_multiselect.js.map" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\ext\dhtmlxscheduler_multisource.js.map" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\ext\dhtmlxscheduler_mvc.js.map" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\ext\dhtmlxscheduler_offline.js.map" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\ext\dhtmlxscheduler_outerdrag.js.map" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\ext\dhtmlxscheduler_pdf.js.map" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\ext\dhtmlxscheduler_quick_info.js.map" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\ext\dhtmlxscheduler_readonly.js.map" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\ext\dhtmlxscheduler_recurring.js.map" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\ext\dhtmlxscheduler_serialize.js.map" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\ext\dhtmlxscheduler_tooltip.js.map" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\ext\dhtmlxscheduler_url.js.map" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\ext\dhtmlxscheduler_wp.js.map" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\ext\dhtmlxscheduler_year_view.js.map" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\locale\locale_ar.js.map" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\locale\locale_be.js.map" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\locale\locale_ca.js.map" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\locale\locale_cn.js.map" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\locale\locale_cs.js.map" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\locale\locale_da.js.map" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\locale\locale_de.js.map" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\locale\locale_el.js.map" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\locale\locale_en.js.map" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\locale\locale_es.js.map" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\locale\locale_fi.js.map" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\locale\locale_fr.js.map" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\locale\locale_he.js.map" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\locale\locale_hu.js.map" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\locale\locale_id.js.map" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\locale\locale_it.js.map" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\locale\locale_jp.js.map" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\locale\locale_nb.js.map" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\locale\locale_nl.js.map" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\locale\locale_no.js.map" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\locale\locale_pl.js.map" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\locale\locale_pt.js.map" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\locale\locale_ro.js.map" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\locale\locale_ru.js.map" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\locale\locale_si.js.map" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\locale\locale_sk.js.map" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\locale\locale_sv.js.map" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\locale\locale_tr.js.map" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\locale\locale_ua.js.map" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\locale\recurring\locale_recurring_be.js.map" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\locale\recurring\locale_recurring_cn.js.map" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\locale\recurring\locale_recurring_cs.js.map" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\locale\recurring\locale_recurring_da.js.map" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\locale\recurring\locale_recurring_de.js.map" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\locale\recurring\locale_recurring_el.js.map" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\locale\recurring\locale_recurring_en.js.map" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\locale\recurring\locale_recurring_es.js.map" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\locale\recurring\locale_recurring_fi.js.map" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\locale\recurring\locale_recurring_fr.js.map" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\locale\recurring\locale_recurring_it.js.map" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\locale\recurring\locale_recurring_nb.js.map" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\locale\recurring\locale_recurring_nl.js.map" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\locale\recurring\locale_recurring_pl.js.map" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\locale\recurring\locale_recurring_pt.js.map" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\locale\recurring\locale_recurring_ro.js.map" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\locale\recurring\locale_recurring_ru.js.map" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\locale\recurring\locale_recurring_sk.js.map" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\locale\recurring\locale_recurring_sv.js.map" />
+    <Content Include="Scripts\dhtmlxScheduler\sources\locale\recurring\locale_recurring_ua.js.map" />
+    <Content Include="Views\Test\TestCreateVenture.cshtml" />
+    <Content Include="Views\Scheduler\ScheduledEvents.cshtml" />
+    <Content Include="Views\Venture\PendingVentureDetails.cshtml" />
+    <Content Include="Views\Mentor\PendingMentorDetails.cshtml" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="CompanySetupImages\" />
+    <Folder Include="Content\CompaniesExport\" />
+    <Folder Include="Content\CompanySetupImages\" />
+    <Folder Include="Content\ContactsExport\" />
+    <Folder Include="Content\ExportCompaniesData\" />
+    <Folder Include="Content\ImportFilesCompanies\" />
+    <Folder Include="Content\ImportFilesContacts\" />
+    <Folder Include="Content\LeadattachmentActivity\" />
+    <Folder Include="Content\SalesExport\" />
+    <Folder Include="Content\Upload\" />
+    <Folder Include="Models\" />
+    <Folder Include="obj\" />
+    <Folder Include="Scripts\NewFolder1\" />
+    <Folder Include="Views\ControllerBase\" />
+    <Folder Include="Views\CustomSettings\" />
+    <Folder Include="Views\Default1\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="packages.config" />
+    <None Include="Project_Readme.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CRMHub\CRMHub.csproj">
+      <Project>{33e781e4-c007-44ce-b3a1-12cf6b5b4cce}</Project>
+      <Name>CRMHub</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>49340</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost/CRM</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Import Project="..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />
+  <Target Name="EnsureBclBuildImported" BeforeTargets="BeforeBuild" Condition="'$(BclBuildImported)' == ''">
+    <Error Condition="!Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=317567." HelpKeyword="BCLBUILD2001" />
+    <Error Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="The build restored NuGet packages. Build the project again to include these packages in the build. For more information, see http://go.microsoft.com/fwlink/?LinkID=317568." HelpKeyword="BCLBUILD2002" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>

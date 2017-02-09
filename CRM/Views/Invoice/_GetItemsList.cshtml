@@ -1,0 +1,302 @@
+﻿@model IEnumerable<CRMHub.EntityFramework.tbl_Items>
+
+
+    <html>
+    <body>
+        <div style="width:100px;">
+            <div id="loading" style="display:none">
+                <img id="loading-image" src="~/Content/assets/images/loader.gif" />
+            </div>
+        </div>
+        <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="jq-datatables-ItemsPopup" style="width:100%">
+            <thead>
+                <tr>
+
+                    <th data-hide="tablet,tabletlandscape,phone">Item ID</th>
+                    <th data-class="expand">Item Name </th>
+                    <th data-hide="phone,smartphone">Item Code</th>
+                    <th data-hide="tabletlandscape,phone">Rate/Unit</th>
+                    @*<th data-hide="tabletlandscape,phone">Mobile</th>*@
+                </tr>
+            </thead>
+            <tbody></tbody>
+
+        </table>
+    </body>
+</html>
+<script type="text/javascript">
+    $(document).ready(function () {
+       
+        // $('#loading').css('display', 'block');
+        bindItemsdGrid();
+
+
+        $('#jq-datatables-ItemsPopup').on('length.dt', function (e, settings, len) {
+
+            $('#loading').css('display', 'block');
+        });
+
+        $('#jq-datatables-ItemsPopup').on('page.dt', function () {
+
+            $('#loading').css('display', 'block');
+        });
+
+
+        // $('#loading').css('display', 'none');
+    });
+    function bindItemsdGrid() {
+
+      
+        $('#loading').css('display', 'block');
+        var responsiveHelper = undefined;
+        var breakpointDefinition = {
+            desktop: Infinity,
+            tablet: 1024,
+            tabletlandscape: 768,
+            phone: 480
+        };
+        var tableElement = $('#jq-datatables-ItemsPopup');
+        tableElement.dataTable({
+            autoWidth: false,
+            preDrawCallback: function () {
+                if (!responsiveHelper) {
+                    responsiveHelper = new ResponsiveDatatablesHelper(tableElement, breakpointDefinition);
+                }
+            },
+            rowCallback: function (nRow) {
+                responsiveHelper.createExpandIcon(nRow);
+            },
+            drawCallback: function (oSettings) {
+                responsiveHelper.respond();
+            },
+            //"order": [[$("#HD_SortValue").val(), "" + $("#HD_SortDirection").val() + ""]],
+            "aLengthMenu": [[10, 25, 50, 100], [10, 25, 50, 100]],
+            //"iDisplayStart": parseInt($("#HD_PageIndex").val()),
+            //"iDisplayLength": parseInt($("#HD_PageSize").val()),
+            "pagingType": "full_numbers",
+            //"processing": true,
+            "serverSide": true,
+            "bFilter": false,
+            "sAjaxSource": "getItemsListforPopup",
+            //"sAjaxSource": "getItemsListforPopup",
+
+
+            //"sAjaxSource": "Contact/getContacts",
+            "fnServerParams": function (aoData) {
+                aoData.push(
+                    // { "name": "Contactkeyword", "value": "" + "" + "" },
+                    ////{ "name": "Contactkeyword", "value": "" + $("#txtKeyWord").val() + "" },
+                    //{ "name": "ContactBranch", "value": "" + "-1" + "" },
+                    //{ "name": "ContactSalesRepresentative", "value": "" + "0" + "" },
+                    //{ "name": "CompanyFilterString", "value": "" },
+                    //{ "name": "CompanyList_IsFromBack", "value": "" },
+                    //{ "name": "CompanyFilterString_ActualQueryCondition", "value": "" }
+                    );
+            },
+            "fnServerData": function (sSource, aoData, fnCallback) {
+                $.ajax({
+                    "dataType": 'json',
+                    "contentType": "application/json; charset=utf-8",
+                    "type": "GET",
+                    "url": sSource,
+                    "data": aoData,
+                    "success":
+                                function (msg) {
+
+                                    $('#loading').css('display', 'none');
+                                    //var json = jQuery.parseJSON(msg.d);
+                                    fnCallback(msg);
+                                    //$("#jq-datatables-example").show();
+                                }
+                });
+            },
+            "asStripeClasses": ['odd gradeX', 'even gradeC'],
+            "aoColumnDefs": [
+
+                { "targets": [0], "visible": true, "bSortable": false, "mDataProp": "ItemID" },
+                {
+                    "targets": [1], "visible": true, "bSortable": false, "mDataProp": "ItemName",
+                    "render": function (data, type, row) {
+
+                        return "<a href=\"#\" id=\"aParentItemtId\" onclick=\"OpenItemDetail('" + row["ItemID"] + "','" + row["ItemCode"] + "','" + row["ItemName"] + "','" + row["Saleprice"] + "')\">" + row["ItemName"] + "</a>";
+
+                    }
+                },
+
+                { "targets": [2], "visible": true, "bSortable": false, "mDataProp": "ItemCode" },
+                { "targets": [3], "visible": true, "bSortable": false, "mDataProp": "Saleprice" },
+
+
+
+            ],
+            "fnDrawCallback": function (oSettings) {
+
+                $('#loading').css('display', 'none');
+            }
+        }).api();
+    }
+
+
+
+    function OpenItemDetail(itemid, itemcode, itemname, ratepunit) {
+       
+        var Exists = false;
+        var itemslength = CheckItems.length;
+
+        if (itemslength == 0) {
+            // alert("Zero");
+            CheckItems.push(itemid);
+            $('#ItemName').val(itemname);
+            $('#hditemtId').val(itemid);
+            $('#ItemCode').val(itemcode);
+            $('#RateperUnit').val(ratepunit);
+            $('#QtyCommitted').val('');
+
+            $('#ItemTotal').val('');
+            $('#ItemName-0').val(itemname);
+            $('#hditemtId-0').val(itemid);
+            $('#ItemCode-0').val(itemcode);
+            $('#RateperUnit-0').val(ratepunit);
+            $('#QtyCommitted-0').val('');
+
+            $('#ItemTotal-0').val('');
+
+            calamount(itemid);
+            $('#myedititemModal').modal("hide");
+
+            $('#myitemModal').modal("hide");
+
+        }
+        else {
+            for (i = 0; i < CheckItems.length; i++) {
+
+                if (CheckItems[i] === itemid) {
+                    $.growl.error({ title: "Error", message: "Items Esists !!! Please Select another Item", size: 'large' });
+                    Exists = true;
+                    break;
+                }
+            }
+
+
+        }
+
+        if (!Exists) {
+            CheckItems.push(itemid);
+            $('#ItemName').val(itemname);
+            $('#hditemtId').val(itemid);
+            $('#ItemCode').val(itemcode);
+            $('#RateperUnit').val(ratepunit);
+            $('#QtyCommitted').val('');
+
+            $('#ItemTotal').val('');
+
+
+            $('#ItemName-0').val(itemname);
+            $('#hditemtId-0').val(itemid);
+            $('#ItemCode-0').val(itemcode);
+            $('#RateperUnit-0').val(ratepunit);
+            $('#QtyCommitted-0').val('');
+
+            $('#ItemTotal-0').val('');
+
+            calamount(itemid);
+            $('#myedititemModal').modal("hide");
+
+            $('#myitemModal').modal("hide");
+        }
+
+        //$('#ItemName').val(itemname);
+        //$('#hditemtId').val(itemid);
+        //$('#ItemCode').val(itemcode);
+        //$('#RateperUnit').val(ratepunit);
+        //$('#QtyCommitted').val('');
+
+        //$('#ItemTotal').val('');
+
+
+        //$('#ItemName-0').val(itemname);
+        //$('#hditemtId-0').val(itemid);
+        //$('#ItemCode-0').val(itemcode);
+        //$('#RateperUnit-0').val(ratepunit);
+        //$('#QtyCommitted-0').val('');
+
+        //$('#ItemTotal-0').val('');
+
+        //calamount(itemid);
+        //$('#myedititemModal').modal("hide");
+
+        //$('#myitemModal').modal("hide");
+
+    }
+    //function OpenContactDetail(contactId, Saddr, Sstreet, Scity, Sstate,Scountry,Szip,Baddr,Bstreet,Bcity,Bstate,Bcountry,Bzip, ContactName) {
+    //   
+
+
+
+    //    var parentCont = ContactName;
+
+    //    var contid = contactId;
+
+    //    var ShippingAddr = "";
+    //    var BillingAddr = "";
+
+    //    if (Saddr != "null")
+    //        Saddr = Saddr;
+    //    else Saddr = "";
+    //    if (Sstreet != "null")
+    //        Sstreet = Sstreet;
+    //    else Sstreet = "";
+    //    if (Scity != "null")
+    //        Scity = Scity;
+    //    else Scity = "";
+    //    if (Sstate != "null")
+    //        Sstate = Sstate;
+    //    else Sstate = "";
+    //    if (Scountry != "null")
+    //        Scountry = Scountry;
+    //    else Scountry = "";
+    //    if (Szip != "null")
+    //        Szip = Szip
+    //    else Szip = "";
+
+    //    if (Baddr != "null")
+    //        Baddr = Baddr;
+    //    else Baddr = "";
+    //    if (Bstreet != "null")
+    //        Bstreet = Bstreet;
+    //    else Bstreet = "";
+    //    if (Bcity != "null")
+    //        Bcity = Bcity;
+    //    else Bcity = "";
+    //    if (Bstate != "null")
+    //        Bstate = Bstate;
+    //    else Bstate = "";
+    //    if (Bcountry != "null")
+    //        Bcountry = Bcountry;
+    //    else Bcountry = "";
+    //    if (Bzip != "null")
+    //        Bzip = Bzip
+    //    else Bzip = "";
+
+
+
+
+
+    //    ShippingAddr = Saddr + "\n"+ Sstreet + "\n"+ Scity + "\n" + Sstate + "\n"+ Scountry + "\n"+ Szip;
+    //    BillingAddr = Baddr + "\n" + Bstreet + "\n" + Bcity + "\n" + Bstate + "\n" + Bcountry + "\n" + Bzip;
+
+    //    //var CompanyName = Account_Name;
+    //    //var CompanayId = AccountId;
+    //    //$('#hdCustomerId').val(CompanayId);
+    //    $('#txtCustomerName').val(parentCont);
+    //    $('#txtAddressBilling').val(BillingAddr);
+    //    $('#txtAddressShipping').val(ShippingAddr);
+    //    $('#hdAddressShipping').val(ShippingAddr);
+
+    //    $('#hdParentContactId').val(contid);
+    //    $('#myModal').modal("hide");
+    //    // $('#loading').css('display', 'none');
+
+    //}
+</script>
+

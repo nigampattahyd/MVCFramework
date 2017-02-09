@@ -1,0 +1,605 @@
+﻿@model CRMHub.ViewModel.LeadModel
+@{
+    ViewBag.Title = "CreateLead";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<link href="~/Content/assets/css/DateTimePicker/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+@using (Html.BeginForm("CreateLead", "Leads", FormMethod.Post))
+{
+<div id="content-wrapper">
+    <div id="CustomBootstrapAlertBox">
+    </div>
+    <div class="row">
+
+        <script>
+            init.push(function () {
+                $('ul.bs-tabdrop-example').tabdrop();
+            });
+        </script>
+        <div class="panel">
+            <div class="panel-heading">
+                <div class="row">
+                    <!-- Page header, center on small screens -->
+                    <h1 class="col-xs-6 col-sm-4 text-left text-left-sm panel-title"><i class="fa fa-user page-header-icon"></i>&nbsp; Create Lead</h1>
+                    <div class="col-xs-6 col-sm-8">
+                        <div class="row">
+                            <div class="pull-right">
+                                @*<a href="#" class="btn btn-flat btn-labeled btn-primary" tabindex="-1"
+                                     data-toggle="modal" data-target="#uidemo-modals-alerts-info"><span class="btn-label icon fa fa-question-circle"></span>Help</a>*@
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <span id="errorsymbol" style="color:red;display:none;margin-left:5px;" class="fa fa-exclamation-circle"></span><div id="ErrorMessages" style="margin-left:20px;color:red;font-size:15px; ">
+
+            </div>
+
+
+            <div class="panel-body">
+                <div class="row">
+
+                    <!-- Tabs -->
+                    <ul class="nav nav-tabs bs-tabdrop-example" id="TabStrip2">
+                        <li id="TabStripLeadDetail" class="active"><a href="#pvLeadDetail" data-toggle="tab">Lead Information</a></li>
+                    </ul>
+
+                    <div class="tab-content tab-content-bordered">
+                        <div class="tab-pane active" id="pvLeadDetail">
+                            <div class="row">
+
+                                <div class="page-header-breadcrumb" style="float:right;">
+                                    <label id="Label1" class="control-label">
+                                        <asp:Label ID="lblMessage" runat="server" Font-Bold="true" ForeColor="red" Visible="false"></asp:Label>
+                                    </label>
+
+
+                                    <button class="btn btn-flat btn-labeled btn-primary" id="btnSave" style=" margin:0px 3px 0px 10px;">
+                                        <span class="btn-label icon fa fa-save"></span>Save
+                                    </button>
+
+                                    @*<li class="btn btn-flat btn-labeled btn-primary">
+                                        @Html.ActionLink("Back", "Index", "", new { @style = "color:#fff; text-decoration:none;" })<span class="btn-label icon fa fa-backward" style="margin-right:6px; "> </span>
+                                    </li>*@
+                                    <a style="color: #fff; text-decoration: none; padding: 0px; font-weight: normal" class="btn btn-flat btn-labeled btn-primary" href="@Url.Action("Index", "Leads" )">
+                                        <span class="btn-label icon fa fa-backward" style="margin-right:6px;"> </span>
+                                        Back
+                                    </a>
+
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="panel-group" id="accordion-example">
+                                        <!-- / .panel -->
+                                        <div class="panel">
+                                            <div class="panel-heading">
+                                                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion-example"
+                                                   href="#collapse2">Lead Detail</a>
+                                            </div>
+                                            <!-- / .panel-heading -->
+                                            <div id="collapse2" class="panel-collapse collapse in" style="height: auto;">
+                                                <div class="panel-body">
+                                                    <div class="col-sm-12 no-padding-hr">
+                                                        <div class="row">
+                                                            <div class="col-sm-3">
+                                                                <div class="form-group no-margin-hr">
+                                                                    <label class="control-label">Company Name :<span style="color: red">*</span></label>
+                                                                    <div class="input-group">
+
+                                                                        @Html.TextBoxFor(m => m.leadEntity.AccountName, new { @class = "form-control input-sm", @id = "txtAccountName", @validate = "Required", @data_val_required = "Company Name" })
+
+                                                                        <span class="input-group-addon" type=" button" style="cursor:pointer;" onclick="return show_NewAccountPopUp(750, 450);">
+                                                                            <i class="fa fa-search"></i>
+
+                                                                        </span>
+                                                                        @Html.HiddenFor(m => m.leadEntity.AccountId, new { @id = "txtParentAccountid" })
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-3">
+                                                                <div class="form-group no-margin-hr">
+                                                                    <label class="control-label">Web Site :</label>
+
+                                                                    @Html.TextBoxFor(m => m.leadEntity.Website, new { @class = "form-control input-sm", @id = "txtWebSite" })
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-3">
+                                                                <div class="form-group no-margin-hr">
+                                                                    <label class="control-label">Owner Ship :</label>
+
+                                                                    @Html.TextBoxFor(m => m.leadEntity.Ownership, new { @class = "form-control input-sm", @id = "txtOwnerShip" })
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-3">
+                                                                <div class="form-group no-margin-hr">
+                                                                    <label class="control-label">Number of Employees :</label>
+
+                                                                    @Html.TextBoxFor(m => m.leadEntity.Employees, new { @class = "form-control numericmask", @onKeyPress = "return CheckNumericAllBrowser(event);", @id = "txtEmp" })
+                                                                </div>
+                                                            </div>
+       
+                                                            <div class="col-sm-3">
+                                                                <div class="form-group no-margin-hr">
+                                                                    <label class="control-label">Industry :</label>
+
+                                                                    @Html.DropDownListFor(m => m.leadEntity.Industry, new SelectList(Model.IndustriesList, "id", "industry"), "None", new { @class = "form-control input-sm", @id = "ddlIdustry" })
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-3">
+                                                                <div class="form-group no-margin-hr">
+                                                                    <label class="control-label">Annual Revenue :</label>
+
+                                                                    @Html.TextBoxFor(m => m.leadEntity.AnnualRevenue, new { @id = "txtAnualRevenue", @class = "form-control decimalmask" })
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-sm-3">
+                                                                <div class="form-group no-margin-hr">
+                                                                    <label class="control-label">Lead Name :<span style="color: red">*</span></label>
+
+                                                                    @Html.TextBoxFor(m => m.leadEntity.LeadName, new { @id = "txtContactName", @class = "form-control input-sm", @validate = "Required", @data_val_required = "Lead Name" })
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-3">
+                                                                <div class="form-group no-margin-hr">
+                                                                    <label class="control-label">Title :</label>
+
+                                                                    @Html.TextBoxFor(m => m.leadEntity.Title, new { @id = "txtTitle", @class = "form-control input-sm" })
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-3">
+                                                                <div class="form-group no-margin-hr">
+                                                                    <label class="control-label">Phone :</label>
+                                                                    <span id="spnPhoneStatus"></span>
+                                                                    @Html.TextBoxFor(m => m.leadEntity.Phone, new { @id = "txtPhone", @class = "form-control input-sm", onkeypress = "return onlynumbers(event,this);",  @MaxLength = "20" })
+
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-3">
+                                                                <div class="form-group no-margin-hr">
+                                                                    <label class="control-label">Mobile :</label>
+
+                                                                    @Html.TextBoxFor(m => m.leadEntity.Mobile, new { @id = "txtMobileNo", @Class = "form-control input-sm",@onkeypress = "return onlynumbers(event,this);", @MaxLength = "20" })
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-sm-3">
+                                                                <div class="form-group no-margin-hr">
+                                                                    <label class="control-label">Email :</label>
+
+                                                                    @Html.TextBoxFor(m => m.leadEntity.Email, new { @id = "txtEmail", @class = "form-control input-sm", @type = "email" })
+                                                                    @Html.ValidationMessageFor(m => m.leadEntity.Email, "", new { @class = "text-danger" })
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-3">
+                                                                <div class="form-group no-margin-hr">
+                                                                    <label class="control-label">Fax :</label>
+
+                                                                    @Html.TextBoxFor(m => m.leadEntity.Fax, new { @id = "txtFaxNo", @class = "form-control input-sm",@onKeyPress = "return onlynumbers(event,this);", @MaxLength = "20" })
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-3">
+                                                                <div class="form-group no-margin-hr">
+                                                                    <label class="control-label">Prefer time to Contact :</label>
+
+                                                                    @Html.TextBoxFor(m => m.leadEntity.PreferTime, new { @class = "form-control input-sm", @id = "txtPrefertime" })
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-3">
+                                                                <div class="form-group no-margin-hr">
+                                                                    <label class="control-label">Prefer mode to Contact :</label>
+
+                                                                    @Html.DropDownListFor(m => m.leadEntity.PreferMode, new List<SelectListItem>
+                                                                        {
+                                                                        new SelectListItem{ Text = "Select", Value = "Select",Selected=true },
+                                                                        new SelectListItem{Text="Phone",Value="Phone"},
+                                                                        new SelectListItem{Text="Email",Value="Email"}
+                                                                        }, new { @id = "ddlContactMode", @class = "form-control input-sm" })
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-sm-3">
+                                                                <div class="form-group no-margin-hr">
+                                                                    <label class="control-label">Email Opt-out :</label>
+                                                                    <div class="col-sm-13">
+                                                                        @Html.TextBoxFor(m => m.leadEntity.EmailOptOut, new { @id = "txtEmailOptout", @class = "form-control input-sm" })
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="panel">
+                                            <div class="panel-heading">
+                                                <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion-example"
+                                                   href="#pnlLeadDetails2">Lead Owner</a>
+                                            </div>
+                                            <!-- / .panel-heading -->
+                                            <div id="pnlLeadDetails2" class="panel-collapse collapse" style="height: auto;">
+                                                <div class="panel-body">
+                                                    <div class="col-sm-12 no-padding-hr">
+                                                        <div class="row">
+                                                            <div class="col-sm-3">
+                                                                <div class="form-group no-margin-hr">
+                                                                    <label class="control-label">Created By :<span style="color: red">*</span></label>
+
+                                                                    @Html.DropDownListFor(m => m.leadEntity.SalesMgr1, new SelectList(Model.userList, "userId", "firstName"), new { @id = "ddlLeadOwner", @class = "form-control input-sm", @validate = "dropdown", @data_val_required = "Created By" })
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-3">
+                                                                <div class="form-group no-margin-hr">
+                                                                    <label class="control-label">Rating :</label>
+
+
+                                                                    @Html.DropDownListFor(m => m.leadEntity.Rating, new List<SelectListItem>
+                                                                        {
+                                                                        new SelectListItem{Text="None",Value="None",Selected=true},
+                                                                        new SelectListItem{Text="Acquired",Value="Acquired"},
+                                                                        new SelectListItem{Text="Active",Value="Value"},
+                                                                        new SelectListItem{Text="Market Falied",Value="Market Failed"},
+                                                                        new SelectListItem{Text="Project Cancelled",Value="Project Cancelled"},
+                                                                        new SelectListItem{Text="ShutDown",Value="ShutDown"}
+                                                                        }, new { @class = "form-control input-sm", @id = "ddRating" })
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-3">
+                                                                <div class="form-group no-margin-hr">
+                                                                    <label class="control-label">Lead Status :</label>
+
+                                                                    @Html.DropDownListFor(m => m.leadEntity.LeadStatus, new List<SelectListItem>
+                                                                        {
+                                                                        new SelectListItem{Text="None",Value="None"},
+                                                                        new SelectListItem{Text="Attempted to Contact",Value="Attempted to Contact"},
+                                                                        new SelectListItem{Text="Contact in Future",Value="Contact in Future"},
+                                                                        new SelectListItem{Text="Contacted",Value="Contacted"},
+                                                                        new SelectListItem{Text="Junk Lead",Value="Junk Lead"},
+                                                                        new SelectListItem{Text="Lost Lead",Value="Lost Lead"},
+                                                                        new SelectListItem{Text="Not Contacted",Value="Not Contacted"},
+                                                                        new SelectListItem{Text="Pre Qualified",Value="Pre Qualified"}
+                                                                        }, new { @id = "ddlLeadStatus", @class = "form-control input-sm" })
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-3">
+                                                                <div class="form-group no-margin-hr">
+                                                                    <label class="control-label">Current System :</label>
+
+                                                                    @Html.TextBoxFor(m => m.leadEntity.CurrentApplication, new { @id = "txtSoftware", @class = "form-control input-sm" })
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-sm-3">
+                                                                <div class="form-group no-margin-hr">
+                                                                    <label class="control-label">Office :</label>
+
+                                                                    @Html.DropDownListFor(m => m.leadEntity.Office, new SelectList(Model.branchList, "branchId", "branchName"), new { @id = "ddlBranch", @class = "form-control input-sm" })
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-3">
+                                                                <div class="form-group no-margin-hr">
+                                                                    <label class="control-label">Lead Source :</label>
+
+                                                                    @Html.DropDownListFor(m => m.leadEntity.Source, new List<SelectListItem>
+                                                                        {
+                                                                        new SelectListItem{Text="Career Builder",Value="Career"},
+                                                                        new SelectListItem{Text="Job Fair",Value="JOB"},
+                                                                        new SelectListItem{Text="Monster",Value="Monster"},
+                                                                        new SelectListItem{Text="Newspaper",Value="NewsPpr"},
+                                                                        new SelectListItem{Text="Walk In",Value="WI"},
+                                                                        new SelectListItem{Text="Word of Mouth",Value="WOM",Selected=true},
+                                                                        new SelectListItem{Text="Yellow Pages",Value="YLP"},
+                                                                        new SelectListItem{Text="Dice",Value="Dice"},
+                                                                        new SelectListItem{Text="Online Networking",Value="ON"},
+                                                                        new SelectListItem{Text="Employee Referral",Value="ER"},
+                                                                        new SelectListItem{Text="Kijiji",Value="KJ"},
+                                                                        new SelectListItem{Text="Workopolis",Value="WP"},
+                                                                        new SelectListItem{Text="HRDC",Value="HRDC"},
+                                                                        new SelectListItem{Text="Networking",Value="Networking"}
+                                                                        }, new { @class = "form-control input-sm" })
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-3">
+                                                                <div class="form-group no-margin-hr">
+                                                                    <label class="control-label">Lead Assigned :<span style="color: red">*</span></label>
+
+                                                                    @Html.DropDownListFor(m => m.leadEntity.LeadAssigned, new SelectList(Model.userList, "userId", "firstName"), new { @id = "ddlLeadAssigned", @class = "form-control input-sm", @validate = "dropdown", @data_val_required = "Lead Assigned" })
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-3">
+                                                                <div class="form-group no-margin-hr">
+                                                                    <label class="control-label">Lead Stage :</label>
+
+                                                                    @Html.DropDownListFor(m => m.leadEntity.LeadStage, new List<SelectListItem>
+                                                                        {
+                                                                        new SelectListItem{Text="Select",Value="Select"},
+                                                                        new SelectListItem{Text="New",Value="New"},
+                                                                        new SelectListItem{Text="Cold",Value="Cold"},
+                                                                        new SelectListItem{Text="Warm",Value="Warm"},
+                                                                        new SelectListItem{Text="Hot",Value="Hot"},
+                                                                        new SelectListItem{Text="Closed",Value="Closed"}
+                                                                        }, new { @id = "ddlLeadStage", @class = "form-control input-sm" })
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="panel">
+                                            <div class="panel-heading">
+                                                <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion-example"
+                                                   href="#Panel2">Address Detail</a>
+                                            </div>
+                                            <!-- / .panel-heading -->
+                                            <div id="Panel2" class="panel-collapse collapse" style="height: auto;">
+                                                <div class="panel-body">
+                                                    <div class="col-sm-12 no-padding-hr">
+                                                        <div class="row">
+                                                            <div class="col-sm-3">
+                                                                <div class="form-group no-margin-hr">
+                                                                    <label class="control-label">Address&nbsp;1 :</label>
+
+                                                                    @Html.TextBoxFor(m => m.leadEntity.MailingAddress, new { @id = "txtAddressMailing", @class = "form-control input-sm", @maxlength = "50" })
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-3">
+                                                                <div class="form-group no-margin-hr">
+                                                                    <label class="control-label">Address&nbsp;2 :</label>
+
+                                                                    @Html.TextBoxFor(m => m.leadEntity.Mailingstreet, new { @id = "txtMailingStreet", @class = "form-control input-sm", @maxlength = "50" })
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-3">
+                                                                <div class="form-group no-margin-hr">
+                                                                    <label class="control-label">
+                                                                        City :
+                                                                    </label>
+
+                                                                    @Html.TextBoxFor(m => m.leadEntity.Mailingcity, new { @id = "txtMailingCity", @class = "form-control input-sm", @maxlength = "50" })
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-3">
+                                                                <div class="form-group no-margin-hr">
+                                                                    <label class="control-label" id="lblStateProvince">
+                                                                        State :
+                                                                    </label>
+
+                                                                    @*@Html.DropDownListFor(m => m.leadEntity.Mailingstate, new SelectList(Model.stateList, "stateCode", "stateName"), new { @id = "ddlMailingState", @class = "form-control input-sm" })*@
+                                                                    @*@Html.TextBoxFor(m => m.leadEntity.Mailingstate, new { @id = "txtMailingstate", @class = "form-control input-sm", @maxlength = "50" })*@
+                                                                    @Html.TextBoxFor(m => m.leadEntity.Mailingstate, new { @id = "txtMailingstate", @class = "form-control input-sm", @maxlength = "50" })
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-sm-3">
+                                                                <div class="form-group no-margin-hr">
+                                                                    <label class="control-label" id="lblPostalCode" runat="server">ZipCode:</label>
+
+                                                                    @Html.TextBoxFor(m => m.leadEntity.Mailingzip, new { @id = "txtMailingZip", @class = "form-control zipmask", @maxlength = "9", onKeyPress = "return onKeyPressOnlyZip(event,this);", @onblur = "return ValidateZip(this);", @onfocus = "return ClickZip(this);" })
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-3">
+                                                                <div class="form-group no-margin-hr">
+                                                                    <label class="control-label">
+                                                                        <asp:Label ID="lblMailingCountry" runat="server"></asp:Label>
+                                                                        Country
+                                                                    </label>
+
+                                                                    @Html.TextBoxFor(m => m.leadEntity.Mailingcountry, new { @id = "txtMailingCountry", @class = "form-control input-sm", @maxlength = "50" })
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="panel">
+                                            <div class="panel-heading">
+                                                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion-example"
+                                                   href="#collapse11">Social Integration</a>
+                                            </div>
+                                            <!-- / .panel-heading -->
+                                            <div id="collapse11" class="panel-collapse collapse" style="height: auto;">
+                                                <div class="panel-body">
+                                                    <div class="col-sm-12 no-padding-hr">
+                                                        <div class="row">
+                                                            <div class="col-sm-3">
+                                                                <div class="form-group no-margin-hr">
+                                                                    <label class="control-label">Facebook&nbsp;User&nbsp;Name :</label>
+
+                                                                    @Html.TextBoxFor(m => m.leadEntity.FacebookUsername, new { @id = "txtFacebook", @class = "form-control input-sm", @maxlength = "60" })
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-3">
+                                                                <div class="form-group no-margin-hr">
+                                                                    <label class="control-label">Twitter&nbsp;User&nbsp;Name :</label>
+
+                                                                    @Html.TextBoxFor(m => m.leadEntity.TwitterUsername, new { @id = "txtTwitter", @class = "form-control input-sm", @maxlength = "60" })
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-3">
+                                                                <div class="form-group no-margin-hr">
+                                                                    <label class="control-label">Linkedin&nbsp;User&nbsp;Name :</label>
+
+                                                                    @Html.TextBoxFor(m => m.leadEntity.LinkedInUsername, new { @id = "txtLinkedin", @class = "form-control input-sm", @maxlength = "60" })
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-3">
+                                                                <div class="form-group no-margin-hr">
+                                                                    <label class="control-label">Google+&nbsp;User&nbsp;Name :</label>
+
+                                                                    @Html.TextBoxFor(m => m.leadEntity.GooglePlusUsername, new { @id = "txtGooglePlus", @class = "form-control input-sm", @maxlength = "60" })
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-sm-3">
+                                                                <div class="form-group no-margin-hr">
+                                                                    <label class="control-label">Pinterest&nbsp;User&nbsp;Name :</label>
+
+                                                                    @Html.TextBoxFor(m => m.leadEntity.PinterestUsername, new { @id = "txtPinterest", @class = "form-control input-sm", @maxlength = "60" })
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-3">
+                                                                <div class="form-group no-margin-hr">
+                                                                    <label class="control-label">Skype&nbsp;User&nbsp;Name :</label>
+
+                                                                    @Html.TextBoxFor(m => m.leadEntity.SkypeUsername, new { @id = "txtSkype", @class = "form-control input-sm", @maxlength = "60" })
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="panel">
+                                            <div class="panel-heading">
+                                                <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion-example"
+                                                   href="#collapse10">Description</a>
+                                            </div>
+                                            <!-- / .panel-heading -->
+                                            <div id="collapse10" class="panel-collapse collapse">
+                                                <div class="panel-body">
+
+                                                    @Html.TextAreaFor(m => m.leadEntity.Description, new { @id = "txtDescription", @class = "textEditor" })
+                                                </div>
+                                                <!-- / .panel-body -->
+                                            </div>
+                                            <!-- / .collapse -->
+                                        </div>
+
+                                       
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+}
+
+<div class="modal fade" id="myModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Company List</h4>
+            </div>
+            <div class="modal-body">
+
+                <div class="row">
+                    <div style="text-align:left;font-size:12px;padding:5px">Note : Click Company Name To Select Record.</div>
+                    <div class="col-sm-12">
+
+                        <div class="table-primary table-striped" id="tblCompanyList">
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts/DateTimePicker/bootstrap-timepicker.min.js"></script>
+<script src="~/Scripts/DateTimePicker/bootstrap-datetimepicker.min.js"></script>
+<script>
+    function show_NewAccountPopUp() {
+
+        //$('#loading').css('display', 'block'); 
+        $.ajax({
+            url: "../Leads/ListParentComp",
+            //url: "../Leads/GetallCompanies",
+            type: "GET",
+            async: false,
+            success: function (data) {
+
+                if (data != null) {
+
+                    $('#tblCompanyList').empty();
+                    $('#tblCompanyList').empty().append(data);
+
+                }
+            },
+            error: function () {
+
+            }
+        });
+        $('#loading').css('display', 'none');
+        $('#myModal').modal("show");
+    }
+
+    $(function () {
+        $('#txtPrefertime').timepicker({
+            format: 'h:mm:ss'
+        });
+    });
+
+    $("#btnSave").click(function (e) {
+
+        Isvalid = true;
+        return Validate(this.form);
+
+
+    });
+    $(document).ready(function () {
+
+        $('#txtPhone').bind("cut copy paste", function (e) {
+            e.preventDefault();
+        });
+
+        $('#txtMobileNo').bind("cut copy paste", function (e) {
+            e.preventDefault();
+        });
+        $('#txtFaxNo').bind("cut copy paste", function (e) {
+            e.preventDefault();
+        });
+
+
+
+
+
+
+        $(".textEditor").jqte();
+        $('.DateP').datepicker({
+            format: 'mm/dd/yyyy'
+        });
+
+
+        $("#TAActualColumnName").keypress(function (e) {
+            if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
+                $("#errormsg").html("Digits Only").show().fadeOut("slow");
+                return false;
+            }
+        });
+    });
+
+    function onlynumbers(evt) {
+        var charCode = (evt.which) ? evt.which : event.keyCode
+        if (charCode == 43 || charCode == 32 || charCode == 40 || charCode == 41)
+            return true;
+        else if (charCode > 31 && (charCode < 45 || charCode > 57 || charCode == 47 || charCode == 46))
+            return false;
+
+        return true;
+    }
+
+</script>

@@ -1,0 +1,306 @@
+﻿@model CRMHub.EntityFramework.Client
+@{
+    ViewBag.Title = "EditClient";
+    Layout = "~/Views/Clientmaster/_LayoutClientsmaster.cshtml";
+}
+
+@using (Html.BeginForm("EditClientsdata", "CreateClients", FormMethod.Post, new
+    {
+        enctype = "multipart/form-data"
+    }))
+{
+    <html>
+    <head>
+
+
+        <script type="text/javascript">
+        init.push(function () {
+            $("#clientmanage").addClass("open active");
+            $("#client-1").addClass("active");
+        });
+
+        </script>
+
+        <style>
+            .Overlay {
+                display: block;
+                position: fixed;
+                top: 0px;
+                bottom: 0px;
+                left: 0px;
+                right: 0px;
+                overflow: hidden;
+                padding: 0;
+                margin: 0;
+                background-color: #000;
+                filter: alpha(opacity=50);
+                opacity: 0.5;
+                z-index: 1049;
+            }
+        </style>
+        <style>
+            .pfi-clear {
+                display: none !important;
+            }
+        </style>
+        <title>
+
+        </title>
+    </head>
+    <body>
+
+
+        <div class="row">
+
+
+            <div class="panel">
+                <div class="panel-heading">
+                    <div class="row">
+                        <!---- Page header, center on small screens -->
+                        <h1 class="col-xs-6 col-sm-4 text-left text-left-sm panel-title"><i class="fa fa-user page-header-icon"></i>&nbsp; Edit Client</h1>
+                        <div class="col-xs-6 col-sm-8">
+                            <div class="row">
+                                <div class="pull-right">
+                                    @*<a href="#" class="btn btn-flat btn-labeled btn-primary" tabindex="-1"
+                                        data-toggle="modal" data-target="#uidemo-modals-alerts-info"><span class="btn-label icon fa fa-question-circle"></span>Help</a>*@
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel-body">
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <!-- Tabs -->
+
+
+                            <div class="tab-pane" id="bs-tabdrop-tab3">
+
+                                <div class="row">
+                                    <div class="col-sm-12 col-xs-12">
+                                        <div class="page-header-breadcrumb">
+                                            <label class="control-label" id="lblMessage"></label>
+                                            <ul class="table-nav-item" style="float: right; margin-bottom:5px;">
+                                                <li id="btnmargin_top">
+                                                    <button class="btn btn-flat btn-labeled btn-primary" id="btnUpdate" style="margin:0px 3px 0px 10px;">
+                                                        <span class="btn-label icon fa fa-save"></span>Update
+                                                    </button>
+
+                                                </li>
+
+                                                @*<li class="btn btn-flat btn-labeled btn-primary" id="btnmargin_top">
+                                                        <span class="btn-label icon fa fa-save"> </span>
+                                                        <a style="color: #fff; text-decoration: none; padding: 0px; font-weight: normal" id="btnAdd" >
+                                                            Save
+                                                        </a>
+                                                    </li>*@
+                                                <li class="btn btn-flat btn-labeled btn-primary" id="btnmargin_top">
+                                                    <span class="btn-label icon fa fa-backward" style="margin-right:6px;"> </span>
+                                                    <a style="color: #fff; text-decoration: none; padding: 0px; font-weight: normal" id="btnbck" href="@Url.Action("ClientManagerIndex", "ClientManager")">
+                                                        Back
+                                                    </a>
+                                                </li>
+
+                                                @*<li>
+                                                        <button class="btn btn-flat btn-labeled btn-primary" id="btnSave">
+                                                            <span class="btn-label icon fa fa-save"></span>Save
+                                                        </button>
+                                                    </li>
+
+                                                    <li>
+                                                        <div class="btn btn-flat btn-labeled btn-primary" style="padding:3.5px 8px !important;">
+                                                            @Html.ActionLink("Back", "ClientManagerIndex", "ClientManager", new { @style = "color:#fff; font-weight:normal; padding:0px 0px; float:right; text-decoration:none;" })
+                                                            <span class="btn-label icon  fa fa-backward"> </span>
+                                                        </div>
+                                                    </li>*@
+                                            </ul>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <span id="errorsymbol" style="color:red;display:none;margin-left:5px;" class="fa fa-exclamation-circle"></span><div id="ErrorMessages" style="margin-left:20px;color:red;font-size:15px;margin-top:-19px">
+
+                                </div>
+                                <div class="row">
+                                    <div class="panel-group" id="accordion-example">
+
+                                        <!-- / .panel -->
+                                        <div class="panel">
+                                            <div class="panel-heading">
+                                                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion-example"
+                                                   href="#collapse2">Client Detail</a>
+                                            </div>
+                                            <!-- / .panel-heading -->
+                                            <div id="collapse2" class="panel-collapse collapse in" style="height: auto;">
+                                                <div class="panel-body">
+                                                    <div class="col-sm-12 no-padding-hr">
+                                                        <div class="row">
+
+                                                            <div class="col-sm-3">
+                                                                <div class="form-group no-margin-hr">
+                                                                    <label class="control-label">Client Id :<span style="color: red">*</span></label>
+                                                                    @Html.TextBoxFor(m => m.ClientID, new { @id = "txtClientId", @class = "form-control input-sm", @maxlength = "50", @tabindex = "1", @validate = "Required", @data_val_required = "Company Name", @disabled = "disabled" })
+                                                                    @Html.HiddenFor(m => m.ClientID)
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-sm-3">
+                                                                <div class="form-group no-margin-hr">
+                                                                    <label class="control-label">Company Name :<span style="color: red">*</span></label>
+                                                                    @Html.TextBoxFor(m => m.CompanyName, new { @id = "txtCompanyName", @class = "form-control input-sm", @maxlength = "50", @tabindex = "1", @validate = "Required", @data_val_required = "Company Name" })
+                                                                </div>
+                                                            </div>
+
+
+                                                            <div class="col-sm-3">
+                                                                <div class="form-group no-margin-hr">
+                                                                    <label class="control-label">Company Type :</label>
+                                                                    @Html.TextBoxFor(m => m.companytype, new { @id = "txtcompanytype", @class = "form-control input-sm", @maxlength = "50", @tabindex = "1" })
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-3">
+                                                                <div class="form-group no-margin-hr">
+                                                                    <label class="control-label">Country :</label>
+                                                                    @Html.TextBoxFor(m => m.Country, new { @id = "txtCountry", @class = "form-control input-sm", @maxlength = "50", @tabindex = "1" })
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+
+                                                        <div class="row">
+
+                                                            <div class="col-sm-3">
+                                                                <div class="form-group no-margin-hr">
+                                                                    <label class="control-label">Address 1 :</label>
+                                                                    @Html.TextBoxFor(m => m.address1, new { @id = "txtaddress1", @class = "form-control input-sm", @maxlength = "50", @tabindex = "1" })
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-sm-3">
+                                                                <div class="form-group no-margin-hr">
+                                                                    <label class="control-label">Address 2 :</label>
+                                                                    @Html.TextBoxFor(m => m.address2, new { @id = "txtaddress2", @class = "form-control input-sm", @maxlength = "50", @tabindex = "1" })
+                                                                </div>
+                                                            </div>
+
+
+                                                            <div class="col-sm-3">
+                                                                <div class="form-group no-margin-hr">
+                                                                    <label class="control-label">City :</label>
+                                                                    @Html.TextBoxFor(m => m.city, new { @id = "txtcity", @class = "form-control input-sm", @maxlength = "50", @tabindex = "1" })
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-3">
+                                                                <div class="form-group no-margin-hr">
+                                                                    <label class="control-label">Company WebSite :</label>
+                                                                    @Html.TextBoxFor(m => m.companywebsite, new { @id = "txtcomwebsite", @class = "form-control input-sm", @maxlength = "50", @tabindex = "1" })
+                                                                </div>
+                                                            </div>
+
+
+                                                            <div class="row">
+                                                                @*<div class="col-sm-3">
+                                                                        <div class="form-group no-margin-hr">
+                                                                            <label class="control-label">Email :<span style="color: red">*</span></label>
+                                                                            @Html.TextBoxFor(m => m.Email, new { @id = "txtemail", @class = "form-control input-sm", @maxlength = "50", @tabindex = "1", @validate = "Required", @data_val_required = "Email" })
+                                                                        </div>
+                                                                    </div>*@
+
+                                                                <div class="col-sm-4">
+                                                                    <div class="form-group no-margin-hr">
+                                                                        <label class="control-label">Company Logo :</label>
+                                                                        <script>
+                                                                        init.push(function () {
+                                                                            $('.styled-finputs-example').pixelFileInput({ placeholder: 'No file selected...' });
+                                                                        })
+                                                                        </script>
+
+                                                                        <input type="file" name="file" id="uploadlogo" class="styled-finputs-example">
+                                                                        @if (ViewBag.Download != null)
+                                                                        {
+                                                                            @ViewBag.Message;
+                                                                            @*@Html.ActionLink((string)ViewBag.Message, "ConAttachDownload")*@
+                                                                        }
+                                                                        @Html.HiddenFor(m => m.companylogo)
+                                                                    </div>
+                                                                </div>
+
+
+                                                            </div>
+
+                                                        </div>
+
+
+                                                    </div>
+                                                </div>
+                                                <!-- / .panel-body -->
+                                            </div>
+                                            <!-- / .collapse -->
+                                        </div>
+                                        <!-- / .panel -->
+                                        <!-- / .panel -->
+                                        <!-- / .panel -->
+                                    </div>
+
+
+
+
+                                    <div class="panel" id="pnlAdmin" runat="server">
+                                        <div class="panel-heading">
+                                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion-example"
+                                               href="#collapse12">Login Information</a>
+                                        </div>
+                                        <!-- / .panel-heading -->
+                                        <div id="collapse12" class="panel-collapse collapse" style="height: auto;">
+                                            <div class="panel-body">
+                                                <div class="row no-padding-hr">
+                                                    <div class="col-sm-4">
+                                                        <div class="form-group no-margin-hr">
+                                                            <label class="control-label">
+                                                                Level :
+                                                            </label>
+
+                                                            @Html.TextBoxFor(m => m.Level, new { @id = "txtlevel", @class = "form-control input-sm", @readonly = "true" })
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-sm-4">
+                                                        <div class="form-group no-margin-hr">
+                                                            <label class="control-label">
+                                                                Login Id :
+                                                            </label>
+                                                           @Html.TextBoxFor(m => m.LoginId, new { @id = "txtLoginId", @class = "form-control input-sm", @maxlength = "50", @tabindex = "17", @readonly = "true" })
+                                                            @*@Html.TextBoxFor(m => m.Contact.LoginID, new { @id = "txtuserName", @class = "form-control input-sm", @TabIndex = "115" })*@
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        <div class="form-group no-margin-hr">
+                                                            <label class="control-label">
+                                                                Password :
+                                                            </label>
+                                                            @Html.TextBoxFor(m => m.Password, new { @id = "txtPassword", @class = "form-control input-sm", @maxlength = "50", @tabindex = "18", @readonly = "true" })
+                                                            @*@Html.TextBoxFor(m => m.Contact.Password, new { @id = "txtPassword", @class = "form-control input-sm" })*@
+                                                            
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </body>
+
+</html>
+}
+

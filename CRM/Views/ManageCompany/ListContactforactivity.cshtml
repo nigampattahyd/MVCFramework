@@ -1,0 +1,75 @@
+﻿@model  IEnumerable<CRMHub.EntityFramework.Account>
+
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $('#loading').css('display', 'none');
+            $('#jq-datatables-ContactPopup').dataTable({
+                "aLengthMenu": [[10, 25, 50], [10, 25, 50]],
+                "columnDefs": [{ targets: 'no-sort', orderable: false, targets: [0, 1] }]
+            });
+        });
+
+        $(document).on("click", "#aParentContactId", function () {
+
+            var parentCont = $(this).text();
+            var contid = $(this).attr('data-contid');
+            var Conph = $(this).attr('data-conph');
+           
+            $('#txtContactPhone').val(Conph);
+           // $('#txtContactMobile').val(contMob);
+            $('#HyperContact').val(parentCont);
+            $('#hdParentContactId').val(contid);
+            $('#myModal').modal("hide");
+            $('#loading').css('display', 'none');
+        });
+
+    </script>
+    <html>
+    <body>
+        <div style="width:100px;">
+            <div id="loading" style="display:none">
+                <img id="loading-image" src="~/Content/assets/images/loader.gif" />
+            </div>
+        </div>
+        <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="jq-datatables-ContactPopup" width="100%">
+            <thead>
+                <tr>
+                    <th data-hide="phone">Contact ID</th>
+                    <th data-class="expand">Contact Name</th>
+                    <th data-hide="phone">Phone</th>
+                    <th data-hide="phone">Mobile</th>
+                    <th data-hide="phone">Email</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null)
+                {
+                    foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @item.ID
+                            </td>
+                            <td>
+                                @*<a href="#" id="aParentContactId" data-contid="@item.ContactId" data-mob="@item.Mobile" data-conph="@item.Phone">@item.Fname</a>*@
+                                <a href="#" id="aParentContactId" data-contid="@item.ID" data-mob="@item.Email" data-conph="@item.Phone">@item.FirstName</a>
+                            </td>
+                            <td>
+                                @item.Phone
+                            </td>
+                            <td>
+                                @item.Mobile
+                            </td>
+                            <td>
+                                @item.Email
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </body>
+</html>
+

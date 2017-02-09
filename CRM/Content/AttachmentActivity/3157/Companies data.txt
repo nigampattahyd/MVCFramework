@@ -1,0 +1,109 @@
+CRM
+
+
+Companies:Company_List.apsx
+
+tblName:tbl_account
+
+for binding grid:
+apptrino.asmx/GetCompanies=>CRM.GetCrmCompaniesList=>USP_GET_CRM_COMPANIES(sp)
+
+For binding office drpdown:GetUserBranch(sp)
+For binding Salesrepresntative drpdown:getAdmin(sp)
+------------------------------------------------------------------------------------------------------------------------------
+ADDNew: Company_New.aspx
+
+Company detail:
+
+For Parent Company column:frmCrm_popupForParentAcc.aspx
+
+
+Binding grid in popup:apptrino.asmx/GetCompaniesforPopUP=>CRM.GetCompaniesListPopUp=>USP_GET_CRM_COMPANY_New(sp)
+
+Industry:ddlIdustry=>getCRMIndustry(sp),tbl:
+
+AddressDetail:
+Binding state:GetState(sp)
+
+
+Administrative detail:
+
+salesrep1:getAdmin(sp):tbl:users
+salesrep2:getAdmin(sp):||
+office:GetUserBranch(sp):tbl:Branch
+
+for saving company:crm_CreateCustomer_Accounting(sp)
+###############################################################################################################################################
+ContactDetail:
+for saving the Company contact: Addnew 
+Company:frmCrm_popupForParentAcc.aspx=>apptrino.asmx/GetCompaniesforPopUP=>CRM.GetCompaniesListPopUp=>USP_GET_CRM_COMPANY_New(sp)
+
+
+PhoneDeatil:
+
+SMS provider:GetSMSProvider(sp),tbl:SMSProviderList
+
+
+AddressDetail:
+Binding state:GetState(sp)
+
+
+Administrative detail:
+
+salesrep1:getAdmin(sp):tbl:users
+salesrep2:getAdmin(sp):||
+office:GetUserBranch(sp):tbl:Branch
+
+
+for saving contact:crm_InsertContactDetail(sp).
+
+displaying all ContactsOf Particular company
+
+apptrino.asmx/GetCompanyContacts=>CRM.GetCrmCompanyContactsList=>USP_GET_CRM_COMPANY_CONTACTS
+
+####################################################################################################################################################
+
+Document:
+
+tbl:AccountDocument
+for binding grid:
+
+apptrino.asmx/GetCompanyDocuments=>CRM.GetCompanyDocumentssList=>USP_GET_COMPANY_DOCUMENTS(sp)
+
+for adding new document:crm_addAccountDocument(sp)
+deleting document:apptrino.asmx/DeleteCompanyDocument=>Users.GetDocumentName=>USP_GET_DOCUMENT_NAME(sp)
+###################################################################################################################################################
+
+Activity:
+
+for binding Company activities:apptrino.asmx/GetCrmCompanyActivities=>CRM.GetCrmCompanyActivityList=>USP_GET_CRM_COMPANY_ACTIVITIES(sp)
+
+Binding types:USP_GET_ACTIVTY_TYPE(sp)tblname:activity_types 
+
+For Adding new company Activity:
+
+type:USP_GET_ACTIVTY_TYPE(sp)tblname:activity_types
+Assignedto:getAdmin(sp) 
+
+for saving new activity:WorkOrder_InsertActivity(sp):tblname:tbl_history
+
+Editing Activity:crm_getHistoryByHistoryID(sp)
+deleting activity:apptrino.asmx/DeleteCompanyActivity=>CRM.DeleteCompanyActivity=>crm_DeleteTask(sp)
+
+To make the activity staus complete:apptrino.asmx/CompleteCompanyActivity=>CRM.CompleteCompanyActivity=>crm_CompleteActivity(sp)
+____________________________________________________________________________________________________________________________________________________
+
+
+For merging of 2 companies:
+
+for getting company records:crm_getAccountById(sp)
+on submit to merge:crm_updateAccountOnMerge(sp)
+
+______________________________________________________________________________________________________________________________________________________
+
+for deleting of companies:
+
+apptrino.asmx/DeleteCompany=>CRM.DeleteCrmCompany=>crm_DeleteAccountDetail(sp)
+_____________________________________________________________________________________________________________________________________________________
+
+

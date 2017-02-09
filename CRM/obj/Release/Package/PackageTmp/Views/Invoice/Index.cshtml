@@ -1,0 +1,494 @@
+﻿@model CRMHub.ViewModel.InvoiceModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .amount {
+        text-align: left !important;
+    }
+</style>
+<div id="content-wrapper">
+    <div id="CustomBootstrapAlertBox">
+    </div>
+    <div class="row">
+
+
+        <div class="panel">
+            <div class="panel-heading">
+                <div class="row">
+                    <!-- Page header, center on small screens -->
+                    <h1 class="col-xs-6 col-sm-4 text-left text-left-sm panel-title"><i class="fa fa-users page-header-icon"></i>&nbsp;&nbsp;&nbsp;Invoice List</h1>
+                    <div class="col-xs-6 col-sm-8">
+                        <div class="row">
+                            <div class="pull-right">
+                                @*<a href="#" class="btn btn-flat btn-labeled btn-primary" tabindex="-1"
+                                    data-toggle="modal" data-target="#uidemo-modals-alerts-info"><span class="btn-label icon fa fa-question-circle"></span>Help</a>*@
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body">
+
+
+                <div class="row">
+
+                    <div class="tab-pane" id="bs-tabdrop-tab3">
+                        <div class="row">
+                            <!-- col-sm-6 -->
+                            @*<div class="col-sm-12" id="pnlSrchCriteria">
+                                    <div class="col-sm-3">
+                                        <div class="form-group no-margin-hr">
+                                            <label class="control-label">Keyword :</label>
+                                            @Html.TextBoxFor(m => m.branch.Keyword, new { @id = "txtKeyWord", @class = "form-control input-sm", @maxlength = "100" })
+
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group no-margin-hr">
+                                            <label class="control-label">Name :</label>
+                                            @Html.TextBoxFor(m => m.branch.Name, new { @id = "txtName", @class = "form-control input-sm" })
+
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group no-margin-hr">
+                                            <label class="control-label">Zip Code :</label>
+                                            @Html.TextBoxFor(m => m.branch.Zip, new { @id = "txtZipCode", @class = "form-control input-sm" })
+
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                    </div>
+                                    <div class="col-sm-3" id="tdStaffingManager" runat="server">
+                                        <div class="form-group no-margin-hr">
+                                            <label class="control-label">City :</label>
+                                            @Html.TextBoxFor(m => m.branch.City, new { @id = "txtCity", @class = "form-control input-sm" })
+
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group no-margin-hr">
+                                            <label class="control-label">
+                                                State:
+                                            </label>
+                                            @Html.DropDownListFor(m => m.branch.StateName, new SelectList(Model.getListOfStates, "stateCode", "stateName"), new { @class = "form-control input-sm", @id = "drpState" })
+
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group no-margin-hr">
+                                            <label class="control-label">Phone :</label>
+                                            @Html.TextBoxFor(m => m.branch.Phone, new { @id = "txtPhone", @class = "form-control input-sm", @onkeypress = "return onlynumbers(event,this);", @onblur = "formatPhone(this);", @maxlength = "20" })
+
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group no-margin-hr">
+                                            <label class="control-label">Email :</label>
+                                            @Html.TextBoxFor(m => m.branch.Email, new { @id = "txtEmail", @class = "form-control input-sm" })
+
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-3 text-right text-left-sm" id="search_btn" style="padding-left:0px">
+                                        <button class="btn btn-flat btn-labeled btn-primary" id="btnSearch">
+                                            <span class="btn-label icon fa fa-search"></span>Search
+                                        </button>
+                                    </div>
+
+
+                                </div>*@
+                            <div class="clearfix"></div>
+                            <div class="col-sm-13" id="filter"></div>
+
+                            <!-- col-sm-6 -->
+                            <div class="col-sm-12">
+
+
+                                <div class="col-sm-12" style="background-color: #f5f5f5; padding-top: 6px; padding-bottom: 6px; text-align: right;">
+                                    <ul class="table-nav-item">
+
+
+
+
+                                        <li class="btn btn-flat btn-labeled btn-primary" id="btnmargin_top">
+
+                                            <a style="color: #fff; text-decoration: none; padding: 0px; font-weight: normal" id="btnAdd" href="@Url.Action("CreateInvoice","Invoice")">
+                                                <span class="btn-label icon  fa fa-pencil-square-o" style="margin-right:6px;"> </span>
+                                                Create Invoice
+                                            </a>
+
+                                        </li>
+
+
+
+
+                                        <li class="btn btn-flat btn-labeled btn-primary" id="btnmargin_top">
+
+                                            <a style="color: #fff; text-decoration: none; padding: 0px; font-weight: normal" id="DeleteContacts" onclick="deleteSelectedInvoice()">
+                                                <span class="btn-label icon fa fa-trash-o" style="margin-right:6px;"> </span>
+                                                Delete Invoice
+                                            </a>
+
+                                        </li>
+
+
+                                    </ul>
+
+                                </div>
+
+                            </div>
+                            <div class="col-sm-12 col-xs-12">
+                                <div class="table-primary table-striped">
+                                    <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="tblInvoice" style="width:100%">
+                                        <thead>
+                                            <tr>
+
+                                                <th><input type="checkbox" id="chkHeader" /></th>
+                                                <th></th>
+                                                <th data-hide="tablet,tabletlandscape,phone">Invoice number</th>
+                                                <th data-class="expand">Customer</th>
+                                                <th data-hide="tablet,tabletlandscape,phone" class="amount">Amount&nbsp;($)</th>
+                                                <th data-hide="tablet,tabletlandscape,phone">Due&nbsp;Date</th>
+                                                <th data-hide="tablet,tabletlandscape,phone">Invoice Type</th>
+                                                <th data-class="tablet,tabletlandscape,phone">Status</th>
+
+
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- /11. $BOOTSTRAP_TAB_DROP -->
+        <!-- / Info -->
+    </div>
+</div>
+<style type="text/css">
+    .alignRight {
+        text-align: right;
+    }
+</style>
+<style>
+    .DT-search, .DT-search input {
+        display: none;
+    }
+
+    .DT-per-page {
+        border-right: 1px solid #eee;
+        margin-right: -1px;
+        height: 23px;
+        padding-right: 15px;
+        white-space: nowrap;
+    }
+</style>
+<script src="~/Scripts/DateTimePicker/bootstrap-timepicker.min.js"></script>
+<script src="~/Scripts/DateTimePicker/bootstrap-datetimepicker.min.js"></script>
+<script src="~/Scripts/jqte/jquery-te-1.4.0.min.js"></script>
+<script type="text/javascript">
+
+
+
+    $(document).ready(function () {
+        
+        var invoice = '@ViewBag.invoice';
+
+        if (invoice != "") {
+            $.growl.notice({ title: "Success", message: "invoice Created Successfully.", size: 'large' });
+            //$('#ErrorMessages').html('User Details Updated Successfully.');
+        }
+        var update = '@ViewBag.invoiceupdate';
+        if (update != "") {
+            $.growl.notice({ title: "Success", message: "invoice Updated Successfully.", size: 'large' });
+            //$('#ErrorMessages').html('User Details Updated Successfully.');
+        }
+        var savepost = '@ViewBag.invoicecreateupdate';
+        if (savepost != "") {
+            $.growl.notice({ title: "Success", message: "invoice Created and also Posted for Payment Successfully.", size: 'large' });
+            //$('#ErrorMessages').html('User Details Updated Successfully.');
+        }
+
+       // TempData["CreatePostInvoice"]
+        BindInvoiceList();
+        $('#tblInvoice').on('length.dt', function (e, settings, len) {
+
+            $('#loading').css('display', 'block');
+
+        });
+
+        $('#tblInvoice').on('page.dt', function () {
+
+            $('#loading').css('display', 'block');
+        });
+
+        $('#loading').css('display', 'none');
+
+    });
+
+
+    function BindInvoiceList() {
+        var responsiveHelper = undefined;
+        var breakpointDefinition = {
+            tablet: 1024,
+            tabletlandscape: 768,
+            phone: 480
+        };
+        var tableElement = $('#tblInvoice');
+
+        tableElement.dataTable({
+            autoWidth: false,
+            preDrawCallback: function () {
+                if (!responsiveHelper) {
+                    responsiveHelper = new ResponsiveDatatablesHelper(tableElement, breakpointDefinition);
+                }
+            },
+            rowCallback: function (nRow) {
+                responsiveHelper.createExpandIcon(nRow);
+            },
+            drawCallback: function (oSettings) {
+                responsiveHelper.respond();
+            },
+            // "order": [[$("#HD_SortValue").val(), "" + $("#HD_SortDirection").val() + ""]],
+            "aLengthMenu": [[10, 25, 50], [10, 25, 50]],
+            //"iDisplayStart": parseInt($("#HD_PageIndex").val()),
+            //"iDisplayLength": parseInt($("#HD_PageSize").val()),
+            //"oSearch": { "sSearch": $("#HD_SearchString").val() },
+
+            "pagingType": "full_numbers",
+
+            "bFilter": false,
+            //"processing": true,
+            "serverSide": true,
+
+            "sAjaxSource": "Invoice/getInvoicelist",
+            "fnServerParams": function (aoData) {
+                aoData.push(
+                    { "name": "b_invoice", "value": "Invoice"  }
+                    //{ "name": "b_Name", "value": "" + $("#txtName").val() + "" },
+                    //{ "name": "b_Zip", "value": "" + $("#txtZipCode").val() + "" },
+
+                    //{ "name": "b_City", "value": "" + $("#txtCity").val() + "" },
+                    //{ "name": "b_state", "value": "" + $("#drpState").val() + "" },
+                    //{ "name": "b_Phone", "value": "" + $("#txtPhone").val() + "" },
+                    //{ "name": "b_email", "value": "" + $("#txtEmail").val() + "" }
+                    //{ "name": "ContactSkillId", "value": "" }
+                    );
+
+            },
+            "fnServerData": function (sSource, aoData, fnCallback) {
+                $.ajax({
+                    "dataType": 'json',
+                    "contentType": "application/json; charset=utf-8",
+                    "type": "GET",
+                    "url": sSource,
+                    "data": aoData,
+                    "success":
+                                function (msg) {
+                                    //var json = jQuery.parseJSON(msg.d);
+                                    fnCallback(msg);
+                                    //$("#jq-datatables-example").show();
+                                }
+                });
+            },
+            "asStripeClasses": ['odd gradeX', 'even gradeC'],
+            "aoColumnDefs": [
+                {
+                    "targets": [0], "visible": true, "bSortable": false, "mDataProp": "InvoiceID",
+                    "render": function (data, type, row) {
+                        return "<input type=\"checkbox\" name=\"chkItem\" class=\"case\" id=\"chkRow_" + row["InvoiceID"] + "\"  data-invoiceid=\"" + row["InvoiceID"] + "\"    />";
+                        //if (row["BranchId"] != 1) {
+                        //    return "<input type=\"checkbox\" name=\"chkItem\" class=\"case\" id=\"chkRow_" + row["InvoiceID"] + "\"  data-invoiceid=\"" + row["InvoiceID"] + "\"    />";
+                        //}
+                        //else {
+                        //    return "";
+                        //}
+                    }
+                },
+                 {
+                     "targets": [1], "visible": true, "bSortable": false,
+                     "render": function (data, type, row) {
+
+                         // if (row["BranchId"] != 1) {
+                         //return "<input type=\"checkbox\" name=\"chkitems\" class=\"case\" id=\"chkRow_" + row["UserId"] + "\"  data-UserId=\"" + row["UserId"] + "\" data-RoleName=\"" + row["roleName"] + "\"/>";
+                         return "<span class=\"fa fa-edit\" onclick=\"OpeninvoiceDetail('" + row["InvoiceID"] + "');\"></span><span class=\"fa fa-times\" onclick=\"deleteEachinvoice('" + row["InvoiceID"] + "');\"></span>";
+                         //}
+                         //else {
+                         //    return "<span class=\"fa fa-edit\" onclick=\"OpenBranchDetail('" + row["InvoiceId"] + "');\"></span>";
+                         //}
+
+
+                     }
+                 },
+                {
+                    "targets": [2], "visible": true, "bSortable": true, "mDataProp": "InvoiceNo",
+
+                },
+                {
+
+                    "targets": [3], "visible": true, "bSortable": true, "mDataProp": "Fname",
+
+                },
+                { "targets": [4], "visible": true, "bSortable": true, "mDataProp": "GrandTotal", "sClass": "alignRight" },
+                 {
+                     "targets": [5], "visible": true, "bSortable": true, "mDataProp": "DueDate",
+                     "render": function (data, type, row) {
+                         var jsDate1 = data;
+                         if (jsDate1 == null) {
+                             return jsDate1 = "";
+                         }
+                         else if (jsDate1.value != "") {
+                             var jsDate = new Date(parseInt(row["DueDate"].substr(6)));
+                             return (jsDate.getMonth() + 1) + '/' + jsDate.getDate() + '/' + jsDate.getFullYear();
+                         }
+
+                     }
+                 },
+
+                  { "targets": [6], "visible": true, "bSortable": true, "mDataProp": "InvoiceType" },
+
+                   //{ "targets": [7], "visible": true, "bSortable": true, "mDataProp": "Status" },
+                   {
+                       "targets": [7], "visible": true, "bSortable": true, "mDataProp": "Status",
+                       "render": function (data, type, row) {
+
+                           if (row["Posted"] != 1) {
+
+                               return "<a class=\"btn btn-flat btn-labeled btn-primary\" href=\"#\" onclick=\"ConverttoPost('" + row["InvoiceID"] + "');\"><span class=\"btn-label icon  fa fa-pencil-square-o\" style=\"margin-right:6px;\"> </span>" + "Post Invoice" + "</a>";
+
+
+                           }
+                           else {
+                               return "Posted";
+                           }
+
+
+                       }
+
+                   },
+
+
+            ],
+            "fnDrawCallback": function (oSettings) {
+
+                $('#loading').css('display', 'none');
+
+            }
+        }).api();
+
+
+        $('#tblInvoice_wrapper .table-caption').text('');
+
+        // $('#tblOffice_wrapper .dataTables_filter input').attr('placeholder', 'Search...');
+
+
+    }
+
+
+
+    function OpeninvoiceDetail(invid) {
+        //var invoiceid = invid;
+        window.location = "Invoice/EditInvoice?InvoiceId=" + invid;
+    }
+    function deleteinvoice(invId) {
+
+       // alert(invId);
+            $.ajax({
+                url: "Invoice/DeleteEachInvoice",
+                type: "POST",
+                async: false,
+                data: { invoiceid: invId.toString() },
+                success: function (data) {
+                    // alert(data);
+                    if (data == "True") {
+
+                        $("#tblInvoice").dataTable().fnDestroy();
+                        //document.location.href = document.location.href;
+                        //location.reload();
+                        BindInvoiceList();
+                        $.growl.notice({ title: "Success", message: "Invoice Deleted Successfully", size: 'large' });
+                    }
+                    else {
+                        $.growl.error({ title: "Fail", message: "Invoice is in payment mode !!! it can not be deleted .", size: 'large' });
+                    }
+                },
+                error: function () {
+
+                }
+            });
+        }
+
+    //}
+
+    $("#chkHeader").click(function () {
+        $('#tblInvoice input[name="chkItem"]').prop('checked', this.checked);
+    });
+
+    $('#tblInvoice input[name="chkItem"]').click(function () {
+
+        if ($('#tblInvoice input[name="chkItem"]').length == $('#tblInvoice input[name="chkItem"]:checked').length) {
+            $("#chkHeader").prop("checked", "checked");
+        }
+        else if ($('#tblInvoice input[name="chkItem"]').length != $('#tblInvoice input[name="chkItem"]:checked').length) {
+            $('#chkHeader').prop('checked', false);
+        }
+    });
+
+    function deleteSelectedInvoice() {
+
+        if ($('#tblInvoice input[name="chkItem"]:checked').length > 0) {
+            var flag = confirm('You are about to delete permanently.Are you sure you want to delete these records?');
+            if (flag) {
+
+                var searchIDs = $("#tblInvoice input:checkbox:checked").map(function () {
+                    return $(this).attr("data-invoiceid");
+                }).get();
+
+                deleteinvoice(searchIDs)
+            }
+        }
+        else {
+            alert("Please select item(s) to delete.");
+        }
+    }
+
+    function deleteEachinvoice(invid)
+    {
+        //alert(invid);
+        var invoiceid = invid;
+        var flag = confirm('You are about to delete the Invoice permanently.Are you sure you want to delete Invoice ?');
+        if (flag) {
+            deleteinvoice(invoiceid);
+        }
+    }
+
+    function ConverttoPost(invid) {
+        var invoiceid = invid;
+        $.ajax({
+            url: '@Url.Action("PostInvoice")',
+            async: false,
+            type: "GET",
+            data: { InvoiceID: invoiceid },
+            success: function (data) {
+
+                if (data == "True") {
+                    var target = '@Url.Action("Index", "Invoice")';
+                    window.location = target;
+                }
+
+            }
+        });
+
+    }
+
+</script>

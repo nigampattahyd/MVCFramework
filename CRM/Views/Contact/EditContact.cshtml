@@ -1,0 +1,2374 @@
+﻿@model CRMHub.ViewModel.ContactModel
+@{
+    ViewBag.Title = "EditContact";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<style type="text/css">
+    .DT-search {
+        display: none;
+    }
+
+    .DT-per-page {
+        border-right: none;
+    }
+</style>
+
+@*$(document).ready(function () {
+
+        var acttab = '@TempData["Activitytab"]';
+        if (acttab == "True") {
+            if (acttab == "True") {
+                $('#tabActivity').css("display", "block");
+                $('#tabActivity').addClass('active');
+                $('#TabContactDetail').removeClass("active");
+                //Bindingactivitygrid();
+            } else {
+                $('#tabActivity').css("display", "none");
+                $('#TabContactDetail').addClass('active');
+                $('#tabActivity').removeClass("active");
+            }
+
+           // $('#TabActivity').css("display", "block");
+          //  $('#TabContactDetail').css("display", "none");
+
+        }
+    });*@
+
+
+
+<script>
+    init.push(function () {
+        $('ul.bs-tabdrop-example').tabdrop();
+    });
+</script>
+
+@using (Html.BeginForm("UpdateContact", "Contact", FormMethod.Post))
+{
+    <div id="content-wrapper">
+        <div id="CustomBootstrapAlertBox">
+        </div>
+        <div class="row">
+
+
+            <div class="panel">
+
+                <div class="panel-heading">
+                    <div class="row">
+                        <!-- Page header, center on small screens -->
+                        <h1 class="col-xs-6 col-sm-4 text-left text-left-sm panel-title">
+                            <i class="fa fa-user page-header-icon"></i>&nbsp; Edit Contact
+                        </h1>
+                        <div class="col-xs-6 col-sm-8">
+
+
+                            <div class="row">
+                                <div class="pull-right">
+                                    @*<a href="#" class="btn btn-flat btn-labeled btn-primary" tabindex="-
+                                        data-toggle="modal" data-target="#uidemo-modals-alerts-info"><span class="btn-label icon fa fa-question-circle"></span>Help</a>*@
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <span id="errorsymbol" style="color:red;display:none;margin-left:5px;" class="fa fa-exclamation-circle"></span>
+                <div id="ErrorMessages" style="margin-left:20px;color:red;font-size:15px;">
+
+                </div>
+
+                <div class="panel-body">
+
+                    <div class="row">
+
+                        <!-- Tabs -->
+
+                        <ul class="nav nav-tabs bs-tabdrop-example" id="TabMenu">
+                            <li id="TabContactDetail"><a href="#pvAccounts" data-toggle="tab">Contact Detail</a></li>
+                            <li id="TabActivity"><a href="#pvActivity" data-toggle="tab" onclick="Bindingactivitygrid()">Activity</a></li>
+
+                            @if (Model.Contact.Type == "1")
+                            {
+                                <li id="TabInvoice"><a href="#pvInvoice" data-toggle="tab" onclick="BindingInvoicegrid()">Invoice</a></li>
+                            }
+
+
+                        </ul>
+                        <div class="tab-content tab-content-bordered">
+                            <div class="tab-pane" id="pvAccounts">
+
+
+                                <div class="row" style="text-align:right;">
+                                    <div class="col-sm-12">
+
+                                        <label class="control-label">
+                                        </label>
+
+
+                                        <ul class="table-nav-item" style="float: right; margin-bottom:5px;">
+                                            <li>
+                                                <button class="btn btn-flat btn-labeled btn-primary" id="btnSave">
+                                                    <span class="btn-label icon fa fa-save"></span>Save
+                                                </button>
+                                            </li>
+                                            <li>
+                                                <a style="color: #fff; text-decoration: none; padding: 0px; font-weight: normal" class="btn btn-flat btn-labeled btn-primary" href="@Url.Action("Index", "Contact")">
+                                                    <span class="btn-label icon fa fa-backward" style="margin-right:6px;"> </span>
+                                                    Back
+                                                </a>
+                                            </li>
+                                        </ul>
+
+
+
+
+
+
+
+
+                                        @*<button class="btn btn-flat btn-labeled btn-primary" id="iptSubmit" style=" margin:0px 3px 0px 10px;">
+                                                <span class="btn-label icon fa fa-save"></span>Save
+                                            </button>
+
+                                            <button class="btn btn-flat btn-labeled btn-primary">
+                                                <span class="btn-label icon fa fa-backward" style="margin-right:6px; "> </span>
+                                                @Html.ActionLink("Back", "Index", "Contact", new { @style = "color:#fff; text-decoration:none;" })
+                                            </button>*@
+
+
+
+                                    </div>
+                                </div>
+
+
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="panel-group" id="accordion-example">
+                                            <!-- / .panel -->
+                                            <div class="panel">
+                                                <div class="panel-heading">
+                                                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion-example"
+                                                       href="#collapse2">Contact Detail</a>
+                                                </div>
+                                                <!-- / .panel-heading -->
+                                                <div id="collapse2" class="panel-collapse collapse in" style="height: auto;">
+                                                    <div class="panel-body">
+                                                        <div class="col-sm-12">
+
+                                                            <div class="row">
+
+                                                                <div class="col-sm-3">
+                                                                    <div class="form-group no-margin-hr">
+                                                                        <label class="control-label">First Name :<span style="color: red">*</span></label>
+                                                                        @*<asp:TextBox ID="txtName" runat="server" CssClass="form-control input-sm" MaxLength="50" TabIndex="1"></asp:TextBox>*@
+                                                                        @Html.TextBoxFor(m => m.Contact.Fname, new { @id = "txtName", @class = "form-control input-sm", @MaxLength = "50", @TabIndex = "1", @validate = "Required", @data_val_required = "Name", @onblur = "return Contactexists(this);" })
+                                                                        @Html.HiddenFor(m => m.Contact.Fname, new { @id = "hidtxtName" })
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-3">
+                                                                    <div class="form-group no-margin-hr">
+                                                                        <label class="control-label">Middle Name :</label>
+                                                                        @*<asp:TextBox ID="txtEmailoptout" runat="server" CssClass="form-control input-sm" MaxLength="100" TabIndex="11"></asp:TextBox>*@
+                                                                        @Html.TextBoxFor(m => m.Contact.MName, new { @id = "txtMiddleName", @class = "form-control input-sm", @MaxLength = "100", @TabIndex = "15" })
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-3">
+                                                                    <div class="form-group no-margin-hr">
+                                                                        <label class="control-label">Last Name :<span style="color: red">*</span></label>
+
+                                                                        @Html.TextBoxFor(m => m.Contact.LName, new { @id = "txtLastName", @class = "form-control input-sm", @MaxLength = "50", @TabIndex = "16", @validate = "Required", @data_val_required = "LastName", @onchange = "return Contactexists(this);" })
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-3">
+                                                                    <div class="form-group no-margin-hr">
+                                                                        <label class="control-label">Title :</label>
+                                                                        @*<asp:TextBox ID="txtTitle" runat="server" CssClass="form-control input-sm" MaxLength="50" TabIndex="2"></asp:TextBox>*@
+                                                                        @Html.TextBoxFor(m => m.Contact.Title, new { @id = "txtTitle", @class = "form-control input-sm", @MaxLength = "50", @TabIndex = "2" })
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+                                                            <div class="row">
+
+                                                                <div class="col-sm-3">
+                                                                    <div class="form-group no-margin-hr">
+                                                                        <label class="control-label">Company :<span style="color: red">*</span></label>
+                                                                        <div class="input-group">
+
+                                                                            @*<asp:TextBox ID="txtAccountList" runat="server" CssClass="form-control" TabIndex="4" onkeypress="return false;" onpaste="return false;"></asp:TextBox>*@
+
+                                                                            @Html.TextBoxFor(m => m.Contact.Account_Name, new { @id = "txtParentAccountName", @class = "form-control input-sm", @maxlength = "30", @validate = "Required", @data_val_required = " Company Name" })
+
+
+                                                                            <span class="input-group-addon" type=" button" style="cursor:pointer;" onclick="return show_NewAccountPopUp(750, 450);">
+                                                                                <i class="fa fa-search"></i>
+
+                                                                                @Html.HiddenFor(m => m.Contact.AccountId, new { @id = "hdParentAccountId" })
+                                                                                @Html.HiddenFor(m => m.Contact.UserID, new { @id = "userid" })
+                                                                            </span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-3">
+                                                                    <div class="form-group no-margin-hr">
+                                                                        <label class="control-label">Department :</label>
+
+                                                                        @*<asp:TextBox ID="txtDepartment" runat="server" CssClass="form-control input-sm" MaxLength="100" TabIndex="5"></asp:TextBox>*@
+                                                                        @Html.TextBoxFor(m => m.Contact.Department, new { @id = "txtDepartment", @class = "form-control input-sm", @MaxLength = "100", @TabIndex = "5" })
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-3">
+                                                                    <div class="form-group no-margin-hr">
+                                                                        <label class="control-label">Email : </label>
+                                                                        @*<asp:TextBox ID="txtEmail" runat="server" CssClass="form-control input-sm" MaxLength="50" TabIndex="6"></asp:TextBox>*@
+                                                                        @Html.TextBoxFor(m => m.Contact.Email, new { @id = "txtEmail", @class = "form-control input-sm", @MaxLength = "50", @TabIndex = "6", @type = "email" })
+                                                                        @Html.ValidationMessageFor(m => m.Contact.Email, "", new { @class = "text-danger" })
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-3">
+                                                                    <div class="form-group no-margin-hr">
+                                                                        <label class="control-label">Company Site :</label>
+                                                                        @*<asp:TextBox ID="txtAccountSite" runat="server" CssClass="form-control input-sm" MaxLength="50" TabIndex="7"></asp:TextBox>*@
+                                                                        @Html.TextBoxFor(m => m.Contact.accountSite, new { @id = "txtAccountSite", @class = "form-control input-sm", @MaxLength = "50", @TabIndex = "7", @readonly = "true" })
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+                                                            <div class="row">
+
+                                                                <div class="col-sm-3">
+                                                                    <div class="form-group no-margin-hr">
+                                                                        <label class="control-label">Birth Date :</label>
+
+                                                                        @Html.TextBoxFor(m => m.Contact.Birthdate, new { @id = "txtbirthdate", @class = "form-control input-sm DateP ", @placeholder = "Date of Birth", @readonly = "true", @MaxLength = "12", @TabIndex = "8" })
+                                                                    </div>
+                                                                </div>
+
+
+                                                                <div class="col-sm-3">
+                                                                    <div class="form-group no-margin-hr">
+                                                                        <label class="control-label">Assistant :</label>
+                                                                        @*<asp:TextBox ID="txtassistant" runat="server" CssClass="form-control input-sm" MaxLength="100" TabIndex="9"></asp:TextBox>*@
+                                                                        @Html.TextBoxFor(m => m.Contact.Assistant, new { @id = "txtassistant", @class = "form-control input-sm", @MaxLength = "100", @TabIndex = "9" })
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-3">
+                                                                    <div class="form-group no-margin-hr">
+                                                                        <label class="control-label">Lead Source :</label>
+                                                                        @Html.DropDownListFor(m => m.Contact.Source, new List<SelectListItem>
+                                                                     {
+                                                                      new SelectListItem{ Text="Career Builder", Value = "Career" },
+                                                                      new SelectListItem{ Text="Job Fair", Value = "JOB" },
+                                                                      new SelectListItem{ Text="Monster", Value = "Monster" },
+                                                                      new SelectListItem{ Text="Walk In", Value = "WI" },
+                                                                      new SelectListItem{ Text="Word of Mouth", Value = "WOM",Selected=true },
+                                                                      new SelectListItem{ Text="Yellow Pages", Value = "YLP" },
+                                                                      new SelectListItem{ Text="Dice", Value = "Dice" },
+                                                                      new SelectListItem{ Text="Online Networking", Value = "ON" },
+                                                                      new SelectListItem{ Text="Employee Referral", Value = "ER" },
+                                                                      new SelectListItem{ Text="Kijiji", Value = "KJ" },
+                                                                      new SelectListItem{ Text="Workopolis", Value = "WP" },
+                                                                      new SelectListItem{ Text="HRDC", Value = "HRDC" },
+                                                                      new SelectListItem{ Text="Networking", Value = "Networking" }
+
+                                                                     }, new { id = "ddlSource", @class = "form-control input-sm", @TabIndex = "12" })
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-3">
+                                                                    <div class="form-group no-margin-hr">
+                                                                        <label class="control-label">Contact Type :</label>
+                                                                        @Html.DropDownListFor(m => m.Contact.Type, new SelectList(Model.Lstcontacttype, "ContactTypeId", "ContactType"), new { @class = "form-control input-sm", @id = "ddl_contactType" })
+                                                                        @*@Html.DropDownListFor(m=>m.Type,ViewBag.ContactType as List<SelectListItem>,new {id="ddl_contactType",@class="form-control input-sm",@TabIndex="13"})*@
+                                                                        @*@Html.DropDownListFor(m => m.Contact.Type, new List<SelectListItem> {
+                                                                             new SelectListItem{Text="None",Value="None"},
+                                                                             new SelectListItem{Text="Analyst",Value="Analyst"},
+                                                                             new SelectListItem{Text="Competitor",Value="Competitor"},
+                                                                             new SelectListItem{Text="Customer",Value="Customer"},
+                                                                             new SelectListItem{Text="vendor",Value="vendor"},
+                                                                             new SelectListItem{Text="Integrator",Value="Integrator"},
+                                                                             new SelectListItem{Text="Investor",Value="Investor"},
+                                                                             new SelectListItem{Text="Partner",Value="Partner"},
+                                                                             new SelectListItem{Text="Press",Value="Press"},
+                                                                             new SelectListItem{Text="Prospect",Value="Prospect"},
+                                                                             new SelectListItem{Text="Reseller",Value="Reseller"},
+                                                                             new SelectListItem{Text="Recruiting Resource",Value="Recruiting Resource"},
+                                                                             new SelectListItem{Text="Other",Value="Other"}
+                                                                            }, new { id = "ddl_contactType", @class = "form-control input-sm", @TabIndex = "13" })*@
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+                                                            <div class="row">
+
+                                                                <div class="col-sm-3" @*style="visibility: hidden"*@>
+                                                                    <div class="form-group no-margin-hr">
+                                                                        <label class="control-label">Funnel Placement :</label>
+                                                                        @*@Html.DropDownListFor(m=>m.suspect_prospect,ViewBag.FunnelPlacement as List<SelectListItem>,new {id="ddlSuspect",@class="form-control input-sm",@TabIndex="14"})*@
+
+                                                                        @Html.DropDownListFor(m => m.Contact.Suspect_prospect, new List<SelectListItem> {
+                                                                        new SelectListItem{Text="Select",Value="None"},
+                                                                        new SelectListItem{Text="Suspect",Value="Suspect"},
+                                                                        new SelectListItem{Text="Prospect",Value="Prospect"},
+                                                                        new SelectListItem{Text="30%",Value="30%"},
+                                                                        new SelectListItem{Text="60%",Value="60%"},
+                                                                        new SelectListItem{Text="90%",Value="90%"},
+                                                                        new SelectListItem{Text="Closed",Value="Closed"}
+                                                                }, new { id = "ddl_Suspect_Prospect", @class = "form-control input-sm", @TabIndex = "14" })
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-3">
+                                                                    <div class="form-group no-margin-hr">
+                                                                        <label class="control-label">Reports To :</label>
+                                                                        @*<asp:TextBox ID="txtreportsto" runat="server" CssClass="form-control input-sm" MaxLength="100" TabIndex="10"></asp:TextBox>*@
+                                                                        @Html.TextBoxFor(m => m.Contact.ReportTo, new { @id = "txtreportsto", @class = "form-control input-sm", @MaxLength = "100", @TabIndex = "10" })
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-3">
+                                                                    <div class="form-group no-margin-hr">
+                                                                        <label class="control-label">Email Opt Out :</label>
+                                                                        @*<asp:TextBox ID="txtEmailoptout" runat="server" CssClass="form-control input-sm" MaxLength="100" TabIndex="11"></asp:TextBox>*@
+                                                                        @Html.TextBoxFor(m => m.Contact.EmailOptOut, new { @id = "txtEmailoptout", @class = "form-control input-sm", @MaxLength = "100", @TabIndex = "11" })
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-3">
+                                                                    <div class="form-group no-margin-hr">
+                                                                        <label class="control-label">Sector :</label>
+                                                                        @*<asp:TextBox ID="txtEmailoptout" runat="server" CssClass="form-control input-sm" MaxLength="100" TabIndex="11"></asp:TextBox>*@
+                                                                        @Html.TextBoxFor(m => m.Contact.Sector, new { @id = "txtsector", @class = "form-control input-sm", @MaxLength = "100", @TabIndex = "14" })
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="panel">
+                                                <div class="panel-heading">
+                                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion-example"
+                                                       href="#collapse3">Phone Detail</a>
+                                                </div>
+                                                <!-- / .panel-heading -->
+                                                <div id="collapse3" class="panel-collapse collapse" style="height: auto;">
+                                                    <div class="panel-body">
+                                                        <div class="col-sm-12 no-padding-hr">
+
+                                                            <div class="row">
+
+                                                                <div class="col-sm-3">
+                                                                    <div class="form-group no-margin-hr">
+                                                                        <label class="control-label">Business :@*<span style="color: red">*</span>*@</label>
+                                                                        @*<asp:TextBox ID="txtPhone" runat="server" CssClass="form-control input-sm" onKeyPress="return CheckNumericWithLength(this,event);"
+                                                                                         onblur="formatPhone_Contact(this);" MaxLength="19">
+                                                                            </asp:TextBox>*@
+                                                                        @Html.TextBoxFor(m => m.Contact.Phone, new
+                                                                   {
+                                                                       @id = "txtPhone",
+                                                                       @class = "form-control  input-sm",
+                                                                       @onKeyPress = "return onlynumbers(event,this)",
+                                                                       @MaxLength = "20"@*, @validate = "Required", @data_val_required = "Business Phone Detail"*@ })
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-3">
+                                                                    <div class="form-group no-margin-hr">
+                                                                        <label class="control-label">Asst. :</label>
+                                                                        @*<asp:TextBox ID="txtAsstphone" runat="server" CssClass="form-control input-sm"
+                                                                                         onKeyPress="return CheckNumericWithLength(this,event);" onfocus="return ClickMobile(this);"
+                                                                                         onblur="return ValidateMobile(this);" MaxLength="12" TabIndex="15">
+                                                                            </asp:TextBox>*@
+                                                                        @Html.TextBoxFor(m => m.Contact.AsstPhone, new { @id = "txtAsstphone", @class = "form-control input-sm", @onKeyPress = "return onlynumbers(event,this)", @MaxLength = "20", @TabIndex = "15" })
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-3">
+                                                                    <div class="form-group no-margin-hr">
+                                                                        <label class="control-label">Home :</label>
+                                                                        @*<asp:TextBox ID="txtHomePhone" runat="server" CssClass="form-control input-sm"
+                                                                                         onKeyPress="return CheckNumericWithLength(this,event);"
+                                                                                         onblur="formatPhone_Contact(this);" MaxLength="19" TabIndex="16">
+                                                                            </asp:TextBox>*@
+                                                                        @Html.TextBoxFor(m => m.Contact.Homephone, new { @id = "txtHomephone", @class = "form-control input-sm", @onKeyPress = "return onlynumbers(event,this)", @MaxLength = "20", @TabIndex = "16" })
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-3">
+                                                                    <div class="form-group no-margin-hr">
+                                                                        <label class="control-label">Fax :</label>
+                                                                        @*<asp:TextBox ID="txtFax" runat="server" CssClass="form-control input-sm" onKeyPress="return CheckNumericWithLength(this,event);"
+                                                                                         onblur="return ValidateFax(this);" MaxLength="12" TabIndex="17">
+                                                                            </asp:TextBox>*@
+                                                                        @Html.TextBoxFor(m => m.Contact.Fax, new { @id = "txtFax", @class = "form-control input-sm", @onKeyPress = "return onlynumbers(event,this)", @MaxLength = "20", @TabIndex = "17" })
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-sm-3">
+                                                                    <div class="form-group no-margin-hr">
+                                                                        <label class="control-label">Mobile :</label>
+                                                                        @Html.TextBoxFor(m => m.Contact.Mobile, new { @id = "txtMobile", @class = "form-control input-sm", @onKeyPress = "return onlynumbers(event,this)", @MaxLength = "20", @TabIndex = "18" })
+                                                                        <div class="row">
+                                                                            <div class="col-sm-6">
+                                                                                @*<asp:TextBox ID="txtMobile" runat="server" CssClass="form-control input-sm" onKeyPress="return CheckNumericWithLength(this,event);"
+                                                                                                 onblur="formatPhone(this);" MaxLength="12" TabIndex="18">
+                                                                                    </asp:TextBox>*@
+
+                                                                            </div>
+
+
+                                                                            @*<div class="col-sm-6">
+                                                                                    <div class="checkbox" style="margin: 0;">
+                                                                                        <label>
+                                                                                            @Html.CheckBoxFor(m => m.Contact.NoNullisAllowSMS, new { @id = "chkisAllowSMS", @class = "checkbox", @text = "Allow SMS Sending", @name = "chksms" })
+                                                                                            <span class="lbl">Allow SMS</span>
+                                                                                        </label>
+                                                                                    </div>
+                                                                                </div>*@
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                                @*<asp:CheckBox runat="server" TabIndex="18" ID="chkAllowSMS" Text=" Allow SMS" Style="vertical-align: bottom" />*@
+                                                                @* @Html.CheckBoxFor(m=>m.isAllowSMS,new {@id="chkAllowSMS",@Text=" Allow SMS",@Style="vertical-align: bottom"})*@
+                                                                @* <label> @Html.CheckBoxFor(m => m.Contact.NoNullisAllowSMS, new { @id = "chkisAllowSMS", @class = "checkbox", @text = "Allow SMS Sending", @name = "chksms" }) Allow SMS</label>*@
+
+
+                                                                @*<div class="col-sm-3">
+                                                                        <div class="form-group no-margin-hr">
+                                                                            <label class="control-label">Provider/Carrier :</label>
+
+                                                                            @Html.DropDownListFor(m => m.Contact.ProviderId, new SelectList(Model.smsProviderList, "ID", "Carrier"), "--Select--", new { @class = "form-control input-sm", @id = "drpSMSprovider", @data_val_required = "Provider/Carrier" })
+                                                                        </div>
+                                                                    </div>*@
+                                                                <div class="col-sm-3">
+                                                                    <div class="form-group no-margin-hr">
+                                                                        <label class="control-label">Other :</label>
+                                                                        @*<asp:TextBox ID="txtOtherphone" runat="server" CssClass="form-control input-sm"
+                                                                                         onKeyPress="return CheckNumericWithLength(this,event);"
+                                                                                         onblur="formatPhone_Contact(this);" MaxLength="19" TabIndex="20">
+                                                                            </asp:TextBox>*@
+                                                                        @Html.TextBoxFor(m => m.Contact.OtherPhone, new { @id = "txtOtherphone", @class = "form-control input-sm", @onKeyPress = "return onlynumbers(event,this)", @MaxLength = "20", @TabIndex = "16" })
+                                                                    </div>
+                                                                </div>
+                                                                @Html.HiddenFor(m => m.Contact.ContactId, new { @id = "HidContactId" })
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="panel">
+                                                <div class="panel-heading">
+                                                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion-example"
+                                                       href="#collapse6">Address Detail</a>
+                                                </div>
+                                                <!-- / .panel-heading -->
+                                                <div id="collapse6" class="panel-collapse collapse" style="height: auto;">
+                                                    <div class="panel-body">
+                                                        <div class="col-sm-12 no-padding-hr">
+                                                            <div class="row">
+                                                                <div class="col-sm-3">
+                                                                    <div class="form-group no-margin-hr">
+                                                                        <span class="label label-primary label-tag">MAILING</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-sm-3">
+                                                                    <div class="form-group no-margin-hr">
+                                                                        <label class="control-label">Address&nbsp;1 :</label>
+                                                                        @*<asp:TextBox ID="txtAddressMailing" runat="server" CssClass="form-control input-sm"
+                                                                            MaxLength="50" TabIndex="21"></asp:TextBox>*@
+                                                                        @Html.TextBoxFor(m => m.Contact.MailingAddress, new { @id = "txtAddressMailing", @class = "form-control input-sm", @MaxLength = "50", @TabIndex = "21" })
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-3">
+                                                                    <div class="form-group no-margin-hr">
+                                                                        <label class="control-label">
+                                                                            Address&nbsp;2 :
+                                                                        </label>
+                                                                        @*<asp:TextBox ID="txtMailingStreet" runat="server" CssClass="form-control input-sm"
+                                                                            MaxLength="50" TabIndex="22"></asp:TextBox>*@
+                                                                        @Html.TextBoxFor(m => m.Contact.Mailingstreet, new { @id = "txtMailingStreet", @class = "form-control input-sm", @MaxLength = "50", @TabIndex = "22" })
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-3">
+                                                                    <div class="form-group no-margin-hr">
+                                                                        <label class="control-label">
+                                                                            City :
+                                                                        </label>
+                                                                        @*<asp:TextBox ID="txtMailingCity" runat="server" CssClass="form-control input-sm"
+                                                                            MaxLength="50" TabIndex="23"></asp:TextBox>*@
+                                                                        @Html.TextBoxFor(m => m.Contact.Mailingcity, new { @id = "txtMailingCity", @class = "form-control input-sm", @maxLength = "50", @tabIndex = "23" })
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-3">
+                                                                    <div class="form-group no-margin-hr">
+                                                                        <label class="control-label">
+                                                                            State
+                                                                        </label>
+                                                                        @*<asp:DropDownList ID="ddlMailingState" runat="server" CssClass="form-control input-sm" TabIndex="24">
+                                                                            </asp:DropDownList>*@
+                                                                        @*@Html.DropDownListFor(m => m.Contact.Mailingstate, new SelectList(Model.stateList, "stateName", "stateName"), new { @class = "form-control input-sm", @id = "drpMailingState" })*@
+                                                                        @*@Html.DropDownListFor(m => m.Contact.Mailingstate, new SelectList(Model.stateList, "stateName", "stateName"), new { @class = "form-control input-sm", @id = "drpMailingState" })*@
+                                                                        @Html.TextBoxFor(m => m.Contact.Mailingstate, new { @id = "txtMailingstate", @class = "form-control input-sm", @maxLength = "50", @tabIndex = "24" })
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-sm-3">
+                                                                    <div class="form-group no-margin-hr">
+                                                                        <label class="control-label">
+                                                                            Zip Code
+                                                                        </label>
+                                                                        @*<asp:TextBox ID="txtMailingZip" runat="server" CssClass="form-control input-sm"
+                                                                            onKeyPress="return onKeyPressOnlyZip(event,this);" onblur="return ValidateZip(this);"
+                                                                            onfocus="return ClickZip(this);" TabIndex="25"></asp:TextBox>*@
+                                                                        @Html.TextBoxFor(m => m.Contact.Mailingzip, new { @id = "txtMailingZip", @class = "form-control zipmask", @onKeyPress = "return onKeyPressOnlyZip(event,this);", @onblur = "return ValidateZip(this);", @onfocus = "return ClickZip(this);", @tabIndex = "25" })
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-3">
+                                                                    <div class="form-group no-margin-hr">
+                                                                        <label class="control-label">
+                                                                            <asp:Label ID="lblMailingCountry" runat="server"></asp:Label>
+                                                                            Country :
+                                                                        </label>
+                                                                        @*<asp:TextBox ID="txtMailingCountry" runat="server" CssClass="form-control input-sm"
+                                                                            MaxLength="50" TabIndex="26"></asp:TextBox>*@
+                                                                        @Html.TextBoxFor(m => m.Contact.Mailingcountry, new { @id = "txtMailingCountry", @class = "form-control input-sm", @MaxLength = "50", @TabIndex = "26" })
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-sm-3">
+                                                                    <div class="form-group no-margin-hr">
+                                                                        <span class="label label-primary label-tag">BILLING :</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-3">
+                                                                    <div class="form-group no-margin-hr">
+                                                                        <label class="control-label"></label>
+                                                                        <div class="col-sm-12">
+                                                                            <label class="checkbox-inline">
+                                                                                <input type="checkbox" class="px" id="chkAddress" onclick="onCheckFillAddress();"><span class="lbl">Same as Mailing</span>
+                                                                            </label>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-sm-3">
+                                                                    <div class="form-group no-margin-hr">
+                                                                        <label class="control-label">
+                                                                            Address&nbsp;1 :
+                                                                        </label>
+                                                                        @*<asp:TextBox ID="txtAddressBilling" runat="server" CssClass="form-control input-sm"
+                                                                            MaxLength="50" TabIndex="28"></asp:TextBox>*@
+                                                                        @Html.TextBoxFor(m => m.Contact.BillingAddress, new { @id = "txtAddressBilling", @class = "form-control input-sm", @MaxLength = "50", @TabIndex = "28" })
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-3">
+                                                                    <div class="form-group no-margin-hr">
+                                                                        <label class="control-label">
+                                                                            Address&nbsp;2 :
+                                                                        </label>
+                                                                        @*<asp:TextBox ID="txtOtherStreet" runat="server" CssClass="form-control input-sm"
+                                                                            MaxLength="100" TabIndex="29"></asp:TextBox>*@
+                                                                        @Html.TextBoxFor(m => m.Contact.Otherstreet, new { @id = "txtOtherStreet", @class = "form-control input-sm", @MaxLength = "100", @TabIndex = "29" })
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-3">
+                                                                    <div class="form-group no-margin-hr">
+                                                                        <label class="control-label">
+                                                                            City :
+                                                                        </label>
+                                                                        @*<asp:TextBox ID="txtOtherCity" runat="server" CssClass="form-control input-sm"
+                                                                            MaxLength="50" TabIndex="30"></asp:TextBox>*@
+                                                                        @Html.TextBoxFor(m => m.Contact.Othercity, new { @id = "txtOtherCity", @class = "form-control input-sm", @MaxLength = "50", @TabIndex = "30" })
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-3">
+                                                                    <div class="form-group no-margin-hr">
+                                                                        <label class="control-label">
+                                                                            @*<label id="lblStateProvince2" runat="server"></label>*@
+                                                                            State :
+                                                                        </label>
+                                                                        @*<asp:DropDownList ID="ddlOthState" runat="server" CssClass="form-control input-sm" TabIndex="31">
+                                                                            </asp:DropDownList>*@
+                                                                        @*@Html.DropDownListFor(m => m.Contact.Otherstate, new SelectList(Model.stateList, "stateName", "stateName"), new { @class = "form-control input-sm", @id = "drpSalesRep" })*@
+                                                                        @*@Html.DropDownListFor(m => m.Contact.Otherstate, new SelectList(Model.stateList, "stateName", "stateName"), new { @class = "form-control input-sm", @id = "drpSalesRep" })*@
+                                                                        @Html.TextBoxFor(m => m.Contact.Otherstate, new { @id = "txtOtherstate", @class = "form-control input-sm", @MaxLength = "50", @TabIndex = "31" })
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-sm-3">
+                                                                    <div class="form-group no-margin-hr">
+                                                                        <label class="control-label">
+                                                                            @*<label id="lblPostalCode2" runat="server"></label>*@
+                                                                            Zip Code :
+                                                                        </label>
+                                                                        @*<asp:TextBox ID="txtOtherZip" runat="server" CssClass="form-control input-sm" onKeyPress="return onKeyPressOnlyZip(event,this);" onblur="return ValidateZip(this);"onfocus="return ClickZip(this);" TabIndex="32"></asp:TextBox>*@
+                                                                        @Html.TextBoxFor(m => m.Contact.Otherzip, new { @id = "txtOtherZip", @class = "form-control zipmask", onKeyPress = "return onKeyPressOnlyZip(event,this);", @onblur = "return ValidateZip(this);", @onfocus = "return ClickZip(this);", @TabIndex = "32" })
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-3">
+                                                                    <div class="form-group no-margin-hr">
+                                                                        <label class="control-label">
+                                                                            Country :
+                                                                        </label>
+                                                                        @*<asp:TextBox ID="txtOtherCountry" runat="server" CssClass="form-control input-sm"
+                                                                            MaxLength="50" TabIndex="33"></asp:TextBox>*@
+
+                                                                        @Html.TextBoxFor(m => m.Contact.Othercountry, new { @id = "txtOtherCountry", @class = "form-control input-sm", @MaxLength = "50", @TabIndex = "33" })
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- / .panel-body -->
+                                            </div>
+
+
+
+                                            <div class="panel">
+                                                <div class="panel-heading">
+                                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion-example"
+                                                       href="#collapse8">Administrative Detail</a>
+                                                </div>
+                                                <!-- / .panel-heading -->
+                                                <div id="collapse8" class="panel-collapse collapse">
+                                                    <div class="panel-body">
+                                                        <div class="col-sm-12 no-padding-hr">
+                                                            <div class="row">
+                                                                <div class="col-sm-4">
+                                                                    <div class="form-group no-margin-hr">
+                                                                        <label class="control-label">Sales Representative :</label>
+                                                                        @*<asp:DropDownList runat="server" ID="ddlSalesRepresentative1" class="form-control input-sm" size="1">
+                                                                            </asp:DropDownList>*@
+                                                                        @Html.DropDownListFor(m => m.Contact.SalesMgr1, new SelectList(Model.listUsers, "userId", "firstName"), new { @class = "form-control input-sm", @id = "drpSalesRep1" })
+                                                                    </div>
+                                                                </div>
+                                                                @*<div class="col-sm-4">
+                                                                    <div class="form-group no-margin-hr">
+                                                                        <label class="control-label">Sales Representative 2 :</label>                                                                     
+                                                                        @Html.DropDownListFor(m => m.Contact.SalesMgr2, new SelectList(Model.listUsers, "userId", "firstName"), new { @class = "form-control input-sm", @id = "drpSalesRep2" })
+                                                                    </div>
+                                                                </div>*@
+                                                                <div class="col-sm-4">
+                                                                    <div class="form-group no-margin-hr">
+                                                                        <label class="control-label">Office / Location :</label>
+                                                                        @*<asp:DropDownList runat="server" ID="ddlBranch" class="form-control input-sm">
+                                                                            </asp:DropDownList>*@
+                                                                        @Html.DropDownListFor(m => m.Contact.Contact_office, new SelectList(Model.BranchList, "branchId", "branchName"), new { @class = "form-control input-sm", @id = "drpOffLoc" })
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- / .panel-body -->
+                                                </div>
+                                                <!-- / .collapse -->
+                                            </div>
+                                            <div class="panel">
+                                                <div class="panel-heading">
+                                                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion-example"
+                                                       href="#collapse11">Social Integration</a>
+                                                </div>
+                                                <!-- / .panel-heading -->
+                                                <div id="collapse11" class="panel-collapse collapse" style="height: auto;">
+                                                    <div class="panel-body">
+                                                        <div class="col-sm-12 no-padding-hr">
+                                                            <div class="row">
+                                                                <div class="col-sm-3">
+                                                                    <div class="form-group no-margin-hr">
+                                                                        <label class="control-label">Facebook&nbsp;User&nbsp;Name :</label>
+                                                                        @*<asp:TextBox ID="txtFacebook" runat="server" CssClass="form-control input-sm"
+                                                                            MaxLength="60" TabIndex="37"></asp:TextBox>*@
+                                                                        @Html.TextBoxFor(m => m.Contact.FacebookUsername, new { @id = "txtFacebook", @class = "form-control input-sm", @MaxLength = "60", @TabIndex = "37" })
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-3">
+                                                                    <div class="form-group no-margin-hr">
+                                                                        <label class="control-label">Twitter&nbsp;User&nbsp;Name :</label>
+                                                                        @*<asp:TextBox ID="txtTwitter" runat="server" CssClass="form-control input-sm"
+                                                                            MaxLength="60" TabIndex="38"></asp:TextBox>*@
+                                                                        @Html.TextBoxFor(m => m.Contact.TwitterUsername, new { @id = "txtTwitter", @class = "form-control input-sm", @MaxLength = "60", @TabIndex = "38" })
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-3">
+                                                                    <div class="form-group no-margin-hr">
+                                                                        <label class="control-label">Linkedin&nbsp;User&nbsp;Name :</label>
+                                                                        @*<asp:TextBox ID="txtLinkedin" runat="server" CssClass="form-control input-sm"
+                                                                            MaxLength="60" TabIndex="39"></asp:TextBox>*@
+                                                                        @Html.TextBoxFor(m => m.Contact.LinkedInUsername, new { @id = "txtLinkedin", @class = "form-control input-sm", @MaxLength = "60", @TabIndex = "39" })
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-3">
+                                                                    <div class="form-group no-margin-hr">
+                                                                        <label class="control-label">Google+&nbsp;User&nbsp;Name :</label>
+                                                                        @*<asp:TextBox ID="txtGooglePlus" runat="server" CssClass="form-control input-sm"
+                                                                            MaxLength="60" TabIndex="40"></asp:TextBox>*@
+                                                                        @Html.TextBoxFor(m => m.Contact.GooglePlusUserName, new { @id = "txtGooglePlus", @class = "form-control input-sm", @MaxLength = "60", @TabIndex = "40" })
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-sm-3">
+                                                                    <div class="form-group no-margin-hr">
+                                                                        <label class="control-label">Pinterest&nbsp;User&nbsp;Name :</label>
+                                                                        @*<asp:TextBox ID="txtPinterest" runat="server" CssClass="form-control input-sm"
+                                                                            MaxLength="60" TabIndex="41"></asp:TextBox>*@
+                                                                        @Html.TextBoxFor(m => m.Contact.PinterestUsername, new { @id = "txtPinterest", @class = "form-control input-sm", @MaxLength = "60", @TabIndex = "41" })
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-3">
+                                                                    <div class="form-group no-margin-hr">
+                                                                        <label class="control-label">Skype&nbsp;User&nbsp;Name :</label>
+                                                                        @*<asp:TextBox ID="txtSkype" runat="server" CssClass="form-control input-sm"
+                                                                            MaxLength="60" TabIndex="42"></asp:TextBox>*@
+                                                                        @Html.TextBoxFor(m => m.Contact.SkypeUsername, new { @id = "txtSkype", @class = "form-control input-sm", @MaxLength = "60", @TabIndex = "42" })
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="panel">
+                                                <div class="panel-heading">
+                                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion-example"
+                                                       href="#collapse10">Description</a>
+                                                </div>
+                                                <!-- / .panel-heading -->
+                                                <div id="collapse10" class="panel-collapse collapse">
+                                                    <div class="panel-body">
+                                                        @*<textarea class="form-control" id="txtDescription" runat="server"></textarea>*@
+                                                        @Html.TextAreaFor(m => m.Contact.Description, new { @id = "txtDescription", @class = "textEditor" })
+                                                    </div>
+                                                    <!-- / .panel-body -->
+                                                </div>
+                                                <!-- / .collapse -->
+                                            </div>
+                                            <div class="panel" id="pnlAdmin" runat="server">
+                                                <div class="panel-heading">
+                                                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion-example"
+                                                       href="#collapse12">Login Information</a>
+                                                </div>
+                                                <!-- / .panel-heading -->
+                                                <div id="collapse12" class="panel-collapse collapse" style="height: auto;">
+                                                    <div class="panel-body">
+                                                        <div class="row no-padding-hr">
+
+                                                            <div class="col-sm-6">
+                                                                <div class="form-group no-margin-hr">
+                                                                    <label class="control-label">
+                                                                        User Name :
+                                                                    </label>
+                                                                    @*<asp:TextBox CssClass="form-control input-sm" ID="txtuserName" runat="server"
+                                                                        TabIndex="115"></asp:TextBox>*@
+                                                                    @Html.TextBoxFor(m => m.Contact.LoginID, new { @id = "txtuserName", @class = "form-control input-sm", @TabIndex = "115" })
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-6">
+                                                                <div class="form-group no-margin-hr">
+                                                                    <label class="control-label">
+                                                                        Password :
+                                                                    </label>
+                                                                    @Html.TextBoxFor(m => m.Contact.Password, new { @id = "txtPassword", @class = "form-control input-sm" })
+                                                                    @*<asp:TextBox CssClass="form-control input-sm" ID="txtPassword" runat="server"></asp:TextBox>*@
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                            @*Binding Custom Fields*@
+                                            <div class="panel">
+                                                <div class="panel-heading">
+                                                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion-example"
+                                                       href="#collapse1c">Custom Fields</a>
+                                                </div>
+                                                <!-- / .panel-heading -->
+                                                <div id="collapse1c" class="panel-collapse collapse" style="height: auto;">
+                                                    <div class="panel-body">
+                                                        <div class="col-sm-12 no-padding-hr">
+                                                            <div class="row">
+                                                                @for (int i = 0; i < Model.lstcustomVM.Count; i++)
+                                                                {
+                                                                    <div class="col-sm-4">
+                                                                        <div class="form-group no-margin-hr">
+                                                                            @Html.HiddenFor(m => m.lstcustomVM[i].Column_Type)
+                                                                            @Html.HiddenFor(m => m.lstcustomVM[i].FieldId)
+                                                                            @Html.HiddenFor(m => m.lstcustomVM[i].CValueId)
+
+
+                                                                            @if (Model.lstcustomVM[i].Column_Type == "textbox")
+                                                                            {
+                                                                                @Html.DisplayFor(m => m.lstcustomVM[i].Column_Label)
+                                                                                if (@Model.lstcustomVM[i].RequiredField == true)
+                                                                                {
+                                                                                    <span style="color: red">*</span>
+                                                                                    @Html.TextBoxFor(m => m.lstcustomVM[i].CustomFieldvalue, new { @class = "form-control input-sm", @title = @Model.lstcustomVM[i].HoverText, @MaxLength = @Model.lstcustomVM[i].MaxLength, @TabIndex = "37", rows = "1", cols = "1", @validate = "Required", @data_val_required = @Model.lstcustomVM[i].Column_Label })
+                                                                                }
+                                                                                else
+                                                                                {
+                                                                                    @Html.TextBoxFor(m => m.lstcustomVM[i].CustomFieldvalue, new { @class = "form-control input-sm", @title = @Model.lstcustomVM[i].HoverText, @MaxLength = @Model.lstcustomVM[i].MaxLength, @TabIndex = "37", rows = "1", cols = "1" })
+                                                                                }
+                                                                            }
+
+
+                                                                            @if (Model.lstcustomVM[i].Column_Type == "textarea")
+                                                                            {
+                                                                                @Html.DisplayFor(m => m.lstcustomVM[i].Column_Label)
+                                                                                if (@Model.lstcustomVM[i].RequiredField == true)
+                                                                                {
+                                                                                    <span style="color: red">*</span>
+                                                                                    @Html.TextAreaFor(m => m.lstcustomVM[i].CustomFieldvalue, new { @class = "form-control input-sm", @MaxLength = @Model.lstcustomVM[i].MaxLength, @TabIndex = "37", rows = "1", cols = "1", @validate = "Required", @data_val_required = @Model.lstcustomVM[i].Column_Label })
+                                                                                }
+                                                                                else
+                                                                                {
+                                                                                    @Html.TextAreaFor(m => m.lstcustomVM[i].CustomFieldvalue, new { @class = "form-control input-sm", @MaxLength = @Model.lstcustomVM[i].MaxLength, @TabIndex = "37", rows = "1", cols = "1" })
+                                                                                }
+
+                                                                            }
+                                                                            @if (Model.lstcustomVM[i].Column_Type == "textfield")
+                                                                            {
+
+
+                                                                                @Html.DisplayFor(m => m.lstcustomVM[i].Column_Label)
+                                                                                if (@Model.lstcustomVM[i].RequiredField == true)
+                                                                                {
+                                                                                    <span style="color: red">*</span>
+                                                                                    @Html.TextBoxFor(m => m.lstcustomVM[i].CustomFieldvalue, new { @id = "TAActualColumnName", @class = "form-control input-sm ", @title = @Model.lstcustomVM[i].HoverText, @MaxLength = @Model.lstcustomVM[i].MaxLength, @TabIndex = "37", rows = "1", cols = "1", @validate = "Required", @data_val_required = @Model.lstcustomVM[i].Column_Label })
+                                                                                }
+                                                                                else
+                                                                                {
+                                                                                    @Html.TextBoxFor(m => m.lstcustomVM[i].CustomFieldvalue, new { @id = "TAActualColumnName", @class = "form-control input-sm ", @title = @Model.lstcustomVM[i].HoverText, @MaxLength = @Model.lstcustomVM[i].MaxLength, @TabIndex = "37", rows = "1", cols = "1" })
+                                                                                }
+
+
+                                                                            }
+                                                                            @if (Model.lstcustomVM[i].Column_Type == "date")
+                                                                            {
+
+                                                                                @Html.DisplayFor(m => m.lstcustomVM[i].Column_Label)
+                                                                                if (@Model.lstcustomVM[i].RequiredField == true)
+                                                                                {
+                                                                                    <span style="color: red">*</span>
+                                                                                    @Html.TextBoxFor(m => m.lstcustomVM[i].CustomFieldvalue, new { @id = "TAActualDate", @class = "form-control input-sm DateP ", @placeholder = "Select Date", @title = @Model.lstcustomVM[i].HoverText, @MaxLength = @Model.lstcustomVM[i].MaxLength, @TabIndex = "37", rows = "1", cols = "1", @validate = "Required", @data_val_required = @Model.lstcustomVM[i].Column_Label })
+                                                                                }
+                                                                                else
+                                                                                {
+                                                                                    @Html.TextBoxFor(m => m.lstcustomVM[i].CustomFieldvalue, new { @id = "TAActualDate", @class = "form-control input-sm DateP ", @placeholder = "Select Date", @title = @Model.lstcustomVM[i].HoverText, @MaxLength = @Model.lstcustomVM[i].MaxLength, @TabIndex = "37", rows = "1", cols = "1", })
+                                                                                }
+
+                                                                            }
+                                                                            @if (Model.lstcustomVM[i].Column_Type == "numeric")
+                                                                            {
+
+                                                                                @Html.DisplayFor(m => m.lstcustomVM[i].Column_Label)
+
+                                                                                if (@Model.lstcustomVM[i].RequiredField == true)
+                                                                                {
+                                                                                    <span style="color: red">*</span>
+                                                                                    @Html.TextBoxFor(m => m.lstcustomVM[i].CustomFieldvalue, new { @id = "TAActualColumnName", @class = "form-control input-sm", @title = @Model.lstcustomVM[i].HoverText, @MaxLength = @Model.lstcustomVM[i].MaxLength, @TabIndex = "37", rows = "1", cols = "1", @validate = "Required", @data_val_required = @Model.lstcustomVM[i].Column_Label })
+                                                                                    <span id="errormsg"></span>
+                                                                                }
+                                                                                else
+                                                                                {
+                                                                                    @Html.TextBoxFor(m => m.lstcustomVM[i].CustomFieldvalue, new { @id = "TAActualColumnName", @class = "form-control input-sm ", @title = @Model.lstcustomVM[i].HoverText, @MaxLength = @Model.lstcustomVM[i].MaxLength, @TabIndex = "37", rows = "1", cols = "1" })
+                                                                                }
+                                                                            }
+
+                                                                            @if (Model.lstcustomVM[i].Column_Type == "dropdown")
+                                                                            {
+
+                                                                                @Html.DisplayFor(m => m.lstcustomVM[i].Column_Label)
+                                                                                if (@Model.lstcustomVM[i].RequiredField == true)
+                                                                                {
+                                                                                    <span style="color: red">*</span>
+                                                                                    @Html.DropDownListFor(m => m.lstcustomVM[i].DefaultValue, new SelectList(Model.lstcustomVM[i].lstCustomOptionsVal, "DrpValueId", "DrpValue", Model.lstcustomVM[i].DefaultValue), "Select", new { @class = "form-control input-sm", @id = "dpOptions", @validate = "Required", @data_val_required = @Model.lstcustomVM[i].Column_Label, @title = @Model.lstcustomVM[i].HoverText, })
+                                                                                }
+                                                                                else
+                                                                                {
+                                                                                    @Html.DropDownListFor(m => m.lstcustomVM[i].DefaultValue, new SelectList(Model.lstcustomVM[i].lstCustomOptionsVal, "DrpValueId", "DrpValue", Model.lstcustomVM[i].DefaultValue), "Select", new { @class = "form-control input-sm", @id = "dpOptions", @title = @Model.lstcustomVM[i].HoverText, })
+                                                                                    @*@Html.DropDownListFor(m => m.lstcustomVM[i].CustomFieldvalue, new SelectList(Model.lstcustomVM[i].lstCustomOptionsVal, "DrpValueId", "DrpValue", Model.lstcustomVM[i].CustomFieldvalue), new { @class = "form-control input-sm", @id = "dpOptionsEdit" })*@
+                                                                                }
+
+                                                                            }
+
+                                                                            @if (Model.lstcustomVM[i].Column_Type == "radiobutton")
+                                                                            {
+                                                                                @Html.DisplayFor(m => m.lstcustomVM[i].Column_Label)
+                                                                                if (@Model.lstcustomVM[i].RequiredField == true)
+                                                                                {
+
+                                                                                    <span style="color: red">*</span>
+                                                                                    <div>
+
+                                                                                        @for (int a = 0; a < Model.lstcustomVM[i].lstCustomOptionsVal.Count; a++)
+                                                                                        {
+                                                                                            @Html.HiddenFor(m => m.lstcustomVM[i].lstCustomOptionsVal[a].DrpValueId)
+                                                                                            @Html.HiddenFor(m => m.lstcustomVM[i].lstCustomOptionsVal[a].FieldId)
+                                                                                            @*@Html.RadioButtonFor(m => m.lstcustomVM[i].CustomFieldvalue, Model.lstcustomVM[i].lstCustomOptionsVal[a].DrpValueId, new { isChecked = Model.lstcustomVM[i].lstCustomOptionsVal[a].IsDefault, @validate = "Required", @data_val_required = @Model.lstcustomVM[i].Column_Label })*@
+                                                                                            if (Model.lstcustomVM[i].lstCustomOptionsVal[a].IsDefault == true)
+                                                                                            {
+                                                                                                @Html.RadioButtonFor(m => m.lstcustomVM[i].DefaultValue, Model.lstcustomVM[i].lstCustomOptionsVal[a].DrpValueId, new { @checked = "checked", @title = @Model.lstcustomVM[i].HoverText, @validate = "Required", @data_val_required = @Model.lstcustomVM[i].Column_Label })
+                                                                                            }
+                                                                                            else
+                                                                                            {
+                                                                                                @Html.RadioButtonFor(m => m.lstcustomVM[i].DefaultValue, Model.lstcustomVM[i].lstCustomOptionsVal[a].DrpValueId, new { @title = @Model.lstcustomVM[i].HoverText, @validate = "Required", @data_val_required = @Model.lstcustomVM[i].Column_Label })
+                                                                                            }
+                                                                                            @Html.DisplayFor(m => m.lstcustomVM[i].lstCustomOptionsVal[a].DrpValue, new { @class = "checkbox-inline" })
+                                                                                        }
+                                                                                    </div>
+                                                                                }
+
+                                                                                else
+                                                                                {
+                                                                                    <div>
+                                                                                        @for (int a = 0; a < Model.lstcustomVM[i].lstCustomOptionsVal.Count; a++)
+                                                                                        {
+                                                                                            @Html.HiddenFor(m => m.lstcustomVM[i].lstCustomOptionsVal[a].DrpValueId)
+                                                                                            @Html.HiddenFor(m => m.lstcustomVM[i].lstCustomOptionsVal[a].FieldId)
+                                                                                            @*@Html.RadioButtonFor(m => m.lstcustomVM[i].CustomFieldvalue, Model.lstcustomVM[i].lstCustomOptionsVal[a].DrpValueId, new { isChecked = Model.lstcustomVM[i].lstCustomOptionsVal[a].IsDefault })*@
+                                                                                            if (Model.lstcustomVM[i].lstCustomOptionsVal[a].IsDefault == true)
+                                                                                            {
+                                                                                                @Html.RadioButtonFor(m => m.lstcustomVM[i].DefaultValue, Model.lstcustomVM[i].lstCustomOptionsVal[a].DrpValueId, new { @checked = "checked", @title = @Model.lstcustomVM[i].HoverText, })
+                                                                                            }
+                                                                                            else
+                                                                                            {
+                                                                                                @Html.RadioButtonFor(m => m.lstcustomVM[i].DefaultValue, Model.lstcustomVM[i].lstCustomOptionsVal[a].DrpValueId, new { @title = @Model.lstcustomVM[i].HoverText, })
+                                                                                            }
+                                                                                            @Html.DisplayFor(m => m.lstcustomVM[i].lstCustomOptionsVal[a].DrpValue, new { @class = "checkbox-inline" })
+                                                                                        }
+                                                                                    </div>
+                                                                                }
+                                                                            }
+                                                                        </div>
+                                                                    </div>
+                                                                }
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            @*End Of Binding Custom Fields*@
+
+
+                                        </div>
+                                        <!-- / .panel  -->
+                                        @*<ucCustom:ctrCustom ID="CustomCompany" runat="server" Module="contacts" ColumnsToDisplay="4" Heading="More Fields" />*@
+                                        <asp:HiddenField ID="hidCustomValueList" runat="server" />
+                                        <asp:HiddenField ID="hidCustomColList" runat="server" />
+                                        <!-- / .panel -->
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="tab-pane" id="pvActivity">
+                                <div class="row">
+                                    <div class="col-sm-12" style="margin-bottom: 8px;">
+
+                                        <div class="row" style="float:right;">
+                                            <div class="col-sm-12">
+
+
+
+                                                <!-- <li><a id="SearchActivity" style="padding-left: 0px;" class="fa fa-search" title="Search"></a></li>-->
+                                                @*Search*@
+                                                <div class="btn btn-flat btn-labeled btn-primary" id="searbtn_margin1">
+
+                                                    <a class="sear_btn1" id="SearchActivity">
+                                                        <span class="btn-label icon  fa fa fa-search" style="margin-right:6px;"> </span>
+                                                        Search
+                                                    </a>
+
+                                                </div>
+
+                                                <!-- <li><a id="btnAddactivity" onclick="return show_AddActivityPopUpNew(540, 300)" class="fa fa-file-o" title="Add"></a></li>-->
+                                                @*Add*@
+
+                                                <div class="btn btn-flat btn-labeled btn-primary" id="searbtn_margin">
+
+                                                    <a style="color: #fff; text-decoration: none; padding: 0px; font-weight: normal" href="@Url.Action("CreateContactActivity", "Contact")">
+                                                        <span class="btn-label icon  fa  fa-plus-circle" style="margin-right:6px;"> </span>
+                                                        Add
+                                                    </a>
+
+
+
+
+                                                    @*<span class="btn-label icon fa fa-plus-circle" style="margin-right:6px; "> </span>*@
+                                                    @*<a style="color: #fff; text-decoration: none; padding: 0px; font-weight: normal" id="btnAddactivity" onclick="return show_AddActivityPopUpNew(540, 300)">*@
+                                                    @*@Html.ActionLink("Add", "CreateContactActivity", new { @style = "color: #ffffff !Important; text-decoration:none; float:right"})*@
+
+
+
+                                                </div>
+
+                                                <div class="btn btn-flat btn-labeled btn-primary" id="searbtn_margin2">
+
+                                                    @*<a id="btnUpdate" class="fa fa-edit" title="Edit" onclick="EditContactActivity()"></a>@*Edit*@
+                                                    <a class="sear_btn1" id="btnEditactivity" onclick="EditContactActivity()">
+                                                        <span class="btn-label icon  fa fa-pencil-square-o" style="margin-right:6px;"> </span>
+                                                        Edit
+                                                    </a>
+                                                </div>
+
+
+                                                <div class="btn btn-flat btn-labeled btn-primary" id="searbtn_margin3">
+
+                                                    <a class="sear_btn1" id="btnDeleteactivity" onclick="deleteSelectedContactActivity()">
+                                                        <span class="btn-label icon  fa fa-trash-o" style="margin-right:6px;"> </span>
+                                                        Delete
+                                                    </a>
+                                                </div>
+
+
+
+                                                <div class="btn btn-flat btn-labeled btn-primary" id="searbtn_margin4">
+
+                                                    <a class="sear_btn1" id="btnComplete" onclick="completeContactActivity();">
+                                                        <span class="btn-label icon  fa fa-check-square-o" style="margin-right:6px;"> </span>
+                                                        Complete
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="col-sm-3">
+                                                <div class="form-group no-margin-hr">
+                                                    <label class="control-label">Keyword :</label>
+                                                    @Html.TextBoxFor(m => m.historydetails.Keyword, new { @class = "form-control input-sm", @id = "txtActivityKeyword", @maxlength = "100" })
+                                                    @*<asp:TextBox ID="txtActivityKeyword" runat="server" CssClass="form-control input-sm"
+                                                        MaxLength="100" TabIndex="1"></asp:TextBox>*@
+                                                </div>
+                                            </div>
+                                            @Html.HiddenFor(m => m.Contact.ContactId)
+                                            <div class="col-sm-3">
+                                                <div class="form-group no-margin-hr">
+                                                    <label class="control-label">Type :</label>
+                                                    @*<asp:DropDownList ID="ddlActivityType"  CssClass="form-control input-sm"></asp:DropDownList>*@
+                                                    @Html.DropDownListFor(m => m.historydetails.HistoryType, new SelectList(Model.TypeList, "name", "name"), new { @id = "ddlHistoryType", @class = "form-control input-sm" })
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <div class="form-group no-margin-hr">
+                                                    <label class="control-label">Priority :</label>
+                                                    @Html.DropDownListFor(m => m.historydetails.Priority, new List<SelectListItem>
+                                                                          {
+                                                                              new SelectListItem{Text="Select",Value="select"},
+                                                                              new SelectListItem{Text="High",Value="High"},
+                                                                              new SelectListItem{Text="Low",Value="Low"},
+                                                                              new SelectListItem{Text="Medium",Value="Medium"},
+                                                                          }, new { @class = "form-control input-sm", @id = "ddlPriority" })
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <div class="form-group no-margin-hr">
+                                                    <label class="control-label">Status :</label>
+                                                    @Html.DropDownListFor(m => m.historydetails.Status, new List<SelectListItem>
+                                                                          {
+                                                                              new SelectListItem{Text="Select",Value="select"},
+                                                                              new SelectListItem{Text="Open",Value="Open"},
+                                                                              new SelectListItem{Text="Completed",Value="Completed"},
+
+                                                                          }, new { @class = "form-control input-sm", @id = "ddlStatus" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-12 col-xs-12">
+                                        <div class="table-primary table-striped">
+                                            <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="jq-datatables-activity" width="100%">
+                                                <thead>
+                                                    <tr>
+                                                        <th><input class="fa fa-square-o" type="checkbox" id="chkContActHeader" /></th>
+                                                        <th data-hide="phone">Created By</th>
+                                                        <th data-class="expand">Created Date</th>
+                                                        <th data-hide="phone"> Due Date</th>
+                                                        <th data-hide="tabletlandscape,phone">Type</th>
+                                                        @* <th data-hide="tablet,tabletlandscape,phone">Applicant Name</th>*@
+                                                        <th data-hide="tablet,tabletlandscape,phone,desktop">Status</th>
+                                                        <th data-hide="tablet,tabletlandscape,phone,desktop">Comments</th>
+                                                        <th data-hide="tablet,tabletlandscape,phone,desktop">Attachment</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody></tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+
+                            @*Invoice Tab*@
+                            <div class="tab-pane" id="pvInvoice">
+                                <div class="row">
+                                    <div class="col-sm-12" style="margin-bottom: 8px;">
+
+                                        <div class="row" style="float:right;">
+                                            <div class="col-sm-12">
+
+
+
+                                                <!-- <li><a id="SearchActivity" style="padding-left: 0px;" class="fa fa-search" title="Search"></a></li>-->
+                                                @*Search*@
+                                                @*<div class="btn btn-flat btn-labeled btn-primary" id="searbtn_margin1">
+
+                                                        <a class="sear_btn1" id="SearchActivity">
+                                                            <span class="btn-label icon  fa fa fa-search" style="margin-right:6px;"> </span>
+                                                            Search
+                                                        </a>
+
+                                                    </div>*@
+
+
+
+
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+                                    <div class="col-sm-12 col-xs-12">
+                                        <div class="table-primary table-striped">
+                                            <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="jq-datatables-Invoice" style="width:100%">
+                                                <thead>
+                                                    <tr>
+                                                        @*<th><input class="fa fa-square-o" type="checkbox" id="chkInvoiceHeader" /></th>*@
+                                                        <th data-hide="phone">Invoice&nbsp;No</th>
+
+                                                        <th data-hide="tablet,tabletlandscape,phone,desktop">Created&nbsp;Date</th>
+                                                        <th data-class="expand" style="text-align:left">Invoice&nbsp;Amount&nbsp;($)</th>
+                                                        <th data-hide="phone" style="text-align:left">Balance&nbsp;Amount&nbsp;($)</th>
+                                                        <th data-hide="tablet,tabletlandscape,phone,desktop">Due&nbsp;Date</th>
+                                                        <th data-hide="tabletlandscape,phone,desktop">Invoice&nbsp;Type</th>
+
+                                                        <th data-hide="tablet,tabletlandscape,phone">Status</th>
+                                                        @*<th data-hide="tablet,tabletlandscape,phone"></th>*@
+
+
+
+
+
+
+
+                                                        @*<th data-class="expand">Created&nbsp;Date</th>
+                                                            <th data-hide="tablet,tabletlandscape,phone,desktop">Invoice&nbsp;Amount</th>
+                                                            <th data-hide="tablet,tabletlandscape,phone,desktop">Balance&nbsp;Amount</th>
+                                                            <th data-hide="phone">Due&nbsp;Date</th>
+                                                            <th data-hide="tabletlandscape,phone,desktop">Invoice&nbsp;Type</th>
+
+                                                            <th data-hide="tablet,tabletlandscape,phone,desktop">Status</th>
+                                                            <th data-hide="tablet,tabletlandscape,phone"></th>*@
+
+
+                                                    </tr>
+                                                </thead>
+                                                <tbody></tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            @*End of Invoice Tab*@
+
+
+
+
+
+
+
+
+
+                            <div class="tab-pane" id="pvMails">
+                                <div class="row">
+                                    <div class="col-sm-13" id="pnlSrchCriteria">
+                                        <div class="col-sm-3">
+                                            <div class="form-group no-margin-hr">
+                                                <label class="control-label">Email :</label>
+                                                @Html.TextBoxFor(m => m.maildetails.Sender, new { @class = "form-control input-sm", @id = "txtMailEmail", @maxlength = "100" })
+                                                @*<asp:TextBox ID="txtmailEmail" runat="server" CssClass="form-control input-sm" MaxLength="100"></asp:TextBox>*@
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div class="form-group no-margin-hr">
+                                                <label class="control-label">Type :</label>
+                                                @Html.DropDownListFor(m => m.maildetails.Folder, new List<SelectListItem>
+                                                                          {
+                                                                              new SelectListItem{Text="Select",Value="select"},
+                                                                              new SelectListItem{Text="InBound",Value="InBound"},
+                                                                              new SelectListItem{Text="OutBound",Value="OutBound"},
+                                                                          }, new { @class = "form-control input-sm", @id = "ddlType" })
+                                                @*<asp:DropDownList ID="ddlType" runat="server" CssClass="form-control input-sm">
+                                                        <asp:listitem>Select</asp:listitem>
+                                                        <asp:listitem>InBound</asp:listitem>
+                                                        <asp:listitem>OutBound</asp:listitem>
+                                                    </asp:DropDownList>*@
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div class="form-group no-margin-hr">
+                                                <label class="control-label">Sales Representative :</label>
+                                                @Html.DropDownListFor(m => m.maildetails.CreatedBy, new SelectList(Model.listUsers, "userId", "firstName"), new { @class = "form-control input-sm", @id = "ddlSalesRepresentative" })
+                                                @* <asp:DropDownList ID="ddlSalesRepAccount" runat="server" CssClass="form-control input-sm"></asp:DropDownList>*@
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div class="form-group no-margin-hr">
+                                                <label class="control-label">Subject :</label>
+                                                @Html.TextBoxFor(m => m.maildetails.Subject, new { @class = "form-control input-sm", @id = "txtSubject", @maxlength = "100" })
+                                                @*<asp:TextBox ID="txtSubject" runat="server" CssClass="form-control input-sm"
+                                                                 MaxLength="100">
+                                                    </asp:TextBox>*@
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div class="form-group no-margin-hr">
+                                                <label class="control-label">Body :</label>
+                                                @Html.TextBoxFor(m => m.maildetails.Body, new { @class = "form-control input-sm", @id = "txtBody", @maxlength = "100" })
+                                                @*<asp:TextBox ID="txtBody" runat="server" CssClass="form-control input-sm"></asp:TextBox>*@
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                    <div class="col-sm-12">
+                                        <div class="col-sm-12" style="background-color: #f5f5f5; padding-top: 6px; padding-bottom: 6px; text-align: right;">
+                                            <ul class="table-nav-item">
+                                                <!-- <li><a id="SearchEmails" style="padding-left: 0px;" class="fa fa-search" title="Search"></a></li>-->
+                                                <li class="btn btn-flat btn-labeled btn-primary" style=" float:left; margin-left:3px;">
+                                                    <span class="btn-label icon  fa fa fa-search" style="margin-right:6px;"> </span>
+                                                    <a style="color: #fff; text-decoration: none; padding: 0px; font-weight: normal" id="SearchEmails">
+                                                        Search
+                                                    </a>
+
+                                                </li>
+                                                @*Search*@
+                                                <!-- <li><a onclick="ClearContactsMailsSelection();" class="fa fa-eraser" title="Clear"></a></li>-->
+                                                <li class="btn btn-flat btn-labeled btn-primary" style=" float:left; margin-left:3px;">
+                                                    <span class="btn-label icon  fa  fa-eraser" style="margin-right:6px;"> </span>
+                                                    <a style="color: #fff; text-decoration: none; padding: 0px; font-weight: normal" onclick="ClearContactsMailsSelection();">
+                                                        Clear
+                                                    </a>
+
+                                                </li>
+                                                @*Clear*@
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-xs-12">
+                                        <div class="table-primary table-striped">
+                                            <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="jq-datatables-mails" width="100%">
+                                                <thead>
+                                                    <tr>
+                                                        <th>
+                                                            <input class="fa fa-square-o" type="checkbox" />
+                                                        </th>
+
+                                                        <th data-hide="phone">Date</th>
+                                                        <th data-class="expand">Subject</th>
+                                                        <th data-hide="phone">Mail Type</th>
+                                                        <th data-hide="tabletlandscape,phone">Sent By</th>
+                                                        <th data-hide="tablet,tabletlandscape,phone">Body</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody></tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+
+
+
+
+
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="myModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Company List</h4>
+                    </div>
+                    <div class="modal-body">
+
+                        <div class="row">
+                            <div style="text-align:left;font-size:12px;padding:5px">Note : Click Company Name To Select Record.</div>
+                            <div class="col-sm-12">
+
+                                <div class="table-primary table-striped" id="tblCompanyList">
+
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="myModalAttachment">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Attachment</h4>
+                    </div>
+                    <div class="modal-body">
+
+                        <div class="row">
+                            <div style="text-align:left;font-size:12px;padding:5px">
+                            </div>
+                            <div class="col-sm-12">
+
+                                <div class="table-primary table-striped" id="tblModalAttachment">
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @*</div>*@
+}
+
+<div class="modal fade" id="myModalInvoice">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            @*<div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+
+                    <h4 class="modal-title">Payment&nbsp;Details&nbsp;of&nbsp;@TempData["InvoiceNo"]</h4>
+                </div>*@
+            @*<div class="modal-body">
+
+                <div class="row">
+
+                    <div class="col-sm-12">*@
+
+            <div class="table-primary table-striped" id="tblPaymentList">
+
+            </div>
+
+            @*</div>
+
+                    </div>
+                </div>*@
+        </div>
+    </div>
+</div>
+
+
+<script src="~/Scripts/DateTimePicker/bootstrap-timepicker.min.js"></script>
+<script src="~/Scripts/DateTimePicker/bootstrap-datetimepicker.min.js"></script>
+<script src="~/Scripts/jqte/jquery-te-1.4.0.min.js"></script>
+
+@*<script type="text/javascript">
+        $(document).ready(function () {
+
+            $('.DateP').datepicker({
+                format: 'mm/dd/yyyy'
+            });
+
+
+            $("#TAActualColumnName").keypress(function (e) {
+                if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
+                    $("#errormsg").html("Digits Only").show().fadeOut("slow");
+                    return false;
+                }
+            });
+        });
+    </script>*@
+
+<script type="text/javascript">
+    $(function () {
+        $('#timepickercontrol').timepicker({
+            format: 'h:mm:ss'
+        });
+    });
+    $(function () {
+        $('#txtbirthdate').datepicker({
+            format: 'mm/dd/yyyy'
+        })
+    });
+</script>
+
+
+
+<script type="text/javascript">
+
+    init.push(function () {
+        $('ul.bs-tabdrop-example').tabdrop();
+
+
+    });
+
+
+
+    $(document).ready(function () {
+        $('#txtPhone').bind("cut copy paste", function (e) {
+            e.preventDefault();
+        });
+
+        $('#txtAsstphone').bind("cut copy paste", function (e) {
+            e.preventDefault();
+        });
+        $('#txtHomephone').bind("cut copy paste", function (e) {
+            e.preventDefault();
+        });
+
+        $('#txtFax').bind("cut copy paste", function (e) {
+            e.preventDefault();
+        });
+        $('#txtMobile').bind("cut copy paste", function (e) {
+            e.preventDefault();
+        });
+        $('#txtOtherphone').bind("cut copy paste", function (e) {
+            e.preventDefault();
+        });
+
+        var accName = $('#txtParentAccountName').val();
+
+        $.ajax({
+            url: "GetAccountSitebyAccName",
+            type: "GET",
+            async: false,
+            data: { AccountName: accName },
+            success: function (data) {
+
+
+                $('#txtAccountSite').val(data);
+            },
+            error: function () {
+
+            }
+        });
+        var acttab = '@TempData["Activitytab"]';
+        var actcnt = '@ViewBag.showActivitiescnttab'
+        var edtcnt = '@ViewBag.EditActivitiescnttab';
+
+        var invoicetab = '@ViewBag.showInvoicecnttab';
+        //$('#TabInvoice').click(function () {
+
+        //    //$('#TabStripAccountDetail_View').css("display", "none");
+        //    //$('#TabStripContacts_View').css("display", "none");
+        //    //$('#TabStripDocument_View').css("display", "none");
+        //    //$('#TabStripOpenActivity_View').css("display", "block");
+        //    //$("#jq-datatables-activity").dataTable().fnDestroy();
+        //    //BindCompaniesActivity();
+        //});
+        if (invoicetab != "") {
+            //alert(invoicetab)
+            $('#pvInvoice').css("display", "block");
+
+            $('#pvActivity').css("display", "none");
+            $('#TabInvoice').addClass('active');
+            $('#TabActivity').removeClass("active");
+            BindingInvoicegrid()
+        }
+        if (acttab == "True") {
+            //$('#tabActivity').css("display", "block");
+            //$('#tabActivity').addClass('active');
+            //$('#TabContactDetail').removeClass("active");
+            $('#pvActivity').css("display", "block");
+            // $('#TabActivity').css("display", "block");
+            $('#TabActivity').addClass('active');
+            Bindingactivitygrid();
+        }
+
+        if (actcnt == 'contId') {
+            $('#pvActivity').css("display", "block");
+            $('#TabActivity').addClass('active');
+            Bindingactivitygrid();
+        }
+
+        if (edtcnt == "EditcontId") {
+            $('#pvActivity').css("display", "block");
+            $('#TabActivity').addClass('active');
+            Bindingactivitygrid();
+        }
+
+
+        if (acttab != "True" && actcnt != 'contId' && edtcnt != 'EditcontId' && invoicetab != "Invoice") {
+            $('#TabMenu a:first').tab('show');
+        }
+        $(".textEditor").jqte();
+
+        $('.DateP').datepicker({
+            format: 'mm/dd/yyyy'
+        });
+
+
+        $("#TAActualColumnName").keypress(function (e) {
+            if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
+                $("#errormsg").html("Digits Only").show().fadeOut("slow");
+                return false;
+            }
+        });
+    })
+
+    function tabOnload() {
+
+        var tabName = document.getElementById("hdTab").value;
+        if (tabName != '') {
+
+            if (tabName == 'Contact Detail') {
+                document.getElementById("tabContact").style.display = "block";
+            } else document.getElementById("tabContact").style.display = "none";
+
+            if (tabName == 'Job Order') {
+                document.getElementById("tabJoborder").style.display = "block";
+            } else document.getElementById("tabJoborder").style.display = "none";
+
+            if (tabName == 'Placement') {
+                document.getElementById("tabPlacement").style.display = "block";
+            } else document.getElementById("tabPlacement").style.display = "none";
+
+            if (tabName == 'Activity') {
+                document.getElementById("tabActivity").style.display = "block";
+            } else document.getElementById("tabActivity").style.display = "none";
+
+            if (tabName == 'Mail') {
+                document.getElementById("tabMail").style.display = "block";
+            } else document.getElementById("tabMail").style.display = "none";
+
+            if (tabName == 'Skills') {
+                document.getElementById("tabSkills").style.display = "block";
+            } else document.getElementById("tabSkills").style.display = "none";
+
+
+        }
+    }
+
+    function onCheckFillAddress() {
+
+
+        if (document.getElementById('chkAddress').checked = true) {
+
+            var address1 = document.getElementById('txtAddressMailing').value;
+            var address2 = document.getElementById('txtMailingStreet').value;
+            var city = document.getElementById('txtMailingCity').value;
+            var postal = document.getElementById('txtMailingZip').value;
+            var state = document.getElementById('txtMailingstate').value;
+            var country = document.getElementById('txtMailingCountry').value;
+
+            document.getElementById('txtAddressBilling').value = address1;
+            document.getElementById('txtOtherStreet').value = address2;
+            document.getElementById('txtOtherCity').value = city;
+            document.getElementById('txtOtherZip').value = postal;
+            document.getElementById('txtOtherstate').value = state;
+            document.getElementById('txtOtherCountry').value = country;
+        }
+        else if (document.getElementById('chkAddress').checked = false) {
+            document.getElementById('txtAddressBilling').value = '';
+            document.getElementById('txtOtherStreet').value = '';
+            document.getElementById('txtOtherCity').value = '';
+            document.getElementById('txtOtherZip').value = '';
+            document.getElementById('txtOtherstate').value = '';
+            document.getElementById('txtOtherCountry').value = '';
+        }
+
+    }
+
+    $("#btnSave").click(function (e) {
+        //alert("hi");
+        Isvalid = true;
+        return Validate(this.form);
+
+
+    });
+
+    $("#chkisAllowSMS").click(function () {
+        if ($(this).prop('checked') == true) {
+
+            $("#txtMobile").attr("validate", "Required");
+            $("#drpSMSprovider").attr("validate", "dropdown");
+        }
+    });
+
+
+
+
+    function show_NewAccountPopUp() {
+
+        $.ajax({
+            url: "SelectCompany",
+            @*url: '@Url.Content("~/ManageCompany/ListParentComp")',*@
+            type: "GET",
+            async: false,
+            success: function (data) {
+
+                if (data != null) {
+
+                    $('#tblCompanyList').empty();
+                    $('#tblCompanyList').empty().append(data);
+                }
+            },
+            error: function () {
+            }
+        });
+        $('#myModal').modal("show");
+    }
+
+
+
+    $("#SearchActivity").click(function (e) {
+        $('#loading').css('display', 'block');
+        $("#jq-datatables-activity").dataTable().fnDestroy();
+        BindContactsActivity();
+
+        $('#jq-datatables-activity').on('length.dt', function (e, settings, len) {
+
+            $('#loading').css('display', 'block');
+            $("#jq-datatables-activity").dataTable().fnDestroy();
+            BindContactsActivity();
+
+        });
+
+        //function SearchMails(){
+        //
+        //    $('#loading').css('display', 'block');
+        //    $('#jq-datatables-mails').dataTable().fnDestroy();
+        //    BindAllEmails();
+        //};
+
+        $('#jq-datatables-activity').on('page.dt', function () {
+
+            $('#loading').css('display', 'block');
+            $("#jq-datatables-activity").dataTable().fnDestroy();
+            BindContactsActivity();
+        });
+
+        $('#loading').css('display', 'none');
+    });
+    function EditContactActivity() {
+
+        if ($('#jq-datatables-activity input[name="chkItemAct"]:checked').length > 0) {
+            if ($('#jq-datatables-activity input[name="chkItemAct"]:checked').length > 1) {
+                alert("Please Select One Record Only.");
+            }
+            else {
+                var id = $('#jq-datatables-activity input[name="chkItemAct"]:checked').attr('data-historyId');
+                window.location.href = "../Contact/EditContactActivity/?historyid=" + id;
+            }
+        }
+        else
+            alert("Please Select atleast One Record Only.");
+    }
+
+    function deleteEachActivity(historyId) {
+
+        $.ajax({
+            url: "DeleteContactActivity",
+            type: "POST",
+            async: false,
+            data: { historyid: historyId },
+            success: function (data) {
+            },
+            error: function () {
+
+            }
+        });
+    }
+    function deleteSelectedContactActivity() {
+
+        if ($('#jq-datatables-activity input[name="chkItemAct"]:checked').length > 0) {
+            var flag = confirm('You are about to delete permanently.Are you sure you want to delete these records?');
+            if (flag) {
+                $('#jq-datatables-activity input[name="chkItemAct"]:checked').each(function () {
+                    var id = $(this).attr('data-historyId');
+                    deleteEachActivity(id);
+                });
+                $('#pvActivity').css("display", "block");
+                // $('#TabActivity').css("display", "block");
+                $('#TabActivity').addClass('active');
+                $("#jq-datatables-activity").dataTable().fnDestroy();
+                location.reload();
+                Bindingactivitygrid();
+
+
+
+                alert("Deleted Successfully");
+            }
+        }
+        else {
+            alert("Please select item(s) to delete.");
+        }
+    }
+
+    function completeContactActivity() {
+
+        if ($('#jq-datatables-activity input[name="chkItemAct"]:checked').length > 0) {
+            var flag = confirm('Are you sure you want to Complete the Activity?');
+            if (flag) {
+                $('#jq-datatables-activity input[name="chkItemAct"]:checked').each(function () {
+
+                    var id = $(this).attr('data-historyId');
+                    completeEachActivity(id);
+                });
+                document.location.href = document.location.href;
+                alert("Activity Updated Successfully");
+            }
+        }
+        else
+            alert("Please Select atleast One Record Only.");
+    }
+
+    function completeEachActivity(historyId) {
+
+        $.ajax({
+            url: "completeContactActivity",
+            type: "GET",
+            async: false,
+            data: { historyid: historyId },
+            success: function (data) {
+            },
+            error: function () {
+
+            }
+        });
+    }
+    function ClearContactsMailsSelection() {
+        $('#txtMailEmail').val('');
+        $('#ddlType option:first-child').attr("selected", "selected");
+        $('#txtSubject').val('');
+        $('#txtBody').val('');
+        $('#ddlSalesRepresentative option:first-child').attr("selected", "selected");
+        $('#jq-datatables-mails').dataTable().fnDestroy();
+        BindAllEmails();
+    }
+    function BindContactMails() {
+        $('#jq-datatables-mails').dataTable().fnDestroy();
+        BindAllEmails();
+    }
+
+    function BindAllEmails() {
+
+        var responsiveHelper = undefined;
+        var breakpointDefinition = {
+            desktop: Infinity,
+            tablet: 1024,
+
+            phone: 480
+        };
+        var tableElement = $('#jq-datatables-mails');
+        tableElement.dataTable({
+            autoWidth: false,
+            preDrawCallback: function () {
+                if (!responsiveHelper) {
+                    responsiveHelper = new ResponsiveDatatablesHelper(tableElement, breakpointDefinition);
+                }
+            },
+            rowCallback: function (nRow) {
+                responsiveHelper.createExpandIcon(nRow);
+            },
+            drawCallback: function (oSettings) {
+                responsiveHelper.respond();
+            },
+            "aLengthMenu": [[10, 25, 50], [10, 25, 50]],
+            // "order": [1, "DESC"],
+            // "iDisplayLength": 10,
+            "pagingType": "full_numbers",
+            "processing": true,
+            "serverSide": true,
+            "sAjaxSource": "GetContactEmails",
+            "fnServerParams": function (aoData) {
+                aoData.push(
+                    { "name": "MailEmail", "value": "" + $("#txtMailEmail").val() + "" },
+                    { "name": "MailType", "value": "" + $("#ddlType").val() + "" },
+                    { "name": "MailSalesRepresentative", "value": "" + $("#ddlSalesRepresentative").val() + "" },
+                    { "name": "MailSubject", "value": "" + $("#txtSubject").val() + "" },
+                    { "name": "MailBody", "value": "" + $("#txtBody").val() + "" }
+                    );
+            },
+            "fnServerData": function (sSource, aoData, fnCallback) {
+                $.ajax({
+                    "dataType": 'json',
+                    "contentType": "application/json; charset=utf-8",
+                    "type": "GET",
+                    "url": sSource,
+                    "data": aoData,
+                    "success":
+                                function (msg) {
+                                    //var json = jQuery.parseJSON(msg.d);
+                                    fnCallback(msg);
+                                    // $("#jq-datatables-mails").show();
+                                }
+                });
+            },
+            "asStripeClasses": ['odd gradeX', 'even gradeC'],
+            "aoColumnDefs": [{
+                "targets": [0], "visible": true, "bSortable": false, "mDataProp": "ID",
+                "render": function (data, type, row) {
+                    // return "<input type=\"checkbox\"  data-SalesId=" + row["SalesId"] + "  class =\"case\" name=\"chkItem\"  id=\"chkRow_" + row["SalesId"] + "\"   />";
+                    return "<input type=\"checkbox\"  data-MailsId=" + row["ID"] + " id=\"chkRow_" + row["ID"] + "\"  />";
+                }
+            },
+              //{
+              //    "targets": [1], "visible": true, "bSortable": false,"mDataProp":"ID",
+              //    "render": function (data, type, row) {
+
+              //        //        return //"<span class=\"fa fa-edit\" onclick=\"OpenMailDetail('" + row["ID"] + "');\"></span>";//<span class=\"glyphicon delete-doc\" onclick=\"DeleteContactsConfirmation('" + row["ID"] + "');\"></span>";
+              //    }
+              //},
+
+                {
+                    "targets": [1], "visible": true, "bSortable": true, "mDataProp": "Date",
+                    "render": function (data, type, row) {
+                        ;
+                        var jsDate1 = data;
+                        if (jsDate1 == null) {
+                            return jsDate1 = "";
+                        }
+                        else if (jsDate1.value != "") {
+                            var jsDate = new Date(parseInt(row["Date"].substr(6)));
+                            return (jsDate.getMonth() + 1) + '/' + jsDate.getDate() + '/' + jsDate.getFullYear();
+                        }
+
+                    }
+                },
+                { "targets": [2], "visible": true, "bSortable": true, "mDataProp": "Subject" },
+                { "targets": [3], "visible": true, "bSortable": true, "mDataProp": "Folder" },
+                { "targets": [4], "visible": true, "bSortable": true, "mDataProp": "Sender" },
+            { "targets": [5], "visible": true, "bSortable": true, "mDataProp": "Body" }
+            ]
+        }).api();
+        $('#jq-datatables-mails_wrapper .table-caption').text('');
+        $('#jq-datatables-mails_wrapper .dataTables_filter input').attr('placeholder', 'Search...');
+        $('#jq-datatables-mails').on('click', 'th input:checkbox', function () {
+            var that = this;
+            $(this).closest('table').find('tr > td:first-child input:checkbox').each(function () {
+                this.checked = that.checked;
+                $(this).closest('tr').toggleClass('selected');
+            });
+        });
+        $('#jq-datatables-mails tbody').on('click', 'tr > td:first-child input:checkbox', function () {
+            // CustomBootBoxAlertMessage($(this)[0].checked);
+            if ($(this)[0].checked)
+            { $(this).parent().parent().addClass('selected'); }
+            else { $(this).parent().parent().removeClass('selected'); }
+        });
+    }
+    $("#SearchEmails").click(function () {
+        ;
+        $('#jq-datatables-mails').dataTable().fnDestroy();
+        BindAllEmails();
+    })
+
+
+    function Bindingactivitygrid() {
+
+        $('#jq-datatables-activity').dataTable().fnDestroy();
+        BindContactsActivity();
+    }
+
+    function BindContactsActivity() {
+
+        var responsiveHelper = undefined;
+        var breakpointDefinition = {
+            desktop: Infinity,
+            tablet: 1024,
+
+            phone: 480
+        };
+        var tableElement = $('#jq-datatables-activity');
+        tableElement.dataTable({
+            autoWidth: false,
+            preDrawCallback: function () {
+                if (!responsiveHelper) {
+                    responsiveHelper = new ResponsiveDatatablesHelper(tableElement, breakpointDefinition);
+                }
+            },
+            rowCallback: function (nRow) {
+                responsiveHelper.createExpandIcon(nRow);
+            },
+            drawCallback: function (oSettings) {
+                responsiveHelper.respond();
+            },
+            "aLengthMenu": [[10, 25, 50], [10, 25, 50]],
+            // "order": [1, "DESC"],
+            // "iDisplayLength": 10,
+            "pagingType": "full_numbers",
+            "processing": true,
+            "serverSide": true,
+            "sAjaxSource": "getContactActivity",
+            "fnServerParams": function (aoData) {
+                aoData.push(
+                    { "name": "ContactKeyword", "value": "" + $("#txtActivityKeyword").val() + "" },
+                    { "name": "ContactType", "value": "" + $("#ddlHistoryType").val() + "" },
+                    { "name": "ContactPriority", "value": "" + $("#ddlPriority").val() + "" },
+                    { "name": "ContactStatus", "value": "" + $("#ddlStatus").val() + "" }
+
+                    );
+            },
+            "fnServerData": function (sSource, aoData, fnCallback) {
+                $.ajax({
+                    "dataType": 'json',
+                    "contentType": "application/json; charset=utf-8",
+                    "type": "GET",
+                    "url": sSource,
+                    "data": aoData,
+                    "success":
+                                function (msg) {
+                                    //var json = jQuery.parseJSON(msg.d);
+                                    fnCallback(msg);
+                                    // $("#jq-datatables-mails").show();
+                                }
+                });
+            },
+            "asStripeClasses": ['odd gradeX', 'even gradeC'],
+            "aoColumnDefs": [{
+                "targets": [0], "visible": true, "bSortable": false, "mDataProp": "HistoryId",
+                "render": function (data, type, row) {
+                    // return "<input type=\"checkbox\"  data-SalesId=" + row["SalesId"] + "  class =\"case\" name=\"chkItem\"  id=\"chkRow_" + row["SalesId"] + "\"   />";
+                    //return "<input type=\"checkbox\"  data-HistoryId=" + row["HistoryId"] + " id=\"chkRow_" + row["HistoryId"] + "\"  />";
+                    return "<input class=\"fa  fa-square-o\" type=\"checkbox\"  name=\"chkItemAct\" class =\"Actcase\"  id=\"chkRow_" + row["HistoryId"] + "\"  data-historyid=\"" + row["HistoryId"] + "\" />";
+                }
+            },
+
+
+                {
+                    "targets": [1], "visible": true, "bSortable": false, "mDataProp": "createdBy"
+                },
+               {
+                   "targets": [2], "visible": true, "bSortable": true, "mDataProp": "CreatedDate",
+                   "render": function (data, type, row) {
+
+                       var jsDate1 = data;
+                       if (jsDate1 == null) {
+                           return jsDate1 = "";
+                       }
+                       else if (jsDate1.value != "") {
+                           var jsDate = new Date(parseInt(row["CreatedDate"].substr(6)));
+                           return (jsDate.getMonth() + 1) + '/' + jsDate.getDate() + '/' + jsDate.getFullYear();
+                       }
+
+                   }
+               },
+                {
+                    "targets": [3], "visible": true, "bSortable": true, "mDataProp": "StartDate",
+                    "render": function (data, type, row) {
+                        var jsDate1 = data;
+                        if (jsDate1 == null) {
+                            return jsDate1 = "";
+                        }
+                        else if (jsDate1.value != "") {
+                            var jsDate = new Date(parseInt(row["StartDate"].substr(6)));
+                            return (jsDate.getMonth() + 1) + '/' + jsDate.getDate() + '/' + jsDate.getFullYear();
+                        }
+
+                    }
+                },
+                { "targets": [4], "visible": true, "bSortable": true, "mDataProp": "HistoryType" },
+              //  { "targets": [5], "visible": true, "bSortable": true, "mDataProp": "ApplicantName" },
+                { "targets": [5], "visible": true, "bSortable": true, "mDataProp": "Status" },
+                { "targets": [6], "visible": true, "bSortable": true, "mDataProp": "Details" },
+                {
+                    "targets": [7], "visible": true, "bSortable": false, "mDataProp": "HistoryId",
+                    "render": function (data, type, row) {
+                        return "<a href=\"#\" onclick=\"return OpenAttachmentPopUp('" + row["HistoryId"] + "')\">Attachment</a>";
+                    }
+                }
+            ],
+
+        }).api();
+
+    }
+
+
+    // if all checkbox are selected
+    $('#jq-datatables-activity').on('click', 'th input:checkbox', function () {
+
+        var that = this;
+        $(this).closest('table').find('tr > td:first-child input:checkbox').each(function () {
+            this.checked = that.checked;
+            $(this).closest('tr').toggleClass('selected');
+        });
+    });
+    // for single  checkbox checked
+
+    $('#jq-datatables-activity tbody').click(function () {
+
+        if ($('#jq-datatables-activity input[name="chkItemAct"]:checked').length == $('#jq-datatables-activity input[name="chkItemAct"]').length) {
+            $("#chkContActHeader").prop("checked", true);
+        } else {
+            $("#chkContActHeader").prop("checked", false);
+        }
+    });
+
+
+
+    $('#jq-datatables-activity').on('length.dt', function (e, settings, len) {
+
+        $('#loading').css('display', 'block');
+        $("#jq-datatables-activity").dataTable().fnDestroy();
+        BindContactsActivity();
+
+    });
+
+    $('#jq-datatables-activity').on('page.dt', function () {
+
+        $('#loading').css('display', 'block');
+        $("#jq-datatables-activity").dataTable().fnDestroy();
+        BindContactsActivity();
+    });
+
+
+    function OpenAttachmentPopUp(HistoryID) {
+
+        var URL = "ContactAttachment";
+        $.ajax({
+            url: URL,
+            type: "GET",
+            async: false,
+            data: { HistoryID: HistoryID },
+            success: function (data) {
+
+                if (data != null) {
+                    $('#tblModalAttachment').empty();
+                    $('#tblModalAttachment').empty().append(data);
+                }
+            },
+            error: function (error) {
+
+
+            }
+        });
+        $('#myModalAttachment').modal("show");
+    }
+
+    function Contactexists(control) {
+        var ContactName = $("#txtName").val();
+        var HidContName = $('#hidtxtName').val();
+
+        if ($("#txtName").val() == "" || ($("#txtName").val() == null)) {
+            $("#btnSave").attr("disabled", "disabled")
+        }
+        if ($("#txtName").val() != "") {
+            if (ContactName != HidContName) {
+                var Contactname = $("#txtName").val();
+                Contactname = jQuery.trim(Contactname);
+
+
+                $("#lblErrormessage").hide();
+                $("#txtName").removeAttr("style");
+                $("#errorsymbol").hide();
+                $("#ErrorMessages").hide();
+                $("#btnSave").removeAttr('disabled');
+                $("#btnSave").css("display", "Inline-block")
+                isValid = true;
+                validateform();
+            }
+
+        }
+
+        return isValid;
+    }
+
+
+    function validateform() {
+
+
+        return Validate(this.form);
+    }
+
+    function onlynumbers(evt) {
+        var charCode = (evt.which) ? evt.which : event.keyCode
+        if (charCode == 43 || charCode == 32 || charCode == 40 || charCode == 41)
+            return true;
+        else if (charCode > 31 && (charCode < 45 || charCode > 57 || charCode == 47 || charCode == 46))
+            return false;
+
+        return true;
+    }
+
+
+
+
+
+
+    function BindingInvoicegrid() {
+
+        var contactId = $('#HidContactId').val();
+        $('#jq-datatables-Invoice').dataTable().fnDestroy();
+        BindContactinvoice();
+        //$('#jq-datatables-activity').dataTable().fnDestroy();
+        //BindContactsActivity();
+    }
+
+
+
+    function BindContactinvoice() {
+
+        var responsiveHelper = undefined;
+        var breakpointDefinition = {
+            desktop: Infinity,
+            tablet: 1024,
+
+            phone: 480
+        };
+        var tableElement = $('#jq-datatables-Invoice');
+        tableElement.dataTable({
+            autoWidth: false,
+            preDrawCallback: function () {
+                if (!responsiveHelper) {
+                    responsiveHelper = new ResponsiveDatatablesHelper(tableElement, breakpointDefinition);
+                }
+            },
+            rowCallback: function (nRow) {
+                responsiveHelper.createExpandIcon(nRow);
+            },
+            drawCallback: function (oSettings) {
+                responsiveHelper.respond();
+            },
+            "aLengthMenu": [[10, 25, 50], [10, 25, 50]],
+            // "order": [1, "DESC"],
+            // "iDisplayLength": 10,
+            "pagingType": "full_numbers",
+            "processing": true,
+            "serverSide": true,
+            "sAjaxSource": "getInvoiceListforContact",
+            "fnServerParams": function (aoData) {
+                aoData.push(
+                    { "name": "ContactId", "value": "" + $("#HidContactId").val() + "" }
+                    );
+            },
+            "fnServerData": function (sSource, aoData, fnCallback) {
+                $.ajax({
+                    "dataType": 'json',
+                    "contentType": "application/json; charset=utf-8",
+                    "type": "GET",
+                    "url": sSource,
+                    "data": aoData,
+                    "success":
+                                function (msg) {
+                                    //var json = jQuery.parseJSON(msg.d);
+                                    fnCallback(msg);
+                                    // $("#jq-datatables-mails").show();
+                                }
+                });
+            },
+            "asStripeClasses": ['odd gradeX', 'even gradeC'],
+            "aoColumnDefs": [
+            //    {
+            //    "targets": [0], "visible": true, "bSortable": false, "mDataProp": "InvoiceNo",
+
+            //},
+
+            {
+                "targets": [0], "visible": true, "bSortable": true, "mDataProp": "InvoiceNo",
+                "render": function (data, type, row) {
+                    return "<a href=\"#\" onclick=\"OpenPaymentDetail('" + row["InvoiceID"] + "')\">" + row["InvoiceNo"] + "</a>";
+
+                }
+
+            },
+
+               {
+                   "targets": [1], "visible": true, "bSortable": true, "mDataProp": "CreatedDate",
+                   "render": function (data, type, row) {
+
+                       var jsDate1 = data;
+                       if (jsDate1 == null) {
+                           return jsDate1 = "";
+                       }
+                       else if (jsDate1.value != "") {
+                           var jsDate = new Date(parseInt(row["CreatedDate"].substr(6)));
+                           return (jsDate.getMonth() + 1) + '/' + jsDate.getDate() + '/' + jsDate.getFullYear();
+                       }
+
+                   }
+               },
+                { "targets": [2], "visible": true, "bSortable": true, "mDataProp": "InvoiceAmount", "sClass": "alignRight" },
+
+                 {
+                     "targets": [3], "visible": true, "bSortable": true, "mDataProp": "BalanceAmount", "sClass": "alignRight",
+                     "render": function (data, type, row) {
+                         if (row["BalanceAmount"] > 0) {
+                             return row["BalanceAmount"];
+                         }
+                         else {
+                             // return "Invoice Cleared";
+                             return "<span class=\"label label-success  inline-block\">-Nil-</span>";
+                         }
+                     }
+                 },
+                {
+                    "targets": [4], "visible": true, "bSortable": true, "mDataProp": "DueDate",
+                    "render": function (data, type, row) {
+                        var jsDate1 = data;
+                        if (jsDate1 == null) {
+                            return jsDate1 = "";
+                        }
+                        else if (jsDate1.value != "") {
+                            var jsDate = new Date(parseInt(row["DueDate"].substr(6)));
+                            return (jsDate.getMonth() + 1) + '/' + jsDate.getDate() + '/' + jsDate.getFullYear();
+                        }
+
+                    }
+                },
+                {
+                    "targets": [5], "visible": true, "bSortable": true, "mDataProp": "InvoiceType",
+
+                    "render": function (data, type, row) {
+                        if (row["InvoiceType"] == "Estimate - Invoice") {
+                            return "<span class=\"label label-estimate  inline-block\">" + row["InvoiceType"] + "</span>";
+
+                        }
+                        else if (row["InvoiceType"] == "Invoice") {
+                            return "<span class=\"label label-invoice  inline-block\">" + row["InvoiceType"] + "</span>";
+
+                        }
+
+                    }
+
+
+
+                },
+
+                {
+                    "targets": [6], "visible": true, "bSortable": true, "mDataProp": "Status",
+                    "render": function (data, type, row) {
+                        if (row["Status"] == "Paid") {
+                            return "<span class=\"label label-success  inline-block\">" + row["Status"] + "</span>";
+                            //return "<span style=\"color:Green\">" + row["Status"] + "</span>";
+                        }
+                        else if (row["Status"] == "Unpaid") {
+                            return "<span class=\"label label-danger  inline-block\">" + row["Status"] + "</span>";
+                            //return "<span style=\"color:red\">" + row["Status"] + "</span>";
+                        }
+                        else if (row["Status"] == "Partially Paid") {
+                            return "<span class=\"label label-warning  inline-block\">" + row["Status"] + "</span>";
+                            //return "<span style=\"color:orange\">" + row["Status"] + "</span>";
+                        }
+                    }
+                },
+
+            ],
+
+        }).api();
+
+    }
+
+
+    function OpenPaymentDetail(invid) {
+        var dataModel = "Contact"
+        $.ajax({
+            url: '@Url.Action("_GetListofPaymentsByInvoiceId", "Invoice")',
+
+            type: "GET",
+            async: false,
+            data: { InvoiceId: invid, location: dataModel },
+            success: function (data) {
+                if (data != null) {
+                    $('#tblPaymentList').empty();
+                    $('#tblPaymentList').empty().append(data);
+                }
+            },
+            error: function (n, y, p) {
+                alert("error");
+            }
+        });
+        $('#myModalInvoice').modal("show");
+    }
+
+    function MakeInvoicePayment(InvoiceID) {
+        //   alert(InvoiceID);
+        $.ajax({
+            url: '@Url.Action("_MakePaymentByInvoiceId", "Invoice")',
+
+            type: "GET",
+            async: false,
+            data: { InvoiceId: InvoiceID },
+            success: function (data) {
+
+                if (data != null) {
+                    $('#tblPaymentList').empty();
+                    $('#tblPaymentList').empty().append(data);
+                }
+            },
+            error: function (n, y, p) {
+                alert("error");
+            }
+        });
+        $('#myModalInvoice').modal("show");
+    }
+
+</script>
+
+<style type="text/css">
+    .alignRight {
+        text-align: right;
+    }
+
+
+    .label-warning {
+        border: 1px solid #f4b04f !important;
+    color: #f4b04f !important;
+    background:#fff !important;
+    text-shadow: 0 0px 0 !important;
+    }
+    .label-danger {
+       border: 1px solid #e66454 !important;
+    color: #e66454 !important;
+    background: #fff !important;
+     text-shadow: 0 0px 0 !important;
+}
+
+    .label-success {
+     border: 1px solid #5ebd5e !important;
+    color: #5ebd5e !important;
+    background:#fff !important;
+     text-shadow: 0 0px 0 !important;
+}
+
+
+     .label-invoice {
+     border: 1px solid #3690e6 !important;
+    color: #3690e6 !important;
+    background:#fff !important;
+    font-size:12px !important;
+     text-shadow: 0 0px 0 !important;
+}
+        .label-estimate {
+     border: 1px solid #857198 !important;
+    color: #857198 !important;
+    background:#fff !important;
+    font-size:12px !important;
+     text-shadow: 0 0px 0 !important;
+
+}
+   
+</style>

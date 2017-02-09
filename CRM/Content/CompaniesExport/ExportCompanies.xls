@@ -1,0 +1,11 @@
+<div>
+	<table cellspacing="0" rules="all" border="1" style="border-collapse:collapse;">
+		<tr>
+			<th scope="col">CompanyId</th><th scope="col">CompanyName</th><th scope="col">CompanySite</th><th scope="col">PhoneNumber</th><th scope="col">City</th><th scope="col">Zip</th><th scope="col">DateCreated</th><th scope="col">Type</th>
+		</tr><tr>
+			<td>236</td><td>vishalsoft</td><td>www.vishalsoft.com</td><td>(111) 111-1111</td><td>New Delhi</td><td>Activity</td><td>&nbsp;</td><td>&nbsp;</td>
+		</tr><tr>
+			<td>246</td><td>cmc1ltd</td><td>www.cmcltd1.com</td><td>(012) 345-6789</td><td>hyd1</td><td>Activity</td><td>&nbsp;</td><td>&nbsp;</td>
+		</tr>
+	</table>
+</div>

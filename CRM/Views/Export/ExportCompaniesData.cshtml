@@ -1,0 +1,121 @@
+﻿@model CRMHub.ViewModel.CompanyModel
+@{
+    ViewBag.Title = "ExportCompaniesData";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        if ('@ViewBag.ExportCompaniesData' == "1") {
+            alert("Export Companies Data Exported Successfully");
+            $.ajax({
+                type: 'GET',
+                url: "DownloadExportCompaniesData/Export",
+                success: function () {
+
+                    window.location = ("../Content/ExportCompaniesData/ExportCompaniesData.csv");
+                },
+                error: function () {
+                    alert("error");
+                }
+            });
+
+        }
+    });
+</script>
+
+@using (Html.BeginForm("ExportCompaniesData", "Export", FormMethod.Post))
+{
+    if (Model.branchList != null)
+    {
+        <div id="content-wrapper">
+            <div id="CustomBootstrapAlertBox">
+            </div>
+            <div class="row">
+                <div class="panel">
+
+                    <div class="panel-heading">
+                        <div class="row">
+                            <!-- Page header, center on small screens -->
+                            <h1 class="col-xs-6 col-sm-4 text-left text-left-sm panel-title"><i class="fa fa-users page-header-icon"></i>&nbsp;<label id="lblHeading">Export Companies Data Detail</label></h1>
+                            <div class="col-xs-6 col-sm-8">
+                                <div class="row">
+                                    <div class="pull-right">
+                                        @*<a href="#" class="btn btn-flat btn-labeled btn-primary" tabindex="-1"
+                                            data-toggle="modal" data-target="#uidemo-modals-alerts-info"><span class="btn-label icon fa fa-question-circle"></span>Help</a>*@
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="panel-body">
+
+                        <div class="row">
+                            <div class="panel">
+                                <div class="panel-group" id="accordion-example">
+                                    <div class="panel-heading">
+                                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion-example"
+                                           href="#collapse8">Export Companies Data Detail</a>
+                                    </div>
+                                    <div id="collapse8" class="panel-collapse collapse in">
+                                        <div class="panel-body">
+                                            <div class="col-sm-12 no-padding-hr">
+                                                <div class="row">
+                                                    <div class="col-sm-4">
+                                                        <div class="form-group no-margin-hr">
+
+                                                            <label class="control-label">Office / Location :</label>
+                                                            @Html.DropDownListFor(m => m.compnay.Account_office, new SelectList(Model.branchList, "BranchId", "BranchName"), new { @class = "form-control input-sm", @id = "drpOffLoc" })
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <div class="page-header-breadcrumb">
+                                                        <ul class="table-nav-item" style="float: right">
+                                                            <li>
+                                                                <button class="btn btn-flat btn-labeled btn-primary" id="btnSave">
+                                                                    <span class="btn-label icon fa fa-save"></span>Export
+                                                                </button>
+                                                            </li>
+                                                            <li>
+                                                                @*<span class="btn btn-flat btn-labeled btn-primary">
+                                                                        @Html.ActionLink("Back", "Index", "DashBoard", new { @style = "color:#FFF;" }, null)
+                                                                        <span class="btn-label icon fa fa-backward" style="margin-right:6px;"></span>
+                                                                    </span>*@
+                                                                @*<div class="btn btn-flat btn-labeled btn-primary">
+                                                                        @Html.ActionLink("Back", "Index", "DashBoard", new { @style = "color:#fff;" }, null)
+                                                                        <span class="btn-label icon  fa fa-backward"> </span>
+                                                                    </div>*@
+                                                                @*<span class="btn btn-flat btn-labeled btn-primary" style=" margin:0px 3px 0px 0px;">
+                                                                        @Html.ActionLink("Back", "Index", "DashBoard", null, new { @style = "color:#fff !important; text-decoration:none; float:right" })
+                                                                        <span class="btn-label icon fa fa-backward" style="margin-right:6px; "> </span>
+                                                                    </span>*@
+                                                                <a style="color: #fff; text-decoration: none; padding: 0px; font-weight: normal" class="btn btn-flat btn-labeled btn-primary" href="@Url.Action("Index", "DashBoard")">
+                                                                    <span class="btn-label icon fa fa-backward" style="margin-right:6px;"> </span>
+                                                                    Back
+                                                                </a>
+
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+}

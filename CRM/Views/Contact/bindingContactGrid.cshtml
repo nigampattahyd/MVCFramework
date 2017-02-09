@@ -1,0 +1,61 @@
+﻿@*@model IEnumerable<CRMHub.EntityFramework.tbl_Contact>*@
+
+@*<table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="tblContacts" width="100%">
+    <thead>
+        <tr>
+
+            <th>
+                <input class="fa fa-square-o" type="checkbox" id="chkHeader" />
+            </th>
+            <th>&nbsp;</th>
+            <th data-hide="tablet,tabletlandscape,phone">Contact ID</th>
+            <th data-class="expand">Contact Name</th>
+            <th data-hide="tablet,tabletlandscape,phone">Contact Title</th>
+            <th data-hide="phone,smartphone">Company Name</th>
+            <th data-hide="tabletlandscape,phone">Phone</th>
+            <th data-hide="tabletlandscape,phone">Mobile</th>
+            <th data-hide="phone,smartphone">Email</th>
+            <th data-hide="tablet,tabletlandscape,phone">Zip Code</th>
+            <th data-hide="tablet,tabletlandscape,phone">Date Created</th>
+            <th data-hide="tabletlandscape,phone">Activity</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td><input type="checkbox" name="chkItem" data-branchid="@item.ContactId" /></td>
+                <td><a class="fa fa-times" style="cursor:pointer" onclick="deleteBranch(@item.ContactId)"></a></td>
+                <td>@item.ContactId</td>
+                <td><a style="cursor:pointer" href="@Url.Action("EditContact", "Contact", new { contactId = @item.ContactId })">@item.fname</a></td>
+                <td>@item.title</td>
+                <td>@item.contact_office</td>
+                <td>@item.phone</td>
+                <td>@item.mobile</td>
+                <td>@item.email</td>
+                <td>@item.mailingzip</td>
+                <td>@item.createdDate</td>
+                <td>@Html.ActionLink("Activity", "", "")</td>
+            </tr>
+        }
+    </tbody>
+</table>*@
+
+@*<script type="text/javascript">
+    var oTable;
+  
+    $(document).ready(function () {
+        
+       // var dt = $('#tblContacts').DataTable();
+        oTable= $('#tblContacts').DataTable(
+            {
+                "aLengthMenu": [[10, 25, 50], [10, 25, 50]],
+                "columnDefs": [{ targets: 'no-sort', orderable: false, targets: [0, 1] }]
+                
+            }
+
+            );
+        oTable.page.len(100).draw();
+    });
+</script>*@

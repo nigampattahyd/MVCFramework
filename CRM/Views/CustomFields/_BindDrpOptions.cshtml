@@ -1,0 +1,506 @@
+﻿@*@model IEnumerable <CRMHub.EntityFramework.Custom_DrpChkValues>*@
+@model CRMHub.EntityFramework.Custom_Manage_Master
+
+
+<div id="content-wrapper">
+
+
+    <div id="CustomBootstrapAlertBox">
+    </div>
+
+    <div class="row">
+
+
+        <div class="panel">
+            <div class="panel-heading">
+                <div class="row">
+                    <!-- Page header, center on small screens -->
+                    <h1 class="col-xs-6 col-sm-4 text-left text-left-sm panel-title"><i class="fa fa-user page-header-icon"></i>&nbsp; Custom Field Add Options</h1>
+                    <div class="col-xs-6 col-sm-8">
+                        <div class="row">
+                            <div class="pull-right">
+                                @*<a href="#" class="btn btn-flat btn-labeled btn-primary" tabindex="-1"
+                                    data-toggle="modal" data-target="#uidemo-modals-alerts-info"><span class="btn-label icon fa fa-question-circle"></span>Help</a>*@
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel-body">
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <!-- Tabs -->
+
+
+                        <div class="tab-pane" id="bs-tabdrop-tab3">
+
+                            @*<div class="row">
+                                    <div class="col-sm-12 col-xs-12">
+                                        <div class="col-xs-12 col-sm-12 text-right text-right-sm" id="white_bg">
+                                            <ul class="table-nav-item">
+                                                <li class="btn btn-flat btn-labeled btn-primary" id="btnmargin_top">
+
+                                                    <a style="color: #fff; text-decoration: none; padding: 0px; font-weight: normal" href="#" id="AddOptions">
+                                                        <span class="btn-label icon  fa  fa-plus-circle" style="margin-right:6px;"> </span>
+                                                        Add Option
+                                                    </a>
+
+                                                </li>
+
+                                                <li class="btn btn-flat btn-labeled btn-primary" id="btnmargin_top">
+
+                                                    <a style="color: #fff; text-decoration: none; padding: 0px; font-weight: normal" id="btnOption" onclick="deleteSelectedOptions();">
+                                                        <span class="btn-label icon  fa   fa-trash-o" style="margin-right:6px;"> </span>
+                                                        Delete
+                                                    </a>
+                                                </li>
+
+
+
+
+                                            </ul>
+
+
+
+
+
+
+                                        </div>
+                                    </div>
+                                </div>*@
+                            <span id="errorsymbol" style="color:red;display:none;margin-left:5px;" class="fa fa-exclamation-circle"></span><div id="ErrorMessages" style="margin-left:20px;color:red;font-size:15px;margin-top:-19px">
+
+                            </div>
+
+
+
+
+
+
+                            <div class="input_fields_wrap" style="padding-top:12px;">
+                                <button type="button" class="btn btn-flat btn-labeled btn-primary add_field_button" style="margin-left:45px;">
+                                    <span class="btn-label icon  fa fa-plus-circle" style="margin-right:6px;"> </span>
+                                    Add More Fields
+                                </button>
+
+
+                                <div style="margin-top:10px;margin-bottom:10px;">
+                                </div>
+                            </div>
+
+                            <input type="hidden" id="hidval" />
+
+
+
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+
+
+
+
+
+
+
+
+        <div class="panel">
+            <div class="panel-heading">
+                <div class="row">
+                    <!-- Page header, center on small screens -->
+                    <h1 class="col-xs-6 col-sm-4 text-left text-left-sm panel-title"><i class="fa fa-user page-header-icon"></i>&nbsp; Custom Field Options List </h1>
+                    <div class="col-xs-6 col-sm-8">
+                        <div class="row">
+                            <div class="pull-right">
+                                @*<a href="#" class="btn btn-flat btn-labeled btn-primary" tabindex="-1"
+                                    data-toggle="modal" data-target="#uidemo-modals-alerts-info"><span class="btn-label icon fa fa-question-circle"></span>Help</a>*@
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel-body">
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <!-- Tabs -->
+
+
+                        <div class="tab-pane" id="bs-tabdrop-tab3">
+
+                            <div class="row">
+                                <div class="col-sm-12 col-xs-12">
+                                    <div class="table-primary table-striped">
+                                        <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="tblOptions" width="100%">
+                                            <thead>
+                                                <tr>
+                                                    <th width="30px">
+                                                        <input class="fa fa-square-o" type="checkbox" id="chkLeadsHeader" />
+                                                    </th>
+                                                    <th>&nbsp;</th>
+                                                    <th data-hide="tabletlandscape,phone">Value</th>                                                    
+                                                    <th data-class="expand">Is Default</th>
+
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+
+                                                @foreach (var item in Model.lstCustomOptions)
+                                                {
+
+                                                    <tr>
+                                                        @*<td></td>*@
+                                                        <td><input type="checkbox" value="" id="@item.DrpValueId" data-val-1="@item.DrpValueId" name="chkItem" /></td>
+
+
+                                                        <td>
+                                                            <span class="fa fa-times" onclick="deleteEachOption(@item.DrpValueId)"></span>
+                                                        </td>
+
+                                                        <td>
+                                                            @*<button class="btn fa fa-search inputTextButton" type="button" title="" data-toggle="modal" data-target="#divEditCustom" onclick="EditCustomValue('@item.DrpValue','@item.IsDefault')"></button>
+                                                            @Html.ActionLink(item.DrpValue, "AddEditPaytype", new {  @id = "divEditCustom", onclick = "EditCustomValue('@item.DrpValue','@item.IsDefault')" })*@
+                                                            @Html.DisplayFor(modelItem => item.DrpValue)
+
+                                                        </td>
+                                                        <td>
+                                                            @Html.DisplayFor(modelItem => item.IsDefault)
+                                                        </td>
+
+
+                                                    </tr>
+
+                                                }
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+
+
+
+</div>
+
+
+<div style="display: none;" role="dialog" tabindex="-1" class="modal fade" id="divEditCustom" aria-hidden="true">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+                <h4 class="modal-title">Edit Custom Value</h4>
+            </div>
+            <div class="modal-body" id="divModalCuMasterList">
+              Value  <input type="text" id="txteditcustomvalue" />
+              Isdefault  <input type="checkbox" id="chkcustomvalue" /></div>
+             <input type="button" id="btnSaveCustomValue" value="Save" class="btn-primary" />
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+        <!-- / .modal-content -->
+    </div>
+    <!-- / .modal-dialog -->
+</div>
+
+<script type="text/javascript">
+    var activefields = 0;
+
+    function EditCustomValue(value, defvalue)
+    {
+        $("#txteditcustomvalue").val(value);
+    }
+
+    $('#btnSave').click(function () {
+
+    })
+
+    $(document).ready(function () {
+       
+        $(document).on("blur", ".CheckDuplication", function () {
+          
+            var fieldid = $('#HidFieldVal').val();
+         
+            var value = this.value;
+            value = jQuery.trim(value).toLowerCase();            
+            var id = this.id;
+            var result = false;
+            $(".CheckDuplication").each(function () {
+                var opt = $(this).val().toLowerCase();
+                var optId = this.id;
+                if (opt == value && id != optId && value!="") {
+                    alert("Value already exist");
+                    result=true
+                    return false;                 
+                }
+                
+            });
+
+            $('#tblOptions tr').each(function () {
+               
+                var optValue = $(this).find("td").eq(2).html();               
+                optValue = jQuery.trim(optValue).toLowerCase();
+                if (optValue == value) {
+                    alert("Value already exist");
+                    result = true
+                    return false;
+                }              
+            });
+
+
+            if (result)
+                this.value = "";
+    });
+
+
+        var Hval = $('#hidval').val();
+        Hval.val = 0;
+        var max_fields = 10; //maximum input boxes allowed
+        var wrapper = $(".input_fields_wrap"); //Fields wrapper
+        var add_button = $(".add_field_button"); //Add button ID
+        var x = 0; //initlal text box count
+        $(add_button).click(function (e) { //on add input button click
+          
+            e.preventDefault();           
+            if (x < max_fields) {                
+                var i = 0;//max input box allowed               
+                    $(wrapper).append('<div style="margin-top:10px;margin-bottom:10px;" id="divoptions' + x + '" >  <input type="hidden" class="hiddefaultvalue" name="lstCustomOptions[' + x + '].defaultval" id="lstCustomOptions[' + x + '].defaultval"  value="0" " />   Value : <input type="text" class="CheckDuplication" name="lstCustomOptions[' + x + '].DrpValue" id="lstCustomOptions[' + x + '].DrpValue" /> Default : <input type="checkbox" name="lstCustomOptions[' + x + '].IsDefault" class="chkChild" id="lstCustomOptions[' + x + '].IsDefault" onclick="GetCheckitem(' + x + ')" /> <a href="#" id="anchorId' + x + '"  onclick="Hideitem(' + x + ')"  class="remove_field">Remove</a></div>'); //add input box
+                    x++;
+                    activefields++;
+                //text box increment               
+            }
+        });
+
+        $(wrapper).on("click", ".remove_field", function (e) { //user click on remove text
+            e.preventDefault();
+            // $(this).parent('div').remove(); x--;
+        })
+    });
+
+
+    function Hideitem(index) {
+
+        $('#divoptions' + index).css("display", "none")
+        //document.getElementById('divoptions' + index + '').style.visibility = "hidden";
+        document.getElementById('lstCustomOptions[' + index + '].defaultval').value = "2";
+        document.getElementById('lstCustomOptions[' + index + '].DrpValue').value = "Deleted_Row";
+        activefields--;
+    }
+
+    function GetCheckitem(index) {
+
+        if (document.getElementById('lstCustomOptions[' + index + '].IsDefault').checked) {
+            $('.chkChild').prop('checked', false);
+            var x = document.getElementsByClassName("hiddefaultvalue");
+            var i;
+            for (i = 0; i < x.length; i++) {
+                if (x[i].value != "2") // If div is not hidden
+                    x[i].value = "0";
+            }
+            document.getElementById('lstCustomOptions[' + index + '].defaultval').value = "1";
+            document.getElementById('lstCustomOptions[' + index + '].IsDefault').checked = true;
+
+        }
+        else {
+            $('.chkChild').prop('checked', false);
+
+            var x = document.getElementsByClassName("hiddefaultvalue");
+            var i;
+            for (i = 0; i < x.length; i++) {
+                x[i].value = "0";
+            }
+        }
+        alert(val);
+    }
+
+    $(document).ready(function () {
+
+
+        var responsiveHelper_example = undefined;
+        var breakpointDefinition = {
+            desktop: Infinity,
+            tablet: 1024,
+            phone: 480
+        };
+
+        $('#tblOptions').dataTable({
+            "autoWidth": false,
+            "searching": true,
+            "preDrawCallback": function () {
+                if (!responsiveHelper_example) {
+                    responsiveHelper_example = new ResponsiveDatatablesHelper($('#tblOptions'), breakpointDefinition);
+                }
+            },
+            "rowCallback": function (nRow) {
+                responsiveHelper_example.createExpandIcon(nRow);
+            },
+            "drawCallback": function (oSettings) {
+                responsiveHelper_example.respond();
+            },
+        });
+
+
+
+    });
+
+    $('#AddOptions').click(function () {
+
+        var Optionval = $('#txtDrpOption').val();
+        var DefaultVal = "";
+        var FieldId = $('#HidFieldVal').val();
+
+
+        if (Optionval != "") {
+
+            if ($('#isDefault').prop("checked") == true) {
+
+                DefaultVal = "1";
+            }
+            else if ($('#isDefault').prop("checked") == false) {
+
+                DefaultVal = "0";
+            }
+            $.ajax({
+                url: "InsertDrpOptions",
+                type: "Post",
+                async: false,
+                data: { Optionval: Optionval, DefaultVal: DefaultVal, FieldId: FieldId },
+                success: function (data) {
+
+                    alert(data);
+                    if (data != null) {
+
+                        $('#Loadoptions').empty();
+                        $('#Loadoptions').empty().html(data);
+
+                    }
+                },
+                error: function () {
+
+                }
+            });
+        }
+        else {
+            alert("Please Enter Option !!!!!!!!!");
+        }
+
+
+    });
+
+
+
+
+    // function to delete the Holiday Details by individual and bulk
+
+    function deleteSelectedOptions() {
+        //alert("delete");
+        if ($('#tblOptions input[name="chkItem"]:checked').length > 0) {
+            var flag = confirm('You are about to delete permanently.Are you sure you want to delete these Option?');
+            if (flag) {
+
+                var searchIDs = $("#tblOptions input:checkbox:checked").map(function () {
+                    return $(this).attr("data-val-1");
+                }).get();
+                // alert(searchIDs);
+                DeleteOptions(searchIDs)
+            }
+        }
+        else {
+            alert("Please select item(s) to delete.");
+        }
+    }
+
+
+    function deleteEachOption(OptionId) {
+
+        var flag = confirm('You are about to delete permanently.Are you sure you want to delete this Option?');
+        if (flag) {
+            DeleteOptions(OptionId);
+        }
+    }
+
+
+    function DeleteOptions(searchIDs) {
+        $.ajax({
+            url: "DeleteCustomOptions",
+            type: "POST",
+            cache: "false",
+            data: { OptionIds: searchIDs.toString() },
+            success: function (data) {
+                if (data == "True") {
+                    $.growl.notice({ title: "Success", message: "Option(s) Deleted Successfully.", size: 'large' });
+                    document.location.href = document.location.href;
+                    // alert("Deleted Successfully");
+                }
+                else {
+                    $.growl.notice({ title: "Fail", message: "Option(s) Not Deleted .", size: 'large' });
+                }
+            },
+            error: function (request, status, error) {
+                alert(request.responseText);
+            }
+        });
+    }
+
+
+    function Opendrpvalue(HistoryID) {
+
+        var URL = "AttachmentActivity";
+        $.ajax({
+            url: URL,
+            type: "GET",
+            async: false,
+            data: { HistoryID: HistoryID },
+            success: function (data) {
+
+                if (data != null) {
+                    $('#tblModalAttachment').empty();
+                    $('#tblModalAttachment').empty().append(data);
+                }
+            },
+            error: function (error) {
+
+
+            }
+        });
+        $('#myModalAttachment').modal("show");
+    }
+
+</script>
+
+
+
+

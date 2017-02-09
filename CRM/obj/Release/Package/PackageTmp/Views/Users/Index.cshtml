@@ -1,0 +1,634 @@
+﻿@model CRMHub.ViewModel.UsersModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+}
+
+<style>
+    .Overlay {
+        display: block;
+        position: fixed;
+        top: 0px;
+        bottom: 0px;
+        left: 0px;
+        right: 0px;
+        overflow: hidden;
+        padding: 0;
+        margin: 0;
+        background-color: #000;
+        filter: alpha(opacity=50);
+        opacity: 0.5;
+        z-index: 1049;
+    }
+</style>
+
+<div id="content-wrapper">
+    <div id="CustomBootstrapAlertBox">
+    </div>
+    <div class="row">
+
+
+        <div class="panel">
+
+            <div class="panel-heading">
+                <div class="row">
+                    <!-- Page header, center on small screens -->
+                    <h1 class="col-xs-6 col-sm-4 text-left text-left-sm panel-title"><i class="fa fa-users page-header-icon"></i>&nbsp;<label id="lblHeading"> Users List</label></h1>
+                    <div class="col-xs-6 col-sm-8">
+                        <div class="row">
+                            <div class="pull-right">
+                                @*<a href="#" class="btn btn-flat btn-labeled btn-primary" tabindex="-1"
+                                    data-toggle="modal" data-target="#uidemo-modals-alerts-info"><span class="btn-label icon fa fa-question-circle"></span>Help</a>*@
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel-body">
+
+
+                <div class="row">
+
+                    <!-- Tabs -->
+
+
+                    <div class="tab-pane" id="bs-tabdrop-tab3">
+                        <div class="row" id="pnlSrchCriteria">
+                            <div class="col-sm-3">
+                                <div class="form-group no-margin-hr">
+                                    <label class="control-label">Keyword :</label>
+
+                                    @Html.TextBoxFor(m => m.users.Keyword, new { @id = "txtKeyWord", @class = "form-control input-sm", @maxlength = "100" })
+                                </div>
+                            </div>
+
+                            <div class="col-sm-3">
+                                <div class="form-group no-margin-hr">
+                                    <label class="control-label">Name :</label>
+
+                                    @Html.TextBoxFor(m => m.users.FirstName, new { @id = "txtName", @class = "form-control input-sm" })
+                                </div>
+                            </div>
+                            <div class="col-sm-3" id="tdStaffingManager" runat="server">
+                                <div class="form-group no-margin-hr">
+                                    <label class="control-label">Role :</label>
+                                    @Html.DropDownListFor(m => m.users.RoleId, new SelectList(@ViewBag.roleids, "roleId", "roleName"), "Select", new { @id = "ddlLevels", @class = "form-control input-sm" })
+
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group no-margin-hr">
+                                    <label class="control-label">Office :</label>
+
+                                    @Html.DropDownListFor(m => m.users.BranchId, new SelectList(Model.listBranch, "branchId", "branchName", "Select All"), new { @id = "ddlBranch", @class = "form-control input-sm" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <div class="form-group no-margin-hr">
+                                    <label class="control-label">City :</label>
+
+                                    @Html.TextBoxFor(m => m.users.City, new { @id = "txtCity", @class = "form-control input-sm" })
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group no-margin-hr">
+                                    <label class="control-label" id="lblState" runat="server">State :</label>
+
+                                    @Html.DropDownListFor(m => m.users.StateCode, new SelectList(Model.getListOfStates, "stateCode", "stateName"), new { @id = "ddlState", @class = "form-control input-sm" })
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group no-margin-hr">
+                                    <label class="control-label">Phone :</label>
+
+
+                                    @Html.TextBoxFor(m => m.users.Phone, new { @id = "txtPhone", @class = "form-control input-sm", @onkeypress = "return onlynumbers(event,this);", @onblur = "formatPhone(this);", @maxlength = "20" })
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group no-margin-hr">
+                                    <label class="control-label">Email :</label>
+
+                                    @Html.TextBoxFor(m => m.users.Email, new { @id = "txtEmail", @class = "form-control input-sm", @type = "email" })
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="clearfix"></div>
+                        <div class="col-sm-12" id="filter"></div>
+
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12 text-right text-right-sm">
+
+                                <div class="col-xs-12 col-sm-12 text-right text-right-sm" id="white_bg">
+                                    <ul class="table-nav-item">
+                                        <li class="btn btn-flat btn-labeled btn-primary" id="btnmargin_top">
+
+                                            <a style="color: #fff; text-decoration: none; padding: 0px; font-weight: normal" id="btnClear">
+                                                <span class="btn-label icon fa fa-eraser" style="margin-right:6px;"> </span>
+                                                Clear
+                                            </a>
+
+
+                                        </li>
+
+                                        <li class="btn btn-flat btn-labeled btn-primary" id="btnmargin_top">
+
+
+                                            <a style="color: #fff; text-decoration: none; padding: 0px; font-weight: normal" id="btnSearch">
+                                                <span class="btn-label icon fa fa-search" style="margin-right:6px;"> </span>
+                                                Search
+                                            </a>
+                                        </li>
+
+                                    </ul>
+
+                                </div>
+
+                                @*<button class="btn btn-flat btn-labeled btn-primary" id="btnSearch" style="margin:0px  0px 15px 0px;">
+                                        <span class="btn-label icon fa fa-search"></span>Search
+                                    </button>*@
+
+
+                            </div>
+                        </div>
+
+                        <!-- col-sm-6 -->
+                        <div class="col-sm-12">
+                            <div class="row">
+
+                                <div class="col-sm-12" style="background-color: #f5f5f5; padding-top: 6px; padding-bottom: 6px; text-align: right;">
+                                    <ul class="table-nav-item">
+
+                                        <li class="btn btn-flat btn-labeled btn-primary" style=" float:left; margin-left:3px;">
+
+                                            <a style="color: #fff; text-decoration: none; padding: 0px; font-weight: normal" href="@Url.Action("CreateUser", "Users")">
+                                                <span class="btn-label icon  fa  fa-plus-circle" style="margin-right:6px;"> </span>
+                                                Add New
+                                            </a>
+
+                                        </li>
+
+
+
+                                        <li class="btn btn-flat btn-labeled btn-primary" style=" float:left; margin-left:3px;">
+
+                                            <a style="color: #fff; text-decoration: none; padding: 0px; font-weight: normal" id="DeleteUsers" onclick="deleteSelectedUser()">
+                                                <span class="btn-label icon  fa  fa-trash-o" style="margin-right:6px;"> </span>
+                                                Delete
+                                            </a>
+                                        </li>
+                                    </ul>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+
+                            <div class="row">
+                                <div class="table-primary table-striped">
+
+                                    <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="jq-datatables-example" width="100%">
+                                        <thead>
+                                            <tr>
+
+                                                <th>
+                                                    <input type="checkbox" id="chkHeader" class="sorting_disabled" style="width:25px" />
+                                                </th>
+                                                <th data-class="expand">Full Name</th>
+                                                <th data-hide="phone">E-mail</th>
+                                                <th data-hide="tabletlandscape,phone">Phone</th>
+                                                <th data-class="tabletlandscape,phone">City</th>
+                                                <th data-hide="tablet,tabletlandscape,phone">State</th>
+                                                <th data-hide="tablet,tabletlandscape,phone">Role</th>
+                                                <th data-hide="tablet,tabletlandscape,phone">Office</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+
+                </div>
+            </div>
+        </div>
+
+        <!-- /11. $BOOTSTRAP_TAB_DROP -->
+        <!-- / Info -->
+    </div>
+</div>
+
+<!-- Info -->
+<!-- / .modal -->
+<div id="MdlAlert" class="modal" tabindex="-1" role="dialog" style="display: none; overflow: hidden; padding-top: 0px; width: 100%; height: 100%;">
+    <div class="modal-dialog" style="width: 99%; margin-left: 421px; margin-top: 165px;">
+        <div class="modal-content" style="width: 22%; height:15%">
+            <div class="modal-header">
+                @*<a id="XbtnClose" style="float:right;margin-top:-9px;">X</a>*@
+                <span style="float:right;margin-top:-9px"><label id="XbtnClose">X</label></span>
+                @*<button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="xAlertClose">×</button>*@
+                <h4 class="modal-title">Delete Users?</h4>
+
+            </div>
+            <div class="modal-body" style="display: inline-block; height: 73px">
+                <p>Are you sure you want to delete selected records?</p>
+
+            </div>
+
+            <div class="modal-footer">
+
+                @*<button type="button" class="btn btn-primary pull-right" data-dismiss="modal" aria-hidden="true" id="btnAlertclose">Close</button>*@
+                @*<input type="button" id="btnok" value="OK" />*@
+                <span><button id="btnCancel">Cancel</button></span>
+                <span><button id="btnok">OK</button></span>
+                @*<input type="submit" value="Ok" />*@
+            </div>
+        </div>
+
+    </div>
+
+</div>
+<div id="overlaydiv" class="Overlay" style="display: none; overflow: hidden"></div>
+
+<style>
+    .DT-search, .DT-search input {
+        display: none;
+    }
+
+    .DT-per-page {
+        border-right: 1px solid #eee;
+        margin-right: -1px;
+        height: 23px;
+        padding-right: 15px;
+        white-space: nowrap;
+    }
+</style>
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        var CreateUser = '@ViewBag.CreateUser';
+        if (CreateUser != "") {
+            //$('#ErrorMessages').html('Lead Details Updated Successfully.');
+            $.growl.notice({ title: "Success", message: "User Details Created Successfully.", size: 'large' });
+
+        }
+
+
+
+        $('#txtPhone').bind("cut copy paste", function (e) {
+            e.preventDefault();
+        });
+
+
+
+        $('#loading').css('display', 'block');
+
+        BindUserSearchList();
+        $('#jq-datatables-example').on('length.dt', function (e, settings, len) {
+
+            $('#loading').css('display', 'block');
+
+        });
+
+        $('#jq-datatables-example').on('page.dt', function () {
+
+            $('#loading').css('display', 'block');
+        });
+
+        $('#loading').css('display', 'none');
+    });
+
+
+
+
+    function BindUserSearchList() {
+
+        $('#loading').css('display', 'block');
+        var responsiveHelper = undefined;
+        var breakpointDefinition = {
+            tablet: 1024,
+            tabletlandscape: 768,
+            phone: 480
+        };
+        var tableElement = $('#jq-datatables-example');
+
+        tableElement.dataTable({
+            autoWidth: false,
+            preDrawCallback: function () {
+                if (!responsiveHelper) {
+                    responsiveHelper = new ResponsiveDatatablesHelper(tableElement, breakpointDefinition);
+                }
+            },
+            rowCallback: function (nRow) {
+                responsiveHelper.createExpandIcon(nRow);
+            },
+            drawCallback: function (oSettings) {
+                responsiveHelper.respond();
+            },
+            //"order": [[$("#HD_SortValue").val(), "" + $("#HD_SortDirection").val() + ""]],
+            "aLengthMenu": [[10, 25, 50], [10, 25, 50]],
+            //"iDisplayStart": parseInt($("#HD_PageIndex").val()),
+            //"iDisplayLength": parseInt($("#HD_PageSize").val()),
+            //"oSearch": { "sSearch": $("#HD_SearchString").val() },
+
+            "pagingType": "full_numbers",
+            //"processing": true,
+            "bFilter": false,
+            "serverSide": true,
+
+            "sAjaxSource": "Users/SearchUser",
+            "fnServerParams": function (aoData) {
+                aoData.push(
+                    { "name": "Adkeyword", "value": "" + $("#txtKeyWord").val() + "" },
+                    { "name": "AdName", "value": "" + $("#txtName").val() + "" },
+                    { "name": "Adlevels", "value": "" + $("#ddlLevels").val() + "" },
+                    { "name": "AdBranch", "value": "" + $("#ddlBranch").val() + "" },
+                    { "name": "AdCity", "value": "" + $("#txtCity").val() + "" },
+                    { "name": "Adstate", "value": "" + $("#ddlState").val() + "" },
+                    { "name": "AdPhone", "value": "" + $("#txtPhone").val() + "" },
+                    { "name": "Ademail", "value": "" + $("#txtEmail").val() + "" }
+                    //{ "name": "ContactSkillId", "value": "" }
+                    );
+
+            },
+            "fnServerData": function (sSource, aoData, fnCallback) {
+                $.ajax({
+                    "dataType": 'json',
+                    "contentType": "application/json; charset=utf-8",
+                    "type": "GET",
+                    "url": sSource,
+                    "data": aoData,
+                    "success":
+                                function (msg) {
+                                    //var json = jQuery.parseJSON(msg.d);
+                                    $('#loading').css('display', 'none');
+                                    fnCallback(msg);
+                                    //$("#jq-datatables-example").show();
+                                }
+                });
+            },
+            "asStripeClasses": ['odd gradeX', 'even gradeC'],
+            "aoColumnDefs": [
+                {
+                    "targets": [0], "visible": true, "bSortable": false, "mDataProp": "UserId",
+                    "render": function (data, type, row) {
+                        if (row["UserId"] != 1) {
+                            return "<input type=\"checkbox\" name=\"chkitems\" class=\"case\" id=\"chkRow_" + row["UserId"] + "\"  data-UserId=\"" + row["UserId"] + "\" data-RoleName=\"" + row["roleName"] + "\"/>";
+                        }
+                        else {
+                            return "";
+                        }
+
+
+
+                    }
+                },
+                {
+
+                    "targets": [1], "visible": true, "bSortable": true, "mDataProp": "FirstName",
+                    "render": function (data, type, row) {
+
+                        return "<a href=\"#\" onclick=\"OpenUsersDetail('" + row["UserId"] + "');\">" + row["FirstName"] + "</a>";
+                    }
+                },
+                {
+
+                    "targets": [2], "visible": true, "bSortable": true, "mDataProp": "Email",
+
+                },
+                { "targets": [3], "visible": true, "bSortable": true, "mDataProp": "Phone" },
+                { "targets": [4], "visible": true, "bSortable": true, "mDataProp": "City" },
+                { "targets": [5], "visible": true, "bSortable": true, "mDataProp": "stateName" },
+                { "targets": [6], "visible": true, "bSortable": true, "mDataProp": "roleName" },
+                 { "targets": [7], "visible": true, "bSortable": true, "mDataProp": "branchName" },
+            ],
+            "fnDrawCallback": function (oSettings) {
+                // $('#loading').css('display', 'none');
+                //$("#HD_PageIndex").val(oSettings._iDisplayStart);
+                //$("#HD_PageSize").val(oSettings._iDisplayLength);
+
+
+                //if ($("#HD_IsFromBack").val() == 'YES') {
+                //    $("#HD_IsFromBack").val('NO');
+                //}
+                $('#loading').css('display', 'none');
+            }
+        }).api();
+
+
+        $('#jq-datatables-example_wrapper .table-caption').text('');
+
+        $('#jq-datatables-example_wrapper .dataTables_filter input').attr('placeholder', 'Search...');
+
+
+
+    }
+
+
+
+    $('#btnSearch').click(function () {
+
+        $('#loading').css('display', 'block');
+        $("#jq-datatables-example").dataTable().fnDestroy();
+        BindUserSearchList();
+
+        $('#jq-datatables-example').on('length.dt', function (e, settings, len) {
+
+            $('#loading').css('display', 'block');
+        });
+
+        $('#jq-datatables-example').on('page.dt', function () {
+
+            $('#loading').css('display', 'block');
+        });
+
+    });
+
+    //$('#jq-datatables-example th').click(function () {
+    //
+    //    $('#loading').css('display', 'none');
+    //})
+
+    $('#btnClear').click(function () {
+
+        //$('#txtOwnerName').val('');
+        //$('#txtKeyWord').val('');
+        //$('#txtCompanyName').val('');
+        //$('#ddlOpporStage').val('0');
+        $("#txtKeyWord").val('');
+        $("#txtName").val('');
+        $("#ddlLevels").val('');
+        $("#ddlBranch").val('-1');
+        $("#txtCity").val('');
+        $("#ddlState").val('AA');
+        $("#txtPhone").val('');
+        $("#txtEmail").val('');
+
+        $('#loading').css('display', 'block');
+        $("#jq-datatables-example").dataTable().fnDestroy();
+        BindUserSearchList();
+
+    });
+
+
+    function deleteSelectedUser() {
+
+        var valid = true;
+        var searchIDsValues = new Array();
+
+        //var searchIDs = $('#jq-datatables-example').dataTable().api().rows('.selected').data().length;
+        //var searchIDs = $('input[name="chkitems"]:checked');
+        var checkedids = $('#jq-datatables-example').find("input[name='chkitems']:checked").length;
+        var isSuperAdminExist = false;
+        if (checkedids > 0) {
+
+            $('#jq-datatables-example input[name="chkitems"]:checked').each(function () {
+
+
+                //if ($(this).attr('data-RoleName') == "Super Admin") {
+                //    $.growl.error({ title: "Error", message: "Super Admin cant be deleted.", size: 'large' });
+                //   // alert("Super Admin cant be deleted");
+                //    valid = false;
+                //    return valid;
+                //}
+                if ($(this).attr('data-RoleName') != "Super Admin") {
+                    searchIDsValues.push($(this).attr('data-UserId'));
+                    //id = $(this).attr('data-UserId');
+                    $('#overlaydiv').show();
+                    $("#MdlAlert").show();
+                    return valid = true;
+                }
+                else {
+                    // window.location.href = window.location.href;
+                    if (isSuperAdminExist == false) {
+                        $.growl.error({ title: "Error", message: "Super Admin cant be deleted.", size: 'large' });
+                        isSuperAdminExist = true;
+                    }
+
+
+                }
+
+            })
+        }
+
+
+        else {
+            alert("Please select item(s) to delete.");
+        }
+
+    }
+
+
+    $("#btnok").click(function (e) {
+
+        e.preventDefault();
+        e.stopPropagation();
+        $('#overlaydiv').hide();
+        $("#MdlAlert").hide();
+
+        // var searchIDs = $('#jq-datatables-example').dataTable().api().rows('.selected').data()["userId"];
+        var searchIDsValues = new Array();
+
+        $('#jq-datatables-example input[name="chkitems"]:checked').each(function () {
+
+            if ($(this).attr('data-RoleName') != "Super Admin") {
+                searchIDsValues.push($(this).attr('data-UserId'));
+            }
+            //id = $(this).attr('data-UserId');
+
+        });
+
+        $.ajax({
+            url: "Users/DeleteUserByuserid",
+            type: "POST",
+            cache: "false",
+            data: { UserIds: searchIDsValues.toString() },
+            success: function (data) {
+
+                if (data == "UserDeleted") {
+                    $.growl.notice({ title: "Success", message: "User Deleted Successfully.", size: 'large' });
+                    $("#jq-datatables-example").dataTable().fnDestroy();
+                    BindUserSearchList();
+                }
+                else if (data == "NotDeleted") {
+                    $.growl.error({ title: "Fail", message: "Can't  Deleted !!!  User is in use.", size: 'large' });
+                }
+                else if (data == "Loggeduser") {
+                    $.growl.error({ title: "Fail", message: "Logged user Can't be deleted.", size: 'large' });
+                }
+
+                //if (data == "True") {
+
+                //    window.location.href = window.location.href;
+                //    //alert("Deleted Successfully")
+                //    $.growl.notice({ title: "Success", message: "User Deleted Successfully.", size: 'large' });
+                //}
+                //else {
+                //    $.growl.notice({ title: "Fail", message: "User Not Deleted .", size: 'large' });
+                //}
+            },
+            error: function (request, status, error) {
+            }
+        });
+
+
+    });
+
+
+    $("#btnCancel").click(function (e) {
+
+        e.preventDefault();
+        e.stopPropagation();
+        $('#overlaydiv').hide();
+        $("#MdlAlert").hide();
+
+    });
+
+    function OpenUsersDetail(userId) {
+        window.location = "Users/EditUserDetail?userId=" + userId;
+    }
+
+
+
+
+
+    $("#chkHeader").click(function () {
+        $(".case").prop("checked", this.checked);
+    });
+    // if all checkbox are selected, check the selectall checkbox
+    // and viceversa
+    $('#jq-datatables-example tbody').click(function () {
+
+        if ($('#jq-datatables-example input[name="chkitems"]:checked').length == $('#jq-datatables-example input[name="chkitems"]').length) {
+            $("#chkHeader").prop("checked", true);
+        } else {
+            $("#chkHeader").prop("checked", false);
+        }
+    });
+
+    function onlynumbers(evt) {
+        var charCode = (evt.which) ? evt.which : event.keyCode
+        if (charCode == 43 || charCode == 32 || charCode == 40 || charCode == 41)
+            return true;
+        else if (charCode > 31 && (charCode < 45 || charCode > 57 || charCode == 47 || charCode == 46))
+            return false;
+
+        return true;
+    }
+</script>
+

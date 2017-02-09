@@ -1,0 +1,248 @@
+﻿@using CRMHub.EntityFramework;
+@using System.Web.Optimization
+@using System.Web.Script.Serialization;
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+}
+
+
+    <script src="~/Scripts/dhtmlxScheduler/dhtmlxscheduler.js"></script>
+    <link href="~/Scripts/dhtmlxScheduler/dhtmlxscheduler.css" rel="stylesheet" />
+    <script src="~/Scripts/dhtmlxScheduler/ext/dhtmlxscheduler_tooltip.js"></script>
+    <style type="text/css">
+        body {
+        }
+
+        b, strong {
+            font-weight: 700;
+            display: none !important;
+        }
+
+        .dhx_cal_event_clear {
+            color: #fff !important;
+            height: 18px !important;
+        }
+
+        .dhx_cal_select_menu {
+            display: none !important;
+        }
+
+        .dhx_title {
+            display: none !important;
+        }
+
+        .dhx_cal_event {
+            width: 0px !important;
+        }
+    </style>
+    @{
+        List<tbl_history> eventtypes = (List<tbl_history>)Session["Notifications"];
+        var jsonres = new JavaScriptSerializer().Serialize(eventtypes);
+    }
+    <script type="text/javascript">
+    $(document).ready(function () {
+        scheduler.templates.tooltip_text = function (start, end, event) {
+            return 'Event:' + event.text
+                + "<br/>Module:" + event.Module
+            + "<br>Due date: " + event.Due_Date
+            + "<br/>Remind date:" + event.Reminder_Date
+            
+        }
+        scheduler.config.icons_select = [];
+        scheduler.locale.labels.new_event = "";
+        scheduler.templates.event_class = function (start, end, ev) {
+            var CurrDate = new Date();
+            if (start > CurrDate) {
+                $('.dhx_cal_event').css('background-color', 'green');
+                ev.color = "green";
+            }
+            else {
+                $('.dhx_cal_event').css('background-color', 'red');
+                ev.color = "red";
+            }
+           // return "dhx_cal_event_line dhx_cal_event_line_start dhx_cal_event_line_end";
+        };
+
+        scheduler.attachEvent("onEmptyClick", function (date) {
+
+            var fullDate = new Date(date);
+            var CurrDate = new Date();
+            if (fullDate > CurrDate) {
+                var twoDigitMonth = fullDate.getMonth() + 1;
+                twoDigitMonth = twoDigitMonth + ""; if (twoDigitMonth.length == 1) twoDigitMonth = "0" + twoDigitMonth;
+                var twoDigitDate = fullDate.getDate() + ""; if (twoDigitDate.length == 1) twoDigitDate = "0" + twoDigitDate;
+                var currentDate = twoDigitDate + "/" + twoDigitMonth + "/" + fullDate.getFullYear();
+                var target = '@Url.Action("CompanyActivities", "ManageCompany")'
+                window.location.href = target + '?dateField=' + currentDate;
+            }
+            else {
+                $.growl.warning({ title: "warning", message: "Activity cannot be created for Present and Past date(s).", size: 'large' });  
+            }
+        })
+
+        scheduler.attachEvent("onDblClick", function (id) {
+
+            var JsonModel = '@Html.Raw(Json.Encode(@eventtypes))';
+            var json1 = JsonModel.split('{');
+            var Moduletype = '';
+            for (var i = 1; i < json1.length; i++) {
+                if (JsonModel.split('{')[i].indexOf(id) > 0) {
+                    var len = JsonModel.split('{')[i].length;
+                    obj = JSON.parse('{' + JsonModel.split('{')[i].substring(0, (len - 1)))
+                    Moduletype = obj.ModuleType;
+                }
+            }
+            schedulerNotification(id, Moduletype);
+        });
+    });
+
+    function schedulerNotification(id, Moduletype) {
+        var HistId = id;
+        if (Moduletype == "Company") {
+            var url = '@Url.Action("EditActivityCmpgrid", "ManageCompany", new { HistoryId = "__id__" })';
+            window.location.href = url.replace('__id__', HistId);
+        }
+        else if (Moduletype == "Contact") {
+            var url = '@Url.Action("EditActivitygridContact", "Contact", new { historyid = "__id__" })';
+            window.location.href = url.replace('__id__', HistId);
+        }
+        else if (Moduletype == "Opportunities") {
+            var url = '@Url.Action("EditOpportunityActivityGrid", "Opportunities", new { Leadhistid = "__id__" })';
+            window.location.href = url.replace('__id__', HistId);
+        }
+        else if (Moduletype == "Leads") {
+            var url = '@Url.Action("EditLeadActivityGrid", "Leads", new { leadhistoryid = "__id__" })';
+            window.location.href = url.replace('__id__', HistId);
+        }
+    }
+        function Cinit() {
+        $.ajax(
+          {
+              type: 'GET',
+              url: '@Url.Action("Data", "Calender")',
+                          asyn: false,
+                          data: {},
+                          success: function (data) {
+                              for (var i = 0; i < data.length; i++) {
+                                  var startdate = data[i].start_date;
+                                  var jsDate1 = startdate;
+                                  if (jsDate1 == null) {
+                                      return jsDate1 = "";
+                                  }
+                                  else if (jsDate1.value != "") {
+                                      var jsDate = new Date(parseInt(startdate.substr(6)));
+                                      var stdate = (jsDate.getMonth() + 1) + '/' + jsDate.getDate() + '/' + jsDate.getFullYear();
+                                      var fullDate = new Date(stdate);
+                                      var twoDigitMonth = fullDate.getMonth() + 1;
+                                      twoDigitMonth = twoDigitMonth + ""; if (twoDigitMonth.length == 1) twoDigitMonth = twoDigitMonth;
+                                      var twoDigitDate = fullDate.getDate() + ""; if (twoDigitDate.length == 1) twoDigitDate = "0" + twoDigitDate;
+                                      var currentDate = twoDigitDate + "/" + twoDigitMonth + "/" + fullDate.getFullYear();
+                                      data[i].start_date = currentDate;
+                                  }
+                                  var enddate = data[i].end_date;
+                                  var jsDate1 = enddate;
+                                  if (jsDate1 == null) {
+                                      return jsDate1 = "";
+                                  }
+                                  else if (jsDate1.value != "") {
+                                      var jsDate = new Date(parseInt(enddate.substr(6)));
+                                      var enddate = (jsDate.getMonth() + 1) + '/' + jsDate.getDate() + '/' + jsDate.getFullYear();
+                                      var fullDate = new Date(enddate);
+                                      var twoDigitMonth = fullDate.getMonth() + 1;
+                                      twoDigitMonth = twoDigitMonth + ""; if (twoDigitMonth.length == 1) twoDigitMonth = twoDigitMonth;
+                                      var twoDigitDate = fullDate.getDate() + ""; if (twoDigitDate.length == 1) twoDigitDate = "0" + twoDigitDate;
+                                      var currentDate = twoDigitDate + "/" + twoDigitMonth + "/" + fullDate.getFullYear();
+                                      data[i].end_date = currentDate;
+                                  }
+                                  var Due_Date = data[i].Due_Date;
+                                  var jsDate1 = Due_Date;
+                                  if (jsDate1 == null) {
+                                      return jsDate1 = "";
+                                  }
+                                  else if (jsDate1.value != "") {
+                                      var jsDate = new Date(parseInt(Due_Date.substr(6)));
+                                      var Due_Date = (jsDate.getMonth() + 1) + '/' + jsDate.getDate() + '/' + jsDate.getFullYear();
+                                      var fullDate = new Date(Due_Date);
+                                      var twoDigitMonth = fullDate.getMonth() + 1;
+                                      twoDigitMonth = twoDigitMonth + ""; if (twoDigitMonth.length == 1) twoDigitMonth = "0" + twoDigitMonth;
+                                      var twoDigitDate = fullDate.getDate() + ""; if (twoDigitDate.length == 1) twoDigitDate = "0" + twoDigitDate;
+                                      var currentDate = twoDigitDate + "/" + twoDigitMonth + "/" + fullDate.getFullYear();
+                                      data[i].Due_Date = currentDate;
+                                  }
+                                  var Reminder_Date = data[i].Reminder_Date;
+                                  var jsDate1 = Reminder_Date;
+                                  if (jsDate1 == null) {
+                                      return jsDate1 = "";
+                                  }
+                                  else if (jsDate1.value != "") {
+                                      var jsDate = new Date(parseInt(Reminder_Date.substr(6)));
+                                      var Reminder_Date = (jsDate.getMonth() + 1) + '/' + jsDate.getDate() + '/' + jsDate.getFullYear();
+                                      var fullDate = new Date(Reminder_Date);
+                                      var twoDigitMonth = fullDate.getMonth() + 1;
+                                      twoDigitMonth = twoDigitMonth + ""; if (twoDigitMonth.length == 1) twoDigitMonth = "0" + twoDigitMonth;
+                                      var twoDigitDate = fullDate.getDate() + ""; if (twoDigitDate.length == 1) twoDigitDate = "0" + twoDigitDate;
+                                      var currentDate = twoDigitDate + "/" + twoDigitMonth + "/" + fullDate.getFullYear();
+                                      data[i].Reminder_Date = currentDate;
+                                  }
+                              }
+                              var data1 = JSON.stringify(data);
+                              scheduler.config.dblclick_create = false;
+                              scheduler.config.drag_create = false;
+                              scheduler.config.drag_move = false;
+                              scheduler.config.drag_resize = false;
+                              scheduler.config.xml_date = "%d-%m-%Y %H:%i";
+                              scheduler.init("scheduler_here", new Date(), "month");
+                              scheduler.parse(data1, "json");
+              },
+              complete: function () {
+
+              },
+              error: function (jqXHR, textStatus, errorThrown) {
+                  console.log(textStatus, errorThrown);
+              },
+          });
+    }
+    </script>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="panel panel-success panel-dark">
+                    <div class="panel-heading">
+                        <span class="panel-title">Scheduler Summary</span>
+                        <div class="panel-heading-controls">
+                            <div class="panel-heading-icon"></div>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div id="scheduler_here" class="dhx_cal_container" style=" height:700px; width:800px; margin:0 auto;overflow:hidden">
+                                <div class="dhx_cal_navline">
+                                    <div class="dhx_cal_prev_button">&nbsp;</div>
+                                    <div class="dhx_cal_next_button">&nbsp;</div>
+                                    <div class="dhx_cal_today_button"></div>
+                                    <div class="dhx_cal_date"></div>
+                                    <div class="dhx_cal_tab" name="day_tab" style="right:204px;"></div>
+                                    <div class="dhx_cal_tab" name="week_tab" style="right:140px;"></div>
+                                    <div class="dhx_cal_tab" name="month_tab" style="right:76px;"></div>
+                                </div>
+                                <div class="dhx_cal_header">
+                                </div>
+                                <div class="dhx_cal_data">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        Cinit();
+    });
+
+</script>
+

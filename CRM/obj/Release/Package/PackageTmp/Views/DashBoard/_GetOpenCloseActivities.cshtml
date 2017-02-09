@@ -1,0 +1,96 @@
+﻿@model CRMHub.ViewModel.DashboardViewModel
+
+
+<div class="col-md-12">
+    <div class="panel panel-primary widget-support-tickets" id="dashboard-support-tickets">
+        <div class="panel-heading">
+            <span class="panel-title" style="color:#fff;">Activities</span>
+
+        </div>
+        <!-- / .panel-heading -->
+        <div class="panel-body tab-content-padding">
+            <!-- Panel padding, without vertical padding -->
+            <div class="col-sm-12">
+                <div class="slimScrollDiv">
+
+                    <div class="table-primary table-striped">
+
+
+                        <table cellpadding="0" cellspacing="0" border="0" class="table table-bordered dataTable no-footer" id="datatables-Activities">
+
+                            <thead>
+                                <tr><th>&nbsp;</th></tr>
+                            </thead>
+                            <tbody>
+                                @for (int i = 0; i < Model.lstHistory.Count; i++)
+                                {
+
+                                    <tr>
+                                        <td> <img src="~/Content/assets/demo/avatars/1.jpg" style="width:40px;height:40px;padding:2px" class="rounded">&nbsp;&nbsp;<div style="padding-left:50px;position:relative;top:-40px;margin-bottom:-40px"><strong> @Html.DisplayFor(model => model.lstHistory[i].HistoryType)</strong> activity created by <strong>Admin@*@Html.DisplayFor(model => model.lstHistory[i].ApplicantName)*@</strong> <br> Module : <strong>@Html.DisplayFor(model => model.lstHistory[i].ModuleType) </strong><br>Company Name : <strong>@Html.DisplayFor(model => model.lstHistory[i].CompanyName)</strong> <b></b><br></div></td>
+
+                                    </tr>
+                                }
+
+
+
+
+                                @*@for (int i = 0; i < Model.ListActivity.Count; i++)
+                                    {
+
+                                        <tr>
+                                            <td> <img src="~/Content/assets/demo/avatars/1.jpg" style="width:40px;height:40px;padding:2px" class="rounded">&nbsp;&nbsp;<div style="padding-left:50px;position:relative;top:-40px;margin-bottom:-40px"><strong> @Html.DisplayFor(model => model.ListActivity[i].ActivityType)</strong> activity created by <strong>Admin, Admin</strong> in module <strong>@Html.DisplayFor(model => model.ListActivity[i].Type) </strong><br>Company Name : <b></b><br></div></td>
+
+                                        </tr>
+                                    }*@
+
+
+
+                            </tbody>
+                        </table>
+
+                    </div>
+
+
+
+                </div>
+            </div>
+        </div>
+        <!-- / .panel-body -->
+    </div>
+    <!-- / .panel -->
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var responsiveHelper_example = undefined;
+        var breakpointDefinition = {
+            desktop: Infinity,
+            tablet: 1024,
+            phone: 480
+        };
+        $('#datatables-Activities').dataTable({
+            "autoWidth": false,
+            "searching": true,
+            "preDrawCallback": function () {
+                if (!responsiveHelper_example) {
+                    responsiveHelper_example = new ResponsiveDatatablesHelper($('#datatables-Activities'), breakpointDefinition);
+                }
+            },
+            "rowCallback": function (nRow) {
+                responsiveHelper_example.createExpandIcon(nRow);
+            },
+            "drawCallback": function (oSettings) {
+                responsiveHelper_example.respond();
+            },
+        });
+
+
+
+    });
+
+
+
+
+
+
+</script>

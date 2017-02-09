@@ -1,0 +1,54 @@
+﻿@using (Html.BeginForm("UploadAttachmentActivity", "Opportunities", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="row" style="text-align:center">
+        @if (ViewBag.DownloadAttachment == "Download Attachment Activity")
+        {
+            <div id="div_download" style="padding: 10px;" class="col-sm-12">
+                <a id="linkResume" href="DownloadAttachmentActivity" target="_blank">
+                    Download Existing
+                    Document
+                </a>
+            </div>
+        }
+        else
+        {
+            <div id="div_message" style="padding: 10px; color: red" class="col-sm-12">
+                No Existing Document Found. Please upload one now.
+            </div>
+        }
+        <div id="div_upload" style="padding: 10px;" class="row">
+
+            <div class="col-sm-6 col-xs-12">
+
+             
+                    <div class="form-group no-margin-hr">
+                      <!--  <label class="control-label" style="text-align:left;">   Attachment:</label>-->
+
+
+                        <script>
+                            init.push(function () {
+                                $('.styled-finputs-example').pixelFileInput({ placeholder: 'No file selected...' });
+                            })
+                        </script>
+                        <input type="file" name="file" id="AttachmentImport" class="styled-finputs-example">
+                        @* @Html.TextBoxFor(m => m.leadhistoryEntity.ActivityAttachment, new { @id = "txtAttachment", @readonly = "true" })*@
+                    </div>
+              
+
+
+
+               
+            </div>
+            <div class="col-sm-6 col-xs-12">
+                <input type="submit" id="btnUpload" value="Upload Document" class="btn btn-primary" />
+            
+                <p>
+                    (Uploading Fresh Document Will Over-write Existing Document Associated With This
+                    Activity)
+                </p>
+            </div>
+        </div>
+    </div>
+}
+
+

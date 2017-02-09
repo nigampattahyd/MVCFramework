@@ -1,0 +1,244 @@
+﻿@model CRMHub.EntityFramework.Account
+@{
+    ViewBag.Title = "ConvertLead";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/Content/assets/css/DateTimePicker/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+<style>
+    label {
+        font-weight: 500;
+    }
+</style>
+@using (Html.BeginForm("ConvertLead", "Leads", FormMethod.Post))
+{
+    <div id="content-wrapper">
+        <div id="CustomBootstrapAlertBox">
+        </div>
+        <div class="row">
+
+            @*<script>
+                    init.push(function () {
+                        $('ul.bs-tabdrop-example').tabdrop();
+                    });
+                </script>*@
+            <div class="panel">
+                <div class="panel-heading">
+                    <div class="row">
+                        <!-- Page header, center on small screens -->
+                        <h3 class="col-xs-12 col-sm-12 text-left text-left-sm panel-title">Convert Lead ( @Html.DisplayFor(m => m.LeadName) - @Html.DisplayFor(m => m.CompanyName) )</h3>
+                        <div class="col-xs-12 col-sm-12">
+                            <div class="row">
+                                <div class="pull-right">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <span id="errorsymbol" style="color:red;display:none;margin-left:5px;" class="fa fa-exclamation-circle"></span><div id="ErrorMessages" style="margin-left:20px;color:red;font-size:15px; ">
+
+                </div>
+
+
+
+
+                <div id="Getleads" style="padding:25px">
+
+                    @if (@ViewBag.companyCount == 0)
+                    {
+                        <div class="form-group" style="padding-bottom:10px; color:#000; font-weight:normal;">
+                            <label>Create New Company </label>
+                            <label style="font-weight:bold;"> @Model.CompanyName </label>
+                            @*<label> Already Exist </label>*@
+                        </div>
+                        <div class="form-group" style="padding-bottom:10px;  color:#000;">
+                            <label>Create New Contact for </label>
+                            <label style="font-weight:bold;">@Model.LeadName </label>
+                        </div>
+
+                    }
+                    else
+                    {
+                        <div class="form-group" style="padding-bottom:10px; color:#000; font-weight:normal;">
+                            <label>Company With the name </label>
+                            <label style="font-weight:bold;"> @Model.CompanyName </label>
+                            <label> Already Exist </label>
+                        </div>
+                        <div class="form-group" style="padding-bottom:10px;  color:#000;">
+                            <label>Create New Contact for </label>
+                            <label style="font-weight:bold;">@Model.LeadName </label>
+                        </div>
+                    }
+
+
+                    <div class="form-group" style="padding-top:40px; padding-bottom:10px;">
+                        <label>@Html.CheckBoxFor(model => model.IsOpportunity, new { id = ("IsOpprtunitychk") }) Create a new Opportunity for this Company</label>
+                    </div>
+                    <div id="OppDiv" style="display:inline-block; width:100%;">
+                        @*<div class="col-sm-8" style="margin-left:40px; border-left:2px solid #ccc; padding-left:40px; margin-bottom:20px;">
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        Amount :
+                                    </div>
+                                    <div class="col-sm-5">
+                                        @Html.TextBoxFor(model => model.OppAmount, new { @class="form-control"})
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group" >
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        Opportunity Name :
+                                    </div>
+                                    <div class="col-sm-5">
+                                        @Html.TextBoxFor(model => model.OppAmount, new { @class = "form-control" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group" style="margin:0;">
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        Closing Date :
+                                    </div>
+                                    <div class="col-sm-5">
+                                        @Html.TextBoxFor(model => model.OppAmount, new { @class = "form-control" })
+                                    </div>
+                                </div>
+                            </div>
+                          
+                        </div>*@
+                    </div>
+                    <div class="form-group">
+                        <label style="font-weight:bold;">Owner of the records :</label><br />
+                        <label style="font-weight:bold; color:#000;">@Html.DisplayFor(model => model.Ownership)</label>
+                    </div>
+                  
+
+                   
+                    @Html.HiddenFor(m => m.CompanyID)
+                    @Html.HiddenFor(m => m.ID, new { @id = "txtID" })
+                    @Html.HiddenFor(m => m.CompanyName)
+                    @Html.HiddenFor(m => m.Ownership)
+                    @Html.HiddenFor(m => m.FirstName)
+                    @Html.HiddenFor(m => m.LastName)
+                    @Html.HiddenFor(m => m.Title)
+                    @Html.HiddenFor(m => m.Email)
+                    @Html.HiddenFor(m => m.Phone)
+                    @Html.HiddenFor(m => m.Fax)
+                    @Html.HiddenFor(m => m.Mobile)
+                    @Html.HiddenFor(m => m.Website)
+                    @Html.HiddenFor(m => m.LeadSource)
+                    @Html.HiddenFor(m => m.LeadSource)
+                    @Html.HiddenFor(m => m.LeadSource)
+                    @Html.HiddenFor(m => m.TotalEmployees)
+                    @Html.HiddenFor(m => m.AnnualRevenue)
+                    @Html.HiddenFor(m => m.Rating)
+                    @Html.HiddenFor(m => m.OptEmailOut)
+                    @Html.HiddenFor(m => m.MailingAddress)
+                    @Html.HiddenFor(m => m.MailingAddress2)
+                    @Html.HiddenFor(m => m.Mailingcity)
+                    @Html.HiddenFor(m => m.MailingstateID)
+                    @Html.HiddenFor(m => m.Mailingzip)
+                    @Html.HiddenFor(m => m.MailingcountryID)
+                    @Html.HiddenFor(m => m.FacebookUsername)
+                    @Html.HiddenFor(m => m.TwitterUsername)
+                    @Html.HiddenFor(m => m.LinkedInUsername)
+                    @Html.HiddenFor(m => m.SkypeUsername)
+                    @Html.HiddenFor(m => m.Description)
+                    @Html.HiddenFor(m => m.CreatedDate)
+                    @Html.HiddenFor(m => m.AccountTypeId)
+                    @Html.HiddenFor(m => m.OwnerID)
+
+                    @Html.HiddenFor(m => m.ModifiedDate)
+                    @Html.HiddenFor(m => m.ModifiedBy)
+                    @Html.HiddenFor(m => m.OptEmailOut)
+
+                    @Html.HiddenFor(m => m.CreatedDate)
+                    @Html.HiddenFor(m => m.CreatedBy)
+                    @*@Html.HiddenFor(m => m.OptEmailOut)*@
+                    <div class="row">
+
+                        <div class="col-sm-12">
+
+                            <div class="col-xs-12 col-sm-12" id="white_bg">
+
+                                @*<div class="col-xs-12 col-sm-12 text-right text-right-sm" id="white_bg">*@
+                                <ul class="table-nav-item">
+
+                                    <li id="btnmargin_top">
+                                        <button class="btn btn-flat btn-labeled btn-primary" id="btnSave" style="color: #fff; text-decoration: none; padding: 0px; font-weight: normal">
+                                            <span class="btn-label icon  fa fa-exchange" style="margin-right:6px;"></span>Convert
+                                        </button>
+
+                                    </li>
+                                    <li class="btn btn-flat btn-labeled btn-primary" id="btnmargin_top">
+                                        <a style="color: #fff; text-decoration: none; padding: 0px; font-weight: normal" href="@Url.Action("getLeaddetails", "Leads", new { LeadId = Model.ID })">
+                                            <span class="btn-label icon fa fa-backward" style="margin-right:6px;"> </span>
+                                            Back
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+}
+<script>
+    $(document).ready(function () {
+        //$('#OppDiv').hide();
+        $("#IsOpprtunitychk").click(function (e) {
+            if ($(this).prop("checked") == true) {
+                //$('#OppDiv').show();
+                var leadid = $('#txtID').val();
+                //alert(leadid);
+
+                $.ajax({
+
+                    url: "../Leads/LoadOpportunities",
+                    type: "GET",
+                    async: false,
+                    success: function (data) {
+
+                        if (data != null) {
+
+                            $('#OppDiv').empty();
+                            $('#OppDiv').empty().append(data);
+
+                        }
+                    },
+                    error: function () {
+
+                    }
+                });
+
+
+
+
+            }
+            else if ($(this).prop("checked") == false) {
+                //$('#OppDiv').hide();
+                $('#OppDiv').empty();
+            }
+
+        });
+    });
+
+    $("#btnSave").click(function (e) {
+        Isvalid = true;
+        return Validate(this.form);
+    });
+</script>
+
+
+

@@ -1,0 +1,116 @@
+﻿@model CRMHub.EntityFramework.Account
+
+
+
+<div class="col-sm-8" style="margin-left:40px; border-left:2px solid #ccc; padding-left:40px; margin-bottom:20px;">
+    <div class="form-group">
+        <div class="row">
+            <div class="col-sm-3">
+                Amount :
+            </div>
+            <div class="col-sm-5">
+                @Html.TextBoxFor(model => model.OppAmount, new { @class = "form-control" })
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="row">
+            <div class="col-sm-3">
+                Opportunity Name :<span style="color: red">*</span>
+            </div>
+            <div class="col-sm-5">
+                @Html.TextBoxFor(model => model.OppName, new { @class = "form-control", @validate = "Required", @data_val_required = "Opportunity Name" })
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="row">
+            <div class="col-sm-3">
+                Closing Date :<span style="color: red">*</span>
+            </div>
+            <div class="col-sm-5">
+                @*@Html.TextBoxFor(m => m.CloseDate, new { @id = "DatePickerControl", @class = "form-control input-sm", @validate = "Required", @data_val_required = "Estimate Close Date" })*@
+                @Html.TextBoxFor(model => model.CloseDate, new { @id = "DatePickerControl", @class = "form-control input-sm", @validate = "Required", @data_val_required = "Closing Date" })
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group" style="margin:0;">
+        <div class="row">
+            <div class="col-sm-3">
+                Stage :<span style="color: red">*</span>
+            </div>
+            <div class="col-sm-5">
+                @*@Html.TextBoxFor(model => model.OppAmount, new { @class = "form-control" })*@
+                @Html.DropDownListFor(m => m.StageID, new List<SelectListItem>
+                                                                        {
+                                                                        new SelectListItem{Text="Select",Value="Select"},
+                                                                        new SelectListItem{Text="Qualification",Value="1"},
+                                                                        new SelectListItem{Text="Needs Analysis",Value="2"},
+                                                                        new SelectListItem{Text="Value Proposition",Value="3"},
+                                                                        new SelectListItem{Text="Id. Decision Makers",Value="3"},
+                                                                        new SelectListItem{Text="Proposal/Price Quote",Value="4"},
+                                                                         new SelectListItem{Text="Negotiation/Review",Value="5"},
+                                                                        new SelectListItem{Text="Closed Won",Value="6"},
+
+                                                                         new SelectListItem{Text="Closed Lost",Value="7"},
+                                                                        new SelectListItem{Text="Closed Lost to Competition",Value="8"}
+                                                                        }, new { @id = "ddlLeadStatus", @class = "form-control input-sm", @validate = "dropdown", @data_val_required = "Stage" })
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<script src="~/Scripts/DateTimePicker/bootstrap-timepicker.min.js"></script>
+<script src="~/Scripts/DateTimePicker/bootstrap-datetimepicker.min.js"></script>
+<script>
+   
+
+  
+
+    $("#btnSave").click(function (e) {
+
+        Isvalid = true;
+        return Validate(this.form);
+
+
+    });
+
+    $(function () {
+        $('#DatePickerControl').datepicker({
+            format: 'mm/dd/yyyy'
+        })
+    });
+    //$(document).ready(function () {
+
+    //    $('#txtPhone').bind("cut copy paste", function (e) {
+    //        e.preventDefault();
+    //    });
+
+    //    $('#txtMobileNo').bind("cut copy paste", function (e) {
+    //        e.preventDefault();
+    //    });
+    //    $('#txtFaxNo').bind("cut copy paste", function (e) {
+    //        e.preventDefault();
+    //    });
+
+
+
+
+
+
+    //    $(".textEditor").jqte();
+    //    $('.DateP').datepicker({
+    //        format: 'mm/dd/yyyy'
+    //    });
+
+
+       
+    //});
+
+   
+   
+</script>

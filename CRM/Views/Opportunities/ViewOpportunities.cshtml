@@ -1,0 +1,704 @@
+﻿@*@model CRMHub.ViewModel.LeadModel*@
+@*@model CRMHub.EntityFramework.Opportunity*@
+@model CRMHub.EntityFramework.Account
+
+@{
+    ViewBag.Title = "Opportunities";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<style>
+    .DT-search, .DT-search input {
+        width: 0px !important; /**/
+    }
+
+    .DT-per-page {
+        border-right: 0px solid #eee;
+        margin-right: 0px;
+        height: 23px;
+        padding-right: 0px;
+        white-space: nowrap;
+    }
+</style>
+
+
+
+
+<div id="content-wrapper">
+    <div id="CustomBootstrapAlertBox">
+    </div>
+    <div class="row">
+
+
+
+        <div class="panel">
+            <div class="panel-heading">
+                <div class="row">
+                    <!-- Page header, center on small screens -->
+                    <h1 class="col-xs-6 col-sm-4 text-left text-left-sm panel-title"><i class="fa fa-users page-header-icon"></i>&nbsp;Opportunities</h1>
+                    <div class="col-xs-6 col-sm-8">
+                        <div class="row">
+                            <div class="pull-right">
+                                @*<a href="#" class="btn btn-flat btn-labeled btn-primary" tabindex="-1"
+                                    data-toggle="modal" data-target="#uidemo-modals-alerts-info"><span class="btn-label icon fa fa-question-circle"></span>Help</a>*@
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body">
+
+
+
+
+                <div class="row">
+
+                    <div class="row" id="pnlSrchCriteria">
+                        <div class="col-sm-3">
+                            <div class="form-group no-margin-hr">
+                                <label class="control-label">Keyword :</label>
+                                @Html.TextBoxFor(m => m.Keyword, new { @id = "txtKeyWord", @class = "form-control input-sm", @maxlength = "100" })
+                            </div>
+                        </div>
+
+
+                        <div class="col-sm-3">
+                            <div class="form-group no-margin-hr">
+                                <label class="control-label">Company Name :</label>
+                                @Html.TextBoxFor(m => m.CompanyName, new { @id = "txtCompanyName", @class = "form-control input-sm", @maxlength = "100" })
+                            </div>
+                        </div>
+
+                        <div class="col-sm-3">
+                            <div class="form-group no-margin-hr">
+                                <label class="control-label">Owner Name :</label>
+                                @Html.TextBoxFor(m => m.Owner, new { @id = "txtOwnerName", @class = "form-control input-sm", @maxlength = "100" })
+                            </div>
+                        </div>
+
+                        <div class="col-sm-3">
+                            <div class="form-group no-margin-hr">
+                                <label class="control-label">Stage&nbsp;:</label>
+
+                                @Html.DropDownListFor(m => m.StageID, new List<SelectListItem>
+                                                                        {
+                                                                        new SelectListItem{Text="Select",Value="0"},
+                                                                        new SelectListItem{Text="Qualification",Value="1"},
+                                                                        new SelectListItem{Text="Needs Analysis",Value="2"},
+                                                                        new SelectListItem{Text="Value Proposition",Value="3"},
+                                                                        new SelectListItem{Text="Id. Decision Makers",Value="4"},
+                                                                        new SelectListItem{Text="Proposal/Price Quote",Value="5"},
+                                                                         new SelectListItem{Text="Negotiation/Review",Value="6"},
+                                                                        new SelectListItem{Text="Closed Won",Value="7"},
+
+                                                                         new SelectListItem{Text="Closed Lost",Value="8"},
+                                                                        new SelectListItem{Text="Closed Lost to Competition",Value="9"}
+                                                                        }, new { @id = "ddlOpporStage", @class = "form-control input-sm" })
+                            </div>
+                        </div>
+
+                       
+                        <div class="row">
+                            <div class="col-sm-12">
+                               
+                                <div class="col-xs-12 col-sm-12 text-right text-right-sm" id="white_bg">
+                                    <ul class="table-nav-item">
+                                        <li class="btn btn-flat btn-labeled btn-primary" id="btnmargin_top">
+
+                                            <a style="color: #fff; text-decoration: none; padding: 0px; font-weight: normal" id="btnClear">
+                                                <span class="btn-label icon fa fa-eraser" style="margin-right:6px;"> </span>
+                                                Clear
+                                            </a>
+
+
+                                        </li>
+
+                                        <li class="btn btn-flat btn-labeled btn-primary" id="btnmargin_top">
+
+
+                                            <a style="color: #fff; text-decoration: none; padding: 0px; font-weight: normal" id="btnsearchopportunity">
+                                                <span class="btn-label icon fa fa-search" style="margin-right:6px;"> </span>
+                                                Search
+                                            </a>
+                                        </li>
+
+                                    </ul>
+
+                                </div>
+
+
+
+
+                                @*<div class="col-sm-12">
+                                    <div class="col-xs-12 col-sm-12 text-right text-left-sm " id="search_btn" style="text-align:right;margin-bottom:15px; margin-top:25px;padding-right:26px;">
+                                        <button class="btn btn-flat btn-labeled btn-primary" id="btnsearchopportunity">
+                                            <span class="btn-label icon fa fa-search"></span>Search
+                                        </button>
+                                    </div>
+                                </div>*@
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    <div class="clearfix"></div>
+                    <div class="col-sm-12" id="filter"></div>
+
+                    <div class="col-sm-12" id="white_bg">
+                        <div class="col-sm-4"> &nbsp; </div>
+                        <div class="col-sm-8" style="background-color: #f5f5f5;  text-align: right;">
+                            <ul class="table-nav-item">
+
+
+
+                                <li class="btn btn-flat btn-labeled btn-primary" id="btnmargin_top" style="float:left; margin-left:3px;">
+                                    <a style="color: #fff; text-decoration: none; padding: 0px; font-weight: normal" href="@Url.Action("CreateNewOpportunity", "Opportunities")">
+                                        <span class="btn-label icon  fa  fa-plus-circle" style="margin-right:6px;"> </span>
+                                        Add New
+                                    </a>
+                                </li>
+                                <li class="btn btn-flat btn-labeled btn-primary" id="btnmargin_top">
+
+                                    <a style="color: #fff; text-decoration: none; padding: 0px; font-weight: normal" id="DeleteOpportunity" onclick="deleteSelectedOpportunity()">
+                                        <span class="btn-label icon  fa fa-trash-o" style="margin-right:6px;"> </span>
+                                        Delete
+                                    </a>
+                                </li>
+
+
+
+                                @*<li class="btn btn-flat btn-labeled btn-primary" id="btnmargin_top">
+
+                                        <a style="color: #fff; text-decoration: none; padding: 0px; font-weight: normal" onclick="ClearSelection();">
+                                            <span class="btn-label icon  fa fa-eraser" style="margin-right:6px;"> </span>
+                                            Clear
+                                        </a>
+                                    </li>*@
+                                @*<li class="dropdown">
+                                        <button class="btn btn-flat btn-labeled btn-primary" data-toggle="dropdown" id="btnmargin_top" style=" vertical-align: super;">
+                                            <span class="btn-label icon fa   fa-chevron-down"></span>Export
+                                        </button>
+                                        <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dropdownMenu1">
+                                            <li role="presentation"><a role="menuitem" style="cursor: pointer" tabindex="-1" onclick="ExportCsv(); return false;">Export Opportunities(CSV)</a></li>
+                                            <li role="presentation"><a role="menuitem" style="cursor: pointer" tabindex="-1" onclick="ExportExcel(); return false;">Export Opportunities(Excel)</a></li>
+                                        </ul>
+                                    </li>*@
+                            </ul>
+                        </div>
+                    </div>
+
+
+                </div>
+
+                <div class="row">
+
+
+                    <div class="table-primary table-striped" id="OpportunitiesGrid">
+
+                        <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="tblOpportunities" style="width:100%">
+                            <thead>
+                                <tr>
+
+                                    <th>
+                                        <input type="checkbox" name="chkAll" id="selectall" />
+                                    </th>
+                                    <th>&nbsp;</th>
+
+                                    <th data-class="expand">Opportunity Name</th>
+                                    @*<th data-hide="tablet,tabletlandscape,phone">Annual Revenue</th>*@
+                                    <th data-hide="tabletlandscape,phone ">Opportunity Stage</th>
+                                    <th data-hide="tablet,tabletlandscape,phone">Estimated Close Date</th>
+                                    <th data-hide="tabletlandscape,phone">Company Name</th>
+                                    <th data-hide="tabletlandscape,phone">Contact Name</th>
+                                    <th data-hide="tabletlandscape,phone">Opportunity Owner</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@*<div class="ExportSection" style="visibility:hidden">
+              <a id="linkExportCsv" href="/CRM/Opportunities/ExportToCsv">Export to Csv</a>
+              <a id="linkExportExcel" href="/CRM/Opportunities/ExportToExcel">Export to Excel</a>
+    </div>*@
+<div class="ExportSection" style="visibility:hidden">
+
+    <a id="linkExportCsv" href="@Url.Action("ExportToCsv", "Opportunities")"<span>Export to Csv</span></a>
+    <a id="linkExportExcel" href="@Url.Action("ExportToExcel", "Opportunities")"<span>Export to Excel</span></a>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+
+        var CreateOppor = '@ViewBag.CreateOppor';
+        if (CreateOppor != "") {
+            //$('#ErrorMessages').html('Lead Details Updated Successfully.');
+            $.growl.notice({ title: "Success", message: "Opportunity Details Created Successfully.", size: 'large' });
+
+        }
+
+
+        $('#loading').css('display', 'block');
+
+        BindOpportunities();
+        $('#tblOpportunities').on('length.dt', function (e, settings, len) {
+
+            $('#loading').css('display', 'block');
+
+        });
+
+        $('#tblOpportunities').on('page.dt', function () {
+
+            $('#loading').css('display', 'block');
+        });
+
+        $('#loading').css('display', 'none');
+
+    });
+
+    function BindOpportunities() {
+        var responsiveHelper = undefined;
+        var breakpointDefinition = {
+            desktop: Infinity,
+            tablet: 1024,
+            tabletlandscape: 768,
+            phone: 480
+        };
+        var tableElement = $('#tblOpportunities');
+        tableElement.dataTable({
+            autoWidth: false,
+            preDrawCallback: function () {
+                if (!responsiveHelper) {
+                    responsiveHelper = new ResponsiveDatatablesHelper(tableElement, breakpointDefinition);
+                }
+            },
+            rowCallback: function (nRow) {
+
+                responsiveHelper.createExpandIcon(nRow);
+            },
+            drawCallback: function (oSettings) {
+                responsiveHelper.respond();
+            },
+            //"order": [[$("#HD_SortValue").val(), "" + $("#HD_SortDirection").val() + ""]],
+            "aLengthMenu": [[10, 25, 50, 100], [10, 25, 50, 100]],
+            //"iDisplayStart": parseInt($("#HD_PageIndex").val()),
+            //"iDisplayLength": parseInt($("#HD_PageSize").val()),
+            "pagingType": "full_numbers",
+            //"processing": true,
+            "serverSide": true,
+            "bFilter": false,
+            "sAjaxSource": "getOpportunities",
+            "fnServerParams": function (aoData) {
+                aoData.push(
+                    //{ "name": "OppKeyword", "value": "" + $("#txtKeyword").val() + "" },
+                    { "name": "CompanyID", "value": +"" },
+                     { "name": "Opportunitykeyword", "value": "" + $("#txtKeyWord").val().trim() + "" },
+                       { "name": "CompanyName", "value": "" + $("#txtCompanyName").val().trim() + "" },
+                         { "name": "OwnerName", "value": "" + $("#txtOwnerName").val().trim() + "" },
+
+                    //{ "name": "BusinessType", "value": "" + $("#ddlbusinesstype").val() + "" },
+                    //{ "name": "OpportunityStatus", "value": "" + $("#ddlOpportunityStatus").val() + "" },
+                    { "name": "OpportunityStage", "value": "" + $("#ddlOpporStage ").val() + "" },
+                    //{ "name": "Opportunityindustries", "value": "" + $("#ddlindustries ").val() + "" },
+                    //{ "name": "OppEmail", "value": "" + $("#txtEmail").val() + "" },
+                    //{ "name": "OppOwner", "value": "" + $("#ddlAdmins").val() + "" },
+                    //{ "name": "OppBranch", "value": "" + $("#ddlBranches").val() + "" },
+                    { "name": "OpportunityFilterString", "value": "" }
+                    );
+            },
+            "fnServerData": function (sSource, aoData, fnCallback) {
+                $.ajax({
+                    "dataType": 'json',
+                    "contentType": "application/json; charset=utf-8",
+                    "type": "GET",
+                    "url": sSource,
+                    "data": aoData,
+                    "success":
+                                function (msg) {
+
+                                    fnCallback(msg);
+                                    $("#tblOpportunities").show();
+                                }
+                });
+            },
+            "asStripeClasses": ['odd gradeX', 'even gradeC'],
+            "aoColumnDefs": [
+
+                         {
+                             "targets": [0], "visible": true, "bSortable": false, "mDataProp": "ID",
+                             "render": function (data, type, row) {
+                                 return "<input type=\"checkbox\"  data-LeadId=" + row["ID"] + " name=\"chkItem\" class =\"case\" id=\"chkRow_" + row["ID"] + "\"   />";
+                             }
+                         },
+                           {
+                               "targets": [1], "visible": true, "bSortable": false, "mDataProp": "ID",
+                               "render": function (data, type, row) {
+
+                                   return "<span class=\"fa fa-times\" onclick=\"deleteOpportunity('" + row["ID"] + "');\"></span>";
+                               }
+                           },
+               {
+                   "targets": [2], "visible": true, "bSortable": true, "mDataProp": "Name",
+                   "render": function (data, type, row) {
+                       return "<a style=\"cursor:pointer\"  onclick=\"OpenOpportunityDetail('" + row["ID"] + "')\">" + row["Name"] + "</a>";
+                   }
+               },
+               // { "targets": [3], "visible": true, "bSortable": true, "mDataProp": "ExpectedRevenue" },
+               { "targets": [3], "visible": true, "bSortable": true, "mDataProp": "Stage" },
+
+               {
+                   "targets": [4], "visible": true, "bSortable": true, "mDataProp": "CloseDate",
+                   "render": function (data, type, row) {
+                       var jsDate1 = data;
+                       if (jsDate1 == null) {
+                           return jsDate1 = "";
+                       }
+                       else if (jsDate1.value != "") {
+                           var jsDate = new Date(parseInt(row["CloseDate"].substr(6)));
+                           return (jsDate.getMonth() + 1) + '/' + jsDate.getDate() + '/' + jsDate.getFullYear();
+                       }
+
+                   }
+               },
+               //{ "targets": [6], "visible": true, "bSortable": true, "mDataProp": "ExpectedRevenue" },
+               { "targets": [5], "visible": true, "bSortable": true, "mDataProp": "CompanyName" },
+               { "targets": [6], "visible": true, "bSortable": true, "mDataProp": "ContactName" },
+               { "targets": [7], "visible": true, "bSortable": true, "mDataProp": "Owner" },
+            ],
+            "fnDrawCallback": function (oSettings) {
+
+                $('#loading').css('display', 'none');
+            },
+
+        }).api();
+    }
+    //$('#tblOpportunities th').click(function () {
+    //    $('#loading').css('display', 'block');
+    //})
+    $("#selectall").click(function () {
+
+        $('.case').prop("checked", this.checked);
+    });
+    // if all checkbox are selected, check the selectall checkbox
+    // and viceversa
+    $('#tblOpportunities tbody').click(function () {
+
+        if ($('#tblOpportunities input[name="chkItem"]:checked').length == $('#tblOpportunities input[name="chkItem"]').length) {
+            $("#selectall").prop("checked", true);
+        } else {
+            $("#selectall").prop("checked", false);
+        }
+    });
+
+    $('#btnsearchopportunity').click(function () {
+
+        $('#loading').css('display', 'block');
+        $("#tblOpportunities").dataTable().fnDestroy();
+        BindOpportunities();
+
+        $('#tblOpportunities').on('length.dt', function (e, settings, len) {
+
+            $('#loading').css('display', 'block');
+        });
+
+        $('#tblOpportunities').on('page.dt', function () {
+
+            $('#loading').css('display', 'block');
+        });
+
+    });
+
+    $('#btnClear').click(function () {
+
+        $('#txtOwnerName').val('');
+        $('#txtKeyWord').val('');
+        $('#txtCompanyName').val('');
+        $('#ddlOpporStage').val('0');
+        $('#loading').css('display', 'block');
+        $("#tblOpportunities").dataTable().fnDestroy();
+        BindOpportunities();
+
+    });
+
+    function ClearSelection() {
+
+        $('#drpOffice option:first-child').attr("selected", "selected");
+        $('#drpSalesRep option:first-child').attr("selected", "selected");
+        // $('#jq-datatables-example_wrapper .dataTables_filter input').val('');
+        $('#txtEmail').val('');
+        // $('#txtKeyWord').val('');
+        //$("#filter").html('');
+        //Get_LeadFilterString();
+        $('#tblOpportunities').dataTable().fnDestroy();
+        BindOpportunities();
+    }
+
+    function OpenOpportunityDetail(LeadId) {
+        // window.location = "RetrieveOpportunity?OppId=" + LeadId;
+        var param = LeadId;
+        var url = '@Url.Action("getOpportunitydetails", "Opportunities", new { LeadId = "__param__" })';
+        window.location.href = url.replace('__param__', encodeURIComponent(param));
+    }
+
+
+    //function OpenOpportunityDetail(LeadId) {
+
+
+    //    window.location = "RetrieveOpportunity?OppId=" + LeadId;
+    //}
+
+
+
+
+</script>
+<script type="text/javascript">
+    function deleteOpportunity(LeadId) {
+
+        var flag = confirm('You are about to delete permanently.Are you sure you want to delete this record?');
+        if (flag) {
+            deleteEachOpportunity(LeadId);
+            $('#tblOpportunities').dataTable().fnDestroy();
+            BindOpportunities();
+            // $.growl.notice({ title: "Success", message: "Opportunities(s) Deleted Successfully.", size: 'large' });
+            //document.location.href = document.location.href;
+            //$.growl.notice({ title: "Success", message: "Opportunities(s) Deleted Successfully.", size: 'large' });
+
+        }
+    }
+    function deleteEachOpportunity(LeadId) {
+
+        $.ajax({
+            url: "DeleteOpportunities",
+            type: "POST",
+            async: false,
+            data: { delopportunity: LeadId.toString() },
+            success: function (data) {
+
+                if (data == "True") {
+                    $.growl.notice({ title: "Success", message: "Opportunities Deleted Successfully.", size: 'large' });
+                    $("#tblOpportunities").dataTable().fnDestroy();
+                    BindOpportunities();
+                }
+                else {
+                    $.growl.error({ title: "Fail", message: "Can't  Deleted !!!  Opportunity is in use.", size: 'large' });
+                }
+            },
+            error: function () {
+
+            }
+        });
+    }
+    function deleteSelectedOpportunity() {
+
+        if ($('#tblOpportunities input[name="chkItem"]:checked').length > 0) {
+            var searchIDsValues = new Array();
+            var flag = confirm('You are about to delete permanently.Are you sure you want to delete these records?');
+            if (flag) {
+                $('#tblOpportunities input[name="chkItem"]:checked').each(function () {
+                    // var id = $(this).attr('data-LeadId');
+                    //deleteEachOpportunity(id);
+                    searchIDsValues.push($(this).attr('data-LeadId'));
+                });
+
+                deleteEachOpportunity(searchIDsValues);
+            }
+        }
+        else {
+            $.growl.notice({ title: "Success", message: "Please select item(s) to delete.", size: 'large' });
+            // alert("Please select item(s) to delete.");
+        }
+    }
+
+    function ConvertOpportunitytoSale() {
+        if ($('#tblOpportunities input[name="chkItem"]:checked').length > 0) {
+            var flag = confirm('You are trying to convert the opportunities to Sales ? Are you Sure?');
+            if (flag) {
+                $('#tblOpportunities input[name="chkItem"]:checked').each(function () {
+                    var cid = $(this).attr('data-LeadId');
+                    ConvertOpportunity(cid);
+                });
+                document.location.href = document.location.href;
+                $.growl.notice({ title: "Success", message: "Opportunity Converted Successfully.", size: 'large' });
+                //alert("Opportunity Converted Successfully");
+            }
+        }
+        else {
+            $.growl.notice({ title: "Success", message: "Please select Opportunities to Convert.", size: 'large' });
+            // alert("Please select Opportunities to Convert.");
+        }
+    }
+    function ConvertOpportunity(LeadId) {
+
+        $.ajax({
+            url: "ConvertToSales",
+            type: "POST",
+            async: false,
+            data: { convtosales: LeadId },
+            success: function (data) {
+            },
+            error: function () {
+            }
+        });
+    }
+
+    function ExportCsv() {
+
+        $('#loading').css('display', 'block');
+        $("#linkExportCsv")[0].click();
+        alert("Opportunities Exported succesfully");
+        $('#loading').css('display', 'none');
+    }
+
+    function ExportExcel() {
+
+        $('#loading').css('display', 'block');
+        $("#linkExportExcel")[0].click();
+        alert("Opportunities Exported succesfully");
+        $('#loading').css('display', 'none');
+
+    }
+
+
+
+    //function ExportCsv() {
+
+    //    var array = new Array();
+    //    if ($('#tblOpportunities input[name="chkItem"]:checked').length > 0) {
+    //        $('#tblOpportunities input[name="chkItem"]:checked').each(function () {
+
+
+    //            if ($("#tblOpportunities tr:has(:checked)")) {
+
+    //                var AccountName = $(this).closest("tr").find('td:eq(2)').text();
+    //                var LeadName = $(this).closest("tr").find('td:eq(3)').text();
+    //                var Phone = $(this).closest("tr").find('td:eq(4)').text();
+    //                var Email = $(this).closest("tr").find('td:eq(5)').text();
+    //                var SalesMgr1 = $(this).closest("tr").find('td:eq(6)').text();
+    //                var LeadStatus = $(this).closest("tr").find('td:eq(7)').text();
+    //                var Source = $(this).closest("tr").find('td:eq(8)').text();
+    //                var CreatedDate = $(this).closest("tr").find('td:eq(9)').text();
+    //                var ModifiedDate = $(this).closest("tr").find('td:eq(10)').text();
+    //                var EstimatedCloseDate = $(this).closest("tr").find('td:eq(11)').text();
+    //                var AnnualRevenue = $(this).closest("tr").find('td:eq(12)').text();
+    //                var Probability = $(this).closest("tr").find('td:eq(13)').text();
+
+
+    //                item = {}
+    //                item["AccountName"] = AccountName;
+    //                item["LeadName"] = LeadName;
+    //                item["Phone"] = Phone;
+    //                item["Email"] = Email;
+    //                item["SalesMgr1"] = SalesMgr1;
+    //                item["LeadStatus"] = LeadStatus;
+    //                item["Source"] = Source;
+    //                item["CreatedDate"] = CreatedDate;
+    //                item["ModifiedDate"] = ModifiedDate;
+    //                item["EstimatedCloseDate"] = EstimatedCloseDate;
+    //                item["AnnualRevenue"] = AnnualRevenue;
+    //                item["Probability"] = Probability;
+    //            }
+    //            array.push(item);
+    //        });
+
+    //        $.ajax({
+    //            url: 'ExportToCsv',
+    //            type: 'POST',
+    //            data: JSON.stringify(array),
+    //            cache: false,
+    //            contentType: "application/json;charset=utf-8",
+    //            dataType: "json",
+    //            success: function (data) {
+    //                window.location.href = "DownloadOpportunitiesExportCSV";
+    //            },
+    //            error: function () {
+
+    //            }
+    //        });
+    //        alert("Opportunities Exported Successfully ");
+    //    }
+    //    else {
+    //        alert("Please select item(s) to Export.");
+    //    }
+    //}
+
+    //function ExportExcel() {
+
+    //    var array = new Array();
+    //    if ($('#tblOpportunities input[name="chkItem"]:checked').length > 0) {
+    //        $('#tblOpportunities input[name="chkItem"]:checked').each(function () {
+
+
+    //            if ($("#tblOpportunities tr:has(:checked)")) {
+
+    //                var AccountName = $(this).closest("tr").find('td:eq(2)').text();
+    //                var LeadName = $(this).closest("tr").find('td:eq(3)').text();
+    //                var Phone = $(this).closest("tr").find('td:eq(4)').text();
+    //                var Email = $(this).closest("tr").find('td:eq(5)').text();
+    //                var SalesMgr1 = $(this).closest("tr").find('td:eq(6)').text();
+    //                var LeadStatus = $(this).closest("tr").find('td:eq(7)').text();
+    //                var Source = $(this).closest("tr").find('td:eq(8)').text();
+    //                var CreatedDate = $(this).closest("tr").find('td:eq(9)').text();
+    //                var ModifiedDate = $(this).closest("tr").find('td:eq(10)').text();
+    //                var EstimatedCloseDate = $(this).closest("tr").find('td:eq(11)').text();
+    //                var AnnualRevenue = $(this).closest("tr").find('td:eq(12)').text();
+    //                var Probability = $(this).closest("tr").find('td:eq(13)').text();
+
+    //                item = {}
+    //                item["AccountName"] = AccountName;
+    //                item["LeadName"] = LeadName;
+    //                item["Phone"] = Phone;
+    //                item["Email"] = Email;
+    //                item["SalesMgr1"] = SalesMgr1;
+    //                item["LeadStatus"] = LeadStatus;
+    //                item["Source"] = Source;
+    //                item["CreatedDate"] = CreatedDate;
+    //                item["ModifiedDate"] = ModifiedDate;
+    //                item["EstimatedCloseDate"] = EstimatedCloseDate;
+    //                item["AnnualRevenue"] = AnnualRevenue;
+    //                item["Probability"] = Probability;
+    //            }
+    //            array.push(item);
+    //        });
+
+    //        $.ajax({
+    //            url: 'ExportToExcel',
+    //            type: 'POST',
+    //            data: JSON.stringify(array),
+    //            cache: false,
+    //            contentType: "application/json;charset=utf-8",
+    //            dataType: "json",
+    //            success: function (data) {
+    //                window.location.href = "DownloadOpportunitiesExportExcel";
+    //            },
+    //            error: function () {
+
+    //            }
+    //        });
+
+    //    }
+    //    else {
+    //        alert("Please select item(s) to Export.");
+    //    }
+    //}
+</script>
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,389 @@
+﻿@model CRMHub.EntityFramework.role
+@{
+    ViewBag.Title = "RoleIndex";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@*<style>
+        .DT-search, .DT-search input {
+            width: 0px !important; /**/
+        }
+
+        .DT-per-page {
+            border-right: 0px solid #eee;
+            margin-right: 0px;
+            height: 23px;
+            padding-right: 0px;
+            white-space: nowrap;
+        }
+    </style>*@
+
+<style>
+    .DT-search, .DT-search input {
+        width: 0px !important;
+        display: none;
+    }
+
+    .DT-per-page {
+        border-right: 0px solid #eee;
+        margin-right: 0px;
+        height: 23px;
+        padding-right: 8px;
+        white-space: nowrap;
+    }
+</style>
+<div id="content-wrapper">
+    <div id="CustomBootstrapAlertBox">
+    </div>
+    <div class="row">
+        <div class="panel">
+            <div class="panel-heading">
+                <div class="row">
+                    <!-- Page header, center on small screens -->
+                    <h1 class="col-xs-6 col-sm-4 text-left text-left-sm panel-title"><i class="fa fa-user page-header-icon"></i>&nbsp;Roles&nbsp;List</h1>
+                </div>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <!-- col-sm-6 -->
+                    @*<div id="pnlSrchCriteria">
+                            <div class="col-sm-3">
+                                <div class="form-group no-margin-hr">
+                                    <label class="control-label">Contact Type:</label>
+
+                                    @Html.TextBoxFor(m => m.ContactType, new { @id = "txtContacttype", @class = "form-control input-sm", @maxlength = "100" })
+
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group no-margin-hr">
+                                    <label class="control-label">Status :</label>
+                                    @Html.DropDownListFor(m => m.Status, new List<SelectListItem>
+                                                                                {
+                                                                                    new SelectListItem { Text = "Select", Value = "0", Selected=true},
+                                                                                    new SelectListItem{ Text="Active", Value = "True" },
+                                                                                    new SelectListItem{ Text="In-Active", Value = "False" }
+
+                                                                                }, new { id = "ddl_Status", @class = "form-control input-sm", @TabIndex = "13" })
+
+
+
+
+
+                                </div>
+                            </div>
+
+                            <div class="col-xs-12 col-sm-12 text-right text-left-sm " id="search_btn" style="text-align:right;margin-bottom:15px; margin-top:0px; margin-left:-13px;">
+                                <button class="btn btn-flat btn-labeled btn-primary" id="btnSearchCType">
+                                    <span class="btn-label icon fa fa-search"></span>Search
+                                </button>
+                            </div>
+                        </div>*@
+
+                    <div class="clearfix"></div>
+                    <div class="col-sm-13" id="filter"></div>
+
+                    <!-- col-sm-6 -->
+                    <div class="col-sm-12">
+
+                        <div class="col-xs-12 col-sm-12 text-right text-right-sm" id="white_bg">
+                            <ul class="table-nav-item">
+                                <li class="btn btn-flat btn-labeled btn-primary" style=" float:left; margin-left:3px;">
+
+                                    <a style="color: #fff; text-decoration: none; padding: 0px; font-weight: normal" href="@Url.Action("AddRole", "Users")">
+                                        <span class="btn-label icon  fa fa-plus-circle" style="margin-right:6px;"> </span>
+                                        Add New
+
+                                    </a>
+
+                                </li>
+                                <li class="btn btn-flat btn-labeled btn-primary" style="float:left; margin-left:3px;">
+
+                                    <a style="color: #fff; text-decoration: none; padding: 0px; font-weight: normal" id="Deleterole" onclick="deleteSelectedRole()">
+                                        <span class="btn-label icon  fa  fa-trash-o" style="margin-right:6px;"> </span>
+                                        Delete
+                                    </a>
+
+                                </li>
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                @*</div>*@
+
+
+                <div class="row">
+
+                    <div class="table-primary table-striped">
+                        <table class="table table-striped table-bordered" id="tblUserRolesList" style="width:100%;">
+                            <thead>
+                                <tr>
+                                    <th class="no-sort"><input class="fa fa-square-o" type="checkbox" id="chkHeader" /></th>
+                                    <th></th>
+                                    <th data-hide="phone">Role</th>
+                                    <th data-class="expand">Description</th>
+                                    <th data-hide="phone">Status</th>
+
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    $(document).ready(function () {
+
+
+        var CreateRole = '@ViewBag.CreateRole';
+        if (CreateRole != "") {
+            //$('#ErrorMessages').html('Lead Details Updated Successfully.');
+            $.growl.notice({ title: "Success", message: "Role Created Successfully.", size: 'large' });
+
+        }
+
+
+        $('#loading').css('display', 'block');
+        bindRoleDetails();
+
+
+        $('#tblUserRolesList').on('length.dt', function (e, settings, len) {
+
+            $('#loading').css('display', 'block');
+        });
+
+        $('#tblUserRolesList').on('page.dt', function () {
+
+            $('#loading').css('display', 'block');
+        });
+
+
+    });
+
+
+    $("#chkHeader").click(function () {
+
+        $('.ContactTypecase').prop("checked", this.checked);
+    });
+    // if all checkbox are selected, check the selectall checkbox
+    // and viceversa
+    $('#tblUserRolesList tbody').click(function () {
+
+        if ($('#tblUserRolesList input[name="chkTypeItem"]:checked').length == $('#tblUserRolesList input[name="chkTypeItem"]').length) {
+            $("#chkHeader").prop("checked", true);
+        } else {
+            $("#chkHeader").prop("checked", false);
+        }
+    });
+
+
+
+
+    function bindRoleDetails() {
+
+
+        //$('#loading').css('display', 'block');
+        var responsiveHelper = undefined;
+        var breakpointDefinition = {
+            desktop: Infinity,
+            tablet: 1024,
+            tabletlandscape: 768,
+            phone: 480
+        };
+        var tableElement = $('#tblUserRolesList');
+        tableElement.dataTable({
+            autoWidth: false,
+            preDrawCallback: function () {
+                if (!responsiveHelper) {
+                    responsiveHelper = new ResponsiveDatatablesHelper(tableElement, breakpointDefinition);
+                }
+            },
+            rowCallback: function (nRow) {
+                responsiveHelper.createExpandIcon(nRow);
+            },
+            drawCallback: function (oSettings) {
+                responsiveHelper.respond();
+            },
+
+            "serverSide": true,
+            //"bFilter": true,
+            "sAjaxSource": '@Url.Action("GetUserRolesList", "Users")',
+            //  "sAjaxSource": "Contact/GetListForContactType",
+            "fnServerParams": function (aoData) {
+                aoData.push(
+                     { "name": "Contacttype", "value": "" + "" + "" },
+                    { "name": "ContactStatus", "value": "" + "0" + "" }
+                    );
+            },
+            "fnServerData": function (sSource, aoData, fnCallback) {
+
+                $.ajax({
+                    "dataType": 'json',
+                    "contentType": "application/json; charset=utf-8",
+                    "type": "GET",
+                    "url": sSource,
+                    "data": aoData,
+                    "success":
+                                function (msg) {
+
+                                    $('#loading').css('display', 'none');
+
+                                    fnCallback(msg);
+
+                                }
+                });
+            },
+            "asStripeClasses": ['odd gradeX', 'even gradeC'],
+            "aoColumnDefs": [
+              {
+                  "targets": [0], "visible": true, "bSortable": false, "mDataProp": "RoleId",
+                  "render": function (data, type, row) {
+
+                      //if ((row["RoleId"] != 1) && (row["RoleId"] != 2)) {
+                      //    return "<input name=\"chkTypeItem\" class =\"ContactTypecase\" type=\"checkbox\"  id=\"chkRow_" + row["RoleId"] + "\"data-CTypeId=\"" + row["RoleId"] + "\"  />";
+                      //}
+                      //else {
+                      //    return "";
+                      //}
+                      if (row["RoleId"] != 1) {
+                          return "<input name=\"chkTypeItem\" class =\"ContactTypecase\" type=\"checkbox\"  id=\"chkRow_" + row["RoleId"] + "\"data-CTypeId=\"" + row["RoleId"] + "\"  />";
+                      }
+                      else {
+                          return "";
+                      }
+
+
+                      //return "<input name=\"chkTypeItem\" class =\"ContactTypecase\" type=\"checkbox\"  id=\"chkRow_" + row["ContactTypeId"] + "\"data-CTypeId=\"" + row["ContactTypeId"] + "\"  />";
+                  }
+              },
+                {
+                    "targets": [1], "visible": true, "bSortable": true,
+                    "render": function (data, type, row) {
+                        //if ((row["RoleId"] != 1) && (row["RoleId"] != 2)) {
+                        //    return "<span class=\"fa fa-times\" onclick=\"DeleteRole('" + row["RoleId"] + "');\"></span>";
+                        //}
+                        //else {
+                        //    return "";
+                        //}
+                        if (row["RoleId"] != 1) {
+                            return "<span class=\"fa fa-times\" onclick=\"DeleteRole('" + row["RoleId"] + "');\"></span>";
+                        }
+                        else {
+                            return "";
+                        }
+
+                    }
+                },
+                {
+
+                    "targets": [2], "visible": true, "bSortable": true, "mDataProp": "RoleName",
+                    "render": function (data, type, row) {
+
+                        return "<a href=\"#\" onclick=\"OpenRoleDetail('" + row["RoleId"] + "')\">" + row["RoleName"] + "</a>";
+
+                    }
+                },
+                {
+                    "targets": [3], "visible": true, "bSortable": true, "mDataProp": "Description",
+
+                },
+
+                //{ "targets": [4], "visible": true, "bSortable": true, "mDataProp": "Status" }
+            { "targets": [4], "visible": true, "bSortable": true, "mDataProp": "ActiveStatus" }
+
+
+            ],
+            "fnDrawCallback": function (oSettings) {
+
+                $('#loading').css('display', 'none');
+            }
+        }).api();
+    }
+
+    function OpenRoleDetail(RoleId) {
+        window.location = "EditRoledetails?RoleId=" + RoleId;
+
+    }
+    function deleteSelectedRole() {
+
+        if ($('#tblUserRolesList input[name="chkTypeItem"]:checked').length > 0) {
+            var flag = confirm('You are about to delete permanently.Are you sure you want to delete these records?');
+            if (flag) {
+
+                var searchIDs = $("#tblUserRolesList input:checkbox:checked").map(function () {
+                    return $(this).attr("data-CTypeId");
+                }).get();
+
+                deleteEachContactType(searchIDs)
+            }
+        }
+        else {
+            alert("Please select item(s) to delete.");
+        }
+    }
+
+    function DeleteRole(RoleId) {
+
+
+        var flag = confirm('You are about to delete permanently.Are you sure you want to delete this record?');
+        if (flag) {
+            deleteEachContactType(RoleId);
+        }
+    }
+
+    function deleteEachContactType(RoleId) {
+
+        $("#tblUserRolesList").dataTable().fnDestroy();
+        $.ajax({
+            url: '@Url.Action("DeleteRole")',
+            type: "POST",
+            async: false,
+            data: { Roleids: RoleId.toString() },
+            success: function (data) {
+                //alert(data)
+                if (data == "TotDel") {
+                    $.growl.notice({ title: "Success", message: "Role Deleted Successfully.", size: 'large' });
+                    //$("#tblUserRolesList").dataTable().fnDestroy();
+                    bindRoleDetails();
+                }
+                else if (data == "PartialDel") {
+                    $.growl.warning({ title: "Warning", message: "Some Role(s) are Deleted Successfully and some Role(s) are in use.", size: 'large' });
+                    // $("#tblUserRolesList").dataTable().fnDestroy();
+                    bindRoleDetails();
+                }
+                else if (data == "NoDel") {
+                    $.growl.error({ title: "Fail", message: "Role(s) Not Deleted .", size: 'large' });
+                    bindRoleDetails();
+                }
+
+            },
+            error: function (request, status, error) {
+            }
+        });
+    }
+    $('#btnSearchCType').click(function () {
+
+        $('#loading').css('display', 'block');
+        $("#tblUserRolesList").dataTable().fnDestroy();
+        bindRoleDetails();
+
+
+        $('#tblUserRolesList').on('length.dt', function (e, settings, len) {
+
+            $('#loading').css('display', 'block');
+        });
+
+        $('#tblUserRolesList').on('page.dt', function () {
+
+            $('#loading').css('display', 'block');
+        });
+
+
+    });
+</script>
+

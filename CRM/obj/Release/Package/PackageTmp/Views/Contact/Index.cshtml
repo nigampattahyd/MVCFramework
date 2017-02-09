@@ -1,0 +1,931 @@
+﻿@*@model CRMHub.ViewModel.ContactModel*@
+@model CRMHub.EntityFramework.Account
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+}
+
+<style>
+    .DT-search {
+        display: none;
+    }
+</style>
+
+
+<div class="widget">
+    <div class="widget-header bordered-bottom bordered-themesecondary">
+        <i class="widget-icon fa fa-tags themesecondary"></i>
+        <span class="widget-caption themesecondary">Mentors</span>
+    </div><!--Widget Header-->
+    <div class="widget-body  no-padding">
+        <div class="tickets-container">
+            <div class="row">
+                <div id="pnlSrchCriteria">
+                    <div class="col-sm-3">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Search these mentors">
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" type="button"><i class="glyphicon glyphicon-search"></i></button>
+                            </span>
+                        </div>
+                        <div class="form-group no-margin-hr" style="display:none;">
+                            <label class="control-label">Keyword :</label>
+                            @Html.TextBoxFor(m => m.Keyword, new { @id = "txtKeyWord", @class = "form-control input-sm", @maxlength = "100" })
+                        </div>
+                    </div>
+
+                    <div class="col-sm-9" style="text-align:right;">
+                        <ul>
+                            <li class="btn btn-flat btn-labeled btn-primary" id="btnmargin_top">
+                                <a style="color: #fff; text-decoration: none; padding: 0px; font-weight: normal" href="@Url.Action("CreateNewContact","Contact")">
+                                    <span class="btn-label icon  fa  fa-plus-circle" style="margin-right:6px;"> </span>
+                                    Add New
+                                </a>
+                            </li>
+                            <li class="btn btn-flat btn-labeled btn-primary" id="btnmargin_top">
+
+                                <a style="color: #fff; text-decoration: none; padding: 0px; font-weight: normal" id="DeleteContacts" onclick="deleteSelectedContacts()">
+                                    <span class="btn-label icon  fa   fa-trash-o" style="margin-right:6px;"> </span>
+                                    Delete
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="col-sm-3" style="display:none;">
+                        <div class="form-group no-margin-hr">
+                            <label class="control-label">Company Name :</label>
+                            @Html.TextBoxFor(m => m.CompanyName, new { @id = "txtCompanyName", @class = "form-control input-sm", @maxlength = "100" })
+                        </div>
+                    </div>
+
+                    <div class="col-sm-3" style="display:none;">
+                        <div class="form-group no-margin-hr">
+                            <label class="control-label">Owner Name :</label>
+                            @Html.TextBoxFor(m => m.Owner, new { @id = "txtOwnerName", @class = "form-control input-sm", @maxlength = "100" })
+                        </div>
+                    </div>
+
+                    <div class="col-sm-3" style="display:none;">
+
+                        <div class="col-xs-12 col-sm-12 text-right text-right-sm" id="white_bg">
+                            <ul class="table-nav-item">
+                                <li class="btn btn-flat btn-labeled btn-primary" id="btnmargin_top">
+
+                                    <a style="color: #fff; text-decoration: none; padding: 0px; font-weight: normal" id="btnClear">
+                                        <span class="btn-label icon fa fa-eraser" style="margin-right:6px;"> </span>
+                                        Clear
+                                    </a>
+
+
+                                </li>
+
+                                <li class="btn btn-flat btn-labeled btn-primary" id="btnmargin_top">
+
+
+                                    <a style="color: #fff; text-decoration: none; padding: 0px; font-weight: normal" id="btnSearchContacts">
+                                        <span class="btn-label icon fa fa-search" style="margin-right:6px;"> </span>
+                                        Search
+                                    </a>
+                                </li>
+
+                            </ul>
+
+                        </div>
+                    </div>
+
+                </div>
+                <!-- col-sm-6 -->
+                <div class="col-sm-12" style="display:none;">
+
+                    <div class="col-sm-12" style="background-color: #f5f5f5; padding-top: 6px; padding-bottom: 6px; text-align: right;">
+                        <ul class="table-nav-item">
+                            <li class="btn btn-flat btn-labeled btn-primary" id="btnmargin_top">
+                                <a style="color: #fff; text-decoration: none; padding: 0px; font-weight: normal" href="@Url.Action("GetHistory", "Import")">
+                                    <span class="btn-label icon  fa fa-anchor" style="margin-right:6px;"> </span>
+                                    History
+                                </a>
+                            </li>
+                            <li class="btn btn-flat btn-labeled btn-primary" id="btnmargin_top">
+                                <a style="color: #fff; text-decoration: none; padding: 0px; font-weight: normal" href="@Url.Action("ImportContacts", "Import")">
+                                    <span class="btn-label icon  fa fa-cloud-upload" style="margin-right:6px;"> </span>
+                                    Import Contacts
+                                </a>
+                            </li>
+                            <li class="btn btn-flat btn-labeled btn-primary" id="btnmargin_top">
+                                <a style="color: #fff; text-decoration: none; padding: 0px; font-weight: normal" href="@Url.Action("CreateNewContact","Contact")">
+                                    <span class="btn-label icon  fa  fa-plus-circle" style="margin-right:6px;"> </span>
+                                    Add New
+                                </a>
+                            </li>
+                            <li class="btn btn-flat btn-labeled btn-primary" id="btnmargin_top">
+
+                                <a style="color: #fff; text-decoration: none; padding: 0px; font-weight: normal" id="DeleteContacts" onclick="deleteSelectedContacts()">
+                                    <span class="btn-label icon  fa   fa-trash-o" style="margin-right:6px;"> </span>
+                                    Delete
+                                </a>
+                            </li>
+
+                        </ul>
+
+                    </div>
+                </div>
+                <div class="col-sm-12 col-xs-12">
+
+                    <div class="table-primary table-striped" id="divTable">
+
+                        <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="tblContacts" width="100%">
+                            <thead>
+                                <tr>
+                                    <th width="25px">
+                                        <label>
+                                            <input class="fa fa-square-o" type="checkbox" id="chkContactHeader" />
+                                            <span class="text"></span>
+                                        </label>
+                                    </th>
+
+                                    <th data-hide="tablet,tabletlandscape,phone">Mentor&nbsp;Name</th>
+
+                                    <th data-class="expand">Venture&nbsp;Name</th>
+
+                                    <th data-hide="tablet,tabletlandscape,phone">Email Address</th>
+                                    <th data-hide="tabletlandscape,phone">Phone</th>
+                                    <th data-hide="tabletlandscape,phone">Contact&nbsp;Owner</th>
+                                    <th>&nbsp;</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- /11. $BOOTSTRAP_TAB_DROP -->
+<!-- / Info -->
+
+
+<div id="MdlAlert" class="modal" tabindex="-1" role="dialog" style="display: none; overflow: hidden; padding-top: 0px; width: 100%; height: 100%;">
+    <div class="modal-dialog" style="width: 99%; margin-left: 537px; margin-top: 219px;">
+        <div class="modal-content" style="width: 22%; height:15%">
+            <div class="modal-header">
+
+                <span style="float:right;margin-top:3px"><label id="XbtnClose">X</label></span>
+
+                <h4 class="modal-title">Delete Contacts?</h4>
+
+            </div>
+            <div class="modal-body" style="display: inline-block; height: 73px">
+                <p>Are you sure you want to delete selected records? </p>
+
+            </div>
+
+            <div class="modal-footer">
+
+
+                <span><button id="btnCancel">Cancel</button></span>
+                <span><button id="btnok">OK</button></span>
+
+            </div>
+        </div>
+
+    </div>
+
+</div>
+<div id="overlaydiv" class="Overlay" style="display: none; overflow: hidden"></div>
+
+
+@*</div>*@
+
+<div class="modal fade" id="myModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Company List</h4>
+            </div>
+            <div class="modal-body">
+
+                <div class="row">
+                    <div style="text-align:left;font-size:12px;padding:5px">Note : Click Company Name To Select Record.</div>
+                    <div class="col-sm-12">
+
+                        <div class="table-primary table-striped" id="tblCompanyList">
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@*<div class="ExportSection" style="visibility:hidden">
+         <a id="linkExportCsv" href="/Contact/ExportToCsv">Export to Csv</a>
+         <a id="linkExportExcel" href="/Contact/ExportToExcel">Export to Excel</a>
+
+    </div>*@
+<div class="ExportSection" style="visibility:hidden">
+
+    <a id="linkExportCsv" href="@Url.Action("ExportToCsv", "Contact")"<span>Export to Csv</span></a>
+    <a id="linkExportExcel" href="@Url.Action("ExportToExcel", "Contact")"<span>Export to Excel</span></a>
+</div>
+
+
+
+
+
+
+
+
+<div class="modal fade" id="myActModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Open Activity</h4>
+            </div>
+            <div class="modal-body">
+
+                <div class="row">
+                    <fieldset>
+
+                        <div style="text-align:left;font-size:12px;padding:5px">
+                            <button class="btn btn-flat btn-labeled btn-primary" onclick="AddActivity()" id="btnAddActivity" style="margin-bottom:5px;">
+                                <span class="btn-label icon fa  fa-plus-circle"></span>Add
+                            </button>
+
+                            <button class="btn btn-flat btn-labeled btn-primary" onclick="EditActivity()" id="btnEditActivity" style="margin-bottom:5px;">
+                                <span class="btn-label icon fa fa-check-square-o"></span>Edit
+                            </button>
+
+                            <button class="btn btn-flat btn-labeled btn-primary" onclick="DeleteActivity()" id="btnDeleteActivity" style="margin-bottom:5px;">
+                                <span class="btn-label icon fa  fa-trash-o"></span>Delete
+                            </button>
+
+                            <button class="btn btn-flat btn-labeled btn-primary" onclick="CompleteActivity()" id="btnCompleteActivity" style="margin-bottom:5px;">
+                                <span class="btn-label icon fa  fa-check-circle"></span>Complete
+                            </button>
+
+
+
+
+
+                            <div class="table-primary table-striped" id="tblContactactivityList" style="margin-top:5px;">
+
+                            </div>
+
+                        </div>
+                    </fieldset>
+                </div>
+                <div class="row">
+                    <fieldset>
+                        <legend>Acitivity History</legend>
+                        <div style="text-align:left;font-size:12px;padding:5px">
+
+                            <button class="btn btn-flat btn-labeled btn-primary" onclick="EditActivityHistory()" id="btnEditActivityHistory">
+                                <span class="btn-label icon fa  fa-check-square-o"></span>Edit
+                            </button>
+
+
+                            <div class="table-primary table-striped" id="tblContactActivityHistory" style="margin-top:5px;">
+
+                            </div>
+
+                        </div>
+                    </fieldset>
+
+                </div>
+            </div>
+            <div>
+                <table cellpadding="0" cellspacing="0" border="0" width="100%">
+                    <tr>
+
+                        <td colspan="3" align="center">
+
+
+                            <input type="button" id="btnclose" value="Close" style="margin-bottom:15px;" class="btn btn-flat btn-labeled btn-primary" data-dismiss="modal" aria-label="Close" />
+                        </td>
+                    </tr>
+
+                </table>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="myModalAddAct">
+    <div class="modal-dialog" style="box-shadow:2px 3px 5px #666;  top:80px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">New Activity</h4>
+            </div>
+            <div class="modal-body">
+
+                <div class="row">
+                    <div style="text-align:left;font-size:12px;padding:5px">
+                    </div>
+                    <div class="col-sm-12">
+
+                        <div class="table-primary table-striped" id="tblNewContactActivity">
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="myModalEditAct">
+    <div class="modal-dialog">
+        <div class="modal-content" style="width:115%;">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Edit Activity</h4>
+            </div>
+            <div class="modal-body">
+
+                <div class="row">
+                    <div style="text-align:left;font-size:12px;padding:5px">
+                        <span><button id="btnClosePopup" data-dismiss="modal" aria-label="Close">Close</button></span>
+                    </div>
+                    <div class="col-sm-12">
+
+                        <div class="table-primary table-striped" id="tblEditContactActivityList">
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="modal fade" id="myMergeModal">
+    <div class="modal-dialog" style="width:81%">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Merge Contacts</h4>
+            </div>
+            <div class="modal-body">
+
+                <div class="row">
+                    <div style="text-align:left;font-size:12px;padding:5px">
+                    </div>
+                    <div class="col-sm-12">
+
+                        <div id="tblMergeContactsLists">
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <span><button id="btnCancelMergePop">Cancel</button></span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.2.min.js"></script>
+<script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/jquery.dataTables.min.js"></script>
+
+<script>
+
+    $(document).ready(function () {
+
+        var CreateContact = '@ViewBag.CreateContact';
+        if (CreateContact != "") {
+            //$('#ErrorMessages').html('Lead Details Updated Successfully.');
+            $.growl.notice({ title: "Success", message: "Contact Details Created Successfully.", size: 'large' });
+
+        }
+
+        bindContactGrid();
+        $('#tblContacts').on('length.dt', function (e, settings, len) {
+
+            $('#loading').css('display', 'block');
+        });
+
+        $('#tblContacts').on('page.dt', function () {
+
+            $('#loading').css('display', 'block');
+        });
+    });
+    function bindContactGrid() {
+
+        var responsiveHelper = undefined;
+        var breakpointDefinition = {
+            desktop: Infinity,
+            tablet: 1024,
+            tabletlandscape: 768,
+            phone: 480
+        };
+
+        var tableElement = $('#tblContacts').dataTable({
+            // autoWidth: false,
+            // "searching": true,
+            preDrawCallback: function () {
+                if (!responsiveHelper) {
+                    responsiveHelper = new ResponsiveDatatablesHelper($('#tblContacts'), breakpointDefinition);
+                }
+            },
+            rowCallback: function (nRow) {
+                responsiveHelper.createExpandIcon(nRow);
+            },
+            drawCallback: function (oSettings) {
+                responsiveHelper.respond();
+            },
+
+            "serverSide": true,
+
+
+            "sAjaxSource": '@Url.Action("getContactsList12", "Contact")',
+
+            "fnServerParams": function (aoData) {
+                aoData.push(
+                     //{ "name": "Contactkeyword", "value": " " txtOwnerName }
+                         { "name": "Contactkeyword", "value": "" + $("#txtKeyWord").val().trim() + "" },
+                         { "name": "CompanyName", "value": "" + $("#txtCompanyName").val().trim() + "" },
+                         { "name": "OwnerName", "value": "" + $("#txtOwnerName").val().trim() + "" }
+
+                    );
+            },
+            "fnServerData": function (sSource, aoData, fnCallback) {
+                $.ajax({
+                    "dataType": 'json',
+                    "contentType": "application/json; charset=utf-8",
+                    "type": "GET",
+                    "url": sSource,
+                    "data": aoData,
+                    "success":
+                                function (msg) {
+
+                                    $('#loading').css('display', 'none');
+
+                                    fnCallback(msg);
+
+                                }
+                });
+            },
+            "asStripeClasses": ['odd gradeX', 'even gradeC'],
+            "aoColumnDefs": [
+              {
+                  "targets": [0], "visible": true, "bSortable": false, "mDataProp": "ID",
+                  "render": function (data, type, row) {
+                      return "<input name=\"chkContactItem\" class =\"Contactcase\" type=\"checkbox\"  id=\"chkRow_" + row["ID"] + "\"data-ContactId=\"" + row["ID"] + "\"  /><span class='text'></span>";
+                  }
+              },
+                {
+                    "targets": [1], "visible": true, "bSortable": true, "mDataProp": "ContactName",
+                    "render": function (data, type, row) {
+                        return "<a style=\"cursor:pointer\"  onclick=\"OpenContactDetail('" + row["ID"] + "')\">" + row["ContactName"] + "</a>";
+                    }
+                },
+                //{ "targets": [2], "visible": true, "bSortable": true, "mDataProp": "LeadName" },
+                {
+                    "targets": [2], "visible": true, "bSortable": true, "mDataProp": "CompanyName"
+
+                },
+                  //{ "targets": [4], "visible": true, "bSortable": true, "mDataProp": "LName" },
+                    { "targets": [3], "visible": true, "bSortable": true, "mDataProp": "Email" },
+
+                { "targets": [4], "visible": true, "bSortable": true, "mDataProp": "Phone" },
+                { "targets": [5], "visible": true, "bSortable": true, "mDataProp": "Ownership" },
+                {
+                    "targets": [6], "visible": true, "bSortable": false,
+                    "render": function (data, type, row) {
+                        return "<span class=\"fa fa-trash\" style='font-size: 15px;' onclick=\"DeleteContactsConfirmation('" + row["ID"] + "');\"></span>";
+                    }
+                },
+
+
+            ],
+
+        }).api();
+
+
+
+    }
+
+
+
+
+
+    $("#chkContactHeader").click(function () {
+
+        $('.Contactcase').prop("checked", this.checked);
+    });
+    // if all checkbox are selected, check the selectall checkbox
+    // and viceversa
+    $('#tblContacts tbody').click(function () {
+
+        if ($('#tblContacts input[name="chkContactItem"]:checked').length == $('#tblContacts input[name="chkContactItem"]').length) {
+            $("#chkContactHeader").prop("checked", true);
+        } else {
+            $("#chkContactHeader").prop("checked", false);
+        }
+    });
+
+    $('#btnSearchContacts').click(function () {
+
+        $('#loading').css('display', 'block');
+        $("#tblContacts").dataTable().fnDestroy();
+        bindContactGrid();
+
+        $('#tblContacts').on('length.dt', function (e, settings, len) {
+
+            $('#loading').css('display', 'block');
+        });
+
+        $('#tblContacts').on('page.dt', function () {
+
+            $('#loading').css('display', 'block');
+        });
+
+    });
+
+
+    $('#btnClear').click(function () {
+
+        $('#txtOwnerName').val('');
+        $('#txtKeyWord').val('');
+        $('#txtCompanyName').val('');
+        $('#loading').css('display', 'block');
+        $("#tblContacts").dataTable().fnDestroy();
+        bindContactGrid();
+
+
+    });
+
+    function OpenContactDetail(ContactId) {
+
+        var param = ContactId;
+        var url = '@Url.Action("getContactdetails", "Contact", new { ContactId = "__param__" })';
+        window.location.href = url.replace('__param__', encodeURIComponent(param));
+
+    }
+
+
+    //function OpenContactDetail(contactId, email) {
+    //    window.location = "Contact/EditContact?contactId=" + contactId;
+    //}
+
+    function DeleteContactsConfirmation(ContactId) {
+
+        var flag = confirm('You are about to delete permanently.Are you sure you want to delete this record?');
+        if (flag) {
+            deleteEachContact(ContactId);
+            //document.location.href = document.location.href;
+            //alert("Deleted Successfully!!!");
+        }
+    }
+    function deleteEachContact(ContactId) {
+
+        $.ajax({
+            url: "Contact/DeleteContacts",
+            type: "POST",
+            async: false,
+            data: { Contactids: ContactId.toString() },
+            success: function (data) {
+                if (data == "True") {
+                    $.growl.notice({ title: "Success", message: "Contact(s) Deleted Successfully.", size: 'large' });
+                    $("#tblContacts").dataTable().fnDestroy();
+                    bindContactGrid();
+                }
+                else {
+                    //$.growl.error({ title: "Fail", message: "Contact(s) Not Deleted .", size: 'large' });
+                    $.growl.error({ title: "Fail", message: "Can't  Deleted !!!  Contact(s) is in use.", size: 'large' });
+                }
+            },
+            error: function () {
+
+            }
+        });
+    }
+
+
+    function deleteSelectedContacts() {
+
+        if ($('#tblContacts input[name="chkContactItem"]:checked').length > 0) {
+            // alert("Hello");
+            var flag = confirm('You are about to delete permanently.Are you sure you want to delete these records?');
+            if (flag) {
+
+
+                var searchIDs = $("#tblContacts input:checkbox:checked").map(function () {
+                    return $(this).attr("data-ContactId");
+                }).get();
+
+                // alert(searchIDs);
+                deleteEachContact(searchIDs)
+            }
+        }
+        else {
+            //alert("Please select item(s) to delete.");
+            $.growl.error({ title: "Fail", message: "Please select Contact(s) to delete.", size: 'large' });
+        }
+
+
+    }
+     
+    var Contid;
+    var Contname;
+
+    function OpenActivityPopUp(ContactID, ContactName) {
+
+        Contid = ContactID;
+        Contname = ContactName;
+        var URL = "Contact/ContactActivityPopup";
+        $.ajax({
+            url: URL,
+            type: "GET",
+            async: false,
+            data: { ContactID: ContactID },
+            success: function (data) {
+
+                if (data != null) {
+                    $('#tblContactactivityList').empty();
+                    $('#tblContactactivityList').empty().append(data);
+                }
+            },
+            error: function (error) {
+
+
+            }
+        });
+
+        var URL1 = "Contact/ContactActivityHistoryPopUp";
+        $.ajax({
+            url: URL1,
+            type: "GET",
+            async: false,
+            data: { ContactID: ContactID },
+            success: function (data) {
+
+                if (data != null) {
+                    $('#tblContactActivityHistory').empty();
+                    $('#tblContactActivityHistory').empty().append(data);
+                }
+            },
+            error: function (error) {
+
+
+            }
+        });
+
+
+        $("#myActModal").modal("show");
+
+    }
+
+    function AddActivity() {
+
+        var URL = "Contact/NewContactActivityPopUp";
+        $.ajax({
+            url: URL,
+            type: "GET",
+            async: false,
+            success: function (data) {
+
+                if (data != null) {
+                    $('#tblNewContactActivity').empty();
+                    $('#tblNewContactActivity').empty().append(data);
+
+                }
+            },
+            error: function (error) {
+
+
+            }
+        });
+
+        $('#myModalAddAct').modal("show");
+
+    }
+
+
+
+    function EditActivity() {
+
+        if ($('#tblContactActivityPopUp input[name="chkItemPop"]:checked').length > 0) {
+            if ($('#tblContactActivityPopUp input[name="chkItemPop"]:checked').length > 1) {
+                alert("Please Select One Record Only.");
+            }
+            else {
+                var id = $('#tblContactActivityPopUp input[name="chkItemPop"]:checked').attr('data-activity');
+                var URL = "Contact/EditContactActivityPopUp";
+                $.ajax({
+                    url: URL,
+                    type: "GET",
+                    data: { HistoryId: id },
+                    async: false,
+                    success: function (data) {
+
+                        if (data != null) {
+                            $('#tblEditContactActivityList').empty();
+                            $('#tblEditContactActivityList').empty().append(data);
+                        }
+                    },
+                    error: function (error) {
+
+                    }
+                });
+                $('#myModalEditAct').modal("show");
+            }
+        }
+        else
+            alert("Please Select atleast One Record Only.");
+    }
+
+
+    $("#btnclose").click(function () {
+        $("#myActModal").modal("hide");
+    });
+
+    $("#btnClosePopup").click(function (e) {
+
+        $('#myModalEditAct').modal("hide");
+        e.stopPropagation();
+        e.preventDefault();
+
+    });
+
+    function DeleteActivity(e) {
+
+        if ($('#tblContactActivityPopUp input[name="chkItemPop"]:checked').length > 0) {
+
+            var flag = confirm('You are about to delete permanently.Are you sure you want to delete these records?');
+            if (flag) {
+
+                $('#tblContactActivityPopUp input[name="chkItemPop"]:checked').each(function () {
+
+                    var id = $(this).attr('data-activity');
+
+                    deleteEachActivity(id);
+                });
+
+
+                //document.location.href = document.location.href;
+                alert("Deleted Successfully");
+                ContactID = Contid;
+                ContactName = Contname;
+                OpenActivityPopUp(ContactID, ContactName);
+            }
+        }
+        else {
+            alert('Please select atleast one record to delete');
+        }
+
+
+    }
+
+    function deleteEachActivity(historyId) {
+
+        $.ajax({
+            url: "Contact/DeleteContactActivity",
+            type: "GET",
+            async: false,
+            data: { historyId: historyId },
+            success: function (data) {
+
+
+
+            },
+            error: function () {
+
+            }
+        });
+    }
+
+    function CompleteActivity() {
+
+        if ($('#tblContactActivityPopUp input[name="chkItemPop"]:checked').length > 0) {
+            var flag = confirm('Are you sure you want to Complete the Activity?');
+            if (flag) {
+                $('#tblContactActivityPopUp input[name="chkItemPop"]:checked').each(function () {
+
+                    var id = $(this).attr('data-activity');
+                    completeEachActivity(id);
+                });
+                alert("Activity Updated Successfully");
+                ContactID = Contid;
+                ContactName = Contname;
+                OpenActivityPopUp(ContactID, ContactName);
+                //document.location.href = document.location.href;
+
+            }
+        }
+        else
+            alert("Please Select atleast One Record Only.");
+    }
+
+    function completeEachActivity(historyId) {
+
+        $.ajax({
+            url: "Contact/CompleteContactActivity",
+            type: "GET",
+            async: false,
+            data: { historyId: historyId },
+            success: function (data) {
+            },
+            error: function () {
+
+            }
+        });
+    }
+
+
+    function EditActivityHistory() {
+
+        if ($('#tblContactActivityHistoryPopUp input[name="chkItemHistPop"]:checked').length > 0) {
+            if ($('#tblContactActivityHistoryPopUp input[name="chkItemHistPop"]:checked').length > 1) {
+                alert("Please Select One Record Only.");
+            }
+            else {
+                var id = $('#tblContactActivityHistoryPopUp input[name="chkItemHistPop"]:checked').attr('data-activity');
+                var URL = "Contact/EditContactActivityPopUp";
+                $.ajax({
+                    url: URL,
+                    type: "GET",
+                    data: { HistoryId: id },
+                    async: false,
+                    success: function (data) {
+
+                        if (data != null) {
+                            $('#tblEditContactActivityList').empty();
+                            $('#tblEditContactActivityList').empty().append(data);
+                        }
+                    },
+                    error: function (error) {
+
+                    }
+                });
+                $('#myModalEditAct').modal("show");
+            }
+        }
+        else
+            alert("Please Select atleast One Record Only.");
+
+
+    }
+
+    $("#btnCancelMergePop").click(function () {
+
+        $("#myMergeModal").modal("hide");
+    });
+
+    function ExportCsv() {
+
+        $('#loading').css('display', 'block');
+        $("#linkExportCsv")[0].click();
+        alert("Contact Exported succesfully");
+        $('#loading').css('display', 'none');
+    }
+
+    function ExportExcel() {
+
+        $('#loading').css('display', 'block');
+        $("#linkExportExcel")[0].click();
+        alert("Contact Exported succesfully");
+        $('#loading').css('display', 'none');
+
+    }
+
+
+
+
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#activemenu").addClass("open active");
+        $('.mm-text').closest('li').each(function () {
+            $(this).removeClass('active');
+        });
+        $('.mm-text').eq(1).closest('li').addClass('active');
+    });
+</script>
+
+
+
+
+
+

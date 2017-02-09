@@ -1,0 +1,62 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<br />
+<br />
+<br />
+<div class="panel-heading">
+    <div class="row">
+        <!-- Page header, center on small screens -->
+        <h1 class="col-xs-6 col-sm-4 text-left text-left-sm panel-title"><i class="fa fa-users page-header-icon"></i>&nbsp;<label id="lblHeading">Import History</label></h1>
+        <div class="col-xs-6 col-sm-8">
+            <div class="row">
+                <div class="pull-right">
+                    @*<a href="#" class="btn btn-flat btn-labeled btn-primary" tabindex="-1"
+                        data-toggle="modal" data-target="#uidemo-modals-alerts-info"><span class="btn-label icon fa fa-question-circle"></span>Help</a>gdfgdssdgsd
+                        *@
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="col-sm-12 col-xs-12">
+    <div class="table-primary table-striped">
+        <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="tblHistory" style="width:100%">
+
+            <thead>
+                <tr>
+                    <th>File</th>
+                    <th>Total Records</th>
+                    <th>Rejected Records</th>
+                    <th>Download</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Session["importhistory"] != null)
+                {
+                    var variable = (List<CRMHub.EntityFramework.ImportHistory>)HttpContext.Current.Session["importhistory"];
+                    var items = Session["importhistory"] as List<string>;
+                    foreach (var item in variable)
+                    {
+                        <tr>
+                            <td> @item.ExcelFile</td>
+                            <td> @item.TotalRecords</td>
+                            <td> @item.FailedRecords</td>
+                            <td><a href="@Url.Action("Download", "Import", new { filename = @item.Filepath })"> Download </a> </td>
+                        </tr>
+                    }
+
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+
+        $(document).ready(function () {
+            $('#tblHistory').DataTable();
+
+        });
+</script>

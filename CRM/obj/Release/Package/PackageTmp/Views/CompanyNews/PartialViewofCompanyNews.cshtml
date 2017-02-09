@@ -1,0 +1,104 @@
+﻿@model IEnumerable<CRMHub.EntityFramework.CompanyNew>
+   
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#tblCompanyNews').dataTable();
+    }
+    );
+</script>
+
+
+
+<div class="col-sm-12">
+
+    <div class="table-primary table-striped">
+
+        <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="tblCompanyNews" width="100%">
+            <thead>
+                <tr>
+
+                  
+                    <th><input type="checkbox" name="chkAll"  id="chkHeader"/></th>
+                    
+                    <th data-hide="tablet,tabletlandscape,phone">News Id</th>
+                    <th data-class="expand">Head Line</th>
+                    <th data-hide="tablet,tabletlandscape,phone">Status</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td><input type="checkbox" name="chkitem" data-val-1="@item.NewsId" class="case" /></td>
+                        <td>@item.NewsId</td>
+                        <td>@Html.ActionLink(@item.NewsHeadLine, "EditCompanyNewsDetails", new { NewsId = item.NewsId })</td>
+                       
+
+                        <td>@item.IsActive</td>
+
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+
+</div>
+<script>
+   
+
+    $(function () {
+        $("#chkHeader").click(function () {
+            $(".case").prop("checked", this.checked);
+        });
+        // if all checkbox are selected, check the selectall checkbox
+        // and viceversa
+        $(".case").click(function () {
+            if ($(".case").length == $(".case:checked").length) {
+                $("#chkHeader").prop("checked", true);
+            } else {
+                $("#chkHeader").prop("checked", false);
+            }
+        });
+    });
+
+
+
+    function ChangeOffice(selectedOffice) {
+
+        $.ajax({
+            url: "CompanyNews/PartialViewofCompanyNews?office=" + selectedOffice + "",
+            type: "Get",
+            data: [],
+            success: function (data) {
+
+                if (data != null) {
+                    $("#divGrid").empty();
+                    $("#divGrid").empty().append(data);
+                    $('#loading').hide();
+                }
+            },
+            error: function (request, status, error) {
+
+            }
+        });
+    }
+
+    $('#tblCompanyNews').on('length.dt', function (e, settings, len) {
+        
+        $('#loading').css('display', 'block');
+        //ChangeOffice($(this).val());
+        $('#loading').css('display', 'none');
+    });
+
+
+    $('#tblCompanyNews').on('page.dt', function () {
+        
+        $('#loading').css('display', 'block');
+        //ChangeOffice($(this).val());
+        $('#loading').css('display', 'none');
+    });
+   
+</script>

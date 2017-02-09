@@ -1,0 +1,748 @@
+﻿@model CRMHub.ViewModel.EstimateInvoiceModel
+@{
+    ViewBag.Title = "EditEstimateInvoice";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm("UpdateEstimateInvoice", "Invoice", FormMethod.Post))
+{
+    <input type="hidden" id="hdSaveValue" value="" />
+
+    <div id="content-wrapper">
+
+
+        <div id="CustomBootstrapAlertBox">
+        </div>
+
+        <div class="row">
+
+
+            <div class="panel">
+                <div class="panel-heading">
+                    <div class="row">
+                        <!-- Page header, center on small screens -->
+                        <h1 class="col-xs-6 col-sm-4 text-left text-left-sm panel-title"><i class="fa fa-user page-header-icon"></i>&nbsp;Edit&nbsp;Estimate&nbsp;Invoice</h1>
+                        <div class="col-xs-6 col-sm-8">
+                            <div class="row">
+                                <div class="pull-right">
+                                    @*<a href="#" class="btn btn-flat btn-labeled btn-primary" tabindex="-1"
+                                        data-toggle="modal" data-target="#uidemo-modals-alerts-info"><span class="btn-label icon fa fa-question-circle"></span>Help</a>*@
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel-body">
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <!-- Tabs -->
+
+
+                            <div class="tab-pane" id="bs-tabdrop-tab3">
+
+                                <div class="row">
+                                    <div class="col-sm-12 col-xs-12">
+                                        <div class="page-header-breadcrumb">
+                                            <label class="control-label" id="lblMessage"></label>
+                                            <ul class="table-nav-item" style="float: right; margin-bottom:5px;">
+                                                @if (Model.estinvoiceobj.Posted == 0)
+                                                {
+                                                    <li>
+                                                        <button class="btn btn-flat btn-labeled btn-primary" name="ConvertInvoice" id="btnConvertToInvoice">
+                                                            <span class="btn-label icon  fa fa-pencil-square-o"></span>Convert To Invoice
+                                                        </button>
+                                                    </li>
+
+                                                    <li>
+
+
+                                                        <button class="btn btn-flat btn-labeled btn-primary" type="submit" name="SaveEI" id="btnSave">
+                                                            <span class="btn-label icon fa fa-save"></span>Update
+                                                        </button>
+                                                    </li>
+                                                }
+
+                                                else
+                                                {
+                                                    <li>
+
+                                                        <label class="control-label" style="margin-right:20px;font-size:16px">Converted To Invoice</label>
+                                                    </li>
+
+                                                }
+
+                                                <li>
+                                                    <a style="color: #fff; text-decoration: none; padding: 0px; font-weight: normal" class="btn btn-flat btn-labeled btn-primary" href="@Url.Action("EstimateInvoice", "Invoice")">
+                                                        <span class="btn-label icon fa fa-backward" style="margin-right:6px;"> </span>
+                                                        Back
+                                                    </a>
+                                                </li>
+
+
+                                                @*<li>
+
+                                                        <div class="btn btn-flat btn-labeled btn-primary" style="padding:3.5px 8px !important;">
+                                                            @Html.ActionLink("Back", "Index", "ManageCompany", new { @style = "color:#fff; font-weight:normal; padding:0px 0px; float:right; text-decoration:none;" })
+                                                            <span class="btn-label icon  fa fa-backward"> </span>
+                                                        </div>
+                                                    </li>*@
+                                            </ul>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <span id="errorsymbol" style="color:red;display:none;margin-left:5px;" class="fa fa-exclamation-circle"></span><div id="ErrorMessages" style="margin-left:20px;color:red;font-size:15px;margin-top:-19px">
+
+                                </div>
+                                <div class="row">
+                                    <div class="panel-group" id="accordion-example">
+
+                                        <!-- / .panel -->
+                                        <div class="panel">
+                                            @*<div class="panel-heading">
+                                                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion-example"
+                                                       href="#collapse2">Invoice Detail</a>
+                                                </div>*@
+                                            <!-- / .panel-heading -->
+                                            <div id="collapse2" class="panel-collapse collapse in" style="height: auto;">
+                                                <div class="panel-body">
+                                                    <div class="col-sm-12 no-padding-hr">
+                                                        <div class="row" style="margin-bottom:23px;">
+
+                                                            <div class="col-sm-8">
+                                                                <div class="row">
+                                                                    <div class="col-sm-6">
+                                                                        <div class="form-group no-margin-hr">
+                                                                            <label class="control-label">Customer Name :<span style="color: red">*</span></label>
+                                                                            @Html.TextBoxFor(m => m.estinvoiceobj.Fname, new { @class = "form-control input-sm", @id = "txtCustomerName", @maxlength = "100", @Placeholder = "Select Customer", @readonly = false, @validate = "Required", @data_val_required = "Contact Name", style = "width: 91%;" })
+                                                                            @Html.HiddenFor(m => m.estinvoiceobj.CustomerID, new { @id = "hdCustomerId" })
+
+                                                                            @Html.HiddenFor(m => m.estinvoiceobj.Posted, new { @id = "hdPosted" })
+                                                                            @*<div class="input-group" id="tblContact" runat="server">
+                                                                                    <span class="input-group-btn">
+                                                                                        <a class="btn" href="#" id="ImageButton4" title="Select Contact"
+                                                                                           onclick="return show_NewContactPopUp(580, 420);" style="cursor: pointer"><i class="fa fa-search"></i></a>
+                                                                                    </span>
+                                                                                </div>*@
+
+
+
+                                                                        </div>
+
+                                                                    </div>
+
+
+                                                                </div>
+
+                                                                <div class="row">
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
+                                                                            <div class="form-group no-margin-hr">
+                                                                                <span class="label label-primary label-tag">Bill&nbsp;To:</span>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="row">
+                                                                            <div class="col-sm-11">
+                                                                                @Html.TextArea("txtAddressBilling", null, new { @class = "form-control input-sm", @cols = 80, @rows = 8 })
+
+                                                                                @*@Html.TextAreaFor(m => m.invoice.BillingAddress, new { @id = "txtAddressBilling",@cols = 80, @rows = 8, @class = "form-control input-sm", @MaxLength = "50" })*@
+                                                                                @*<textarea maxlength="50" class="form-control input-sm" cols="80" id="txtAddressBilling" rows="8"></textarea>*@
+                                                                            </div>
+                                                                        </div>
+
+
+                                                                    </div>
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
+                                                                            <div class="form-group no-margin-hr">
+                                                                                <span class="label label-primary label-tag">Ship&nbsp;To:</span>
+
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="row">
+                                                                            <div class="col-sm-11">
+                                                                                @Html.TextArea("txtAddressShipping", null, new { @class = "form-control input-sm", @cols = 80, @rows = 8 })
+                                                                                @*@Html.TextAreaFor(m => m.invoice.ShippingAddress, new { @id = "txtAddressShipping",@cols = 80, @rows = 8, @class = "form-control input-sm", @MaxLength = "50" })
+                                                                                    @Html.HiddenFor(m => m.invoice.ShippingAddress, new { @id = "hdAddressShipping" })*@
+
+                                                                                @*<textarea maxlength="50" class="form-control input-sm " cols="80" id="txtAddressShipping" rows="8"></textarea>*@
+
+                                                                            </div>
+                                                                        </div>
+
+                                                                    </div>
+
+                                                                </div>
+
+
+                                                            </div>
+
+
+                                                            <div class="col-sm-4" style="border:1px solid #ccc; padding:10px;margin-top:45px;">
+                                                                <div class="col-sm-12">
+                                                                    <div class="form-group no-margin-hr">
+                                                                        <label class="control-label col-sm-6" style="align-content:flex-end">Invoice&nbsp;Number :</label>
+                                                                        <div class="col-sm-6">
+
+                                                                            @Html.TextBoxFor(m => m.estinvoiceobj.EstInvoiceNo, new { @id = "txtinvoiceNumber", @class = "form-control input-sm", @MaxLength = "50", @readonly = false })
+                                                                            @Html.HiddenFor(m => m.estinvoiceobj.EstInvoiceID, new { @id = "hdInvoiceId" })
+                                                                        </div>
+
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-sm-12">
+                                                                    <div class="form-group no-margin-hr">
+                                                                        <label class="control-label col-sm-6">Invoice Date :</label>
+                                                                        <div class="col-sm-6">
+
+                                                                            @Html.TextBoxFor(m => m.estinvoiceobj.CreatedDate, "{0:MM/dd/yyyy}", new { @id = "txtCreatedDate", @class = "form-control input-sm", @MaxLength = "50", @readonly = false })
+                                                                        </div>
+
+                                                                    </div>
+                                                                </div>
+
+
+                                                            </div>
+                                                        </div>
+
+
+
+
+
+                                                        @*Here We use partial view to add items list*@
+                                                        <div class="row">
+                                                            <div class="col-sm-12">
+
+                                                                <div id="EditbinditemsData">
+                                                                    @*Partial view to bind items Lists*@
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+
+                                                        @*End of partial view to add items list*@
+                                                        @*<div class="row">
+                                                                <div class="col-sm-12">
+                                                                        <div class="form-group no-margin-hr">
+                                                                            <div class="col-sm-3" style="float:right;width:18%;margin-right:43px;">
+                                                                                @Html.TextBoxFor(m => m.invoice.GrandTotal, new { @class = "form-control input-sm", @id = "txtGrdTotal" })
+                                                                            </div>
+                                                                        </div>
+                                                                </div>
+                                                            </div>*@
+
+                                                        @if (Model.estinvoiceobj.Posted == 0)
+                                                        {
+
+
+                                                            <div class="row">
+                                                                <div class="col-sm-12">
+                                                                    <div class="form-group no-margin-hr">
+                                                                        <label class="control-label col-sm-2" style="float:left;width:20%;margin-bottom:-50px;margin-top: 5px;margin-left:640px;">Total&nbsp;($):</label>
+                                                                        <div class="col-sm-3" style="float:right;width:18%;margin-right:73px;">
+                                                                            @*@Html.LabelFor(m => m.invoice.Total, new { @class = "form-control input-sm", @readonly = false, @id = "txttotal", @style = "text-align:right" })*@
+                                                                            @Html.TextBoxFor(m => m.estinvoiceobj.Total, new { @class = "form-control input-sm", @readonly = false, @id = "txttotal", @style = "text-align:right" })
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-sm-12">
+                                                                    <div class="form-group no-margin-hr">
+                                                                        <label class="control-label col-sm-2" style="float:right;width:20%;margin-bottom:-50px;margin-top: 5px;margin-right:210px;">Tax&nbsp;(%)&nbsp;:</label>
+                                                                        <label class="control-label col-sm-2" style="float:right;width:20%;margin-bottom:-50px;margin-top: 5px;margin-right:80px;">(+)</label>
+                                                                        <div class="col-sm-3" style="float:right;width:18%;margin-right:73px;">
+                                                                            @Html.TextBoxFor(m => m.estinvoiceobj.TaxAmount, new { @class = "form-control input-sm", @readonly = false, @id = "txtTax", @style = "text-align:right" })
+                                                                        </div>
+                                                                        <div class="col-sm-3" style="float:right;width:10%;margin-right:7px;">
+                                                                            @Html.TextBoxFor(m => m.estinvoiceobj.TaxPercent, new { @class = "form-control input-sm", @id = "txtTaxpercent", @style = "text-align:right" })
+                                                                            @*@Html.TextBox("txtTaxpercent", null, new { @class = "form-control input-sm", @id = "txtTaxpercent" })*@
+                                                                        </div>
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="row">
+                                                                <div class="col-sm-12">
+                                                                    <div class="form-group no-margin-hr">
+                                                                        <label class="control-label col-sm-2" style="float:right;width:20%;margin-bottom:-50px;margin-top: 5px;margin-right:243px;">Discount&nbsp;(%)&nbsp;:</label>
+                                                                        <label class="control-label col-sm-2" style="float:right;width:20%;margin-bottom:-50px;margin-top: 5px;margin-right:80px;">(-)</label>
+                                                                        <div class="col-sm-3" style="float:right;width:18%;margin-right:72px;">
+                                                                            @Html.TextBoxFor(m => m.estinvoiceobj.Discount, new { @class = "form-control input-sm", @readonly = false, @id = "txtDiscount", @style = "text-align:right" })
+                                                                        </div>
+                                                                        <div class="col-sm-3" style="float:right;width:10%;margin-right:6px;">
+                                                                            @Html.TextBoxFor(m => m.estinvoiceobj.DiscountPercent, new { @class = "form-control input-sm", @id = "txtDiscamt", @style = "text-align:right" })
+                                                                            @*@Html.TextBox("txtDiscamt", null, new { @class = "form-control input-sm", @id = "txtDiscamt" })*@
+                                                                        </div>
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="row">
+                                                                <div class="col-sm-12">
+                                                                    <div class="form-group no-margin-hr">
+                                                                        <label class="control-label col-sm-2" style="float:right;width:20%;margin-bottom:-50px;margin-top: 5px;margin-right:322px;">Miscellaneous&nbsp;Amount&nbsp;($):</label>
+                                                                        <label class="control-label col-sm-2" style="float:right;width:20%;margin-bottom:-50px;margin-top: 5px;margin-right:80px;">(+)</label>
+                                                                        <div class="col-sm-3" style="float:right;width:18%;margin-right:70px;">
+                                                                            @Html.TextBoxFor(m => m.estinvoiceobj.MiscellaneousAmount, new { @class = "form-control input-sm", @readonly = false, @id = "txtmsiAmt", @style = "text-align:right" })
+                                                                        </div>
+                                                                        <div class="col-sm-3" style="float:right;width:10%;margin-right:8px;">
+                                                                            @Html.TextBoxFor(m => m.estinvoiceobj.MiscellaneousAmount, new { @class = "form-control input-sm", @id = "txtMisAmount", @style = "text-align:right" })
+                                                                            @*@Html.TextBox("txtMisAmount", null, new { @class = "form-control input-sm", @id = "txtMisAmount" })*@
+                                                                        </div>
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+
+                                                            <div class="row">
+                                                                <div class="col-sm-12">
+
+                                                                    <div class="form-group no-margin-hr">
+                                                                        <label class="control-label col-sm-2" style="float:left;width:20%;margin-bottom:-75px;margin-top: 5px;margin-left:600px;">Grand&nbsp;Total&nbsp;($):</label>
+                                                                        <div class="col-sm-3" style="float:right;width:18%;margin-right:68px;">
+
+                                                                            @Html.TextBoxFor(m => m.estinvoiceobj.GrandTotal, new { @class = "form-control input-sm", @readonly = false, @id = "txtGrdTotal", @style = "text-align:right" })
+                                                                        </div>
+
+                                                                    </div>
+
+
+                                                                </div>
+
+                                                            </div>
+
+                                                        }
+                                                        else
+                                                        {
+                                                            <div class="row">
+                                                                <div class="col-sm-12">
+                                                                    <div class="form-group no-margin-hr">
+                                                                        <label class="control-label col-sm-2" style="float:left;width:20%;margin-bottom:-50px;margin-top: 5px;margin-left:725px;">Total&nbsp;($):</label>
+                                                                        <div class="col-sm-3" style="float:right;width:18%;margin-right:-11px;">
+                                                                            @*@Html.LabelFor(m => m.invoice.Total, new { @class = "form-control input-sm", @readonly = false, @id = "txttotal", @style = "text-align:right" })*@
+                                                                            @Html.TextBoxFor(m => m.estinvoiceobj.Total, new { @class = "form-control input-sm", @readonly = false, @id = "txttotal", @style = "text-align:right" })
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="row">
+                                                                <div class="col-sm-12">
+                                                                    <div class="form-group no-margin-hr">
+                                                                        <label class="control-label col-sm-2" style="float:right;width:20%;margin-bottom:-50px;margin-top: 5px;margin-right:120px;">Tax&nbsp;(%)&nbsp;:</label>
+                                                                        <label class="control-label col-sm-2" style="float:right;width:20%;margin-bottom:-50px;margin-top: 5px;margin-right:-8px;">(+)</label>
+                                                                        <div class="col-sm-3" style="float:right;width:18%;margin-right:-9px;">
+                                                                            @Html.TextBoxFor(m => m.estinvoiceobj.TaxAmount, new { @class = "form-control input-sm", @readonly = false, @id = "txtTax", @style = "text-align:right" })
+                                                                        </div>
+                                                                        <div class="col-sm-3" style="float:right;width:10%;margin-right:-1px;">
+                                                                            @Html.TextBoxFor(m => m.estinvoiceobj.TaxPercent, new { @class = "form-control input-sm", @id = "txtTaxpercent", @style = "text-align:right", @readonly = false })
+                                                                            @*@Html.TextBox("txtTaxpercent", null, new { @class = "form-control input-sm", @id = "txtTaxpercent" })*@
+                                                                        </div>
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="row">
+                                                                <div class="col-sm-12">
+                                                                    <div class="form-group no-margin-hr">
+                                                                        <label class="control-label col-sm-2" style="float:right;width:20%;margin-bottom:-50px;margin-top: 5px;margin-right:154px;">Discount&nbsp;(%)&nbsp;:</label>
+                                                                        <label class="control-label col-sm-2" style="float:right;width:20%;margin-bottom:-50px;margin-top: 5px;margin-right:-9px;">(-)</label>
+                                                                        <div class="col-sm-3" style="float:right;width:18%;margin-right:-9px;">
+                                                                            @Html.TextBoxFor(m => m.estinvoiceobj.Discount, new { @class = "form-control input-sm", @readonly = false, @id = "txtDiscount", @style = "text-align:right" })
+                                                                        </div>
+                                                                        <div class="col-sm-3" style="float:right;width:10%;margin-right:-1px;">
+                                                                            @Html.TextBoxFor(m => m.estinvoiceobj.DiscountPercent, new { @class = "form-control input-sm", @id = "txtDiscamt", @style = "text-align:right", @readonly = false })
+                                                                            @*@Html.TextBox("txtDiscamt", null, new { @class = "form-control input-sm", @id = "txtDiscamt" })*@
+                                                                        </div>
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="row">
+                                                                <div class="col-sm-12">
+                                                                    <div class="form-group no-margin-hr">
+                                                                        <label class="control-label col-sm-2" style="float:right;width:20%;margin-bottom:-50px;margin-top: 5px;margin-right:235px;">Miscellaneous&nbsp;Amount&nbsp;($):</label>
+                                                                        <label class="control-label col-sm-2" style="float:right;width:20%;margin-bottom:-50px;margin-top: 5px;margin-right:-7px;">(+)</label>
+                                                                        <div class="col-sm-3" style="float:right;width:18%;margin-right:-10px;">
+                                                                            @Html.TextBoxFor(m => m.estinvoiceobj.MiscellaneousAmount, new { @class = "form-control input-sm", @readonly = false, @id = "txtmsiAmt", @style = "text-align:right" })
+                                                                        </div>
+                                                                        <div class="col-sm-3" style="float:right;width:10%;margin-right:1px;">
+                                                                            @Html.TextBoxFor(m => m.estinvoiceobj.MiscellaneousAmount, new { @class = "form-control input-sm", @id = "txtMisAmount", @style = "text-align:right", @readonly = false })
+                                                                            @*@Html.TextBox("txtMisAmount", null, new { @class = "form-control input-sm", @id = "txtMisAmount" })*@
+                                                                        </div>
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+
+                                                            <div class="row">
+                                                                <div class="col-sm-12">
+
+                                                                    <div class="form-group no-margin-hr">
+                                                                        <label class="control-label col-sm-2" style="float:left;width:20%;margin-bottom:-75px;margin-top: 5px;margin-left:683px;">Grand&nbsp;Total&nbsp;($):</label>
+                                                                        <div class="col-sm-3" style="float:right;width:18%;margin-right:-11px;">
+
+                                                                            @Html.TextBoxFor(m => m.estinvoiceobj.GrandTotal, new { @class = "form-control input-sm", @readonly = false, @id = "txtGrdTotal", @style = "text-align:right" })
+                                                                        </div>
+
+                                                                    </div>
+
+
+                                                                </div>
+
+                                                            </div>
+
+                                                        }
+
+                                                        <div class="row">
+                                                            <div class="col-sm-12">
+
+                                                                <div class="form-group no-margin-hr">
+                                                                    <label class="control-label">Notes&nbsp;:</label>
+                                                                    <div class="col-sm-12">
+                                                                        @Html.TextAreaFor(m => m.estinvoiceobj.Description, new { @id = "txtDescription", @class = "textEditor" })
+
+                                                                    </div>
+
+
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+
+
+
+
+
+                                                    </div>
+                                                </div>
+                                                <!-- / .panel-body -->
+                                            </div>
+                                            <!-- / .collapse -->
+                                        </div>
+                                        <!-- / .panel -->
+                                        <!-- / .panel -->
+                                        <!-- / .panel -->
+
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+}
+
+<script>
+
+
+    $(document).ready(function () {
+
+        var ContactId = $('#hdCustomerId').val();
+
+        $.ajax({
+            url: '@Url.Action("GetCustomerDetails", "Invoice")',
+
+            type: "GET",
+            async: false,
+            data: { ContactId: ContactId },
+            success: function (data) {
+                if (data != null) {
+
+
+                    if (data.MailingAddress != null)
+                        data.MailingAddress = data.MailingAddress;
+                    else data.MailingAddress = "-";
+
+                    if (data.Mailingstreet != null)
+                        data.Mailingstreet = data.Mailingstreet;
+                    else data.Mailingstreet = "-";
+
+                    if (data.Mailingcity != null)
+                        data.Mailingcity = data.Mailingcity;
+                    else data.Mailingcity = "-";
+
+                    if (data.Mailingstate != null)
+                        data.Mailingstate = data.Mailingstate;
+                    else data.Mailingstate = "-";
+
+                    if (data.Mailingcountry != null)
+                        data.Mailingcountry = data.Mailingcountry;
+                    else data.Mailingcountry = "-";
+
+                    if (data.Mailingzip != null)
+                        data.Mailingzip = data.Mailingzip
+                    else data.Mailingzip = "-";
+
+
+                    if (data.BillingAddress != null)
+                        data.BillingAddress = data.BillingAddress;
+                    else data.BillingAddress = "-";
+
+                    if (data.Otherstreet != null)
+                        data.Otherstreet = data.Otherstreet;
+                    else data.Otherstreet = "-";
+
+                    if (data.Othercity != null)
+                        data.Othercity = data.Othercity;
+                    else data.Othercity = "-";
+
+                    if (data.Otherstate != null)
+                        data.Otherstate = data.Otherstate;
+                    else data.Otherstate = "-";
+
+                    if (data.Othercountry != null)
+                        data.Othercountry = data.Othercountry;
+                    else data.Othercountry = "-";
+
+                    if (data.Otherzip != null)
+                        data.Otherzip = data.Otherzip;
+                    else data.Otherzip = "-";
+                    var phone = data.Phone;
+                    var mobile = data.Mobile;
+                    if (phone != null)
+                        phone = phone;
+                    else phone = "-";
+
+                    if (mobile != null)
+                        mobile = mobile;
+                    else mobile = "-";
+
+                    var ShippingAddr = data.MailingAddress + "\n" + data.MailingAddress + "\n" + data.Mailingcity + "\n" + data.Mailingstate + "\n" + data.Mailingcountry + "\n" + data.Mailingzip + ". \n Phone: " + phone + "\n Mobile: " + mobile;
+                    var BillingAddr = data.BillingAddress + "\n" + data.Otherstreet + "\n" + data.Othercity + "\n" + data.Otherstate + "\n" + data.Othercountry + "\n" + data.Otherzip + ". \n Phone: " + phone + "\n Mobile: " + mobile;
+
+
+                    $('#txtAddressShipping').val(ShippingAddr);
+                    $('#txtAddressBilling').val(BillingAddr);
+                }
+            },
+            error: function (n, y, p) {
+                alert("error");
+            }
+        })
+
+
+
+
+
+        var Converted = $('#hdPosted').val();
+        var invoiceid = $('#hdInvoiceId').val();
+        // alert("Converted : " + Converted);
+
+
+
+
+
+        if (Converted == 0) {
+            $.ajax({
+                url: '_BindEditEstimateItemslist',
+                dataType: "html",
+                type: "GET",
+                async: false,
+                data: { InvoiceID: invoiceid },
+                success: function (data) {
+                    $("#EditbinditemsData").html(data);
+                }
+            });
+        }
+        else if (Converted == 1) {
+            $.ajax({
+                url: '_BindConvertedEstimateItemslist',
+                dataType: "html",
+                type: "GET",
+                async: false,
+                data: { InvoiceID: invoiceid },
+                success: function (data) {
+                    $("#EditbinditemsData").html(data);
+                }
+            });
+        }
+
+    });
+
+    $(".textEditor").jqte();
+    $(function () {
+
+        $('#txtCreatedDate').datepicker({
+            format: 'mm/dd/yyyy'
+            //setDate:'currentDate'
+        });
+        $('#txtDueDate').datepicker({
+            format: 'mm/dd/yyyy'
+        });
+        $('.DateP').datepicker({
+            format: 'mm/dd/yyyy'
+        })
+    });
+
+    @*function show_NewContactPopUp() {
+
+        $('#loading').css('display', 'block');
+
+        $.ajax({
+            url: '@Url.Action("_GetCustomersList", "Invoice")',
+
+            type: "GET",
+            async: false,
+            // data: { companyid: companyid },
+            success: function (data) {
+                if (data != null) {
+                    $('#tblCustomerList').empty();
+                    $('#tblCustomerList').empty().append(data);
+                }
+            },
+            error: function (n, y, p) {
+                alert("error");
+            }
+        });
+        $('#myModal').modal("show");
+    }*@
+
+
+
+    //$('#ddl_Invoice_term').change(function () {
+    //
+    //    var termvalue = $('#ddl_Invoice_term').val();
+
+    //    var daystoadd = "";
+    //    if (termvalue == "1") {
+    //        daystoadd = 15;
+    //    }
+    //    else if (termvalue == "2") {
+    //        daystoadd = 30;
+    //    }
+    //    else if (termvalue == "3") {
+    //        daystoadd = 45;
+    //    }
+    //    else daystoadd = 30;
+
+    //    var Cdate = $('#txtCreatedDate').val();
+    //    var ndate = DateFromString(Cdate, daystoadd);
+    //    var DuedateC = new Date(ndate);
+
+    //    var twoDigitMonth = DuedateC.getMonth() + 1;
+
+    //    twoDigitMonth = twoDigitMonth + ""; if (twoDigitMonth.length == 1) twoDigitMonth = "0" + twoDigitMonth;
+    //    var twoDigitDate = DuedateC.getDate() + ""; if (twoDigitDate.length == 1) twoDigitDate = "0" + twoDigitDate;
+    //    var currentDate = twoDigitMonth + "/" + twoDigitDate + "/" + DuedateC.getFullYear();
+
+    //    $('#txtDueDate').val(currentDate);
+
+    //});
+    //function DateFromString(str, daystoadd) {
+    //    str = str.split(/\D+/);
+    //    str = new Date(str[2], str[0] - 1, (parseInt(str[1]) + daystoadd));
+    //    return MMDDYYYY(str);
+    //}
+
+    //function MMDDYYYY(str) {
+    //    var ndateArr = str.toString().split(' ');
+    //    var Months = 'Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec';
+    //    return (parseInt(Months.indexOf(ndateArr[1]) / 4) + 1) + '/' + ndateArr[2] + '/' + ndateArr[3];
+    //}
+
+
+    $('#txtTaxpercent').blur(function () {
+        updateamount();
+
+    });
+    $('#txtDiscamt').blur(function () {
+        var discAmount1 = $('#txtDiscamt').val();
+        $('#txtDiscount').val(discAmount1);
+        updateamount();
+    });
+
+    $('#txtMisAmount').blur(function () {
+        var miscamount1 = $('#txtMisAmount').val();
+
+        //$('#txtmsiAmt').val((miscamount1).toFixed(2));
+        $('#txtmsiAmt').val(miscamount1);
+        updateamount();
+    });
+
+    function updateamount() {
+        //alert("Update");
+        var itemtotal = $('#ItemTotal').val();
+
+        var taxrate = 0;
+        var taxamount = 0;
+        var discAmount = 0;
+        var discrate = 0;
+        var totamount = $('#txttotal').val();
+
+        // Calculation Of Tax Amount
+        var taxpercent = $('#txtTaxpercent').val();
+        if (taxpercent != "") {
+            taxrate = taxpercent / 100;
+            taxamount = parseInt(totamount * taxrate);
+        }
+        else taxrate = 0;
+
+        $('#txtTax').val((taxamount).toFixed(2));
+        //  $('#txtTax').val(taxamount);
+
+        // Calculation Of Discount Amount
+        var discountpercent = $('#txtDiscamt').val();
+        if (discountpercent != "") {
+            discrate = discountpercent / 100;
+            discAmount = parseInt(totamount * discrate);
+        }
+        else discAmount = 0;
+        //var discAmount = $('#txtDiscamt').val();
+        var miscamount = $('#txtMisAmount').val();
+
+
+        if (miscamount != "") {
+            miscamount == miscamount;
+        }
+        else miscamount = 0;
+        $('#txtmsiAmt').val(miscamount);
+        //  $('#txtmsiAmt').val((miscamount).toFixed(2));
+        $('#txtDiscount').val((discAmount).toFixed(2));
+
+        // Calculation of Invoice Grandtotal Amount
+        var grdamt = parseInt(totamount) + parseInt(taxamount) - parseInt(discAmount) + parseInt(miscamount);
+        grdamt = (isNaN(grdamt)) ? 0 : grdamt;
+
+        $('#txtGrdTotal').val((grdamt).toFixed(2));
+    }
+
+    $("#btnSave").click(function (e) {
+
+        var checkval = true;
+        if (r > 0) {
+            if (($('#ItemName-0').val() != "") && $('#ItemName-0').val() != " ") {
+                if ($('#QtyCommitted-0').val() == "" || ($('#QtyCommitted-0').val() == 0)) {
+                    $.growl.error({ title: "Error", message: "Please Enter Quantity", size: 'large' });
+                    checkval = false;
+                    // return false;
+                }
+            }
+        }
+        else {
+            $.growl.error({ title: "Error", message: "Please Add Item(s) to Kart", size: 'large' });
+            checkval = false;
+            //return false;
+        }
+
+        return checkval;
+        //return false;
+
+    });
+</script>

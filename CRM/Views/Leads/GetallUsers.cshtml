@@ -1,0 +1,132 @@
+﻿@model IEnumerable<CRMHub.EntityFramework.user>
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+          
+            $('#loading').css('display', 'block');
+            BindUserSearchList();
+
+
+            $('#jq-datatables-userPopup').on('length.dt', function (e, settings, len) {
+
+                $('#loading').css('display', 'block');
+            });
+
+            $('#jq-datatables-userPopup').on('page.dt', function () {
+
+                $('#loading').css('display', 'block');
+            });
+        });
+        function  BindUserSearchList() {
+            $('#loading').css('display', 'block');
+            var responsiveHelper = undefined;
+            var breakpointDefinition = {
+                desktop: Infinity,
+                tablet: 1024,
+                tabletlandscape: 768,
+                phone: 480
+            };
+            var tableElement = $('#jq-datatables-userPopup');
+            tableElement.dataTable({
+                autoWidth: false,
+                preDrawCallback: function () {
+                    if (!responsiveHelper) {
+                        responsiveHelper = new ResponsiveDatatablesHelper(tableElement, breakpointDefinition);
+                    }
+                },
+                rowCallback: function (nRow) {
+                    responsiveHelper.createExpandIcon(nRow);
+                },
+                drawCallback: function (oSettings) {
+                    responsiveHelper.respond();
+                },
+
+                "aLengthMenu": [[10, 25, 50, 100], [10, 25, 50, 100]],
+
+                "pagingType": "full_numbers",
+
+                "serverSide": true,
+                "bFilter": false,
+                "sAjaxSource": '@Url.Action("getUsersLookup", "Leads")',
+                
+                "fnServerData": function (sSource, aoData, fnCallback) {
+                    $.ajax({
+                        "dataType": 'json',
+                        "contentType": "application/json; charset=utf-8",
+                        "type": "GET",
+                        "url": sSource,
+                        "data": aoData,
+
+                        "success":
+                                    function (msg) {
+                                        ;
+
+                                        $('#loading').css('display', 'none');
+                                        //var json = jQuery.parseJSON(msg.d);
+                                        fnCallback(msg);
+                                        //$("#jq-datatables-example").show();
+                                    }
+                    });
+                },
+                "asStripeClasses": ['odd gradeX', 'even gradeC'],
+                "aoColumnDefs": [
+
+             
+                    {
+                        "targets": [0], "visible": true, "bSortable": true, "mDataProp": "FirstName",
+                        "render": function (data, type, row) {
+
+
+                            return "<a href=\"#\"  id=\"aParentAccountId\" onclick=\"OpenUserDetail('" + row["UserId"] + "','" + row["FirstName"] + "','" + row["Phone"] + "','" + row["Email"] + "')\">" + row["FirstName"] + "</a>";
+
+
+                        }
+                    },
+                    { "targets": [1], "visible": true, "bSortable": true, "mDataProp": "Phone" },
+                    { "targets": [2], "visible": true, "bSortable": true, "mDataProp": "Email" },
+                    { "targets": [3], "visible": true, "bSortable": true, "mDataProp": "roleName" },
+
+                ],
+                "fnDrawCallback": function (oSettings) {
+
+                    $('#loading').css('display', 'none');
+                }
+            }).api();
+        }
+        function OpenUserDetail(UserId, userName, Phone, email) {        
+            var userid = UserId;
+            var Username = userName;
+            var compPhone = Phone;
+      
+            $('#txtOwnerShip').val(Username);
+            $('#txtOwnerid').val(userid);
+            $('#hdOwnerId').val(userid);
+           
+            $('#txtAssignedname').val(Username);
+            $('#hdassignedId').val(userid);
+
+            //$('#txtOwnername').val(Username);
+            //$('#hdOwnerId').val(userid);
+
+
+            $('#myUserModal').modal("hide");
+        }
+
+    </script>
+
+    <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="jq-datatables-userPopup" width="100%">
+        <thead>
+            <tr>
+
+                @*<th data-hide="tablet,tabletlandscape,phone">Company ID</th>*@
+                <th data-class="expand">User Name</th>
+                <th data-hide="phone,smartphone">Phone</th>
+                <th data-hide="tabletlandscape,phone">Email</th>
+                <th data-hide="phone,smartphone">Role</th>
+                
+                @*<th data-hide="tabletlandscape,phone">Company Status</th>*@
+        </thead>
+        <tbody></tbody>
+
+    </table>

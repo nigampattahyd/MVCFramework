@@ -1,0 +1,21 @@
+--- CRM.Context.cs
++++ CRM.Context.cs
+@@ -25,8 +25,6 @@
+             : base("name=DevEntities")
+         {
+         }
+-
+-    
+         protected override void OnModelCreating(DbModelBuilder modelBuilder)
+         {
+             throw new UnintentionalCodeFirstException();
+@@ -82,7 +81,8 @@
+         public virtual DbSet<VMSHelp> VMSHelps { get; set; }
+         public virtual DbSet<Event> Events { get; set; }
+         public virtual DbSet<VentureDetail> VentureDetails { get; set; }
+-        public virtual DbSet<Mentor> Mentors { get; set; }
++        public virtual DbSet<MentorDetail> MentorDetails { get; set; }
++        public virtual DbSet<MentorQuestionary> MentorQuestionaries { get; set; }
+     
+         [DbFunction("DevEntities", "fn_Split")]
+         public virtual IQueryable<fn_Split_Result> fn_Split(string text, string delimiter)

@@ -1,0 +1,641 @@
+﻿@model CRMHub.EntityFramework.Account
+<link href="~/Content/assets/css/DateTimePicker/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+@using (Html.BeginForm("EditLeadDetails", "Leads", FormMethod.Post))
+{
+    <div class="row">
+
+        <div class="col-sm-12">
+
+
+            <div class="col-xs-12 col-sm-12 text-right text-right-sm" id="white_bg">
+
+
+                <button class="btn btn-flat btn-labeled btn-primary" id="btnSave" style=" margin:0px 3px 0px 10px;">
+                    <span class="btn-label icon fa fa-save"></span>Save
+                </button>
+
+                <a style="color: #fff; text-decoration: none; padding: 0px; font-weight: normal" class="btn btn-flat btn-labeled btn-primary" href="@Url.Action("Index", "Leads" )">
+                    <span class="btn-label icon fa fa-backward" style="margin-right:6px;"> </span>
+                    Back
+                </a>
+
+            </div>
+        </div>
+
+
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel-group" id="accordion-example">
+                <!-- / .panel -->
+                <div class="panel">
+                    <div class="panel-heading">
+                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion-example"
+                           href="#collapse2">Lead Detail</a>
+                    </div>
+                    <!-- / .panel-heading -->
+                    <div id="collapse2" class="panel-collapse collapse in" style="height: auto;">
+                        <div class="panel-body">
+                            <div class="col-sm-12 no-padding-hr">
+                                <div class="row">
+                                    @*<div class="col-sm-3">
+                                        <div class="form-group no-margin-hr">
+                                            <label class="control-label">Lead Owner :</label>
+                                            <div class="input-group">
+                                                @Html.TextBoxFor(m => m.Ownership, new { @class = "form-control input-sm", @id = "txtOwnerShip", @readonly = false })
+                                                 @Html.HiddenFor(m => m.Ownership, new { @id = "txtOwnerShip" })
+                                                <span class="input-group-addon" type=" button" style="cursor:pointer;" onclick="return show_UsersPopUp(750, 450);">
+                                                    <i class="fa fa-search"></i>
+                                                </span>
+                                            </div>
+                                          
+                                        </div>
+                                    </div>*@
+
+
+                                    @if (Model.RoleID == 1)
+                                    {
+                                        <div class="col-sm-3">
+                                            <div class="form-group no-margin-hr">
+                                                <label class="control-label">Contact&nbsp;Owner&nbsp;:</label>
+                                                <div class="input-group">
+                                                    @Html.TextBoxFor(m => m.Ownership, new { @class = "form-control input-sm", @id = "txtOwnerShip", @readonly = false })
+                                                    @Html.HiddenFor(m => m.Ownership, new { @id = "txtOwnerShip" })
+                                                    @Html.HiddenFor(m => m.OwnerID, new { @id = "txtOwnerid" })
+                                                    <span class="input-group-addon" type=" button" style="cursor:pointer;" onclick="return show_UsersPopUp(750, 450);">
+                                                        <i class="fa fa-search"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="col-sm-3">
+                                            <div class="form-group no-margin-hr">
+                                                <label class="control-label">Contact&nbsp;Owner&nbsp;:</label>
+                                                @Html.TextBoxFor(m => m.Ownership, new { @class = "form-control input-sm", @id = "txtOwnerShip", @readonly = false })
+                                                @Html.HiddenFor(m => m.Ownership, new { @id = "txtOwnerShip" })
+                                                @Html.HiddenFor(m => m.OwnerID, new { @id = "txtOwnerid" })
+                                            </div>
+                                        </div>
+                                    }
+
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group no-margin-hr">
+                                            <label class="control-label">Company Name :<span style="color: red">*</span></label>
+                                            @Html.TextBoxFor(m => m.CompanyName, new { @class = "form-control input-sm", @id = "txtAccountName", @validate = "Required", @data_val_required = "Company Name", @readonly = false })
+                                            @Html.HiddenFor(m => m.CompanyName, new { @id = "txtAccountName" })
+                                            @Html.HiddenFor(m => m.CompanyID, new { @id = "txtParentAccountid" })
+                                            @Html.HiddenFor(m => m.OwnerID)
+
+
+                                            @*<div class="input-group">
+
+                                                @Html.TextBoxFor(m => m.CompanyName, new { @class = "form-control input-sm", @id = "txtAccountName", @validate = "Required", @data_val_required = "Company Name", @readonly = false })
+                                                @Html.HiddenFor(m => m.CompanyName, new { @id = "txtAccountName" })
+                                                <span class="input-group-addon" type=" button" style="cursor:pointer;" onclick="return show_NewAccountPopUp(750, 450);">
+                                                    <i class="fa fa-search"></i>
+                                                </span>
+                                                @Html.HiddenFor(m => m.CompanyID, new { @id = "txtParentAccountid" })
+                                                @Html.HiddenFor(m => m.OwnerID)
+
+
+                                            </div>*@
+                                        </div>
+                                    </div>
+
+                                    @Html.HiddenFor(m => m.AccountTypeId, new { @id = "txtAccounttype" })
+                                    @Html.HiddenFor(m => m.ID, new { @id = "txtID" })
+                                    @Html.HiddenFor(m => m.CreatedDate, new { @id = "txtcurdate" })
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group no-margin-hr">
+                                            <label class="control-label">First&nbsp;Name&nbsp;:<span style="color: red">*</span></label>
+                                            @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control input-sm", @id = "txtFirstname", @validate = "Required", @data_val_required = "First Name" })
+
+
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group no-margin-hr">
+                                            <label class="control-label">Last&nbsp;Name&nbsp;:</label>
+                                            @Html.TextBoxFor(m => m.LastName, new { @class = "form-control input-sm", @id = "txtLastName"})
+
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group no-margin-hr">
+                                            <label class="control-label">Title&nbsp;:</label>
+                                            @Html.TextBoxFor(m => m.Title, new { @id = "txtTitle", @class = "form-control input-sm" })
+
+
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group no-margin-hr">
+                                            <label class="control-label">Email&nbsp;:</label>
+
+                                            @Html.TextBoxFor(m => m.Email, new { @id = "txtEmail", @class = "form-control input-sm", @type = "email" })
+                                            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group no-margin-hr">
+                                            <label class="control-label">Phone&nbsp;:</label>
+
+                                            @Html.TextBoxFor(m => m.Phone, new { @id = "txtPhone", @class = "form-control input-sm", onkeypress = "return onlynumbers(event,this);", @MaxLength = "20" })
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group no-margin-hr">
+                                            <label class="control-label">Fax&nbsp;:</label>
+
+                                            @Html.TextBoxFor(m => m.Fax, new { @id = "txtFaxNo", @class = "form-control input-sm", @onKeyPress = "return onlynumbers(event,this);", @MaxLength = "20" })
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group no-margin-hr">
+                                            <label class="control-label">Mobile&nbsp;:</label>
+                                            <span id="spnPhoneStatus"></span>
+                                            @Html.TextBoxFor(m => m.Mobile, new { @id = "txtMobileNo", @Class = "form-control input-sm", @onkeypress = "return onlynumbers(event,this);", @MaxLength = "20" })
+
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group no-margin-hr">
+                                            <label class="control-label">Website&nbsp;:</label>
+                                            @Html.TextBoxFor(m => m.Website, new { @class = "form-control input-sm", @id = "txtWebSite" })
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group no-margin-hr">
+                                            <label class="control-label">Lead&nbsp;Source&nbsp;:</label>
+
+                                            @Html.DropDownListFor(m => m.LeadSource, new List<SelectListItem>
+                                                                        {
+                                                                        new SelectListItem{Text="Career Builder",Value="Career"},
+                                                                        new SelectListItem{Text="Job Fair",Value="JOB"},
+                                                                        new SelectListItem{Text="Monster",Value="Monster"},
+                                                                        new SelectListItem{Text="Newspaper",Value="NewsPpr"},
+                                                                        new SelectListItem{Text="Walk In",Value="WI"},
+                                                                        new SelectListItem{Text="Word of Mouth",Value="WOM",Selected=true},
+                                                                        new SelectListItem{Text="Yellow Pages",Value="YLP"},
+                                                                        new SelectListItem{Text="Dice",Value="Dice"},
+                                                                        new SelectListItem{Text="Online Networking",Value="ON"},
+                                                                        new SelectListItem{Text="Employee Referral",Value="ER"},
+                                                                        new SelectListItem{Text="Kijiji",Value="KJ"},
+                                                                        new SelectListItem{Text="Workopolis",Value="WP"},
+                                                                        new SelectListItem{Text="HRDC",Value="HRDC"},
+                                                                        new SelectListItem{Text="Networking",Value="Networking"}
+                                                                        }, new { @class = "form-control input-sm"})
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group no-margin-hr">
+                                            <label class="control-label">Lead&nbsp;Status&nbsp;:</label>
+
+                                            @Html.DropDownListFor(m => m.LeadStatus, new List<SelectListItem>
+                                                                        {
+                                                                        new SelectListItem{Text="Select",Value="0"},
+                                                                        new SelectListItem{Text="AttemptedtoContact",Value="1"},
+                                                                        new SelectListItem{Text="ContactinFuture",Value="2"},
+                                                                        new SelectListItem{Text="Contacted",Value="3"},
+                                                                        new SelectListItem{Text="LostLead",Value="4"},
+                                                                        new SelectListItem{Text="Closed",Value="5"},
+                                                                         new SelectListItem{Text="NotContacted",Value="6"},
+                                                                        new SelectListItem{Text="PreQualified",Value="7"}
+                                                                        }, new { @id = "ddlLeadStatus", @class = "form-control input-sm" })
+                                        </div>
+                                    </div>
+
+
+
+
+
+                                    <div class="row">
+                                        <div class="col-sm-12">
+
+
+
+                                            <div class="col-sm-3">
+                                                <div class="form-group no-margin-hr">
+                                                    <label class="control-label">Industry&nbsp;:</label>
+
+                                                    @Html.DropDownListFor(m => m.IndustryID, new List<SelectListItem>
+                                                                        {
+                                                                        new SelectListItem{Value="0",Text="Select"},
+                                                                        new SelectListItem{Value="1",Text="Agriculture"},
+                                                                        new SelectListItem{Value="2",Text="Apparel"},
+                                                                        new SelectListItem{Value="3",Text="Automotive"},
+                                                                        new SelectListItem{Value="4",Text="Banking"},
+                                                                        new SelectListItem{Value="5",Text="Biotechnology"},
+                                                                            new SelectListItem{Value="6",Text="Chemicals"},
+                                                                        new SelectListItem{Value="7",Text="Clothing"},
+                                                                        new SelectListItem{Value="8",Text="Communications"},
+                                                                        new SelectListItem{Value="9",Text="Construction"},
+                                                                        new SelectListItem{Value="10",Text="Consulting"},
+
+                                                                         new SelectListItem{Value="11",Text="Customer Service"},
+                                                                        new SelectListItem{Value="49",Text="Distribution"},
+                                                                        new SelectListItem{Value="12",Text="Education"},
+                                                                        new SelectListItem{Value="13",Text="Electronics"},
+                                                                        new SelectListItem{Value="14",Text="Energy"},
+                                                                            new SelectListItem{Value="15",Text="Engineering"},
+                                                                        new SelectListItem{Value="16",Text="Entertainment"},
+                                                                        new SelectListItem{Value="17",Text="Environmental"},
+                                                                        new SelectListItem{Value="18",Text="Finance"},
+                                                                        new SelectListItem{Value="19",Text="Food Processing"},
+
+
+                                                                         new SelectListItem{Value="20",Text="Forestry"},
+                                                                        new SelectListItem{Value="21",Text="Furniture"},
+                                                                        new SelectListItem{Value="22",Text="Government"},
+                                                                        new SelectListItem{Value="23",Text="Healthcare"},
+                                                                        new SelectListItem{Value="24",Text="Hospitality"},
+                                                                            new SelectListItem{Value="46",Text="Injection Mold"},
+                                                                        new SelectListItem{Value="25",Text="Insurance"},
+                                                                        new SelectListItem{Value="26",Text="Machinery"},
+                                                                        new SelectListItem{Value="27",Text="Manufacturing"},
+                                                                        new SelectListItem{Value="28",Text="Media"},
+
+                                                                         new SelectListItem{Value="29",Text="Medical"},
+                                                                        new SelectListItem{Value="30",Text="Metal Fabricator"},
+                                                                        new SelectListItem{Value="31",Text="Navision"},
+                                                                        new SelectListItem{Value="32",Text="Not for Profit"},
+
+                                                                        new SelectListItem{Value="45",Text="Oil &amp; Gas"},
+                                                                            new SelectListItem{Value="34",Text="Recreation"},
+                                                                        new SelectListItem{Value="35",Text="Retail"},
+                                                                        new SelectListItem{Value="36",Text="Service"},
+                                                                        new SelectListItem{Value="37",Text="Shipping"},
+                                                                        new SelectListItem{Value="38",Text="Software"},
+
+                                                                        new SelectListItem{Value="40",Text="Tech Support"},
+                                                                        new SelectListItem{Value="39",Text="Technology"},
+                                                                            new SelectListItem{Value="41",Text="Telecommunication"},
+                                                                        new SelectListItem{Value="42",Text="Transportation"},
+                                                                        new SelectListItem{Value="43",Text="Utilities"},
+                                                                        new SelectListItem{Value="48",Text="Warehousing"},
+                                                                        new SelectListItem{Value="44",Text="Wholesaler"},
+                                                                        new SelectListItem{Value="33",Text="Others"}
+                                                                        }, new { @id = "ddlLeadStage", @class = "form-control input-sm"})
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <div class="form-group no-margin-hr">
+                                                    <label class="control-label">No&nbsp;of&nbsp;Employees&nbsp;:</label>
+
+
+                                                    @Html.TextBoxFor(m => m.TotalEmployees, new { @id = "txtTotalEmployees", @Class = "form-control input-sm", @onkeypress = "return onlynumbers(event,this);", @MaxLength = "20"})
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-3">
+                                                <div class="form-group no-margin-hr">
+                                                    <label class="control-label">Annual&nbsp;Revenue&nbsp;($)&nbsp;:</label>
+
+                                                    @Html.TextBoxFor(m => m.AnnualRevenue, new { @id = "txtAnualRevenue", @class = "form-control decimalmask"})
+
+                                                </div>
+                                            </div>
+
+
+                                            <div class="col-sm-3">
+                                                <div class="form-group no-margin-hr">
+                                                    <label class="control-label">Rating&nbsp;:</label>
+
+                                                    @Html.TextBoxFor(m => m.Rating, new { @id = "txtAnualRevenue", @class = "form-control decimalmask"})
+
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-3">
+                                                <div class="form-group no-margin-hr">
+                                                    <label class="control-label">Email&nbsp;Opt&nbsp;Out&nbsp;:</label>
+                                                    @Html.CheckBoxFor(m => m.OptEmailOut)
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel">
+                    <div class="panel-heading">
+                        <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion-example"
+                           href="#Panel2">Address Detail</a>
+                    </div>
+                    <!-- / .panel-heading -->
+                    <div id="Panel2" class="panel-collapse collapse" style="height: auto;">
+                        <div class="panel-body">
+                            <div class="col-sm-12 no-padding-hr">
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <div class="form-group no-margin-hr">
+                                            <label class="control-label">Address&nbsp;1 :</label>
+
+                                            @Html.TextBoxFor(m => m.MailingAddress, new { @id = "txtAddressMailing", @class = "form-control input-sm", @maxlength = "50"})
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group no-margin-hr">
+                                            <label class="control-label">Address&nbsp;2 :</label>
+
+                                            @Html.TextBoxFor(m => m.MailingAddress2, new { @id = "txtMailingStreet", @class = "form-control input-sm", @maxlength = "50"})
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group no-margin-hr">
+                                            <label class="control-label">
+                                                City :
+                                            </label>
+
+                                            @Html.TextBoxFor(m => m.Mailingcity, new { @id = "txtMailingCity", @class = "form-control input-sm", @maxlength = "50"})
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group no-margin-hr">
+                                            <label class="control-label" id="lblStateProvince">
+                                                State :
+                                            </label>
+
+                                            @*Dropdown list for State*@
+                                            @Html.DropDownListFor(m => m.MailingstateID, ViewBag.StateList as List<SelectListItem>, new { @id = "txtMailingstate", @class = "form-control input-sm", @maxlength = "50", @onchange = "GetCountrybyStateId(this)" })
+                                            @*@Html.TextBoxFor(m => m.MailingstateID, new { @id = "txtMailingstate", @class = "form-control input-sm", @maxlength = "50" })*@
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <div class="form-group no-margin-hr">
+                                            <label class="control-label" id="lblPostalCode" runat="server">ZipCode:</label>
+
+                                            @Html.TextBoxFor(m => m.Mailingzip, new { @id = "txtMailingZip", @class = "form-control zipmask", @maxlength = "9", onKeyPress = "return onKeyPressOnlyZip(event,this);", @onblur = "return ValidateZip(this);", @onfocus = "return ClickZip(this);"})
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group no-margin-hr">
+                                            <label class="control-label">
+                                                <asp:Label ID="lblMailingCountry" runat="server"></asp:Label>
+                                                Country
+                                            </label>
+                                            @*Dropdown list for Country*@
+                                            @Html.DropDownListFor(m => m.MailingcountryID, ViewBag.CountryList as List<SelectListItem>, new { @id = "txtMailingCountry", @class = "form-control input-sm", @maxlength = "50" })
+                                            @*@Html.TextBoxFor(m => m.MailingcountryID, new { @id = "txtMailingCountry", @class = "form-control input-sm", @maxlength = "50"})*@
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel">
+                    <div class="panel-heading">
+                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion-example"
+                           href="#collapse11">Social Integration</a>
+                    </div>
+                    <!-- / .panel-heading -->
+                    <div id="collapse11" class="panel-collapse collapse" style="height: auto;">
+                        <div class="panel-body">
+                            <div class="col-sm-12 no-padding-hr">
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <div class="form-group no-margin-hr">
+                                            <label class="control-label">Facebook&nbsp;User&nbsp;Name :</label>
+
+                                            @Html.TextBoxFor(m => m.FacebookUsername, new { @id = "txtFacebook", @class = "form-control input-sm", @maxlength = "60"})
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group no-margin-hr">
+                                            <label class="control-label">Twitter&nbsp;User&nbsp;Name :</label>
+
+                                            @Html.TextBoxFor(m => m.TwitterUsername, new { @id = "txtTwitter", @class = "form-control input-sm", @maxlength = "60"})
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group no-margin-hr">
+                                            <label class="control-label">Linkedin&nbsp;User&nbsp;Name :</label>
+
+                                            @Html.TextBoxFor(m => m.LinkedInUsername, new { @id = "txtLinkedin", @class = "form-control input-sm", @maxlength = "60" })
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group no-margin-hr">
+                                            <label class="control-label">Skype&nbsp;User&nbsp;Name :</label>
+
+                                            @Html.TextBoxFor(m => m.SkypeUsername, new { @id = "txtSkype", @class = "form-control input-sm", @maxlength = "60" })
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel">
+                    <div class="panel-heading">
+                        <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion-example"
+                           href="#collapse10">Description</a>
+                    </div>
+                    <!-- / .panel-heading -->
+                    <div id="collapse10" class="panel-collapse collapse">
+                        <div class="panel-body">
+
+                            @Html.TextAreaFor(m => m.Description, new { @id = "txtDescription", @class = "textEditor"})
+                        </div>
+                        <!-- / .panel-body -->
+                    </div>
+                    <!-- / .collapse -->
+                </div>
+
+
+            </div>
+        </div>
+
+    </div>
+
+}
+
+
+<div class="modal fade" id="myModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Company List</h4>
+            </div>
+            <div class="modal-body">
+
+                <div class="row">
+                    <div style="text-align:left;font-size:12px;padding:5px">Note : Click Company Name To Select Record.</div>
+                    <div class="col-sm-12">
+
+                        <div class="table-primary table-striped" id="tblCompanyList">
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="~/Scripts/DateTimePicker/bootstrap-timepicker.min.js"></script>
+<script src="~/Scripts/DateTimePicker/bootstrap-datetimepicker.min.js"></script>
+<script>
+    function show_NewAccountPopUp() {
+
+        //$('#loading').css('display', 'block');
+        $.ajax({
+            url: "../Leads/ListParentComp",
+            type: "GET",
+            async: false,
+            success: function (data) {
+
+                if (data != null) {
+
+                    $('#tblCompanyList').empty();
+                    $('#tblCompanyList').empty().append(data);
+
+                }
+            },
+            error: function () {
+
+            }
+        });
+        $('#loading').css('display', 'none');
+        $('#myModal').modal("show");
+    }
+
+
+    function show_UsersPopUp() {
+        $.ajax({
+
+            url: "../Leads/GetallUsers",
+            type: "GET",
+            async: false,
+            success: function (data) {
+
+                if (data != null) {
+
+                    $('#tblUserList').empty();
+                    $('#tblUserList').empty().append(data);
+
+                }
+            },
+            error: function () {
+
+            }
+        });
+        $('#loading').css('display', 'none');
+        $('#myUserModal').modal("show");
+    }
+    $("#btnSave").click(function (e) {
+
+        Isvalid = true;
+        return Validate(this.form);
+
+
+    });
+    $(document).ready(function () {
+
+        $('#txtPhone').bind("cut copy paste", function (e) {
+            e.preventDefault();
+        });
+
+        $('#txtMobileNo').bind("cut copy paste", function (e) {
+            e.preventDefault();
+        });
+        $('#txtFaxNo').bind("cut copy paste", function (e) {
+            e.preventDefault();
+        });
+
+
+
+
+
+
+        $(".textEditor").jqte();
+
+
+        //$(".jqte_editor").prop('contenteditable', 'false');
+
+
+        $('.DateP').datepicker({
+            format: 'mm/dd/yyyy'
+        });
+
+
+        $("#TAActualColumnName").keypress(function (e) {
+            if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
+                $("#errormsg").html("Digits Only").show().fadeOut("slow");
+                return false;
+            }
+        });
+    });
+
+    function onlynumbers(evt) {
+        var charCode = (evt.which) ? evt.which : event.keyCode
+        if (charCode == 43 || charCode == 32 || charCode == 40 || charCode == 41)
+            return true;
+        else if (charCode > 31 && (charCode < 45 || charCode > 57 || charCode == 47 || charCode == 46))
+            return false;
+
+        return true;
+    }
+
+    function GetCountrybyStateId(stateobj) {
+        var stateid = stateobj.value;
+        $.ajax({
+            url: '@Url.Action("GetCountrybyStateid", "Leads")',
+            type: "GET",
+            async: false,
+            data: { StateId: stateid },
+            success: function (data) {              
+                $('#txtMailingCountry').val(data);
+            },
+            error: function () {
+            }
+        });
+        @*'@Url.Action("getLeaddetails", "Leads", new { LeadId = "__param__" })';*@
+        }
+
+</script>
+
+<div class="modal fade" id="myUserModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Users List</h4>
+            </div>
+            <div class="modal-body">
+
+                <div class="row">
+                    <div style="text-align:left;font-size:12px;padding:5px">Note : Click User Name To Select Record.</div>
+                    <div class="col-sm-12">
+
+                        <div class="table-primary table-striped" id="tblUserList">
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

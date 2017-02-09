@@ -1,0 +1,6 @@
+E:\Mentoring_Hg\mentoring\TEst\bin\TEst.dll.config
+E:\Mentoring_Hg\mentoring\TEst\bin\TEst.dll
+E:\Mentoring_Hg\mentoring\TEst\bin\TEst.pdb
+E:\Mentoring_Hg\mentoring\TEst\obj\Debug\TEst.csprojResolveAssemblyReference.cache
+E:\Mentoring_Hg\mentoring\TEst\obj\Debug\TEst.dll
+E:\Mentoring_Hg\mentoring\TEst\obj\Debug\TEst.pdb

@@ -1,0 +1,663 @@
+﻿@model CRMHub.ViewModel.VentureViewModel
+
+@{
+    ViewBag.Title = "PendingVentureDetails";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+}
+<style type="text/css">
+    input[type=checkbox] {
+        margin: 0px 0px 0px 6px;
+    }
+
+    .form-group {
+        width: 100%;
+        display: inline-block;
+    }
+
+    .fontBold {
+        font-weight: bold;
+    }
+</style>
+
+@using (Html.BeginForm("ConvertactiveVenture", "Venture", FormMethod.Post, new { id = "UpdatePenVenture" }))
+{
+    <div class="widget">
+        <div class="widget-header bordered-bottom bordered-themesecondary">
+            <i class="widget-icon fa fa-user themesecondary"></i>
+            <span class="widget-caption themesecondary">@Html.DisplayFor(m => m.objVenture.VentureName)</span>
+        </div><!--Widget Header-->
+        <div class="widget-body">
+
+            <div class="panel">
+                <div class="panel-body">
+                    <span id="errorsymbol" style="color:red;display:none;margin-left:5px;" class="fa fa-exclamation-circle"></span>
+
+                    <div class="row">
+
+                        <!-- Tabs -->
+
+                        <ul class="nav nav-tabs bs-tabdrop-example" id="TabMenu" style="margin-top:20px;">
+                            <li id="TabStripVentureDetail" class="active"><a href="#TabStripVentureDetail_View" data-toggle="tab">Venture Application Details</a></li>
+                            <li id="TabStripVentureAnswers"><a href="#TabStripVentureAnswers_View" data-toggle="tab">Venture Application Answers</a></li>
+                        </ul>
+
+                        <div class="tab-pane active" id="TabStripAccountDetail_View">
+
+
+                            <div class="col-sm-12" style="padding-top:13px;padding-right:0px;">
+
+                                <div class="col-xs-12 col-sm-12 text-right text-right-sm" id="white_bg">
+                                    <ul class="table-nav-item">
+                                        <button class="btn btn-flat btn-labeled btn-primary" id="btnEdit" style=" margin:0px 3px 0px 10px;">
+                                            <span class="btn-label icon fa fa-edit"></span>Convert to active venture
+                                        </button>
+                                        <li class="btn btn-flat btn-labeled btn-primary" id="btnmargin_top">
+                                            <a style="color: #fff; text-decoration: none; padding: 0px; font-weight: normal" href="@Url.Action("index", "Venture/" )">
+
+                                                <span class="btn-label icon fa fa-backward" style="margin-right:6px;"> </span>
+                                                Back
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                            </div>
+
+
+                            <div class="tab-pane active" id="TabStripVentureDetail_View">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="panel">
+
+
+                                            <div class="col-sm-12">
+                                                <!-- Page header, center on small screens -->
+                                                <div class="col-sm-12" style="background: #2ab8da; padding:10px;">
+                                                    <span class="label label-primary label-tag" style="font-size:14px;font-weight:800;"> Venture Application Details</span>
+
+                                                </div>
+
+
+                                            </div>
+
+
+                                            <div class="panel-body" style="padding-top: 53px;">
+
+
+                                                <div class="row">
+
+
+                                                    @*<div class="col-sm-6">
+                                                        <div class="form-group no-margin-hr">
+                                                            <label class="col-sm-5 fontBold">Date :<span style="color: red">*</span></label>
+                                                            <div class="col-sm-7">
+                                                                <div class="input-group datepicker1">
+                                                                    @Html.TextBoxFor(m => m.objVenture.CreatedDate, "{0:MM/dd/yy}", new { @id = "txtcreateddate", @class = "form-control input-sm", @disabled = "disabled" })
+                                                                    <span class="input-group-addon">
+                                                                        <i class="fa fa-calendar"></i>
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                            </div>
+                                                    </div>*@
+                                                    
+                                                    <div class="col-sm-6">
+                                                        <div class="form-group no-margin-hr">
+                                                            <label class="col-sm-5 fontBold">Created Date :<span style="color: red">*</span></label>
+                                                            <div class="col-sm-7">
+                                                                @Html.TextBoxFor(m => m.objVenture.CreatedDate, "{0:MM/dd/yy}", new { @class = "form-control input-sm", @id = "txtcreateddate", @disabled = "disabled" })
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+
+                                                    <div class="col-sm-6">
+                                                        <div class="form-group no-margin-hr">
+                                                            <label class="col-sm-5 fontBold">Venture Name :<span style="color: red">*</span></label>
+                                                            <div class="col-sm-7">
+                                                                @Html.TextBoxFor(m => m.objVenture.VentureName, new { @class = "form-control input-sm", @id = "txtVentureName", @validate = "Required", @data_val_required = "Venture Name", @disabled = "disabled" })
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <div class="col-sm-12">
+                                                            <p> If you do not have a name, please insert TBD. </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-sm-8">
+                                                        <div class="col-sm-12">
+                                                            <h5 style="font-weight:bold !important;">  Venture Mailing Address (Your venture must be located in Northwest Ohio)  </h5>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-sm-6">
+                                                        <div class="form-group no-margin-hr">
+                                                            <label class="col-sm-5 fontBold">Street :</label>
+                                                            <div class="col-sm-7">
+                                                                @Html.TextBoxFor(m => m.objVenture.Street, new { @class = "form-control input-sm", @id = "txtstreet" })
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    @Html.HiddenFor(m => m.objVenture.VentureId, new { @id = "txtcmpID" })
+
+                                                    <div class="col-sm-6">
+                                                        <div class="form-group no-margin-hr">
+                                                            <label class="col-sm-5 fontBold">City :</label>
+                                                            <div class="col-sm-7">
+                                                                @Html.TextBoxFor(m => m.objVenture.City, new { @id = "txtcity", @class = "form-control input-sm", @MaxLength = "20" })
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+
+
+                                                    <div class="col-sm-6">
+                                                        <div class="form-group no-margin-hr">
+                                                            <label class="col-sm-5 fontBold">State :</label>
+                                                            <div class="col-sm-7">
+                                                                @Html.TextBoxFor(m => m.objVenture.State, new { @id = "txtState", @class = "form-control input-sm", @MaxLength = "50" })
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <div class="form-group no-margin-hr">
+                                                            <label class="col-sm-5 fontBold">ZIP:</label>
+                                                            <div class="col-sm-7">
+                                                                @Html.TextBoxFor(m => m.objVenture.ZIP, new { @id = "txtZIP", @class = "form-control input-sm" })
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-sm-6">
+                                                        <div class="form-group no-margin-hr">
+                                                            <label class="col-sm-5 fontBold">Industry Categorization :</label>
+                                                            <div class="col-sm-7">
+                                                                @Html.DropDownListFor(m => m.objVenture.IndustryCategoryName, new SelectList(Model.listofCategory, "Value", "Text"), "--Select--", new { @class = "form-control", @id = "drpCategory", @style = "height:30px;" })
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <div class="form-group no-margin-hr">
+                                                            <label class="col-sm-5 fontBold">If other, please specify:</label>
+                                                            <div class="col-sm-7">
+                                                                @Html.TextBoxFor(m => m.objVenture.CategoryOthers, new { @id = "txtCategoryOthers", @class = "form-control input-sm" })
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+
+                                                <div class="row">
+                                                    <div class="col-sm-8">
+                                                        <div class="col-sm-12">
+                                                            <h5 style="font-weight:bold !important;">
+                                                                Who is the team? Please just list the founders and key members of the team. <br />
+                                                                List primary contact first: 
+                                                            </h5>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-sm-6">
+                                                        <div class="form-group no-margin-hr">
+                                                            <label class="col-sm-5 fontBold">Name :</label>
+                                                            <div class="col-sm-7">
+                                                                @Html.TextBoxFor(m => m.objVenture.PrimaryContact, new { @id = "txtPrimaryContact", @class = "form-control input-sm", @MaxLength = "40" })
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-sm-6">
+                                                        <div class="form-group no-margin-hr">
+                                                            <label class="col-sm-5 fontBold">Role In Venture :</label>
+                                                            <div class="col-sm-7">
+                                                                @Html.TextBoxFor(m => m.objVenture.PrimaryRoleInVenture, new { @id = "txtPrimaryRoleInVenture", @class = "form-control input-sm", @MaxLength = "20" })
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-sm-6">
+                                                        <div class="form-group no-margin-hr">
+                                                            <label class="col-sm-5 fontBold">Email :<span style="color: red">*</span></label>
+                                                            <div class="col-sm-7">
+                                                                @Html.TextBoxFor(m => m.objVenture.PrimaryEmail, new { @id = "txtPrimaryEmail", @class = "form-control input-sm", @MaxLength = "50", @disabled = "disabled" })
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-sm-6">
+                                                        <div class="col-sm-12">
+                                                            <p> (Please list the best email address for us to reach you)</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-sm-6">
+                                                        <div class="form-group no-margin-hr">
+                                                            <label class="col-sm-5 fontBold">PhoneNo :<span style="color: red">*</span></label>
+                                                            <div class="col-sm-7">
+                                                                @Html.TextBoxFor(m => m.objVenture.PrimaryPhoneNo, new { @id = "txtPrimaryPhoneNo", @class = "form-control input-sm", @MaxLength = "14" })
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-sm-6">
+                                                        <label class="col-sm-12 fontBold">Colaboration Affiliation :</label>
+                                                        <div class="col-sm-12">
+                                                            @foreach (var item in Model.ListPrimaryColaborationAffiliation)
+                                                            {
+                                                                @*@Html.HiddenFor(m=>item.ID)
+                                                                    @Html.CheckBoxFor(model =>item.IsChecked)
+                                                                    @Html.LabelFor(model=>item.Value,item.Value)*@
+                                                                @Html.CheckBox("chkcollbp", item.IsChecked, new { value = item.Value });<label>@item.Text</label>
+
+                                                            }
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-sm-6">
+                                                        <div class="col-sm-12">
+                                                            <h5 style="font-weight:bold !important;">Secondary contact </h5>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-sm-6">
+                                                        <div class="form-group no-margin-hr">
+                                                            <label class="col-sm-5 fontBold">Name :</label>
+                                                            <div class="col-sm-7">
+                                                                @Html.TextBoxFor(m => m.objVenture.SecondaryContact, new { @id = "txtSecondaryContact", @class = "form-control input-sm", @MaxLength = "20" })
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-sm-6">
+                                                        <div class="form-group no-margin-hr">
+                                                            <label class="col-sm-5 fontBold">Role In Venture :</label>
+                                                            <div class="col-sm-7">
+                                                                @Html.TextBoxFor(m => m.objVenture.SecondaryRoleInVenture, new { @id = "txtSecondaryRoleInVenture", @class = "form-control input-sm", @MaxLength = "20" })
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-sm-6">
+                                                        <div class="form-group no-margin-hr">
+                                                            <label class="col-sm-5 fontBold">Email :</label>
+                                                            <div class="col-sm-7">
+                                                                @Html.TextBoxFor(m => m.objVenture.SecondaryEmail, new { @id = "txtSecondaryEmail", @class = "form-control input-sm" })
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-sm-6">
+                                                        <div class="form-group no-margin-hr">
+                                                            <label class="col-sm-5 fontBold">PhoneNo :</label>
+                                                            <div class="col-sm-7">
+                                                                @Html.TextBoxFor(m => m.objVenture.SecondaryPhoneNo, new { @id = "txtSecondaryPhoneNo", @class = "form-control input-sm", @MaxLength = "14" })
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-sm-6">
+                                                        <label class="col-sm-12 fontBold">Colaboration Affiliation :</label>
+                                                        <div class="col-sm-12">
+                                                            @foreach (var item in Model.ListSecondaryColaborationAffiliation)
+                                                            {
+                                                                @*@Html.HiddenFor(model => item.ID)
+                                                                    @Html.CheckBoxFor(model => item.IsChecked)
+                                                                    @Html.Label(item.Text)*@
+
+                                                                @Html.CheckBox("chkcollbs", item.IsChecked, new { value = item.Value });<label>@item.Text</label>
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-sm-10">
+                                                        <div class="col-sm-12">
+                                                            <h5 style="font-weight:bold !important;">How did you hear about NextTech VMS?</h5>
+                                                        </div>
+
+                                                        <label class="col-sm-12 fontBold">Check all that apply&nbsp;:</label>
+                                                        <div class="col-sm-12">
+                                                            @foreach (var item in Model.ListofAdvertisement)
+                                                            {
+                                                                @*@Html.HiddenFor(model => item.ID)
+                                                                    @Html.CheckBoxFor(model => item.IsChecked)
+                                                                    @Html.Label(item.Text)*@
+                                                                @Html.CheckBox("chkadvertise", item.IsChecked, new { value = item.Value });<label>@item.Text</label>
+                                                            }
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-sm-8">
+                                                        <div class="col-sm-12">
+                                                            <div class="form-group">
+                                                                <label class="control-label fontBold">If you would like to elaborate with specifics, please do so below&nbsp;:</label>
+                                                                @Html.TextBoxFor(m => m.objVenture.WouldLikeToElaborateSpecifics, new { @id = "txtWouldLikeToElaborateSpecifics", @class = "form-control input-sm" })
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+
+
+
+
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="TabStripVentureAnswers_View" class="tab-pane active" style="display:none;">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="panel">
+
+
+                                        <div class="col-sm-12">
+                                            <!-- Page header, center on small screens -->
+                                            <div class="col-sm-12" style="background: #2ab8da; padding:10px;">
+                                                <span class="label label-primary label-tag" style="font-size:14px;font-weight:800;"> Venture Application Answers</span>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="panel-body" style="padding-top: 53px;">
+
+                                            <div class="col-sm-12">
+                                                <div class="form-group">
+                                                    <label class="control-label fontBold">1. What do you do?Please provide a succinct 1-sentence description of what you do:  </label>
+                                                    @Html.TextAreaFor(m => m.objVenture.WhatDoYouDo, new { @id = "txtWhatDoYouDo", @class = "form-control" })
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-12">
+                                                <div class="form-group">
+                                                    <label class="control-label fontBold">2. What is the problem? In a few sentences, please describe what problem you are solving:   </label>
+                                                    @Html.TextAreaFor(m => m.objVenture.WhatIsTheProblem, new { @id = "txtWhatIsTheProblem", @class = "form-control" })
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-12">
+                                                <div class="form-group">
+                                                    <label class="control-label fontBold">3. Who has it?In one or two sentences, describe who has this problem                      </label>
+                                                    @Html.TextAreaFor(m => m.objVenture.WhoHasIt, new { @id = "txtWhoHasIt", @class = "form-control" })
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-12">
+                                                <div class="form-group">
+                                                    <label class="control-label fontBold">4. How will you solve the problem? - In a few sentences and in completely NON-TECHNICAL terms, please describe how you expect to solve it:   </label>
+                                                    @Html.TextAreaFor(m => m.objVenture.HowWillUSolveTheProblem, new { @id = "txtHowWillUSolveTheProblem", @class = "form-control" })
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-12">
+                                                <div class="form-group">
+                                                    <label class="control-label fontBold">5. How will you make money?  In a few sentences, describe who will use it, who will pay you and how you envision selling to them. Again, you do not need to provide in-depth financial details.  </label>
+                                                    @Html.TextAreaFor(m => m.objVenture.HowWillUMakeMoney, new { @id = "txtHowWillUMakeMoney", @class = "form-control" })
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-12">
+                                                <div class="form-group">
+                                                    <label class="control-label fontBold">6. What is the secret sauce?  In a few sentences, describe what is special about your solution and product. What is its competitive advantage over existing products or solutions?   </label>
+                                                    @Html.TextAreaFor(m => m.objVenture.WhtIsTheSecretSauce, new { @id = "txtWhtIsTheSecretSauce", @class = "form-control" })
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-12">
+                                                <div class="form-group">
+                                                    <label class="control-label fontBold">7. Is there IP?  In a few sentences describe the IP status. Also, if you are employed by, or affiliated with, a collaborator (PI, Mercy, BGSU or UT), does the collaborator have any legal rights to your IP?   </label>
+                                                    @Html.TextAreaFor(m => m.objVenture.IsThereIP, new { @id = "txtIsThereIP", @class = "form-control" })
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-12">
+                                                <div class="form-group">
+                                                    <label class="control-label fontBold">8. What is your current status?  It’s just fine to be very early in the process, even at the idea stage. Please check one:?&nbsp;:</label>
+                                                    <div class="input-group">
+                                                        @foreach (var item in Model.Listofstatus)
+                                                        {
+
+                                                            @Html.CheckBox("chkstatus", item.IsChecked, new { value = item.Value });<label>@item.Text</label>
+                                                        }
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-12">
+                                                <div class="form-group">
+                                                    <label class="control-label fontBold">9. What type(s) of VMS help do you think your startup needs?  (please check all that apply)&nbsp;:</label>
+
+                                                    <div class="input-group">
+                                                        @foreach (var item in Model.ListofVMShelp)
+                                                        {
+
+                                                            @Html.CheckBox("chkvmsHelp", item.IsChecked, new { value = item.Value });<label>@item.Text</label>
+                                                        }
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-12">
+                                                <div class="form-group">
+                                                    <label class="control-label fontBold">Additional Comments:  If there is anything else we should know about your venture, please let us know here.  </label>
+                                                    @Html.TextAreaFor(m => m.objVenture.Comments, new { @id = "txtcomments", @class = "form-control", @cols = 50, @rows = 5 })
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+}
+<script type="text/javascript">
+
+    $("#txtSecondaryEmail").blur(function () {
+
+        var isvalid;
+        if ($("#txtSecondaryEmail").val() != "") {
+            if ($("#txtSecondaryEmail").val() == $("#txtPrimaryEmail").val()) {
+                bootbox.alert("Primary Email and Secondary Email Should not be same");
+                $("#txtSecondaryEmail").val('');
+            }
+            else {
+                isvalid = ValidateEmail($(this)[0]);
+                ValidateEmails($("#txtSecondaryEmail").val(), isvalid);
+            }
+        }
+    });
+    function ValidateEmails(objemailvalue, isvalid) {
+        if (isvalid == true) {
+
+
+        }
+
+        else {
+            if (objemailvalue != "") {
+                bootbox.alert("Email is not valid");
+            }
+
+        }
+    }
+   
+    $(document).ready(function () {
+
+      
+
+        //$(function () {
+        //    
+        //    var dateToday = $("#txtcreateddate").val();
+        //    //var currentDate = (dateToday.getMonth() + 1) + '/' + dateToday.getDate() + '/' + dateToday.getFullYear();
+        //    $('.datepicker1').datetimepicker({
+              
+        //        format: 'L'
+        //    }).on('dp.change', function (e) {
+        //        $('.datepicker1').data("DateTimePicker").minDate(dateToday);
+        //    });
+
+        //});
+
+       
+
+        $("#btnEdit").click(function () {
+
+            var isvalid = false;
+            var Alerttext = "Are you sure? you want to convert this venture to an Active Venture?";
+            isvalid = boortboxconformation(Alerttext);
+            return isvalid;
+
+        });
+
+        $('#txtPrimaryPhoneNo').keydown(function (e) {
+            //PhoneMask(e, '#txtphone');
+
+            var key = e.which || e.charCode || e.keyCode || 0;
+            $phone = $(this);
+
+            // Don't let them remove the starting '('
+            if ($phone.val().length === 1 && (key === 8 || key === 46)) {
+                $phone.val('(');
+                return false;
+            }
+                // Reset if they highlight and type over first char.
+            else if ($phone.val().charAt(0) !== '(') {
+                $phone.val('(' + $phone.val());
+            }
+
+            // Auto-format- do not expose the mask as the user begins to type
+            if (key !== 8 && key !== 9) {
+                if ($phone.val().length === 4) {
+                    $phone.val($phone.val() + ')');
+                }
+                if ($phone.val().length === 5) {
+                    $phone.val($phone.val() + ' ');
+                }
+                if ($phone.val().length === 9) {
+                    $phone.val($phone.val() + '-');
+                }
+            }
+
+            // Allow numeric (and tab, backspace, delete) keys only
+            return (key == 8 ||
+                    key == 9 ||
+                    key == 46 ||
+                    (key >= 48 && key <= 57) ||
+                    (key >= 96 && key <= 105));
+        });
+        $('#txtSecondaryPhoneNo').keydown(function (e) {
+            //PhoneMask(e, '#txtphone');
+
+            var key = e.which || e.charCode || e.keyCode || 0;
+            $phone = $(this);
+
+            // Don't let them remove the starting '('
+            if ($phone.val().length === 1 && (key === 8 || key === 46)) {
+                $phone.val('(');
+                return false;
+            }
+                // Reset if they highlight and type over first char.
+            else if ($phone.val().charAt(0) !== '(') {
+                $phone.val('(' + $phone.val());
+            }
+
+            // Auto-format- do not expose the mask as the user begins to type
+            if (key !== 8 && key !== 9) {
+                if ($phone.val().length === 4) {
+                    $phone.val($phone.val() + ')');
+                }
+                if ($phone.val().length === 5) {
+                    $phone.val($phone.val() + ' ');
+                }
+                if ($phone.val().length === 9) {
+                    $phone.val($phone.val() + '-');
+                }
+            }
+
+            // Allow numeric (and tab, backspace, delete) keys only
+            return (key == 8 ||
+                    key == 9 ||
+                    key == 46 ||
+                    (key >= 48 && key <= 57) ||
+                    (key >= 96 && key <= 105));
+        });
+    });
+
+    function boortboxconformation(Alerttext) {
+        var isvalid = false;
+
+        bootbox.confirm(Alerttext, function (flag) {
+
+            if (flag == true) {
+
+                isvalid = true;
+                $("#UpdatePenVenture").submit();
+            }
+            else {
+                isvalid = true;
+            }
+            return isvalid;
+        });
+        return isvalid;
+    }
+
+    $('#TabStripVentureDetail').click(function () {
+        $('#TabStripVentureDetail_View').css("display", "block");
+        $('#TabStripVentureAnswers_View').css("display", "none");
+        $("#TabStripVentureDetail").addClass("active");
+        $("#TabStripVentureAnswers").removeClass("active");
+    });
+
+    $('#TabStripVentureAnswers').click(function () {
+        $('#TabStripVentureDetail_View').css("display", "none");
+        $('#TabStripVentureAnswers_View').css("display", "block");
+        $("#TabStripVentureAnswers").addClass("active");
+        $("#TabStripVentureDetail").removeClass("active");
+
+    });
+</script>

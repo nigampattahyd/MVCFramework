@@ -1,0 +1,315 @@
+﻿@model CRMHub.EntityFramework.CalendarEventRequest
+
+@{
+    ViewBag.Title = "EditAppointment";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+}
+
+
+
+@using (Html.BeginForm("EditAppointment", "Scheduler", FormMethod.Post, new { @id = "EditApp" }))
+{
+    <div class="widget">
+        <div class="widget-header bordered-bottom bordered-themesecondary">
+            <i class="widget-icon fa fa-user themesecondary"></i>
+            <span class="widget-caption themesecondary">@Html.DisplayFor(m => m.Title)</span>
+        </div><!--Widget Header-->
+        <div class="widget-body  no-padding">
+            <div class="tickets-container">
+                <div id="CustomBootstrapAlertBox">
+                </div>
+                <div class="row">
+
+                   
+                    <div class="tab-pane active" id="pvMentorDetail">
+                        <div id="GetMentors">
+                            <div class="col-sm-12">
+                                <div class="col-xs-12 col-sm-12 text-right text-right-sm" id="white_bg">
+                                    <button class="btn btn-flat btn-labeled btn-primary" id="btniamavailable" type="submit" style=" margin:0px 3px 0px 10px;" value="iamavailable">
+                                        <span class="btn-label icon fa fa-check"></span>I am Available
+                                        @Html.HiddenFor(m => m.IsIamAvailable, "True")
+                                    </button>
+                                    <button class="btn btn-flat btn-labeled btn-primary" id="btniamnotavailable" type="submit" style=" margin:0px 3px 0px 10px;" value="iamnotavailable">
+                                        <span class="btn-label icon fa fa-times"></span>I am Not Available
+                                        @Html.HiddenFor(m => m.IsIamNotAvailable, "False")
+                                    </button>
+                                    @*<a class="btn btn-flat btn-labeled btn-primary" href="@Url.Action("getUpComingEvents", "Scheduler" )" id="btnback">
+                                        <span class="btn-label icon fa fa-backward" style="margin-right:6px;"> </span>
+                                        Back
+                                    </a>*@
+                                </div>
+                            </div>
+
+
+                            <div class="col-sm-12" style="padding-top:10px;">
+                                <div class="panel-group" id="accordion-example">
+                                    <!-- / .panel -->
+                                    <div class="panel">
+                                        <div class="panel-heading">
+                                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion-example"
+                                               href="#collapse2">Appointment&nbsp;Details</a>
+                                        </div>
+                                        <!-- / .panel-heading -->
+                                        <div id="collapse2" class="panel-collapse collapse in" style="height: auto;">
+                                            <div class="panel-body">
+                                                <div class="col-sm-12 no-padding-hr">
+                                                    <div class="row">
+                                                        @Html.Partial("~/Views/Shared/_AppointmentDetails.cshtml", Model)
+                                                        @Html.HiddenFor(m => m.strIsaccepted)
+                                                        @Html.HiddenFor(m => m.strisdenied)
+                                                        @Html.HiddenFor(m => m.strAccepteddatetime)
+                                                    </div>
+                                                </div>
+                                               
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="divbuttonblock" style="display:none;">
+                                        <div class="col-sm-12" style="align-content:center; ">
+                                            <div class="col-xs-12 col-sm-12 text-center text-center-sm" id="white_bg">
+                                                <button class="btn btn-flat btn-labeled btn-primary" id="btniamavailable" type="submit" style=" margin:0px 3px 0px 10px;" value="iamavailable">
+                                                    <span class="btn-label icon fa fa-check"></span>I am Available
+                                                    @Html.HiddenFor(m => m.IsIamAvailable, "True")
+                                                </button>
+
+                                                <button class="btn btn-flat btn-labeled btn-primary" id="btniamnotavailable" type="submit" style=" margin:0px 3px 0px 10px;" value="iamnotavailable">
+                                                    <span class="btn-label icon fa fa-times"></span>I am Not Available
+                                                    @Html.HiddenFor(m => m.IsIamNotAvailable, "False")
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  
+    <script type="text/javascript">
+        $(document).ready(function () {
+            //BootboxAlert("");
+            if ($("#strIsaccepted").val() == "-" && $("#strisdenied").val() == "-") {
+                $('#btniamavailable').attr("disabled", false);
+                $('#btniamnotavailable').attr("disabled", false);
+                $('#RdDate1').attr("disabled", false);
+                $('#RdDate2').attr("disabled", false);
+                $('#RdDate3').attr("disabled", false);
+            }
+            else {
+                $('#RdDate1').attr("disabled","disabled");
+                $('#RdDate2').attr("disabled", "disabled");
+                $('#RdDate3').attr("disabled", "disabled");
+                $('#btniamavailable').attr("disabled","disabled");
+                $('#btniamnotavailable').attr("disabled", "disabled");
+            }
+
+
+        });
+        $("#btniamavailable").click(function () {
+            
+            var isvalid = false;
+            if ($('#RdDate1').is(':checked') || $('#RdDate2').is(':checked') || $('#RdDate3').is(':checked')) {
+                if ($('#RdDate1').is(':checked')) {
+                    if ($("#RdD1Time1").is(':checked') || $("#RdD1Time2").is(':checked') || $("#RdD1Time3").is(':checked')) {
+                        var valid = BootboxConform();
+                        $('input[disabled="disabled"]').removeAttr("disabled");
+                        valid = isvalid;
+                        
+                   
+                      return isvalid;
+                    }
+                    else {
+                        BootboxAlert("Date 1");
+                        return isvalid;
+                    }
+                    return isvalid;
+                }
+                else if ($('#RdDate2').is(':checked')) {
+                    if ($("#RdD2Time1").is(':checked') || $("#RdD2Time2").is(':checked') || $("#RdD2Time3").is(':checked')) {
+                        var valid = BootboxConform();
+                      
+                        valid = isvalid;
+                        return isvalid;
+                    }
+                    else {
+                        BootboxAlert("Date 2");
+                        return false;
+                    }
+                }
+                else if ($('#RdDate3').is(':checked')) {
+                    if ($("#RdD3Time1").is(':checked') || $("#RdD3Time2").is(':checked') || $("#RdD3Time3").is(':checked')) {
+                        var valid = BootboxConform();
+                      
+                        valid = isvalid;
+                        return isvalid;
+                    }
+                    else {
+                        BootboxAlert("Date 3");
+                        return false;
+                    }
+                }
+                return isvalid;
+            }
+            else {
+                
+                BootboxAlert("");
+                return false;
+            }
+
+            return isvalid;
+        });
+        $("#btniamnotavailable").click(function () {
+            var isvalid = Bootboxdeny();
+            return isvalid;
+
+        });
+
+        function BootboxConform() {
+            
+            var isvalid = false;
+            
+            bootbox.confirm("Are you sure want to accept the meeting !", function (event) {
+                
+                if (event == true) {
+                    
+                    isvalid = true;
+                    $("#IsIamAvailable").val("True");
+                    $("#IsIamNotAvailable").val("False");
+                    $('[disabled="disabled"]').removeAttr('disabled');
+                    $("#EditApp").submit();
+                    return isvalid;
+                }
+               
+                else {
+                    
+                    $("#IsIamAvailable").val("False");
+                    $("#IsIamNotAvailable").val("False");
+                    isvalid= true;
+                    return isvalid;
+                }
+                return isvalid;
+            });
+            
+            return isvalid;
+        }
+        function BootboxAlert(Dateid) {
+            
+            var Isvalid = false;
+            if (Dateid == "") {
+                
+                var Alertmessage = "Please select Date 1 or Date 2 or Date 3";
+                bootbox.alert(Alertmessage);
+                return Isvalid;
+                
+            }
+            else
+            {
+                var Alertmessage = "Please select Time 1 or Time 2 or Time 3 from " + Dateid + "";
+                bootbox.alert(Alertmessage);
+                return Isvalid;
+            }
+         
+            return Isvalid;
+        }
+        function Bootboxdeny()
+        {
+            var isvalid = false;
+
+            bootbox.confirm("Are you sure want to deny the meeting !", function (event) {
+                
+                if (event == true) {
+                    
+                    isvalid = true;
+                    $("#IsIamAvailable").val("False");
+                    $("#IsIamNotAvailable").val("True");
+                    $("#EditApp").submit();
+                    return isvalid;
+                }
+                
+                else {
+                    $("#IsIamAvailable").val("False");
+                    $("#IsIamNotAvailable").val("False");
+                    isvalid = true;
+                    return isvalid;
+                }
+                return isvalid;
+            });
+
+            return isvalid;
+        }
+       $("#RdDate1").click(function(){
+
+           if ($('#RdDate1').is(':checked') == true) {
+               $('#RdD1Time1').attr("disabled",false);
+               $('#RdD1Time2').attr("disabled", false);
+               $('#RdD1Time3').attr("disabled", false);
+           }
+           else {
+               $('#RdD1Time1').attr("disabled","disabled");
+               $('#RdD1Time2').attr("disabled", "disabled");
+               $('#RdD1Time3').attr("disabled", "disabled");
+               $('#RdD1Time1').prop("checked", false);
+               $('#RdD1Time2').prop("checked", false);
+               $('#RdD1Time3').prop("checked", false);
+           }
+       })
+       $("#RdDate2").click(function () {
+
+           if ($('#RdDate2').is(':checked') == true) {
+               $('#RdD2Time1').attr("disabled", false);
+               $('#RdD2Time2').attr("disabled", false);
+               $('#RdD2Time3').attr("disabled", false);
+           }          
+           else {     
+               $('#RdD2Time1').attr("disabled", "disabled");
+               $('#RdD2Time2').attr("disabled", "disabled");
+               $('#RdD2Time3').attr("disabled", "disabled");
+               $('#RdD2Time1').prop("checked", false);
+               $('#RdD2Time2').prop("checked", false);
+               $('#RdD2Time3').prop("checked", false);
+           }
+       })
+       $("#RdDate3").click(function () {
+
+           if ($('#RdDate3').is(':checked') == true) {
+               $('#RdD3Time1').attr("disabled", false);
+               $('#RdD3Time2').attr("disabled", false);
+               $('#RdD3Time3').attr("disabled", false);
+           }         
+           else {    
+               $('#RdD3Time1').attr("disabled", "disabled");
+               $('#RdD3Time2').attr("disabled", "disabled");
+               $('#RdD3Time3').attr("disabled", "disabled");
+               $('#RdD3Time1').prop("checked", false);
+               $('#RdD3Time2').prop("checked", false);
+               $('#RdD3Time3').prop("checked", false);
+           }
+       })
+       $("#btnback").click(function () {
+           
+           if('@Request.QueryString["Page"]' == 'Scheduler')
+           {
+              
+               window.location.url='Scheduler/getUpComingEvents'
+           }
+           else if ('@Request.QueryString["Page"]' == 'DBoard') {
+               window.location.url = 'dBoard/Index'
+           }
+       });
+    </script>
+    <script type="text/javascript">
+
+    $(document).ready(function () {
+        $("#activemenu").addClass("open active");
+        $('.mm-text').closest('li').each(function () {
+            $(this).removeClass('active');
+        });
+        $('.mm-text').eq(0).closest('li').addClass('active');
+    });
+    </script>
+
+}

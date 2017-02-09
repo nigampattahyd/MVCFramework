@@ -1,0 +1,493 @@
+﻿@model CRMHub.ViewModel.MentorViewmodel
+@{
+    ViewBag.Title = "Edit Mentor";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+}
+
+
+<style>
+    .ui-autocomplete {
+        max-height: 100px;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    .ui-autocomplete {
+        height: 100px;
+    }
+   
+</style>
+
+@using (Html.BeginForm("EditMentor", "Mentor", FormMethod.Post))
+{
+    <div class="widget">
+        <div class="widget-header bordered-bottom bordered-themesecondary">
+            <i class="widget-icon fa fa-user themesecondary"></i>
+            <span class="widget-caption themesecondary">@Html.DisplayFor(m => m.objMentor.Name)</span>
+        </div><!--Widget Header-->
+        <div class="widget-body  no-padding">
+            <div class="tickets-container">
+                <div id="CustomBootstrapAlertBox">
+                </div>
+                <div class="row">
+
+                    <script>
+                        init.push(function () {
+                            $('ul.bs-tabdrop-example').tabdrop();
+                        });
+                    </script>
+
+                    <span id="errorsymbol" style="color:red;display:none;margin-left:5px;" class="fa fa-exclamation-circle"></span>
+                    <div id="ErrorMessages" style="margin-left:20px;color:red;font-size:15px;">
+
+                    </div>
+
+
+                    <div class="tab-pane active" id="pvMentorDetail">
+                        <div id="GetMentors">
+                            <div class="col-sm-12">
+                                <div class="col-xs-12 col-sm-12 text-right text-right-sm" id="white_bg">
+                                    <button class="btn btn-flat btn-labeled btn-primary" id="btnSave" type="submit" style=" margin:0px 3px 0px 10px;">
+                                        <span class="btn-label icon fa fa-edit"></span>Update
+                                    </button>
+                                    <a class="btn btn-flat btn-labeled btn-primary"  id="btnback">
+                                        <span class="btn-label icon fa fa-backward" style="margin-right:6px;"> </span>
+                                        Back
+                                    </a>
+                                </div>
+                            </div>
+
+
+                            <div class="col-sm-12" style="padding-top:10px;">
+                                <div class="panel-group" id="accordion-example">
+                                    <!-- / .panel -->
+                                    <div class="panel">
+                                        <div class="panel-heading">
+                                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion-example"
+                                               href="#collapse2">Mentor&nbsp;Details</a>
+                                        </div>
+                                        <!-- / .panel-heading -->
+                                        <div id="collapse2" class="panel-collapse collapse in" style="height: auto;">
+                                            <div class="panel-body">
+                                                <div class="col-sm-12 no-padding-hr">
+                                                    <div class="row">
+                                                        <div class="row">
+                                                            <div class="col-sm-12">
+                                                                <div class="col-sm-3">
+                                                                    <div class="form-group no-margin-hr">
+                                                                        <label class="control-label">Mentor Name :<span style="color: red">*</span></label>
+                                                                        @Html.TextBoxFor(m => m.objMentor.Name, new { @class = "form-control input-sm", @id = "txtMentorName", @validate = "Required", @data_val_required = "Mentor Name", @disabled = "disabled" })
+                                                                        @Html.ValidationMessageFor(m => m.objMentor.Name, "", new { @class = "text-danger" })
+
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-3">
+                                                                    <div class="form-group no-margin-hr">
+                                                                        <label class="control-label">Venture&nbsp;:</label>
+                                                                        <div id="Table1" class="input-group">
+                                                                            @Html.HiddenFor(m => m.objMentor.VentureId)
+                                                                            @Html.TextBoxFor(m => m.objMentor.VentureName, new { @id = "txtVentureName", @placeholder = "Type to search ventures", @class = "form-control input-sm", @MaxLength = "50" })
+                                                                           
+                                                                            <span class="input-group-addon" type=" button" style="cursor:pointer;">
+                                                                                <i class="fa fa-search"></i>
+                                                                            </span>
+                                                                        </div>
+                                                                        @Html.ValidationMessageFor(m => m.objMentor.VentureName, "", new { @class = "text-danger" })
+                                                                        <span class="text-danger" id="spnInvalidVenture" style="display:none;">Invalid Venture</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-3">
+                                                                    <div class="form-group no-margin-hr">
+                                                                        <label class="control-label">Mentor Type&nbsp;:</label>
+                                                                        @Html.DropDownListFor(m => m.objMentor.MentorType, new SelectList(Model.lstMentorType, "MentorTypeId", "MentorType1"), "--Select--", new { @class = "form-control", @id = "drpMentorType", @style = "height:30px;" })
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-sm-12">
+                                                                <div class="col-sm-3">
+                                                                    <div class="form-group no-margin-hr">
+                                                                        <label class="control-label">Start Date&nbsp;:</label>
+                                                                        <div class="input-group datepicker1">
+                                                                            @Html.TextBoxFor(m => m.objMentor.StartDate, "{0:MM/dd/yyyy}", new { @id = "txtStartDate", @class = "form-control input-sm", @MaxLength = "10" })
+                                                                            <span class="input-group-addon">
+                                                                                <i class="fa fa-calendar"></i>
+                                                                            </span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-3">
+                                                                    <div class="form-group no-margin-hr">
+                                                                        <label class="control-label">End Date&nbsp;:</label>
+                                                                        <div class="input-group datepicker2">
+                                                                            @Html.TextBoxFor(m => m.objMentor.EndDate, "{0:MM/dd/yyyy}", new { @id = "txtEndDate", @class = "form-control input-sm", @MaxLength = "10" })
+                                                                            <span class="input-group-addon">
+                                                                                <i class="fa fa-calendar"></i>
+                                                                            </span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-3">
+                                                                    <div class="form-group no-margin-hr">
+                                                                        <label class="control-label">Email:<span style="color: red">*</span> </label>
+                                                                        @Html.TextBoxFor(m => m.objMentor.Email, new { @id = "txtEmail", @class = "form-control input-sm", @MaxLength = "60", @disabled = "disabled" })
+                                                                        @Html.ValidationMessageFor(m => m.objMentor.Email, "", new { @class = "text-danger" })
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-12">
+                                                            <div class="form-group no-margin-hr">
+                                                                <label class="control-label">Comment :</label>
+                                                                @Html.TextAreaFor(m => m.objMentor.Comment, new { @id = "txtComment", @class = "textEditor", @cols = 38, @rows = 5, @MaxLength = "200", @style = "resize: none;"})
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+
+                                                            <div class="col-sm-12">
+                                                                <div class="col-sm-12">
+                                                                    <div class="form-group no-margin-hr">
+                                                                        <div class="form-group">
+                                                                            <div class="checkbox">
+                                                                                <label>
+                                                                                    @Html.CheckBoxFor(model => model.objMentor.Active, new { id = "chkIsActive" })
+                                                                                    <span class="text">Is Active</span>
+                                                                                </label>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <div class="checkbox">
+                                                                                <label>
+                                                                                    @Html.CheckBoxFor(model => model.objMentor.isHaverelevantExp, new { id = "chkisHaverelevantExp" })
+                                                                                    <span class="text">Have relevant experience</span>
+                                                                                </label>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <div class="checkbox">
+                                                                                <label>
+                                                                                    @Html.CheckBoxFor(model => model.objMentor.isWillhelpifNeeded, new { id = "chkisWillhelpifNeeded" })
+                                                                                    <span class="text">Will Help If Needed</span>
+                                                                                </label>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <div class="checkbox">
+                                                                                <label>
+                                                                                    @Html.CheckBoxFor(model => model.objMentor.isInterested, new { id = "chkisInterested" })
+                                                                                    <span class="text">Interested</span>
+                                                                                </label>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <div class="checkbox">
+                                                                                <label>
+                                                                                    @Html.CheckBoxFor(model => model.objMentor.isRecruited, new { id = "chkisRecruited" })
+                                                                                    <span class="text">Recruited</span>
+                                                                                </label>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <div class="checkbox">
+                                                                                <label>
+                                                                                    @Html.CheckBoxFor(model => model.objMentor.isConflictFinancialInterest, new { id = "chkisConflictFinancialInterest" })
+                                                                                    <span class="text">Conflict Financial Interest</span>
+                                                                                    @Html.HiddenFor(m => m.objMentor.MentorId, new { @id = "txtmentorID" })
+                                                                                </label>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    @*Binding Custom Fields*@
+                                    <div class="panel">
+                                        <div class="panel-heading">
+                                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion-example"
+                                               href="#collapse1c">Custom Fields</a>
+                                        </div>
+                                        <!-- / .panel-heading -->
+                                        <div id="collapse1c" class="panel-collapse collapse" style="height: auto;">
+                                            <div class="panel-body">
+                                                <div class="col-sm-12 no-padding-hr">
+                                                    <div class="row">
+                                                        @for (int i = 0; i < Model.listCustomfields.Count; i++)
+                                                        {
+                                                            <div class="col-sm-4">
+                                                                <div class="form-group no-margin-hr">
+                                                                    @Html.HiddenFor(m => m.listCustomfields[i].FieldId)
+                                                                    @Html.HiddenFor(m => m.listCustomfields[i].Column_Type)
+
+                                                                    @if (Model.listCustomfields[i].Column_Type == "textbox")
+                                                                    {
+                                                                        @Html.DisplayFor(m => m.listCustomfields[i].Column_Label)
+                                                                        if (@Model.listCustomfields[i].RequiredField == true)
+                                                                        {
+                                                                            <span style="color: red">*</span>
+                                                                            @Html.TextBoxFor(m => m.listCustomfields[i].DefaultValue, new { @id = "TxtCusttext" + i, @class = "form-control input-sm", @title = @Model.listCustomfields[i].HoverText, @MaxLength = @Model.listCustomfields[i].MaxLength, @TabIndex = "37", rows = "1", cols = "1", @validate = "Required", @data_val_required = @Model.listCustomfields[i].Column_Label })
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            @Html.TextBoxFor(m => m.listCustomfields[i].DefaultValue, new { @id = "TxtCusttext" + i, @class = "form-control input-sm", @title = @Model.listCustomfields[i].HoverText, @MaxLength = @Model.listCustomfields[i].MaxLength, @TabIndex = "37", rows = "1", cols = "1" })
+                                                                        }
+                                                                    }
+
+                                                                    @if (Model.listCustomfields[i].Column_Type == "textarea")
+                                                                    {
+                                                                        @Html.DisplayFor(m => m.listCustomfields[i].Column_Label)
+                                                                        if (@Model.listCustomfields[i].RequiredField == true)
+                                                                        {
+                                                                            <span style="color: red">*</span>
+                                                                            @Html.TextAreaFor(m => m.listCustomfields[i].DefaultValue, new { @id = "TxtCusttextarea" + i, @class = "form-control input-sm", @title = @Model.listCustomfields[i].HoverText, @MaxLength = @Model.listCustomfields[i].MaxLength, @TabIndex = "37", rows = "1", cols = "1", @validate = "Required", @data_val_required = @Model.listCustomfields[i].Column_Label })
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            @Html.TextAreaFor(m => m.listCustomfields[i].DefaultValue, new { @id = "TxtCusttextarea" + i, @class = "form-control input-sm", @title = @Model.listCustomfields[i].HoverText, @MaxLength = @Model.listCustomfields[i].MaxLength, @TabIndex = "37", rows = "1", cols = "1" })
+                                                                        }
+                                                                    }
+
+                                                                    @if (Model.listCustomfields[i].Column_Type == "textfield")
+                                                                    {
+                                                                        @Html.DisplayFor(m => m.listCustomfields[i].Column_Label)
+                                                                        if (@Model.listCustomfields[i].RequiredField == true)
+                                                                        {
+                                                                            <span style="color: red">*</span>
+                                                                            @Html.TextBoxFor(m => m.listCustomfields[i].DefaultValue, new { @id = "TAActualColumnName" + i, @class = "form-control input-sm ", @title = @Model.listCustomfields[i].HoverText, @MaxLength = @Model.listCustomfields[i].MaxLength, @TabIndex = "37", rows = "1", cols = "1", @validate = "Required", @data_val_required = @Model.listCustomfields[i].Column_Label })
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            @Html.TextBoxFor(m => m.listCustomfields[i].DefaultValue, new { @id = "TAActualColumnName" + i, @class = "form-control input-sm ", @title = @Model.listCustomfields[i].HoverText, @MaxLength = @Model.listCustomfields[i].MaxLength, @TabIndex = "37", rows = "1", cols = "1" })
+                                                                        }
+                                                                    }
+                                                                    @if (Model.listCustomfields[i].Column_Type == "date")
+                                                                    {
+                                                                        @Html.DisplayFor(m => m.listCustomfields[i].Column_Label)
+                                                                        if (@Model.listCustomfields[i].RequiredField == true)
+                                                                        {
+                                                                            <span style="color: red">*</span>
+                                                                            @Html.TextBoxFor(m => m.listCustomfields[i].DefaultValue, new { @id = "TAActualDate" + i, @class = "form-control input-sm DateP ", @placeholder = "Select Date", @title = @Model.listCustomfields[i].HoverText, @MaxLength = @Model.listCustomfields[i].MaxLength, @TabIndex = "37", rows = "1", cols = "1", @validate = "Required", @data_val_required = @Model.listCustomfields[i].Column_Label })
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            @Html.TextBoxFor(m => m.listCustomfields[i].DefaultValue, new { @id = "TAActualDate" + i, @class = "form-control input-sm DateP ", @placeholder = "Select Date", @title = @Model.listCustomfields[i].HoverText, @MaxLength = @Model.listCustomfields[i].MaxLength, @TabIndex = "37", rows = "1", cols = "1", })
+                                                                        }
+
+                                                                    }
+                                                                    @if (Model.listCustomfields[i].Column_Type == "numeric")
+                                                                    {
+                                                                        @Html.DisplayFor(m => m.listCustomfields[i].Column_Label)
+
+                                                                        if (@Model.listCustomfields[i].RequiredField == true)
+                                                                        {
+                                                                            <span style="color: red">*</span>
+                                                                            @Html.TextBoxFor(m => m.listCustomfields[i].DefaultValue, new { @id = "TAActualColumnName" + i, @class = "form-control input-sm numericCls", @title = @Model.listCustomfields[i].HoverText, @MaxLength = @Model.listCustomfields[i].MaxLength, @TabIndex = "37", rows = "1", cols = "1", @validate = "Required", @data_val_required = @Model.listCustomfields[i].Column_Label })
+                                                                            <span id="errormsg"></span>
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            @Html.TextBoxFor(m => m.listCustomfields[i].DefaultValue, new { @id = "TAActualColumnName" + i, @class = "form-control input-sm numericCls ", @title = @Model.listCustomfields[i].HoverText, @MaxLength = @Model.listCustomfields[i].MaxLength, @TabIndex = "37", rows = "1", cols = "1" })
+                                                                        }
+
+                                                                    }
+
+                                                                    @if (Model.listCustomfields[i].Column_Type == "dropdown")
+                                                                    {
+                                                                        @Html.DisplayFor(m => m.listCustomfields[i].Column_Label)
+                                                                        if (@Model.listCustomfields[i].RequiredField == true)
+                                                                        {
+                                                                            <span style="color: red">*</span>
+                                                                            @Html.DropDownListFor(m => m.listCustomfields[i].DefaultValue, new SelectList(Model.listCustomfields[i].lstCustomOptions, "DrpValueId", "DrpValue", Model.listCustomfields[i].DefaultValue), "Select", new { @class = "form-control input-sm", @id = "dpOptions" + i, @validate = "Required", @data_val_required = @Model.listCustomfields[i].Column_Label, @title = @Model.listCustomfields[i].HoverText, })
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            @Html.DropDownListFor(m => m.listCustomfields[i].DefaultValue, new SelectList(Model.listCustomfields[i].lstCustomOptions, "DrpValueId", "DrpValue", Model.listCustomfields[i].DefaultValue), "Select", new { @class = "form-control input-sm", @id = "dpOptions" + i, @title = @Model.listCustomfields[i].HoverText, })
+                                                                        }
+
+                                                                    }
+                                                                    @if (Model.listCustomfields[i].Column_Type == "radiobutton")
+                                                                    {
+                                                                        @Html.DisplayFor(m => m.listCustomfields[i].Column_Label)
+
+                                                                        if (@Model.listCustomfields[i].RequiredField == true)
+                                                                        {
+                                                                            <span style="color: red">*</span>
+                                                                            <div>
+                                                                                @for (int a = 0; a < Model.listCustomfields[i].lstCustomOptions.Count; a++)
+                                                                                {
+                                                                                    @Html.HiddenFor(m => m.listCustomfields[i].lstCustomOptions[a].DrpValueId)
+                                                                                    @Html.HiddenFor(m => m.listCustomfields[i].lstCustomOptions[a].FieldId)
+                                                                                    if (Model.listCustomfields[i].lstCustomOptions[a].IsDefault == true)
+                                                                                    {
+                                                                                        @Html.RadioButtonFor(m => m.listCustomfields[i].DefaultValue, Model.listCustomfields[i].lstCustomOptions[a].DrpValueId, new { @id = "rdOptions" + i, @checked = "checked", @title = @Model.listCustomfields[i].HoverText, @validate = "Required", @data_val_required = @Model.listCustomfields[i].Column_Label })
+                                                                                    }
+                                                                                    else
+                                                                                    {
+                                                                                        @Html.RadioButtonFor(m => m.listCustomfields[i].DefaultValue, Model.listCustomfields[i].lstCustomOptions[a].DrpValueId, new { @id = "rdOptions" + i, @title = @Model.listCustomfields[i].HoverText, @validate = "Required", @data_val_required = @Model.listCustomfields[i].Column_Label })
+                                                                                    }
+                                                                                    @Html.DisplayFor(m => m.listCustomfields[i].lstCustomOptions[a].DrpValue, new { @class = "checkbox-inline" })
+                                                                                }
+                                                                            </div>
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <div>
+                                                                                @for (int a = 0; a < Model.listCustomfields[i].lstCustomOptions.Count; a++)
+                                                                                {
+                                                                                    @Html.HiddenFor(m => m.listCustomfields[i].lstCustomOptions[a].DrpValueId)
+                                                                                    @Html.HiddenFor(m => m.listCustomfields[i].lstCustomOptions[a].FieldId)
+                                                                                    if (Model.listCustomfields[i].lstCustomOptions[a].IsDefault == true)
+                                                                                    {
+                                                                                        @Html.RadioButtonFor(m => m.listCustomfields[i].DefaultValue, Model.listCustomfields[i].lstCustomOptions[a].DrpValueId, new { @id = "rdOptions" + i, @checked = "checked", @title = @Model.listCustomfields[i].HoverText, })
+                                                                                    }
+                                                                                    else
+                                                                                    {
+                                                                                        @Html.RadioButtonFor(m => m.listCustomfields[i].DefaultValue, Model.listCustomfields[i].lstCustomOptions[a].DrpValueId, new { @id = "rdOptions" + i, @title = @Model.listCustomfields[i].HoverText, })
+                                                                                    }
+                                                                                    @Html.DisplayFor(m => m.listCustomfields[i].lstCustomOptions[a].DrpValue, new { @class = "checkbox-inline" })
+                                                                                }
+                                                                            </div>
+                                                                        }
+                                                                    }
+
+                                                                </div>
+                                                            </div>
+                                                        }
+
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @*End Of Binding Custom Fields*@
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<script type="text/javascript">
+    $(".textEditor").jqte();
+    $(function () {
+      
+        $('#drpMentorType option').filter('[value="1"],[value="2"],[value="3"],[value="5"]').remove();
+        $('.date-picker').datepicker();
+        //var dateTypeVar = $('#datepicker').datepicker('getDate');
+        //$.datepicker.formatDate('MM-dd-yy', dateTypeVar);
+        var dateTypeVar = $('#datepicker').datepicker({ dateFormat: 'MM/dd/yy' }).datepicker('getDate');
+        
+        var ventureid = $("#objMentor_VentureId").val();
+        var roleid = '@ViewBag.Roleid';
+        var venturename = '@ViewBag.VentureName';
+
+        if (roleid == "2") {
+            $("#txtVentureName").val(venturename);
+            $("#txtVentureName").prop("disabled", "disabled");
+            $("#objMentor_VentureId").val(ventureid);
+        }
+        else {
+            $("#txtVentureName").autocomplete({
+                source: function (request, response) {
+
+                    $.ajax({
+                        url: '../Mentor/AutoComplete/',
+                        data: "{ 'prefix': '" + request.term + "'}",
+                        dataType: "json",
+                        type: "POST",
+                        contentType: "application/json; charset=utf-8",
+                        success: function (data) {
+                            response($.map(data, function (item) {
+                                return { label: item.VentureName, value: item.VentureName, value1: item.VentureId };
+                            }))
+                        },
+                        error: function (response) {
+                            //alert(response.responseText);
+                        },
+                        failure: function (response) {
+                            //alert(response.responseText);
+                        }
+                    });
+                },
+                select: function (e, i) {
+
+                    //$("#txtVentureName").val(i.item.label);
+                    $("#objMentor_VentureId").val(i.item.value1);
+                    //alert($("#objMentor_VentureId").val());
+                },
+
+                minLength: 1,
+                change: function (event, ui) {
+                    if (!ui.item) {
+                        this.value = '';
+                        $('#spnInvalidVenture').show();
+                    } else {
+                        // Populate your hidden input.
+                        $('#spnInvalidVenture').hide();
+                    }
+                }
+            });
+        }
+
+        var dateToday = new Date();
+
+        var currentDate = (dateToday.getMonth() + 1) + '/' + dateToday.getDate() + '/' + dateToday.getFullYear();
+        
+        var maxdate = $("#txtEndDate").val();
+        var mindate = $("#txtStartDate").val();
+        $(".datepicker1").datetimepicker({
+            format: 'L',
+        }).on('dp.change', function (e) {
+            
+            maxdate = $("#txtEndDate").val();
+            $('.datepicker1').data("DateTimePicker").minDate(currentDate);
+        });
+
+        $(".datepicker2").datetimepicker({
+            format: 'L',
+        }).on('dp.change', function (e) {
+            
+            mindate = $("#txtStartDate").val();
+            maxdate = $("#txtEndDate").val();
+            $('.datepicker2').data("DateTimePicker").minDate(mindate);
+
+        });
+    });
+
+   
+
+ 
+    $("#btnback").click(function () {
+        
+        var ventureid = $("#objMentor_VentureId").val();
+       
+        if ('@Request.QueryString["Module"]' == "Venture") {
+            window.location = "../Venture/getVenturedetails?VentureId=" + ventureid + "&Module=Mentor";
+
+        }
+        else {
+            window.location = "../Mentor/Index";
+
+        }
+    })
+    //$("#btnSave").click(function () {
+    //    $('.inputDisabled').removeAttr("disabled")
+    //});
+</script>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#Mentors").addClass("active");
+    });
+</script>

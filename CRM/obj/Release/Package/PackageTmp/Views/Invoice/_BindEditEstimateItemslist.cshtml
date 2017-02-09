@@ -1,0 +1,485 @@
+﻿@model CRMHub.ViewModel.EstimateInvoiceModel
+<style>
+    .table > tbody > tr > td, .table > tbody > tr > th, .table > tfoot > tr > td, .table > tfoot > tr > th, .table > thead > tr > td, .table > thead > tr > th {
+        border-top: 0;
+    }
+</style>
+<div class="row">
+    <table cellpadding="0" cellspacing="0" border="0" class="table table-striped" id="jq-datatables-itemPopup" width="100%">
+        <thead>
+            <tr>
+                <th data-hide="phone">Item <span style="color: red">*</span></th>
+                <th data-class="expand">Item Code</th>
+                <th data-hide="phone">Quantity <span style="color: red">*</span></th>
+                <th data-hide="phone">Rate/Unit&nbsp;($)</th>
+
+                <th data-hide="phone">Total Amount&nbsp;($)</th>
+                <th></th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @{int a = Model.ListEstimateitems.Count - 1;}
+
+            @for (int i = 0; i < Model.ListEstimateitems.Count; i++)
+            {
+                <tr>
+
+                    <td width="25%">
+                        <div class="input-group" id="tblitem" runat="server" style="width:90%">
+                            @*@Html.TextBoxFor(m => m.itemsobj.ItemName, new { @class = "form-control input-sm", Name = "listinvoiceitems[" + i + "].ItemName", @id = "ItemName", @Placeholder = "Select Item", @readonly = false, @validate = "Required", @data_val_required = "Item Name" })*@
+                            @Html.TextBoxFor(m => m.ListEstimateitems[i].ItemName, new { @class = "form-control input-sm", Name = "ListEstimateitems[" + i + "].ItemName", @id = "ItemName-" + i, @Placeholder = "Select Item", @readonly = false, @validate = "Required", @data_val_required = "Item Name" })
+                            @if (i == 0)
+                            {
+                                <span class="input-group-btn" id="Popupspan">
+                                    <a class="btn" href="#" id="ImageButton4" title="Select Items"
+                                       onclick="return show_NewitemsPopUp(580, 420);" style="cursor: pointer"><i class="fa fa-search"></i></a>
+                                </span>
+                            }
+
+                            @Html.HiddenFor(m => m.ListEstimateitems[i].ItemId, new { @id = "hditemtId-" + i, Name = "ListEstimateitems[" + i + "].ItemId" })
+                            @Html.HiddenFor(m => m.ListEstimateitems[i].EstimateInvoiceItemId, new { @id = "hdInvoiceItemId-" + i, Name = "ListEstimateitems[" + i + "].EstimateInvoiceItemId" })
+
+                        </div>
+
+                    </td>
+
+                    <td>
+                        @*@Html.TextBoxFor(m => m.itemsobj.ItemCode, new { @id = "ItemCode", Name = "listinvoiceitems[" + i + "].ItemCode", @class = "form-control input-sm" })*@
+                        @Html.TextBoxFor(m => m.ListEstimateitems[i].ItemCode, new { @id = "ItemCode-" + i, Name = "ListEstimateitems[" + i + "].ItemCode", @class = "form-control input-sm" })
+                    </td>
+                    <td>
+                        @*@Html.TextBoxFor(m => m.itemsobj.QtyCommitted, new { @id = "QtyCommitted", Name = "listinvoiceitems[" + i + "].Quantity", @class = "form-control input-sm calcamount", type = "number", @min = "0" })*@
+                        @Html.TextBoxFor(m => m.ListEstimateitems[i].Quantity, new { @id = "QtyCommitted-" + i, Name = "ListEstimateitems[" + i + "].Quantity", @class = "form-control input-sm calcamount", type = "number", @min = "0" })
+                    </td>
+                    <td>
+                        @*@Html.TextBoxFor(m => m.itemsobj.RateperUnit, new { @id = "RateperUnit", Name = "listinvoiceitems[" + i + "].RatePerUnit", @class = "form-control input-sm calcamount" })*@
+                        @Html.TextBoxFor(m => m.ListEstimateitems[i].RatePerUnit, new { @id = "RateperUnit-" + i, Name = "ListEstimateitems[" + i + "].RatePerUnit", @class = "form-control input-sm calcamount", @style = "text-align:right" })
+                    </td>
+
+                    <td>
+                        @*@Html.TextBoxFor(m => m.itemsobj.ItemTotal, new { @id = "ItemTotal", Name = "listinvoiceitems[" + i + "].ItemTotal", @class = "form-control input-sm sumtot" })*@
+                        @Html.TextBoxFor(m => m.ListEstimateitems[i].ItemTotal, new { @id = "ItemTotal-" + i, Name = "ListEstimateitems[" + i + "].ItemTotal", @class = "form-control input-sm sumtot", @style = "text-align:right" })
+                    </td>
+                    @if (i == 0)
+                    {
+                        <td>
+                            <button class="btn btn-flat btn-labeled btn-primary" id="btnadd" style=" margin:0px 3px 0px 10px;" onclick="appendrow()" name="button" type="button">
+                                Add
+
+                            </button>
+                            @*<button name="button" id="btnadd" type="button" onclick="appendrow()">Add</button>*@
+                        </td>
+                    }
+                    else
+                    {
+                        <td>
+                            <button class="btn btn-flat btn-labeled btn-primary" id="deladd-@{@i}" style=" margin:0px 3px 0px 10px;" name="button" onclick="deleterow(this)" type="button">
+                                Delete
+                            </button>
+
+                        </td>
+                    }
+
+
+
+
+
+
+
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<div class="row">
+    <div class="col-sm-5">
+        <div class="col-sm-12">
+            <div class="form-group no-margin-hr">
+
+
+            </div>
+        </div>
+
+    </div>
+
+    <div class="col-sm-4">
+        <div class="col-sm-12">
+            <div class="form-group no-margin-hr">
+                @*<label class="control-label col-sm-4">Discount Amount :</label>*@<label class="control-label col-sm-4"></label>
+                <div class="col-sm-8">
+
+                    @*@Html.TextBoxFor(m => m.invoice.Discount, new { @class = "form-control input-sm", @id = "txtDiscount", @validate = "Required", @data_val_required = "Project Name" })*@
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="modal fade" id="myedititemModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+
+                <h4 class="modal-title">Items List</h4>
+            </div>
+            <div class="modal-body">
+
+                <div class="row">
+                    <div style="text-align:left;font-size:12px;padding:5px">Note : Click Item Name To Select Record.</div>
+                    <div class="col-sm-12">
+
+                        <div class="table-primary table-striped" id="tblitemsList">
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    var CheckItems = [];
+    $(document).ready(function () {
+       
+        var modelCount = @Model.ListEstimateitems.Count;
+        for(var x=1;x<modelCount;x++)
+        {
+            var itemobj ="hditemtId-"+x;
+            var itemid = document.getElementById(itemobj).value;
+            CheckItems.push(itemid);
+        }
+    });
+
+
+    var index = @Model.ListEstimateitems.Count -1;
+    var r = index;
+   
+    var Idexists = 0;
+    function appendrow() {
+      
+        if ($('#ItemName-0').val() != "") {
+            if ($('#QtyCommitted-0').val() == "" || ($('#QtyCommitted-0').val() == 0)) {
+                $.growl.error({ title: "Error", message: "Please Enter Quantity", size: 'large' });
+                return false;
+            }
+        }
+        else {
+            $.growl.error({ title: "Error", message: "Please Select Item", size: 'large' });
+            return false;
+        }
+
+
+        var tempDiv = $("#jq-datatables-itemPopup tbody tr:eq(0)").clone(true);
+        $("input,select,button", tempDiv).each(function (i, v) {
+          
+            var actid = $(v).attr("id");
+            // alert(actid)
+            var spid = actid.split("-");
+            var stringid = spid[0];
+            var id = stringid + "-" + (index + 1);
+            //var id = actid + "-" + (index + 1);
+
+            if (actid == "hditemtId-0") {
+
+                var name = "ListEstimateitems[" + (index + 1) + "].ItemId";
+            }
+            else if (actid == "QtyCommitted-0") {
+                var name = "ListEstimateitems[" + (index + 1) + "].Quantity";
+            }
+            else if (actid == "hdInvoiceItemId-0") {
+                var name = "ListEstimateitems[" + (index + 1) + "].EstimateInvoiceItemId";
+                var itemobj = document.getElementById(actid).value;
+            }
+            else if (actid == "ItemName-0") {
+                var name = "ListEstimateitems[" + (index + 1) + "].ItemName";
+            }
+            else if (actid == "ItemCode-0") {
+                var name = "ListEstimateitems[" + (index + 1) + "].ItemCode";
+            }
+            else if (actid == "ItemTotal-0") {
+                var name = "ListEstimateitems[" + (index + 1) + "].ItemTotal";
+            }
+            else if (actid == "RateperUnit-0") {
+                var name = "ListEstimateitems[" + (index + 1) + "].RateperUnit";
+            }
+            //else var name = "listinvoiceitems[" + (index + 1) + "]." + actid;
+
+            $(v).attr("id", id);
+            $(v).attr("Name", name);
+
+            if ($(v).is("button")) {
+               
+                var btnTd = $(v).find("button");
+                $(btnTd).text("Delete");
+
+                $(btnTd).bind("click", function () {
+
+                    $(this).closest("tr").hide();
+                })
+            }
+
+        });
+        var tempDiv1 = $("#jq-datatables-itemPopup tbody tr:eq(0)");
+        $('input:hidden', tempDiv1).each(function (i, v) {
+            var actid = $(v).attr("id");
+            document.getElementById(actid).value = 0;
+        });
+        $("input:text", tempDiv1).each(function (i, v) {
+          
+            var actidtxt = $(v).attr("id");
+
+            document.getElementById(actidtxt).value = " ";
+            var itemobj = document.getElementById(actidtxt).value;
+        });
+        document.getElementById('QtyCommitted-0').value = " ";
+        var qtyid = document.getElementById('QtyCommitted-0').value;
+        //alert("qtyid - " + qtyid);
+        //var Qunatityid =$(tempDiv1).find(id='QtyCommitted-0').id;
+        //alert("Qunatityid--" + Qunatityid);
+
+        var btnTd = $(tempDiv).find("button");
+        $(btnTd).text("Delete");
+        var actid1 = $(btnTd).attr("id");
+
+        var id = actid1 + "-" + (index + 1);
+        var name = "ListEstimateitems[" + index + 1 + "]";
+        var cls = 'btn btn-flat btn-labeled btn-primary btn-label icon fa fa-trash-o';
+
+        $(btnTd).attr("id", id);
+        $(btnTd).attr("Name", name);
+        // $(btnTd).attr("Class", cls);
+        $(btnTd).removeAttr("onclick");
+        $(btnTd).bind("click", function () {
+           
+            //alert("Start");
+            $("input,select,button", tempDiv).each(function (i, v) {
+                var actids = $(v).attr("id");
+                //alert(actids);
+               
+                var spid = actids.split("-");
+                var stringid = spid[0];
+                //alert(stringid);
+
+                if (stringid == "hditemId") {
+                    actids = "ItemId";
+                    document.getElementById(actids).value = 0;
+                }
+                else if (stringid == "hdInvoiceItemId") {
+                    // alert("actids : " + actids)
+                    var iteminvoiceval = document.getElementById(actids).value;
+                    //alert("iteminvoiceval : " + iteminvoiceval)
+                }
+                else if (stringid == "ItemName") {
+                    document.getElementById(actids).value = "DeletedRow";
+                }
+                else if (stringid == "ItemTotal") {
+                    document.getElementById(actids).value = "";
+                }
+                else if (stringid == "QtyCommitted") {
+
+                    document.getElementById(actids).value = " ";
+                }
+              
+               
+
+            });
+          
+            calculateSum();
+
+            $(this).closest("tr").hide();           
+            r--;
+            
+        });
+       
+
+
+        $('#ItemCode-0').val('');
+        $('#QtyCommitted-0').val('');
+        $('#RateperUnit-0').val('');
+        $('#ItemTotal-0').val('');
+        $('#ItemName').val('');
+        $('#hdInvoiceItemId').val('');
+
+        // hditemtId
+        tempDiv.insertAfter("#jq-datatables-itemPopup tbody tr:last");
+
+        index++;
+        r++;
+       // alert("Add R value: "+ r);
+        //var tempDivfirst = $("#jq-datatables-itemPopup tbody tr:eq(0)").clone();
+
+        //tempDivfirst.find('input:hidden').val('')
+
+
+    }
+
+
+
+    function deleterow(obj) {
+      
+        var btnid = obj.id;
+
+        var spid = btnid.split("-");
+        var numid = spid[1];
+        var itemcode = "ItemCode-" + numid;
+        var hdInvoiceItemId = "hdInvoiceItemId-" + numid;
+        var ItemTotal = "ItemTotal-" + numid;
+        var ItemName = "ItemName-" + numid;
+        var RateperUnit = "RateperUnit-" + numid;
+        var QtyCommitted = "QtyCommitted-" + numid;
+        var hditemtId = "hditemtId-" + numid;
+        itemiddel = document.getElementById(hditemtId).value;
+        for (i = CheckItems.length; i--;) {
+            if (CheckItems[i] === itemiddel) {
+                CheckItems.splice($.inArray(itemiddel, CheckItems), 1);
+            }
+        }
+
+
+        document.getElementById(hditemtId).value = 0;
+        document.getElementById(ItemName).value = "DeletedRow";
+        var itname = document.getElementById(ItemName).value;
+        document.getElementById(RateperUnit).value = "";
+        document.getElementById(ItemTotal).value = "";
+
+        document.getElementById(ItemTotal).value = "";
+        document.getElementById(QtyCommitted).value = "";
+
+        var btid = '#' + btnid;
+        calculateSum();
+
+        $(btid).closest("tr").hide();       
+        r--;
+       
+    }
+
+    $(document).ready(function () {
+        calculateSum();
+        //$('.sumtot').each(function () {
+        //   // alert(this.value);
+        //    calculateSum();
+        //});
+    });
+    function calculateSum() {
+        
+        var sum = 0;
+        var taxsum = 0;
+        //iterate through each td based on class and add the values
+        $(".sumtot").each(function () {
+           
+            //add only if the value is number
+            if (!isNaN(this.value) && this.value.length != 0) {
+                sum += parseFloat(this.value);
+            }
+
+        });
+      
+        $('#txttotal').val( (sum).toFixed(2));
+        $('#txtGrdTotal').val( (sum).toFixed(2));
+
+        //$('#txttotal').val(sum);
+        //$('#txtGrdTotal').val(sum);
+
+        updateamount();
+
+
+    };
+
+
+
+    $(".calcamount").blur(function () {
+       
+        var curid = this.id;
+        //  alert(curid);
+        calamount(curid)
+    });
+
+    function calamount(curid) {
+        
+        var getidsplit = curid.split("-");
+        var getidstring = getidsplit[0];
+        //alert("curid" + curid)
+        var numid = getidsplit[1];
+        //var idspilt = getidstring.split("-");
+        //// var stringid = idspilt[0];
+        //var numid = idspilt[1];
+        var Quantity = "QtyCommitted";
+        var ratePunit = "RateperUnit";
+        var itemtotal = "ItemTotal";
+        var taxAmtper = "hidTaxPercent";
+
+        if (numid == undefined) {
+            var Quantity = Quantity+"-0";
+            var ratePunit = ratePunit+"-0";
+            var itemtotal = itemtotal+"-0";
+            var taxAmtper = itemtotal+"-0";
+            Quantity = Quantity;
+            ratePunit = ratePunit;
+            itemtotal = itemtotal;
+            taxAmtper = taxAmtper;
+        }
+        else {
+            Quantity = Quantity + "-" + numid;
+            ratePunit = ratePunit + "-" + numid;
+            itemtotal = itemtotal + "-" + numid;
+            taxAmtper = taxAmtper + "-" + numid;
+        }
+
+        var Qele = document.getElementById(Quantity);
+        var Rele = document.getElementById(ratePunit);
+        var Tele = document.getElementById(itemtotal);
+        // var taxid = document.getElementById(taxAmtper);
+
+        var Qval = document.getElementById(Qele.id).value;
+        var Rval = document.getElementById(Rele.id).value;
+        var Tval = document.getElementById(Tele.id).value;
+
+        var totalprice = Qval * Rval;
+        //var taxpercent = "18%";
+        //var taxrate = 18 / 100;
+
+        //var taxamount = totalprice * taxrate;
+      
+        //document.getElementById(taxid.id).value = taxamount;(total).toFixed(2);
+        document.getElementById(Tele.id).value = totalprice;
+        //document.getElementById(Tele.id).value = (totalprice).toFixed(2);
+        calculateSum();
+    }
+
+
+
+    // show_NewitemsPopUp
+    function show_NewitemsPopUp() {      
+      
+        $('#loading').css('display', 'block');
+
+        $.ajax({
+            url: '@Url.Action("_GetItemsList", "Invoice")',
+
+            type: "GET",
+            async: false,          
+            success: function (data) {
+                if (data != null) {
+                    $('#tblitemsList').empty();
+                    $('#tblitemsList').empty().append(data);
+                }
+            },
+            error: function (n, y, p) {
+                alert("error");
+            }
+        });
+        $('#myedititemModal').modal("show");
+    }
+
+
+</script>

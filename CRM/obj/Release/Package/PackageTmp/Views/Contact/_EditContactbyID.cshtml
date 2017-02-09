@@ -1,0 +1,987 @@
+﻿@model CRMHub.ViewModel.AccountModel
+@*@model CRMHub.EntityFramework.Account*@
+<link href="~/Content/assets/css/DateTimePicker/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+@using (Html.BeginForm("updateContactDetails", "Contact", FormMethod.Post))
+{
+
+    <div class="row">
+
+        <div class="col-sm-12">
+
+
+            <div class="col-xs-12 col-sm-12 text-right text-right-sm" id="white_bg">
+
+
+                <button class="btn btn-flat btn-labeled btn-primary" id="btnSave" style=" margin:0px 3px 0px 10px;">
+                    <span class="btn-label icon fa fa-save"></span>Save
+                </button>
+
+                <a style="color: #fff; text-decoration: none; padding: 0px; font-weight: normal" class="btn btn-flat btn-labeled btn-primary" href="@Url.Action("Index", "Contact" )">
+                    <span class="btn-label icon fa fa-backward" style="margin-right:6px;"> </span>
+                    Back
+                </a>
+
+            </div>
+        </div>
+
+
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel-group" id="accordion-example">
+                <!-- / .panel -->
+                <div class="panel">
+                    <div class="panel-heading">
+                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion-example"
+                           href="#collapse2">Contact Detail</a>
+                    </div>
+                    <!-- / .panel-heading -->
+                    <div id="collapse2" class="panel-collapse collapse in" style="height: auto;">
+                        <div class="panel-body">
+                            <div class="col-sm-12 no-padding-hr">
+                                <div class="row">
+                                    @*<div class="col-sm-3">
+                                        <div class="form-group no-margin-hr">
+                                            <label class="control-label">Lead Owner :</label>
+                                            <div class="input-group">
+                                                @Html.TextBoxFor(m => m.AccountObj.Ownership, new { @class = "form-control input-sm", @id = "txtOwnerShip", @readonly = false })
+                                                @Html.HiddenFor(m => m.AccountObj.Ownership, new { @id = "txtOwnerShip" })
+                                                @Html.HiddenFor(m => m.AccountObj.OwnerID, new { @id = "txtOwnerid" })
+                                                <span class="input-group-addon" type=" button" style="cursor:pointer;" onclick="return show_UsersPopUp(750, 450);">
+                                                    <i class="fa fa-search"></i>
+                                                </span>
+                                            </div>                                          
+                                        </div>
+                                    </div>*@
+
+
+
+                                    @if (Model.AccountObj.RoleID == 1)
+                                    {
+                                        <div class="col-sm-3">
+                                            <div class="form-group no-margin-hr">
+                                                <label class="control-label">Contact&nbsp;Owner&nbsp;:</label>
+                                                <div class="input-group">
+                                                    @Html.TextBoxFor(m => m.AccountObj.Ownership, new { @class = "form-control input-sm", @id = "txtOwnerShip", @readonly = false })
+                                                    @Html.HiddenFor(m => m.AccountObj.Ownership, new { @id = "txtOwnerShip" })
+                                                    @Html.HiddenFor(m => m.AccountObj.OwnerID, new { @id = "txtOwnerid" })
+                                                    <span class="input-group-addon" type=" button" style="cursor:pointer;" onclick="return show_UsersPopUp(750, 450);">
+                                                        <i class="fa fa-search"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="col-sm-3">
+                                            <div class="form-group no-margin-hr">
+                                                <label class="control-label">Contact&nbsp;Owner&nbsp;:</label>
+                                                @Html.TextBoxFor(m => m.AccountObj.Ownership, new { @class = "form-control input-sm", @id = "txtOwnerShip", @readonly = false })
+                                                @Html.HiddenFor(m => m.AccountObj.Ownership, new { @id = "txtOwnerShip" })
+                                                @Html.HiddenFor(m => m.AccountObj.OwnerID, new { @id = "txtOwnerid" })
+                                            </div>
+                                        </div>
+                                    }
+
+
+
+
+
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group no-margin-hr">
+                                            <label class="control-label">Company Name :<span style="color: red">*</span></label>
+
+                                            <div class="input-group">
+
+                                                @Html.TextBoxFor(m => m.AccountObj.CompanyName, new { @class = "form-control input-sm", @id = "txtAccountName", @validate = "Required", @data_val_required = "Company Name", @readonly = false })
+                                                @Html.HiddenFor(m => m.AccountObj.CompanyName, new { @id = "txtAccountName" })
+                                                <span class="input-group-addon" type=" button" style="cursor:pointer;" onclick="return show_NewAccountPopUp(750, 450);">
+                                                    <i class="fa fa-search"></i>
+                                                </span>
+                                                @Html.HiddenFor(m => m.AccountObj.CompanyID, new { @id = "txtParentAccountid" })
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    @Html.HiddenFor(m => m.AccountObj.AccountTypeId, new { @id = "txtAccounttype" })
+                                    @Html.HiddenFor(m => m.AccountObj.ID, new { @id = "txtID" })
+                                    @Html.HiddenFor(m => m.AccountObj.CreatedDate, new { @id = "txtcurdate" })
+
+                                    @Html.HiddenFor(m => m.AccountObj.CreatedBy, new { @id = "txtcreatedby" })
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group no-margin-hr">
+                                            <label class="control-label">First&nbsp;Name&nbsp;:</label>
+                                            @Html.TextBoxFor(m => m.AccountObj.FirstName, new { @class = "form-control input-sm", @id = "txtFirstname" })
+
+
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group no-margin-hr">
+                                            <label class="control-label">Last&nbsp;Name&nbsp;:<span style="color: red">*</span></label>
+                                            @Html.TextBoxFor(m => m.AccountObj.LastName, new { @class = "form-control input-sm", @id = "txtLastName", @validate = "Required", @data_val_required = "Last Name" })
+
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group no-margin-hr">
+                                            <label class="control-label">Title&nbsp;:</label>
+                                            @Html.TextBoxFor(m => m.AccountObj.Title, new { @id = "txtTitle", @class = "form-control input-sm" })
+
+
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group no-margin-hr">
+                                            <label class="control-label">Email&nbsp;:</label>
+
+                                            @Html.TextBoxFor(m => m.AccountObj.Email, new { @id = "txtEmail", @class = "form-control input-sm", @type = "email" })
+                                            @Html.ValidationMessageFor(m => m.AccountObj.Email, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group no-margin-hr">
+                                            <label class="control-label">Phone&nbsp;:</label>
+
+                                            @Html.TextBoxFor(m => m.AccountObj.Phone, new { @id = "txtPhone", @class = "form-control input-sm", onkeypress = "return onlynumbers(event,this);", @MaxLength = "20" })
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group no-margin-hr">
+                                            <label class="control-label">Fax&nbsp;:</label>
+
+                                            @Html.TextBoxFor(m => m.AccountObj.Fax, new { @id = "txtFaxNo", @class = "form-control input-sm", @onKeyPress = "return onlynumbers(event,this);", @MaxLength = "20" })
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group no-margin-hr">
+                                            <label class="control-label">Mobile&nbsp;:</label>
+                                            <span id="spnPhoneStatus"></span>
+                                            @Html.TextBoxFor(m => m.AccountObj.Mobile, new { @id = "txtMobileNo", @Class = "form-control input-sm", @onkeypress = "return onlynumbers(event,this);", @MaxLength = "20" })
+
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group no-margin-hr">
+                                            <label class="control-label">Website&nbsp;:</label>
+                                            @Html.TextBoxFor(m => m.AccountObj.Website, new { @class = "form-control input-sm", @id = "txtWebSite" })
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group no-margin-hr">
+                                            <label class="control-label">Lead&nbsp;Source&nbsp;:</label>
+
+                                            @Html.DropDownListFor(m => m.AccountObj.LeadSource, new List<SelectListItem>
+                                                                        {
+                                                                        new SelectListItem{Text="Career Builder",Value="Career"},
+                                                                        new SelectListItem{Text="Job Fair",Value="JOB"},
+                                                                        new SelectListItem{Text="Monster",Value="Monster"},
+                                                                        new SelectListItem{Text="Newspaper",Value="NewsPpr"},
+                                                                        new SelectListItem{Text="Walk In",Value="WI"},
+                                                                        new SelectListItem{Text="Word of Mouth",Value="WOM",Selected=true},
+                                                                        new SelectListItem{Text="Yellow Pages",Value="YLP"},
+                                                                        new SelectListItem{Text="Dice",Value="Dice"},
+                                                                        new SelectListItem{Text="Online Networking",Value="ON"},
+                                                                        new SelectListItem{Text="Employee Referral",Value="ER"},
+                                                                        new SelectListItem{Text="Kijiji",Value="KJ"},
+                                                                        new SelectListItem{Text="Workopolis",Value="WP"},
+                                                                        new SelectListItem{Text="HRDC",Value="HRDC"},
+                                                                        new SelectListItem{Text="Networking",Value="Networking"}
+                                                                        }, new { @class = "form-control input-sm" })
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group no-margin-hr">
+                                            <label class="control-label">Lead&nbsp;Status&nbsp;:</label>
+
+                                            @Html.DropDownListFor(m => m.AccountObj.LeadStatus, new List<SelectListItem>
+                                                                        {
+                                                                        new SelectListItem{Text="Select",Value="Select"},
+                                                                        new SelectListItem{Text="AttemptedtoContact",Value="1"},
+                                                                        new SelectListItem{Text="ContactinFuture",Value="2"},
+                                                                        new SelectListItem{Text="Contacted",Value="3"},
+                                                                        new SelectListItem{Text="LostLead",Value="3"},
+                                                                        new SelectListItem{Text="Closed",Value="4"},
+                                                                         new SelectListItem{Text="NotContacted",Value="5"},
+                                                                        new SelectListItem{Text="PreQualified",Value="6"}
+                                                                        }, new { @id = "ddlLeadStatus", @class = "form-control input-sm" })
+                                        </div>
+                                    </div>
+
+
+
+
+
+                                    <div class="row">
+                                        <div class="col-sm-12">
+
+
+
+                                            <div class="col-sm-3">
+                                                <div class="form-group no-margin-hr">
+                                                    <label class="control-label">Industry&nbsp;:</label>
+
+                                                    @Html.DropDownListFor(m => m.AccountObj.IndustryID, new List<SelectListItem>
+                                                                        {
+                                                                        new SelectListItem{Value="0",Text="Select"},
+                                                                        new SelectListItem{Value="1",Text="Agriculture"},
+                                                                        new SelectListItem{Value="2",Text="Apparel"},
+                                                                        new SelectListItem{Value="3",Text="Automotive"},
+                                                                        new SelectListItem{Value="4",Text="Banking"},
+                                                                        new SelectListItem{Value="5",Text="Biotechnology"},
+                                                                            new SelectListItem{Value="6",Text="Chemicals"},
+                                                                        new SelectListItem{Value="7",Text="Clothing"},
+                                                                        new SelectListItem{Value="8",Text="Communications"},
+                                                                        new SelectListItem{Value="9",Text="Construction"},
+                                                                        new SelectListItem{Value="10",Text="Consulting"},
+
+                                                                         new SelectListItem{Value="11",Text="Customer Service"},
+                                                                        new SelectListItem{Value="49",Text="Distribution"},
+                                                                        new SelectListItem{Value="12",Text="Education"},
+                                                                        new SelectListItem{Value="13",Text="Electronics"},
+                                                                        new SelectListItem{Value="14",Text="Energy"},
+                                                                            new SelectListItem{Value="15",Text="Engineering"},
+                                                                        new SelectListItem{Value="16",Text="Entertainment"},
+                                                                        new SelectListItem{Value="17",Text="Environmental"},
+                                                                        new SelectListItem{Value="18",Text="Finance"},
+                                                                        new SelectListItem{Value="19",Text="Food Processing"},
+
+
+                                                                         new SelectListItem{Value="20",Text="Forestry"},
+                                                                        new SelectListItem{Value="21",Text="Furniture"},
+                                                                        new SelectListItem{Value="22",Text="Government"},
+                                                                        new SelectListItem{Value="23",Text="Healthcare"},
+                                                                        new SelectListItem{Value="24",Text="Hospitality"},
+                                                                            new SelectListItem{Value="46",Text="Injection Mold"},
+                                                                        new SelectListItem{Value="25",Text="Insurance"},
+                                                                        new SelectListItem{Value="26",Text="Machinery"},
+                                                                        new SelectListItem{Value="27",Text="Manufacturing"},
+                                                                        new SelectListItem{Value="28",Text="Media"},
+
+                                                                         new SelectListItem{Value="29",Text="Medical"},
+                                                                        new SelectListItem{Value="30",Text="Metal Fabricator"},
+                                                                        new SelectListItem{Value="31",Text="Navision"},
+                                                                        new SelectListItem{Value="32",Text="Not for Profit"},
+
+                                                                        new SelectListItem{Value="45",Text="Oil &amp; Gas"},
+                                                                            new SelectListItem{Value="34",Text="Recreation"},
+                                                                        new SelectListItem{Value="35",Text="Retail"},
+                                                                        new SelectListItem{Value="36",Text="Service"},
+                                                                        new SelectListItem{Value="37",Text="Shipping"},
+                                                                        new SelectListItem{Value="38",Text="Software"},
+
+                                                                        new SelectListItem{Value="40",Text="Tech Support"},
+                                                                        new SelectListItem{Value="39",Text="Technology"},
+                                                                            new SelectListItem{Value="41",Text="Telecommunication"},
+                                                                        new SelectListItem{Value="42",Text="Transportation"},
+                                                                        new SelectListItem{Value="43",Text="Utilities"},
+                                                                        new SelectListItem{Value="48",Text="Warehousing"},
+                                                                        new SelectListItem{Value="44",Text="Wholesaler"},
+                                                                        new SelectListItem{Value="33",Text="Others"}
+                                                                        }, new { @id = "ddlLeadStage", @class = "form-control input-sm" })
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <div class="form-group no-margin-hr">
+                                                    <label class="control-label">No&nbsp;of&nbsp;Employees&nbsp;:</label>
+
+
+                                                    @Html.TextBoxFor(m => m.AccountObj.TotalEmployees, new { @id = "txtTotalEmployees", @Class = "form-control input-sm", @onkeypress = "return onlynumbers(event,this);", @MaxLength = "20" })
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-3">
+                                                <div class="form-group no-margin-hr">
+                                                    <label class="control-label">Annual&nbsp;Revenue&nbsp;($)&nbsp;:</label>
+
+                                                    @Html.TextBoxFor(m => m.AccountObj.AnnualRevenue, new { @id = "txtAnualRevenue", @class = "form-control decimalmask" })
+
+                                                </div>
+                                            </div>
+
+
+                                            <div class="col-sm-3">
+                                                <div class="form-group no-margin-hr">
+                                                    <label class="control-label">Rating&nbsp;:</label>
+
+                                                    @Html.TextBoxFor(m => m.AccountObj.Rating, new { @id = "txtAnualRevenue", @class = "form-control decimalmask" })
+
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-3">
+                                                <div class="form-group no-margin-hr">
+                                                    <label class="control-label">Email&nbsp;Opt&nbsp;Out&nbsp;:</label>
+                                                    @Html.CheckBoxFor(m => m.AccountObj.OptEmailOut)
+
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+
+
+
+
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel">
+
+                    @*<div class="panel-heading">
+                            <div class="row">
+                                 Page header, center on small screens
+                                <h6 class="col-xs-12 col-sm-12 text-left text-left-sm panel-title">
+                                    Address Detail
+                                </h6>
+                                <div class="col-xs-12 col-sm-12">
+                                    <div class="row">
+                                        <div class="pull-right">
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>*@
+                    <div class="panel-heading">
+                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion-example"
+                           href="#collapse3">Address Detail</a>
+                    </div>
+
+
+                    <!-- / .panel-heading -->
+                    <div id="collapse3" class="panel-collapse collapse" style="height: auto;">
+                        <div class="panel-body">
+                            <div class="col-sm-12 no-padding-hr">
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <div class="form-group no-margin-hr">
+                                            <span class="label label-primary label-tag">MAILING</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <div class="form-group no-margin-hr">
+                                            <label class="control-label">Address&nbsp;1 :</label>
+
+                                            @Html.TextBoxFor(m => m.AccountObj.MailingAddress, new { @id = "txtAddressMailing", @class = "form-control input-sm", @maxlength = "50" })
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group no-margin-hr">
+                                            <label class="control-label">Address&nbsp;2 :</label>
+
+                                            @Html.TextBoxFor(m => m.AccountObj.MailingAddress2, new { @id = "txtMailingStreet", @class = "form-control input-sm", @maxlength = "50" })
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group no-margin-hr">
+                                            <label class="control-label">
+                                                City :
+                                            </label>
+
+                                            @Html.TextBoxFor(m => m.AccountObj.Mailingcity, new { @id = "txtMailingCity", @class = "form-control input-sm", @maxlength = "50" })
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group no-margin-hr">
+                                            <label class="control-label" id="lblStateProvince">
+                                                State :
+                                            </label>
+
+                                            @*Dropdown list for State*@
+                                            @*@Html.TextBoxFor(m => m.MailingstateID, new { @id = "txtMailingstate", @class = "form-control input-sm", @maxlength = "50" })*@
+                                            @Html.DropDownListFor(m => m.AccountObj.MailingstateID, ViewBag.StateList as List<SelectListItem>, new { @id = "txtMailingstate", @class = "form-control input-sm", @maxlength = "50" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <div class="form-group no-margin-hr">
+                                            <label class="control-label" id="lblPostalCode" runat="server">ZipCode:</label>
+
+                                            @Html.TextBoxFor(m => m.AccountObj.Mailingzip, new { @id = "txtMailingZip", @class = "form-control zipmask", @maxlength = "9", onKeyPress = "return onKeyPressOnlyZip(event,this);", @onblur = "return ValidateZip(this);", @onfocus = "return ClickZip(this);" })
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group no-margin-hr">
+                                            <label class="control-label">
+                                                <asp:Label ID="lblMailingCountry" runat="server"></asp:Label>
+                                                Country
+                                            </label>
+                                            @*Dropdown list for Country*@
+                                            @*@Html.TextBoxFor(m => m.MailingcountryID, new { @id = "txtMailingCountry", @class = "form-control input-sm", @maxlength = "50" })*@
+                                            @Html.DropDownListFor(m => m.AccountObj.MailingcountryID, ViewBag.CountryList as List<SelectListItem>, new { @id = "txtMailingCountry", @class = "form-control input-sm", @maxlength = "50" })
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="form-group no-margin-hr">
+                                            @Html.CheckBox("CopyMailing", new { @id = "chkcopyadd" })
+                                            @Html.Label("Copy Mailing to Billing ")
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <div class="form-group no-margin-hr">
+                                            <span class="label label-primary label-tag">BILLING</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <div class="form-group no-margin-hr">
+                                            <label class="control-label">Address&nbsp;1 :</label>
+
+                                            @Html.TextBoxFor(m => m.AccountObj.BillingAddress, new { @id = "txtAddressBilling", @class = "form-control input-sm", @maxlength = "50" })
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group no-margin-hr">
+                                            <label class="control-label">Address&nbsp;2 :</label>
+
+                                            @Html.TextBoxFor(m => m.AccountObj.BillingAddress2, new { @id = "txtBillingStreet", @class = "form-control input-sm", @maxlength = "50" })
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group no-margin-hr">
+                                            <label class="control-label">
+                                                City :
+                                            </label>
+
+                                            @Html.TextBoxFor(m => m.AccountObj.Billingcity, new { @id = "txtBillingCity", @class = "form-control input-sm", @maxlength = "50" })
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group no-margin-hr">
+                                            <label class="control-label" id="lblStateProvince">
+                                                State :
+                                            </label>
+
+                                            @*Dropdown list for State*@
+                                            @*@Html.TextBoxFor(m => m.BillingstateID, new { @id = "txtBillingstate", @class = "form-control input-sm", @maxlength = "50" })*@
+                                            @Html.DropDownListFor(m => m.AccountObj.BillingstateID, ViewBag.StateList as List<SelectListItem>, new { @id = "txtBillingstate", @class = "form-control input-sm", @maxlength = "50" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <div class="form-group no-margin-hr">
+                                            <label class="control-label" id="lblPostalCode" runat="server">ZipCode:</label>
+
+                                            @Html.TextBoxFor(m => m.AccountObj.Billingzip, new { @id = "txtBillingZip", @class = "form-control zipmask", @maxlength = "9", onKeyPress = "return onKeyPressOnlyZip(event,this);", @onblur = "return ValidateZip(this);", @onfocus = "return ClickZip(this);" })
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group no-margin-hr">
+                                            <label class="control-label">
+                                                <asp:Label ID="lblMailingCountry" runat="server"></asp:Label>
+                                                Country
+                                            </label>
+                                            @*Dropdown list for Country*@
+                                            @*@Html.TextBoxFor(m => m.BillingcountryID, new { @id = "txtBillingCountry", @class = "form-control input-sm", @maxlength = "50" })*@
+                                            @Html.DropDownListFor(m => m.AccountObj.BillingcountryID, ViewBag.CountryList as List<SelectListItem>, new { @id = "txtBillingCountry", @class = "form-control input-sm", @maxlength = "50" })
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="panel">
+                    <div class="panel-heading">
+                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion-example"
+                           href="#collapse11">Social Integration</a>
+                    </div>
+                    <!-- / .panel-heading -->
+                    <div id="collapse11" class="panel-collapse collapse" style="height: auto;">
+                        <div class="panel-body">
+                            <div class="col-sm-12 no-padding-hr">
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <div class="form-group no-margin-hr">
+                                            <label class="control-label">Facebook&nbsp;User&nbsp;Name :</label>
+
+                                            @Html.TextBoxFor(m => m.AccountObj.FacebookUsername, new { @id = "txtFacebook", @class = "form-control input-sm", @maxlength = "60" })
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group no-margin-hr">
+                                            <label class="control-label">Twitter&nbsp;User&nbsp;Name :</label>
+
+                                            @Html.TextBoxFor(m => m.AccountObj.TwitterUsername, new { @id = "txtTwitter", @class = "form-control input-sm", @maxlength = "60" })
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group no-margin-hr">
+                                            <label class="control-label">Linkedin&nbsp;User&nbsp;Name :</label>
+
+                                            @Html.TextBoxFor(m => m.AccountObj.LinkedInUsername, new { @id = "txtLinkedin", @class = "form-control input-sm", @maxlength = "60" })
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group no-margin-hr">
+                                            <label class="control-label">Skype&nbsp;User&nbsp;Name :</label>
+
+                                            @Html.TextBoxFor(m => m.AccountObj.SkypeUsername, new { @id = "txtSkype", @class = "form-control input-sm", @maxlength = "60" })
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel">
+                    <div class="panel-heading">
+                        <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion-example"
+                           href="#collapse10">Description</a>
+                    </div>
+                    <!-- / .panel-heading -->
+                    <div id="collapse10" class="panel-collapse collapse">
+                        <div class="panel-body">
+
+                            @Html.TextAreaFor(m => m.AccountObj.Description, new { @id = "txtDescription", @class = "textEditor" })
+                        </div>
+                        <!-- / .panel-body -->
+                    </div>
+                    <!-- / .collapse -->
+                </div>
+
+                @*Binding Custom Fields*@
+                <div class="panel">
+
+                    <div class="panel-heading">
+                        <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion-example"
+                           href="#collapse16">Custom Fields</a>
+                    </div>
+
+
+                    <!-- / .panel-heading -->
+                    <div id="collapse16" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <div class="col-sm-12 no-padding-hr">
+                                <div class="row">
+                                    @for (int i = 0; i < Model.lstcustomVM.Count; i++)
+                                {
+                                    <div class="col-sm-4">
+                                        <div class="form-group no-margin-hr">
+                                            @Html.HiddenFor(m => m.lstcustomVM[i].Column_Type)
+                                            @Html.HiddenFor(m => m.lstcustomVM[i].FieldId)
+                                            @Html.HiddenFor(m => m.lstcustomVM[i].CValueId)
+
+
+                                            @if (Model.lstcustomVM[i].Column_Type == "textbox")
+                                            {
+                                                @Html.DisplayFor(m => m.lstcustomVM[i].Column_Label)
+                                                if (@Model.lstcustomVM[i].RequiredField == true)
+                                                {
+                                                <span style="color: red">*</span>
+                                                @Html.TextBoxFor(m => m.lstcustomVM[i].CustomFieldvalue, new { @id = "TxtCusttext" + i, @class = "form-control input-sm", @title = @Model.lstcustomVM[i].HoverText, @MaxLength = @Model.lstcustomVM[i].MaxLength, @TabIndex = "37", rows = "1", cols = "1", @validate = "Required", @data_val_required = @Model.lstcustomVM[i].Column_Label })
+                                                }
+                                                else
+                                                {
+                                                @Html.TextBoxFor(m => m.lstcustomVM[i].CustomFieldvalue, new { @id = "TxtCusttext" + i, @class = "form-control input-sm", @title = @Model.lstcustomVM[i].HoverText, @MaxLength = @Model.lstcustomVM[i].MaxLength, @TabIndex = "37", rows = "1", cols = "1" })
+                                                }
+                                            }
+
+
+                                            @if (Model.lstcustomVM[i].Column_Type == "textarea")
+                                            {
+                                                @Html.DisplayFor(m => m.lstcustomVM[i].Column_Label)
+                                                if (@Model.lstcustomVM[i].RequiredField == true)
+                                                {
+                                                <span style="color: red">*</span>
+                                                @Html.TextAreaFor(m => m.lstcustomVM[i].CustomFieldvalue, new { @id = "TxtCusttextarea" + i, @class = "form-control input-sm", @MaxLength = @Model.lstcustomVM[i].MaxLength, @TabIndex = "37", rows = "1", cols = "1", @validate = "Required", @data_val_required = @Model.lstcustomVM[i].Column_Label })
+                                                }
+                                                else
+                                                {
+                                                @Html.TextAreaFor(m => m.lstcustomVM[i].CustomFieldvalue, new { @id = "TxtCusttextarea" + i, @class = "form-control input-sm", @MaxLength = @Model.lstcustomVM[i].MaxLength, @TabIndex = "37", rows = "1", cols = "1" })
+                                                }
+
+                                            }
+                                            @if (Model.lstcustomVM[i].Column_Type == "textfield")
+                                            {
+
+
+                                                @Html.DisplayFor(m => m.lstcustomVM[i].Column_Label)
+                                                if (@Model.lstcustomVM[i].RequiredField == true)
+                                                {
+                                                <span style="color: red">*</span>
+                                                @Html.TextBoxFor(m => m.lstcustomVM[i].CustomFieldvalue, new { @id = "TAActualColumnName"+i, @class = "form-control input-sm ", @title = @Model.lstcustomVM[i].HoverText, @MaxLength = @Model.lstcustomVM[i].MaxLength, @TabIndex = "37", rows = "1", cols = "1", @validate = "Required", @data_val_required = @Model.lstcustomVM[i].Column_Label })
+                                                }
+                                                else
+                                                {
+                                                @Html.TextBoxFor(m => m.lstcustomVM[i].CustomFieldvalue, new { @id = "TAActualColumnName"+i, @class = "form-control input-sm ", @title = @Model.lstcustomVM[i].HoverText, @MaxLength = @Model.lstcustomVM[i].MaxLength, @TabIndex = "37", rows = "1", cols = "1" })
+                                                }
+
+
+                                            }
+                                            @if (Model.lstcustomVM[i].Column_Type == "date")
+                                            {
+
+                                                @Html.DisplayFor(m => m.lstcustomVM[i].Column_Label)
+                                                if (@Model.lstcustomVM[i].RequiredField == true)
+                                                {
+                                                <span style="color: red">*</span>
+                                                @Html.TextBoxFor(m => m.lstcustomVM[i].CustomFieldvalue, new { @id = "TAActualDate"+i, @class = "form-control input-sm DateP ", @placeholder = "Select Date", @title = @Model.lstcustomVM[i].HoverText, @MaxLength = @Model.lstcustomVM[i].MaxLength, @TabIndex = "37", rows = "1", cols = "1", @validate = "Required", @data_val_required = @Model.lstcustomVM[i].Column_Label })
+                                                }
+                                                else
+                                                {
+                                                @Html.TextBoxFor(m => m.lstcustomVM[i].CustomFieldvalue, new { @id = "TAActualDate"+i, @class = "form-control input-sm DateP ", @placeholder = "Select Date", @title = @Model.lstcustomVM[i].HoverText, @MaxLength = @Model.lstcustomVM[i].MaxLength, @TabIndex = "37", rows = "1", cols = "1", })
+                                                }
+
+                                            }
+                                            @if (Model.lstcustomVM[i].Column_Type == "numeric")
+                                            {
+
+                                                @Html.DisplayFor(m => m.lstcustomVM[i].Column_Label)
+
+                                                if (@Model.lstcustomVM[i].RequiredField == true)
+                                                {
+                                                <span style="color: red">*</span>
+                                                @Html.TextBoxFor(m => m.lstcustomVM[i].CustomFieldvalue, new { @id = "TAActualColumnName"+i, @class = "form-control input-sm numericCls", @title = @Model.lstcustomVM[i].HoverText, @MaxLength = @Model.lstcustomVM[i].MaxLength, @TabIndex = "37", rows = "1", cols = "1", @validate = "Required", @data_val_required = @Model.lstcustomVM[i].Column_Label })
+                                                <span id="errormsg"></span>
+                                                }
+                                                else
+                                                {
+                                                @Html.TextBoxFor(m => m.lstcustomVM[i].CustomFieldvalue, new { @id = "TAActualColumnName"+i, @class = "form-control input-sm numericCls ", @title = @Model.lstcustomVM[i].HoverText, @MaxLength = @Model.lstcustomVM[i].MaxLength, @TabIndex = "37", rows = "1", cols = "1" })
+                                                }
+                                            }
+
+                                            @if (Model.lstcustomVM[i].Column_Type == "dropdown")
+                                            {
+
+                                                @Html.DisplayFor(m => m.lstcustomVM[i].Column_Label)
+                                                if (@Model.lstcustomVM[i].RequiredField == true)
+                                                {
+                                                <span style="color: red">*</span>
+                                                @Html.DropDownListFor(m => m.lstcustomVM[i].DefaultValue, new SelectList(Model.lstcustomVM[i].lstCustomOptionsVal, "DrpValueId", "DrpValue", Model.lstcustomVM[i].DefaultValue), "Select", new { @class = "form-control input-sm", @id = "dpOptions"+i, @validate = "Required", @data_val_required = @Model.lstcustomVM[i].Column_Label, @title = @Model.lstcustomVM[i].HoverText, })
+                                                }
+                                                else
+                                                {
+                                                @Html.DropDownListFor(m => m.lstcustomVM[i].DefaultValue, new SelectList(Model.lstcustomVM[i].lstCustomOptionsVal, "DrpValueId", "DrpValue", Model.lstcustomVM[i].DefaultValue), "Select", new { @class = "form-control input-sm", @id = "dpOptions"+i, @title = @Model.lstcustomVM[i].HoverText, })
+                                                @*@Html.DropDownListFor(m => m.lstcustomVM[i].CustomFieldvalue, new SelectList(Model.lstcustomVM[i].lstCustomOptionsVal, "DrpValueId", "DrpValue", Model.lstcustomVM[i].CustomFieldvalue), new { @class = "form-control input-sm", @id = "dpOptionsEdit" })*@
+                                                }
+
+                                            }
+
+                                            @if (Model.lstcustomVM[i].Column_Type == "radiobutton")
+                                            {
+                                                @Html.DisplayFor(m => m.lstcustomVM[i].Column_Label)
+                                                if (@Model.lstcustomVM[i].RequiredField == true)
+                                                {
+
+                                                <span style="color: red">*</span>
+                                                <div>
+
+                                                    @for (int a = 0; a < Model.lstcustomVM[i].lstCustomOptionsVal.Count; a++)
+                                                        {
+                                                        @Html.HiddenFor(m => m.lstcustomVM[i].lstCustomOptionsVal[a].DrpValueId)
+                                                        @Html.HiddenFor(m => m.lstcustomVM[i].lstCustomOptionsVal[a].FieldId)
+                                                        @*@Html.RadioButtonFor(m => m.lstcustomVM[i].CustomFieldvalue, Model.lstcustomVM[i].lstCustomOptionsVal[a].DrpValueId, new { isChecked = Model.lstcustomVM[i].lstCustomOptionsVal[a].IsDefault, @validate = "Required", @data_val_required = @Model.lstcustomVM[i].Column_Label })*@
+                                                            if (Model.lstcustomVM[i].lstCustomOptionsVal[a].IsDefault == true)
+                                                            {
+                                                        @Html.RadioButtonFor(m => m.lstcustomVM[i].DefaultValue, Model.lstcustomVM[i].lstCustomOptionsVal[a].DrpValueId, new { @id = "rdOptions" + i, @checked = "checked", @title = @Model.lstcustomVM[i].HoverText, @validate = "Required", @data_val_required = @Model.lstcustomVM[i].Column_Label })
+                                                            }
+                                                            else
+                                                            {
+                                                        @Html.RadioButtonFor(m => m.lstcustomVM[i].DefaultValue, Model.lstcustomVM[i].lstCustomOptionsVal[a].DrpValueId, new { @id = "rdOptions" + i, @title = @Model.lstcustomVM[i].HoverText, @validate = "Required", @data_val_required = @Model.lstcustomVM[i].Column_Label })
+                                                            }
+                                                        @Html.DisplayFor(m => m.lstcustomVM[i].lstCustomOptionsVal[a].DrpValue, new { @class = "checkbox-inline" })
+                                                        }
+                                                </div>
+                                                }
+
+                                                else
+                                                {
+                                                <div>
+                                                    @for (int a = 0; a < Model.lstcustomVM[i].lstCustomOptionsVal.Count; a++)
+                                                        {
+                                                        @Html.HiddenFor(m => m.lstcustomVM[i].lstCustomOptionsVal[a].DrpValueId)
+                                                        @Html.HiddenFor(m => m.lstcustomVM[i].lstCustomOptionsVal[a].FieldId)
+                                                        @*@Html.RadioButtonFor(m => m.lstcustomVM[i].CustomFieldvalue, Model.lstcustomVM[i].lstCustomOptionsVal[a].DrpValueId, new { isChecked = Model.lstcustomVM[i].lstCustomOptionsVal[a].IsDefault })*@
+                                                            if (Model.lstcustomVM[i].lstCustomOptionsVal[a].IsDefault == true)
+                                                            {
+                                                        @Html.RadioButtonFor(m => m.lstcustomVM[i].DefaultValue, Model.lstcustomVM[i].lstCustomOptionsVal[a].DrpValueId, new { @id = "rdOptions" + i, @checked = "checked", @title = @Model.lstcustomVM[i].HoverText, })
+                                                            }
+                                                            else
+                                                            {
+                                                        @Html.RadioButtonFor(m => m.lstcustomVM[i].DefaultValue, Model.lstcustomVM[i].lstCustomOptionsVal[a].DrpValueId, new { @id = "rdOptions" + i, @title = @Model.lstcustomVM[i].HoverText, })
+                                                            }
+                                                        @Html.DisplayFor(m => m.lstcustomVM[i].lstCustomOptionsVal[a].DrpValue, new { @class = "checkbox-inline" })
+                                                        }
+                                                </div>
+                                                }
+                                            }
+                                        </div>
+                                    </div>
+                                }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @*End Of Binding Custom Fields*@
+
+            </div>
+        </div>
+
+    </div>
+
+}
+
+
+<div class="modal fade" id="myCompanyModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Company List</h4>
+            </div>
+            <div class="modal-body">
+
+                <div class="row">
+                    <div style="text-align:left;font-size:12px;padding:5px">Note : Click Company Name To Select Record.</div>
+                    <div class="col-sm-12">
+
+                        <div class="table-primary table-striped" id="tblCompanyList">
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="~/Scripts/DateTimePicker/bootstrap-timepicker.min.js"></script>
+<script src="~/Scripts/DateTimePicker/bootstrap-datetimepicker.min.js"></script>
+<script>
+    function show_NewAccountPopUp() {
+
+        //$('#loading').css('display', 'block');
+        $.ajax({
+           // url: "../Leads/ListParentComp",
+            url: "../Leads/GetallCompanies",
+            type: "GET",
+            async: false,
+            success: function (data) {
+
+                if (data != null) {
+
+                    $('#tblCompanyList').empty();
+                    $('#tblCompanyList').empty().append(data);
+
+                }
+            },
+            error: function () {
+
+            }
+        });
+        $('#loading').css('display', 'none');
+       // $('#myModal').modal("show");
+        $('#myCompanyModal').modal("show");
+    }
+
+
+    function show_UsersPopUp() {
+        $.ajax({
+
+            url: "../Leads/GetallUsers",
+            type: "GET",
+            async: false,
+            success: function (data) {
+
+                if (data != null) {
+
+                    $('#tblUserList').empty();
+                    $('#tblUserList').empty().append(data);
+
+                }
+            },
+            error: function () {
+
+            }
+        });
+        $('#loading').css('display', 'none');
+        $('#myUserModal').modal("show");
+    }
+    $("#btnSave").click(function (e) {
+
+        Isvalid = true;
+        return Validate(this.form);
+
+
+    });
+    $(document).ready(function () {
+
+        $('#txtPhone').bind("cut copy paste", function (e) {
+            e.preventDefault();
+        });
+
+        $('#txtMobileNo').bind("cut copy paste", function (e) {
+            e.preventDefault();
+        });
+        $('#txtFaxNo').bind("cut copy paste", function (e) {
+            e.preventDefault();
+        });
+
+
+
+
+
+
+        $(".textEditor").jqte();
+
+
+        //$(".jqte_editor").prop('contenteditable', 'false');
+
+
+        $('.DateP').datepicker({
+            format: 'mm/dd/yyyy'
+        });
+
+        $(".numericCls").keypress(function (e) {
+            //alert(e);
+            if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
+                $("#errormsg").html("Digits Only").show().fadeOut("slow");
+                return false; //
+            }
+        });
+
+        //$("#TAActualColumnName").keypress(function (e) {
+        //    if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
+        //        $("#errormsg").html("Digits Only").show().fadeOut("slow");
+        //        return false;
+        //    }
+        //});
+    });
+
+    function onlynumbers(evt) {
+        var charCode = (evt.which) ? evt.which : event.keyCode
+        if (charCode == 43 || charCode == 32 || charCode == 40 || charCode == 41)
+            return true;
+        else if (charCode > 31 && (charCode < 45 || charCode > 57 || charCode == 47 || charCode == 46))
+            return false;
+
+        return true;
+    }
+
+    $('#txtMailingstate').change(function () {
+
+        var type = "Mail";
+        GetCountrybyStateId(this, type);
+    })
+
+    $('#txtBillingstate').change(function () {
+        var type1 = "Bill";
+        GetCountrybyStateId(this, type1);
+    })
+
+    function GetCountrybyStateId(stateobj, type) {
+
+        var stateid = stateobj.value;
+        $.ajax({
+            url: '@Url.Action("GetCountrybyStateid", "Leads")',
+            type: "GET",
+            async: false,
+            data: { StateId: stateid },
+            success: function (data) {
+
+                if (type == "Mail") {
+                    $('#txtMailingCountry').val(data);
+                }
+                else {
+                    $('#txtBillingCountry').val(data);
+                }
+
+            },
+            error: function () {
+            }
+        });
+
+    }
+
+    $("#chkcopyadd").click(function (e) {
+        if ($(this).prop("checked") == true) {
+            var mailCountry = $('#txtMailingCountry').val();
+            var mailstate = $('#txtMailingstate').val();
+            var mailcity = $('#txtMailingCity').val();
+            var mailstreet = $('#txtMailingStreet').val();
+            var mailaddress = $('#txtAddressMailing').val();
+            var mailZip = $('#txtMailingZip').val();
+
+            $('#txtAddressBilling').val(mailaddress);
+            $('#txtBillingStreet').val(mailstreet);
+            $('#txtBillingCity').val(mailcity);
+            $('#txtBillingstate').val(mailstate);
+            $('#txtBillingZip').val(mailZip);
+            $('#txtBillingCountry').val(mailCountry);
+
+        }
+        else if ($(this).prop("checked") == false) {
+            $('#txtAddressBilling').val('');
+            $('#txtBillingStreet').val('');
+            $('#txtBillingCity').val('');
+            $('#txtBillingstate').val('');
+            $('#txtBillingZip').val("");
+            $('#txtBillingCountry').val("");
+        }
+
+    });
+</script>
+
+<div class="modal fade" id="myUserModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Users List</h4>
+            </div>
+            <div class="modal-body">
+
+                <div class="row">
+                    <div style="text-align:left;font-size:12px;padding:5px">Note : Click User Name To Select Record.</div>
+                    <div class="col-sm-12">
+
+                        <div class="table-primary table-striped" id="tblUserList">
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

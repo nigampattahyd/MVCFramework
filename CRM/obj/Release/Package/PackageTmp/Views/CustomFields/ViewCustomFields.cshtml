@@ -1,0 +1,333 @@
+﻿@model IEnumerable<CRMHub.EntityFramework.Custom_Manage_Master>
+    @{
+        ViewBag.Title = "Custom Fields";
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+           
+            var CreateCF = '@ViewBag.CField';
+
+            if (CreateCF != "") {
+                $.growl.notice({ title: "Success", message: "Custom Filed Details Added Successfully.", size: 'large' });
+                //$('#ErrorMessages').html('User Details Updated Successfully.');
+            }
+
+            var UpdateCF = '@ViewBag.UField';
+
+            if (UpdateCF != "") {
+                $.growl.notice({ title: "Success", message: "Custom Filed Details Updated Successfully.", size: 'large' });
+                //$('#ErrorMessages').html('User Details Updated Successfully.');
+            }
+
+
+            $('#tblCustomFields').dataTable();
+        }
+            );
+    </script>
+
+
+
+
+
+    @using (Html.BeginForm("ViewCustomFields", "CustomFields", FormMethod.Post))
+    {
+
+
+        <div id="content-wrapper">
+            <div id="CustomBootstrapAlertBox">
+            </div>
+            <div class="row">
+
+
+                <div class="panel">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <!-- Page header, center on small screens -->
+                            <h1 class="col-xs-6 col-sm-4 text-left text-left-sm panel-title"><i class="fa fa-users page-header-icon"></i>&nbsp; Custom Fields</h1>
+                            <div class="col-xs-6 col-sm-8">
+                                <div class="row">
+                                    <div class="pull-right">
+                                        @*<a href="#" class="btn btn-flat btn-labeled btn-primary" tabindex="-1"
+                                            data-toggle="modal" data-target="#uidemo-modals-alerts-info"><span class="btn-label icon fa fa-question-circle"></span>Help</a>*@
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+
+
+
+                        <div class="row">
+
+
+
+                            <div class="col-sm-3">
+                                <div class="form-group no-margin-hr">
+                                    <label class="control-label">Module</label>
+                                    @Html.DropDownList("Modules", new List<SelectListItem>
+                                                 {
+                                                        new SelectListItem{ Text="--Select--",Value="SelectAll"} ,
+                                                  new SelectListItem{ Text="Company", Value = "company" },
+                                                  new SelectListItem{ Text="Contacts", Value = "Contact" },
+                                                  //new SelectListItem{ Text="Leads", Value = "leads" },
+                                                  //new SelectListItem{ Text="Sales", Value = "sales" }
+                                                 }, new { @id = "ddlModule", @class = "form-control input-sm" })
+
+                                </div>
+                            </div>
+                            <!-- Tabs -->
+
+
+                            <div class="tab-pane" id="bs-tabdrop-tab3">
+
+                                <div class="row">
+                                    <div class="col-sm-12" id="divtohide">
+
+                                        <div class="col-sm-12" style="background-color: #f5f5f5; padding-top: 6px; padding-bottom: 6px; text-align: right;">
+
+                                            <ul class="table-nav-item">
+                                                <li class="btn btn-flat btn-labeled btn-primary" id="btnmargin_top">
+
+                                                    <a style="color: #fff; text-decoration: none; padding: 0px; font-weight: normal" id="DeleteCompanies" onclick="deleteSelectedCustomfield()">
+                                                        <span class="btn-label icon  fa  fa-trash-o" style="margin-right:6px;"> </span>
+                                                        Delete
+                                                    </a>
+                                                </li>
+                                                <li class="btn btn-flat btn-labeled btn-primary" id="btnmargin_top">
+                                                    <a style="color: #fff; text-decoration: none; padding: 0px; font-weight: normal" id="AddNewField" href="@Url.Action("AddEditCustomFields", "CustomFields")">
+                                                        <span class="btn-label icon fa fa-plus-circle" style="margin-right:6px; "></span>
+                                                        Add New
+                                                    </a>
+
+                                                </li>
+
+                                                <li class="btn btn-flat btn-labeled btn-primary" id="btnmargin_top">
+
+                                                    <a style="color: #fff; text-decoration: none; padding: 0px; font-weight: normal" id="DeActivateField">
+                                                        <span class="btn-label icon fa fa-minus-circle" style="margin-right:6px; "> </span>
+                                                        In-Active
+                                                    </a>
+                                                </li>
+
+                                            </ul>
+
+
+
+
+
+                                            @*<input type="button" id="AddNewField" value="Add New" class="btn btn-flat btn-labeled btn-primary" onclick="window.location.href='@Url.Action("AddEditCustomFields", "CustomFields")'" />*@
+
+                                            @*<span class="btn btn-flat btn-labeled btn-primary">
+
+                                                        @Html.ActionLink("Add New", "AddEditCustomFields", "CustomFields", new { @id = "AddNewField", @style = "color:#fff; text-decoration:none;" })
+                                                        <span class="btn-label icon fa fa-plus-circle" style="margin-right:6px; "></span>
+
+                                                    </span>
+                                                <span class="btn btn-flat btn-labeled btn-primary">
+                                                    @Html.ActionLink("In-Active", "In-ActivateFields", "", new { @id = "DeActivateField", @style = "color:#fff; text-decoration:none;" })
+                                                    <span class="btn-label icon fa fa-minus-circle"  style="margin-right:6px; "> </span>
+                                                </span>*@
+
+
+
+                                        </div>
+
+
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-12">
+
+                                        <div class="table-primary table-striped" id="divGrid">
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div id="MdlAlert" class="modal" tabindex="-1" role="dialog" style="display: none; overflow: hidden; padding-top: 0px; width: 100%; height: 100%;">
+            <div class="modal-dialog" style="width: 99%; margin-left: 537px; margin-top: 219px;">
+                <div class="modal-content" style="width: 22%; height:15%">
+                    <div class="modal-header">
+
+                        <span style="float:right;margin-top:3px"><label id="XbtnClose">X</label></span>
+
+                        <h4 class="modal-title">In-Activate?</h4>
+
+                    </div>
+                    <div class="modal-body" style="display: inline-block; height: 73px">
+                        <p>Please Confirm to In-Activate the Field(s) </p>
+
+                    </div>
+
+                    <div class="modal-footer">
+
+
+                        <span><button id="btnCancel">Cancel</button></span>
+                        <span><button id="btnok">OK</button></span>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    }
+
+
+
+
+    <script type="text/javascript">
+
+
+        $(document).ready(function () {
+            changeModule("SelectAll");
+        });
+        $("#DeActivateField").click(function (e) {
+
+            var searchIDs = $("#tblCustomFields input:checkbox:checked").map(function () {
+                return $(this).attr("data-val-1");
+            }).get();
+            if (searchIDs.toString().length == 0) {
+                alert("Please select item(s) to In-Activate.");
+                e.preventDefault();
+                e.stopPropagation();
+            }
+            else
+                if (searchIDs.toString().length > 0) {
+                    $('#loading').css('display', 'block');
+                    $("#MdlAlert").show();
+                    e.preventDefault();
+                    e.stopPropagation();
+                }
+        });
+
+        $("#btnok").click(function (e) {
+
+            e.preventDefault();
+            e.stopPropagation();
+            $('#loading').css('display', 'block');
+            $("#MdlAlert").hide();
+            var searchIDs = $("#tblCustomFields input:checkbox:checked").map(function () {
+                return $(this).attr("data-val-1");
+            }).get();
+
+            $.ajax({
+                url: "InActivateFields",
+                type: "POST",
+                cache: "false",
+                data: { chkbxIds: searchIDs.toString() },
+                success: function (data) {
+
+                    $('#loading').css('display', 'none');
+                    $('#ConfirmModal').modal('show');
+                    if (data === true) {
+                        window.location.href = window.location.href;
+                        $.growl.notice({ title: "Success", message: "Field(s) In-Activated Successfully.", size: 'large' });
+                    }
+                    else {
+                        $.growl.notice({ title: "Fail", message: "In-Activation Failed .", size: 'large' });
+                    }
+                },
+                error: function (request, status, error) {
+                }
+            });
+        });
+
+        $("#btnCancel").click(function (e) {
+
+            e.preventDefault();
+            e.stopPropagation();
+            $('#loading').css('display', 'none');
+            $("#MdlAlert").hide();
+        });
+
+
+        $('#ddlModule').change(function () {
+            $('#loading').css('display', 'block');
+            changeModule($(this).val());
+
+        });
+
+        $("#AddNewField").click(function (e) {
+
+            if ($("#ddlModule").val() == "SelectAll") {
+                alert("Please Select Module");
+                e.preventDefault();
+            }
+            if (TempData["colcount"] != null) {
+                alert('@TempData["Message"]');
+                e.preventDefault();
+                e.stopPropagation();
+            }
+
+
+
+        });
+
+        function changeModule(selectedModule) {
+
+            $.ajax({
+                url: "PartialViewCustomFields",
+                type: 'POST',
+                data: { SelectedModule: selectedModule },
+                success: function (data) {
+
+                    if (data != null) {
+                        $('#divGrid').empty();
+                        $('#divGrid').empty().append(data);
+                        $('#loading').css('display', 'none');
+                    }
+                },
+                error: function (request, status, error) {
+
+                }
+            });
+        } function deleteCustomfield(FieldId) {
+
+            $.ajax({
+                url: "DeleteCustomfields",
+                type: "POST",
+                async: false,
+                data: { fieldid: FieldId },
+                success: function (data) {
+                },
+                error: function () {
+
+                }
+            });
+        }
+        function deleteSelectedCustomfield() {
+
+            if ($('#tblCustomFields input[name="childchk"]:checked').length > 0) {
+                var flag = confirm('You are about to delete permanently.Are you sure you want to delete these records?');
+                if (flag) {
+                    $('#tblCustomFields input[name="childchk"]:checked').each(function () {
+
+                        var id = $(this).attr('data-val-1');
+                        deleteCustomfield(id);
+                    });
+                    document.location.href = document.location.href;
+                    alert("Deleted Successfully");
+                }
+            }
+            else {
+                alert("Please select item(s) to delete.");
+            }
+        }
+
+
+    </script>

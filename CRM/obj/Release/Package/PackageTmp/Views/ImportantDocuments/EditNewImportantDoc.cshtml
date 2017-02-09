@@ -1,0 +1,233 @@
+﻿@model CRMHub.ViewModel.ImportantDocumentsModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<html>
+<head>
+   
+    <title>
+
+    </title>
+
+
+    <style>
+
+        button {
+            background: none !important;
+            border: none;
+            padding: 0 !important;
+            /*optional*/
+            font: bold;
+            color: #069;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+        .pfi-clear {
+        display: none !important;
+    }
+    </style>
+</head>
+
+
+@using (Html.BeginForm("EditNewImportantDoc", "ImportantDocuments", FormMethod.Post, new { id = "PostImpDocForm", enctype = "multipart/form-data" }))
+{
+    <body>
+       
+        <div id="content-wrapper">
+
+            <div id="CustomBootstrapAlertBox">
+            </div>
+            <div class="row">
+                
+                    <div class="panel">
+
+                        <div class="panel-heading">
+                            <div class="row">
+                                <!-- Page header, center on small screens -->
+                                <h1 class="col-xs-6 col-sm-4 text-left text-left-sm panel-title"><i class="fa fa-users page-header-icon"></i>&nbsp;<label id="lblHeading">Important Document Details</label></h1>
+                                <div class="col-xs-6 col-sm-8">
+                                    <div class="row">
+                                        <div class="pull-right">
+                                            @*<a href="#" class="btn btn-flat btn-labeled btn-primary" tabindex="-1"
+                                               data-toggle="modal" data-target="#uidemo-modals-alerts-info"><span class="btn-label icon fa fa-question-circle"></span>Help</a>*@
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+ 
+
+                        <div class="panel-body">
+
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="row">
+                                        <div class="col-xs-12 col-sm-12 text-right text-right-sm no-margin-hr " id="divtoshow">
+                                            <button class="btn btn-flat btn-labeled btn-primary" id="btnSave" style=" margin: 0px 3px 0px 0px; background:#1b80c2 !important; text-decoration:none;">
+                                                <span class="btn-label icon fa fa-save"></span>Save
+                                            </button>
+
+                                            @*<span class="btn btn-flat btn-labeled btn-primary">
+                                                @Html.ActionLink("Back", "ViewImportantDocuments", "ImportantDocuments", new { @id = "LnkBack", @style = "color:#fff; text-decoration:none;" })<span class="btn-label icon fa fa-backward" style="margin-right:6px; "> </span>
+                                            </span>*@
+                                            <a style="color: #fff; text-decoration: none; padding: 0px; font-weight: normal" class="btn btn-flat btn-labeled btn-primary" href="@Url.Action("ViewImportantDocuments", "ImportantDocuments")">
+                                                <span class="btn-label icon fa fa-backward" style="margin-right:6px;"> </span>
+                                                Back
+                                            </a>
+                                        </div>
+
+                                    </div>
+
+                            <div class="row">
+                                <div class="panel">
+
+                                    <div class="panel-body">
+                                        <div class="row">
+
+
+                                            <!-- Tabs -->
+                                            <div class=" tab-pane" id="ImpDocsCreate">
+
+                                                <div class="row">
+                                                    <asp:Label ID="lblmessage" runat="server" Visible="false"></asp:Label>
+                                                    <div class="col-sm-4">
+                                                        <div class="form-group no-margin-hr">
+                                                            <label class="control-label">Document Name :</label>
+                                                            <span style="color:red">*</span>
+                                                            @Html.TextBoxFor(m => m.impDocsEntity.DocName, new { @id = "txtDocName", @class = "form-control input-sm", @maxlength = "50" })
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-sm-4">
+                                                        <div class="form-group no-margin-hr">
+                                                            <label class="control-label">Document Description :</label>
+
+                                                            @Html.TextBoxFor(m => m.impDocsEntity.DocDescription, new { @id = "txtDocDesc", @class = "form-control input-sm", @maxlength = "50", })
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-sm-4">
+                                                        <div class="form-group no-margin-hr">
+                                                            <label class="control-label">Document File :</label>
+                                                            <span style="color:red">*</span>
+                                                          
+                                                            <script>
+                                                                init.push(function () {
+                                                                    $('.styled-finputs-example').pixelFileInput({ placeholder: 'No file selected...' });
+                                                                })
+                                                            </script>
+                                                            <input type="file" name="uploadFile" id="uploadimpdoc" class="styled-finputs-example">
+
+
+                                                            @Html.TextBoxFor(m => m.impDocsEntity.DocFileNameOriginal, new { @id = "txtDocFileName", @readonly = "true" })
+                                                       
+
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-sm-4">
+                                                        <div class="form-group no-margin-hr">
+                                                            <label class="control-label">Share to Office:</label>
+                                                            @Html.DropDownListFor(model => model.impDocsEntity.DocShareToOffice, new SelectList(Model.branchList, "branchid", "branchName"), new { @class = "form-control", @id = "ddlBranches" })
+
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-sm-4">
+                                                        <div class="form-group no-margin-hr">
+                                                            <label class="control-label">Share to User Role :</label>
+                                                            @Html.DropDownListFor(model => model.impDocsEntity.DocShareToUser, new SelectList(Model.rolesList, "roleid", "roleName"), new { @class = "form-control", @id = "ddlRoles" })
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-sm-4">
+                                                        <div class="form-group no-margin-hr">
+                                                            <label class="control-label">Status :</label>
+                                                            @Html.DropDownListFor(m => m.impDocsEntity.IsActive, new List<SelectListItem>
+                                                     {
+                                                      new SelectListItem{ Text="Active", Value = "True" },
+                                                      new SelectListItem{ Text="InActive", Value = "False" }
+                                                     }, new { @id = "ddlActive", @class = "form-control input-sm" })
+
+
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="clearfix"></div>
+                                                    <div class="col-sm-13" id="filter"></div>
+                                                    @Html.HiddenFor(m => m.impDocsEntity.DocId)
+                                                    @Html.HiddenFor(m => m.impDocsEntity.DocFileNameOriginal)
+                                                    @Html.HiddenFor(m => m.impDocsEntity.DocFileName)
+
+                                                    <!-- col-sm-6 -->
+                                                    <!-- col-sm-6 -->
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div> </div>
+                    </div>
+                </div></div>
+            </div>
+        </div>
+
+    </body>
+}
+</html>
+<script language="javascript" type="text/javascript">
+    
+   
+    $(document).on("click", "#btnSave", function (e) {
+      
+        IsFormValid();
+        if (!IsFormValid())
+        {
+            e.preventDefault();
+            e.stopPropagation();
+            alert("Please Provide Complete Details");
+        }       
+    })
+
+    function IsFormValid() {
+      
+        var isValid = true;
+        if ($("#txtDocName").val() == "") {
+            $("#txtDocName").parent().addClass("state-error");
+            isValid = false;
+        } else {
+            $("#txtDocName").parent().removeClass("state-error");
+            $("#txtDocName").parent().addClass("state-success");
+        }
+       
+        if ($("#uploadimpdoc").val() == "") {
+            
+            if ($("#txtDocFileName").val() == "")
+            {
+                $("#txtDocFileName").parent().addClass("state-error");
+                isValid = false;
+            }
+            else
+            {
+                $("#txtDocFileName").parent().removeClass("state-error");
+                $("#txtDocFileName").parent().addClass("state-success");
+            }
+          
+        } else {
+            $("#uploadimpdoc").parent().removeClass("state-error");
+            $("#uploadimpdoc").parent().addClass("state-success");
+        }
+
+        return isValid;
+    }
+</script>
+
+
+
+
+

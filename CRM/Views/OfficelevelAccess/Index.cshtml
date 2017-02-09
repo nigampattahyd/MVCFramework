@@ -1,0 +1,295 @@
+﻿@model CRMHub.ViewModel.OfficeLevelAccessModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script>
+    $(document).ready(function () {
+        $("#jq-datatables-example").dataTable();
+    });
+</script>
+
+
+
+      <div id="content-wrapper">
+            <div id="CustomBootstrapAlertBox">
+            </div>
+            <div class="row">
+               
+
+                    <div class="panel">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <!-- Page header, center on small screens -->
+                                <h1 class="col-xs-6 col-sm-4 text-left text-left-sm panel-title"><i class="fa fa-users page-header-icon"></i>&nbsp; Office Level Access</h1>
+                                <div class="col-xs-6 col-sm-8">
+                                    <div class="row">
+                                        <div class="pull-right">
+                                            @*<a href="#" class="btn btn-flat btn-labeled btn-primary" tabindex="-1"
+                                               data-toggle="modal" data-target="#uidemo-modals-alerts-info"><span class="btn-label icon fa fa-question-circle"></span>Help</a>*@
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                             
+                       
+                            <div class="row">
+                             
+                                    <!-- Tabs -->
+
+
+                                    <div class="tab-pane" id="bs-tabdrop-tab3">
+
+                                        <div class="row">
+                                            <asp:Label ID="lblmessage" runat="server"  Visible="false"></asp:Label>
+                                          <div class="col-sm-3">
+                                                <div class="form-group no-margin-hr">
+                                                    <label class="control-label">Name :</label>
+                                            
+                                                    @Html.TextBoxFor(m=>m.users.FirstName, new { @id = "txtName", @class = "form-control input-sm", @maxlength = "50" })
+                                                </div>
+                                            </div>
+                                           
+                                               <div class="col-sm-3">
+                                                <div class="form-group no-margin-hr">
+                                                    <label class="control-label">Email :</label>
+                                            
+                                                    @Html.TextBoxFor(m => m.users.Email, new { @id = "txtEmail", @class = "form-control input-sm", @maxlength = "50" })
+                                                </div>
+                                            </div>
+                                          
+                                             <div class="col-sm-3">
+                                                <div class="form-group no-margin-hr">
+                                                    <label class="control-label">Level :</label>
+                                            
+                                                 @Html.DropDownListFor(m => m.users.RoleId, new SelectList(Model.lstRoles, "roleId", "roleName"), new { @class = "form-control input-sm", @id = "ddlLevels" })
+
+                                            </div>
+                                            </div>
+
+                                            <div class="col-xs-12 col-sm-3 text-right text-left-sm" id="search_btn">
+                                                <button class="btn btn-flat btn-labeled btn-primary" id="btnSearch">
+                                                    <span class="btn-label icon fa fa-search"></span>Search
+                                                </button>
+                                            </div>
+
+                                            <div class="clearfix"></div>
+                                            <div class="col-sm-13" id="filter"></div>
+
+                                            <!-- col-sm-6 -->
+                                           <!-- col-sm-6 -->
+											<div class="col-sm-12" id="divtohide">
+
+												<div class="col-sm-12" style="background-color: #f5f5f5; padding-top: 6px; padding-bottom: 6px; text-align: right;">
+													<ul class="table-nav-item">
+                             
+                                                        </li>
+                                <li>@*<asp:LinkButton ID="btnSave" runat="server" >Save</asp:LinkButton>*@
+                                    <button class="btn btn-flat btn-labeled btn-primary" id="btnSave">
+                                        <span class="btn-label icon fa fa-save"></span>Save
+                                    </button>          
+                                                        </li> 
+                              
+
+													</ul>
+												</div>
+											</div>
+                                            
+
+                                            <div class="col-sm-12 col-xs-12">
+                                                <div class="table-primary table-striped">
+                                                    <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="tblOfficelevelaccess" width="100%">
+                                                        <thead>
+                                                            <tr>
+
+                                                                <th>User ID</th>      
+                                                                <th data-class="expand">Full Name</th>                                                          
+                                                                <th data-hide="tablet,tabletlandscape,phone">Office - Texas Nurse Connection, Ltd</th>                                                                
+                                                                <th data-hide="tablet,tabletlandscape,phone">Office - About Staffing, Ltd</th>
+                                                                <th data-class="tablet,tabletlandscape,phone">Office - PSPL</th>
+                                                                <th data-hide="tablet,tabletlandscape,phone">Office - Noida</th>
+
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody></tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+
+                                
+                            </div>
+                         
+                        </div>
+                    </div>
+                
+            </div>
+        </div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        
+        BindOfficelevelgrid();
+        $('#tblOfficelevelaccess').on('length.dt', function (e, settings, len) {
+            
+            $('#loading').css('display', 'block');
+
+        });
+
+        $('#tblOfficelevelaccess').on('page.dt', function () {
+            
+            $('#loading').css('display', 'block');
+        });
+
+        $('#loading').css('display', 'none');
+
+
+    });
+
+
+    
+
+    function BindOfficelevelgrid() {
+        var responsiveHelper = undefined;
+        var breakpointDefinition = {
+            desktop:Infinity,
+            tablet: 1024,
+            tabletlandscape: 768,
+            phone: 480
+        };
+        var tableElement = $('#tblOfficelevelaccess');
+
+        tableElement.dataTable({
+            autoWidth: false,
+            preDrawCallback: function () {
+                if (!responsiveHelper) {
+                    responsiveHelper = new ResponsiveDatatablesHelper(tableElement, breakpointDefinition);
+                }
+            },
+            rowCallback: function (nRow) {
+                responsiveHelper.createExpandIcon(nRow);
+            },
+            drawCallback: function (oSettings) {
+                responsiveHelper.respond();
+            },
+            // "order": [[$("#HD_SortValue").val(), "" + $("#HD_SortDirection").val() + ""]],
+            "aLengthMenu": [[10, 25, 50], [10, 25, 50]],
+            //"iDisplayStart": parseInt($("#HD_PageIndex").val()),
+            //"iDisplayLength": parseInt($("#HD_PageSize").val()),
+            //"oSearch": { "sSearch": $("#HD_SearchString").val() },
+
+            "pagingType": "full_numbers",
+            //"processing": true,
+            "serverSide": true,
+
+            "sAjaxSource": "OfficeLevelAccess/getofficelevelacessdata",
+            "fnServerParams": function (aoData) {
+                aoData.push(
+                    { "name": "AdminName", "value": "" + $("#txtName").val() + "" },
+                    { "name": "AdminEmail", "value": "" + $("#txtEmail").val() + "" },
+                    { "name": "Levels", "value": "" + $("#ddlLevels").val() + "" }
+
+                    );
+
+            },
+            "fnServerData": function (sSource, aoData, fnCallback) {
+                $.ajax({
+                    "dataType": 'json',
+                    "contentType": "application/json; charset=utf-8",
+                    "type": "GET",
+                    "url": sSource,
+                    "data": aoData,
+                    "success":
+                                function (msg) {
+                                    //var json = jQuery.parseJSON(msg.d);
+                                    fnCallback(msg);
+                                    //$("#jq-datatables-example").show();
+                                }
+                });
+            },
+            "asStripeClasses": ['odd gradeX', 'even gradeC'],
+            "aoColumnDefs": [
+                { "targets": [0], "visible": true, "bSortable": false, "mDataProp": "UserId" },
+                 {
+                   "targets": [1], "visible": true, "bSortable": false,
+                                              "render": function (data, type, row) {
+                                                  return "<a href=\"#\" onclick=\"return OpenUsersDetail('" + row["UserId"] + "','" + row["RoleID"] + "')\">" + row["FirstName"] + "</a>";
+                                              }
+                                          },
+                {
+                                             "targets": [2], "visible": true, "bSortable": true, "mDataProp": "Office_Texas",
+                                             "render": function (data, type, row) {
+                                                 return "<input type=\"checkbox\"  id=\"chkRow_" + row["Office_Texas"] + "\"   />";
+                                             }
+                                         },
+                {
+                                             "targets": [3], "visible": true, "bSortable": true, "mDataProp": "Office_About",
+                                             "render": function (data, type, row) {
+                                                 return "<input type=\"checkbox\"  id=\"chkRow_" + row["Office_About"] + "\"   />";
+                                             }
+                                         },
+                {
+                                                "targets": [4], "visible": true, "bSortable": true, "mDataProp": "Office_PSPL",
+                                                "render": function (data, type, row) {
+                                                    return "<input type=\"checkbox\"  id=\"chkRow_" + row["Office_PSPL"] + "\"   />";
+                                                }
+                                            },
+                {
+                                               "targets": [5], "visible": true, "bSortable": true, "mDataProp": "Office_Noida",
+                                               "render": function (data, type, row) {
+                                                   return "<input type=\"checkbox\"  id=\"chkRow_" + row["Office_Noida"] + "\"   />";
+                                               }
+                                           }
+                                     ],                                       
+        }).api();
+
+        $('#tblOfficelevelaccess_wrapper .table-caption').text('');
+
+        $('#tblOfficelevelaccess_wrapper .dataTables_filter input').attr('placeholder', 'Search...');
+
+        $('#tblOfficelevelaccess').on('click', 'th input:checkbox', function () {
+        var that = this;
+        $(this).closest('table').find('tr > td:first-child input:checkbox').each(function () {
+            this.checked = that.checked;
+            $(this).closest('tr').toggleClass('selected');
+        });
+    });
+
+        $('#tblOfficelevelaccess tbody').on('click', 'tr > td:first-child input:checkbox', function () {
+        // CustomBootBoxAlertMessage($(this)[0].checked);
+        if ($(this)[0].checked)
+        { $(this).parent().parent().addClass('selected'); }
+        else { $(this).parent().parent().removeClass('selected'); }
+
+    });
+
+
+    }
+    $('#btnSearch').click(function () {
+        
+        $('#loading').css('display', 'block');
+        $("#tblOfficelevelaccess").dataTable().fnDestroy();
+        BindOfficelevelgrid();
+
+        $('#tblOfficelevelaccess').on('length.dt', function (e, settings, len) {
+            
+            $('#loading').css('display', 'block');
+        });
+
+        $('#tblOfficelevelaccess').on('page.dt', function () {
+            
+            $('#loading').css('display', 'block');
+        });
+
+    });
+    function OpenUsersDetail(userId) {
+        window.location = "OfficeLevelAccess/EditUserDetail?userId=" + userId;
+    }
+
+</script>

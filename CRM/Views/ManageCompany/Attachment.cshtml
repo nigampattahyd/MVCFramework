@@ -1,0 +1,39 @@
+﻿@using (Html.BeginForm("UploadAttachment", "ManageCompany", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="row" style="text-align:center">
+        @if (ViewBag.Download == "Download Doc")
+        {
+            <div id="div_download" style="padding: 10px;" class="col-sm-12">
+                <a id="linkResume" @*style="display:none;"*@ href="ManageCompany/Download" target="_blank">
+                    Download Existing
+                    Document
+                </a>
+            </div>
+        }
+        else
+        {
+            <div id="div_message" style="padding: 10px; color: red; text-align:left;" class="col-sm-12">
+                No Existing Document Found. Please upload one now.
+            </div>
+        }
+        <div id="div_upload" style="padding: 10px;">
+            <div class="col-sm-12 col-xs-6">
+                <input type="file" id="AttachmentImport" name="file" class="styled-finputs-example" />
+                <script>
+                    init.push(function () {
+                        $('.styled-finputs-example').pixelFileInput({ placeholder: 'No file selected...' });
+                    })
+                </script>
+                <br />
+            </div>
+            <div class="col-sm-12 col-xs-6">
+                <input type="submit" id="btnUpload" value="Upload Document" class="btn btn-primary"/>
+            </div>
+            <div> &nbsp;</div>
+            <div>
+                (Uploading Fresh Document Will Over-write Existing Document Associated With This
+                Activity)
+            </div>
+        </div>
+    </div>
+}

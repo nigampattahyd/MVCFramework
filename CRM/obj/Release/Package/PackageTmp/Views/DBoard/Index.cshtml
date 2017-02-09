@@ -1,0 +1,666 @@
+﻿@model CRMHub.ViewModel.DBoardViewModel
+@using CRM.Helper;
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+}
+
+<!-- Page Related Scripts -->
+<!-- Note: FullCalendar scripts and call must be added to header -->
+
+<link href="~/Content/AssetsNew/css/zabuto_calendar.min.css" rel="stylesheet" />
+<style>
+    .modal-open .modal {
+        padding: 0 !important;
+    }
+
+    div.zabuto_calendar .table tr.calendar-month-header th {
+        background-color: #eeeeee !important;
+    }
+
+    div.zabuto_calendar .table {
+        border: 0px solid #2dc3e8 !important;
+    }
+</style>
+
+<div class="row">
+    <div class="col-sm-7">
+        <div class="widget">
+            <div class="widget-header bordered-bottom bordered-themesecondary">
+                <i class="widget-icon fa fa-tags themesecondary"></i>
+                <span class="widget-caption themesecondary">Calendar</span>
+            </div><!--Widget Header-->
+            <div class="widget-body">
+
+                <div class="row">
+                    <div class="col-sm-5">
+                        <div id="calendar"></div>
+                    </div>
+                    <div class="col-sm-7">
+                        <div class="col-sm-12">
+                            <div class="orders-container">
+                                <div class="orders-header">
+                                    <h6 style="color:#e56100;"><i class="fa fa-calendar"></i> Event Details : <span id="todaysevents"></span></h6>
+                                </div>
+                                <ul class="orders-list">
+                                    <li class="order-item">
+                                        no events
+                                    </li>
+                                    @*<li class="order-item">
+                                            <div class="row">
+                                                <div class="col-lg-4 col-md-3 col-sm-3 col-xs-3 item-left">
+                                                    <div class="item-price">
+                                                        <span class="price">9:30 am</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-8 col-md-9 col-sm-9 col-xs-9 item-right">
+                                                    <div class="item-booker">(FM) Enlivity Corporation</div>
+                                                </div>
+                                            </div>
+                                            <a class="item-more" href="">
+                                                <i></i>
+                                            </a>
+                                        </li>*@
+                                    @*<li class="order-item">
+                                            <div class="row">
+                                                <div class="col-lg-4 col-md-3 col-sm-3 col-xs-3 item-left">
+                                                    <div class="item-price">
+                                                        <span class="price">9:30 am</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-8 col-md-9 col-sm-9 col-xs-9 item-right">
+                                                    <div class="item-booker">(FM) Enlivity Corporation</div>
+                                                </div>
+
+                                            </div>
+                                            <a class="item-more" href="">
+                                                <i></i>
+                                            </a>
+                                        </li>
+                                        <li class="order-item">
+                                            <div class="row">
+                                                <div class="col-lg-4 col-md-3 col-sm-3 col-xs-3 item-left">
+                                                    <div class="item-price">
+                                                        <span class="price">9:30 am</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-8 col-md-9 col-sm-9 col-xs-9 item-right">
+                                                    <div class="item-booker">(FM) Enlivity Corporation</div>
+                                                </div>
+
+                                            </div>
+                                            <a class="item-more" href="">
+                                                <i></i>
+                                            </a>
+                                        </li>
+                                        <li class="order-item">
+                                            <div class="row">
+                                                <div class="col-lg-4 col-md-3 col-sm-3 col-xs-3 item-left">
+                                                    <div class="item-price">
+                                                        <span class="price">9:30 am</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-8 col-md-9 col-sm-9 col-xs-9 item-right">
+                                                    <div class="item-booker">(FM) Enlivity Corporation</div>
+                                                </div>
+
+                                            </div>
+                                            <a class="item-more" href="">
+                                                <i></i>
+                                            </a>
+                                        </li>*@
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group" style="padding-top:10px; border-top:1px dashed #ccc; text-align:right; margin:0; margin-top:10px;">
+                            <a href="#" class="viewall">View All ..</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-5">
+        <div class="widget">
+            <div class="widget-header bordered-bottom bordered-themesecondary">
+                <i class="widget-icon fa fa-tags themesecondary"></i>
+                <span class="widget-caption themesecondary">Announcements</span>
+            </div><!--Widget Header-->
+            <div class="widget-body">
+
+                <div id="links">
+                    <ul style="height:220px;">
+                        <li>
+                            <a href="#">
+                                <div class="ann-brand"><i class="fa fa-star"></i></div>
+                                <div class="ann-date">Dec 13</div>
+                                <div class="ann-body">Portal Quick STart Guide+FAQs</div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <div class="ann-brand"><span>New</span></div>
+                                <div class="ann-date">Nov 13</div>
+                                <div class="ann-body">Portal Quick STart Guide+FAQs</div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <div class="ann-brand"><span>New</span></div>
+                                <div class="ann-date">Dec 3</div>
+                                <div class="ann-body">Portal Quick STart Guide+FAQs</div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <div class="ann-brand"><span>New</span></div>
+                                <div class="ann-date">Dec 19</div>
+                                <div class="ann-body">Portal Quick STart Guide+FAQs</div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <div class="ann-brand"><i class="fa fa-star"></i></div>
+                                <div class="ann-date">Dec 1</div>
+                                <div class="ann-body">Portal Quick STart Guide+FAQs</div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <div class="ann-brand"><span>New</span></div>
+                                <div class="ann-date">jun 13</div>
+                                <div class="ann-body">Portal Quick STart Guide+FAQs</div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <div class="ann-brand"><span>New</span></div>
+                                <div class="ann-date">Aug 3</div>
+                                <div class="ann-body">Portal Quick STart Guide+FAQs</div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <div class="ann-brand"><span>New</span></div>
+                                <div class="ann-date">Dec 10</div>
+                                <div class="ann-body">Portal Quick STart Guide+FAQs</div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <div class="ann-brand"><span>New</span></div>
+                                <div class="ann-date">Dec 13</div>
+                                <div class="ann-body">Portal Quick STart Guide+FAQs</div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <div class="ann-brand"><span>New</span></div>
+                                <div class="ann-date">Dec 13</div>
+                                <div class="ann-body">Portal Quick STart Guide+FAQs</div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <div class="ann-brand"><span>New</span></div>
+                                <div class="ann-date">Dec 13</div>
+                                <div class="ann-body">Portal Quick STart Guide+FAQs</div>
+                            </a>
+                        </li>
+
+                    </ul>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group" style="padding-top:10px; border-top:1px dashed #ccc; text-align:right; margin:0; margin-top:10px;">
+                            <a href="#" class="viewall">View All ..</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-8">
+        <div class="widget">
+            <div class="widget-header bordered-bottom bordered-themesecondary">
+                <i class="widget-icon fa fa-tags themesecondary"></i>
+                <span class="widget-caption themesecondary">Files</span>
+            </div><!--Widget Header-->
+            <div class="widget-body">
+                <div class="row">
+                    <div class="col-lg-7 col-sm-7 col-xs-12">
+                        <div id="jstree">
+                            <!-- in this example the tree is populated from inline HTML -->
+                            @foreach (var item in Model.lstContent)
+                            {
+                                <ul>
+                                    <li>
+                                        @item.Name
+                                        @*<ul>
+                                                <li id="child_node_1">Child node 1</li>
+                                                <li>Child node 2</li>
+                                            </ul>*@
+                                    </li>
+                                </ul>
+                            }
+
+                        </div>
+                        @*<div id="MyTree" class="tree">
+                                @{List<Content> contents = (List<Content>)Session["ssnContent"];}
+                                    @foreach (var content in contents)
+                                    {
+                                <div class="tree-folder" style="display: none;">
+                                    <div class="tree-folder-header">
+                                        <i class="fa fa-folder"></i>
+                                        <div class="tree-folder-name"></div>
+                                    </div>
+                                    <div class="tree-folder-content">
+                                    </div>
+                                    <div class="tree-loader" style="display: none;"></div>
+                                </div>
+                                }
+
+                                <div class="tree-item" style="display: none;">
+                                    <i class="tree-dot"></i>
+                                    <div class="tree-item-name"></div>
+                                </div>
+                            </div>*@
+                    </div>
+                    <div class="col-sm-5">
+                        <div class="recent-items">
+                            <h4>Recently Updated</h4>
+                            <div class="recent-items-body">
+                                <ul>
+                                    <li>
+                                        <div class="meeting-notes">Meeting Notes 12.11.14.pdf</div>
+
+                                        <div class="meeting-time">3:12pm, Fri, 12/12</div>
+                                    </li>
+                                    <li>
+                                        <div class="meeting-notes">Meeting Notes 12.11.14.pdf</div>
+
+                                        <div class="meeting-time">3:12pm, Fri, 12/12</div>
+                                    </li>
+                                    <li>
+                                        <div class="meeting-notes">Meeting Notes 12.11.14.pdf</div>
+
+                                        <div class="meeting-time">3:12pm, Fri, 12/12</div>
+                                    </li>
+                                    <li>
+                                        <div class="meeting-notes">Meeting Notes 12.11.14.pdf</div>
+
+                                        <div class="meeting-time">3:12pm, Fri, 12/12</div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group" style="padding-top:10px; border-top:1px dashed #ccc; text-align:right; margin:0; margin-top:10px;">
+                            <a href="#" class="viewall">View All ..</a>
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="widget">
+            <div class="widget-header bordered-bottom bordered-themesecondary">
+                <i class="widget-icon fa fa-tags themesecondary"></i>
+                <span class="widget-caption themesecondary">Links</span>
+            </div><!--Widget Header-->
+            <div class="widget-body ">
+                <div id="links">
+                    <ul style="height:268px;">
+                        <li><a href="#" data-toggle="tooltip" data-placement="left" data-original-title="Tooltip in left">Portal Quick STart Guide+FAQs</a></li>
+                        <li><a href="#" data-toggle="tooltip" data-placement="left" data-original-title="Tooltip in left">REPORT PORTAL PROBLEMS</a></li>
+                        <li><a href="#" data-toggle="tooltip" data-placement="left" data-original-title="Tooltip in left">Mentor Directory (coming soon)</a></li>
+                        <li><a href="#" data-toggle="tooltip" data-placement="left" data-original-title="Tooltip in left">VMS Venture Profiles (coming soon)</a></li>
+                        <li><a href="#" data-toggle="tooltip" data-placement="left" data-original-title="Tooltip in left">VMS Website</a></li>
+                        <li><a href="#" data-toggle="tooltip" data-placement="left" data-original-title="Tooltip in left">Big List of Useful resources for ventures</a></li>
+                        <li><a href="#" data-toggle="tooltip" data-placement="left" data-original-title="Tooltip in left">Portal Quick STart Guide+FAQs</a></li>
+                        <li><a href="#" data-toggle="tooltip" data-placement="left" data-original-title="Tooltip in left">REPORT PORTAL PROBLEMS</a></li>
+                        <li><a href="#" data-toggle="tooltip" data-placement="left" data-original-title="Tooltip in left">Mentor Directory (coming soon)</a></li>
+                        <li><a href="#" data-toggle="tooltip" data-placement="left" data-original-title="Tooltip in left">VMS Venture Profiles (coming soon)</a></li>
+                    </ul>
+                </div>
+                <div class="form-group" style="padding-top:10px; border-top:1px dashed #ccc; text-align:right; margin:0; margin-top:10px;">
+                    <a href="#" class="viewall">View All ..</a>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="widget">
+            <div class="widget-header bordered-bottom bordered-themesecondary">
+                <i class="widget-icon fa fa-tags themesecondary"></i>
+                <span class="widget-caption themesecondary">Request Events</span>
+            </div><!--Widget Header-->
+            <div class="widget-body">
+
+                <div class="table-primary table-striped">
+                    <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="tblRecentActivities" style="width:100%;">
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Location</th>
+                                <th>Hosted By</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group" style="padding-top:10px; border-top:1px dashed #ccc; text-align:right; margin:0; margin-top:10px;">
+                            <a href="@Url.Action("getUpComingEvents", "Scheduler")" class="viewall">View All ..</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!--Small Modal Templates-->
+<div id="modal-warning" class="bootbox modal fade modal-darkorange" style="display: none; padding:0 !important;" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title" id="mySmallModalLabel">Small modal</h4>
+            </div>
+            <div class="modal-body" style="height:540px; overflow:auto;">
+                ...
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-default">Ok</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+
+
+
+<script src="~/Content/AssetsNew/js/jquery.min.js"></script>
+<script src="~/Content/AssetsNew/js/zabuto_calendar.min.js"></script>
+
+<script type="text/javascript">
+
+    var dateToday = new Date();
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth() + 1; //January is 0!
+    var yyyy = today.getFullYear();
+
+    if (dd < 10) {
+        dd = '0' + dd
+    }
+
+    if (mm < 10) {
+        mm = '0' + mm
+    }
+    today = yyyy + '-' + mm + '-' + dd;
+
+    //var eventData = [
+    //{ "date": today, "badge": false, "title": "Today's Date" },
+    //{ "date": '2017-01-27', "badge": false, "title": "Test Date" },
+    //{ "date": '2017-01-15', "badge": false, "title": "Test Date" }
+    //];
+    var eventData = [];
+    $(document).ready(function () {
+
+        $.ajax({
+            url: "dBoard/getScheduledAppointments",
+            type: "POST",
+            async: false,
+            success: function (data) {
+
+                var y = data.reduce(function (result, current) {
+                    result[current.EventDate] = result[current.EventDate] || [];
+                    result[current.EventDate].push(current);
+                    return result;
+                }, {});
+                $.each(y, function (i, item) {
+
+                    var evtDate;
+                    var evtTime = '';
+                    var dte;
+                    var title = '';
+                    if (item != undefined && item.length > 0) {
+                        var evtDate = JSON.parse(JSON.stringify(item[0].EventDate), dateTimeReviver);
+                        dte = evtDate.getFullYear() + "-" + (evtDate.getMonth().toString() + 1) + "-" + (evtDate.getDate());
+                        for (var i = 0; i < item.length; i++) {
+                            evtTime = evtTime + item[i].EventTime + ',';
+                            title = title + item[i].Title + ',';
+                        }
+                    }
+                    else {
+                        evtDate = JSON.parse(JSON.stringify(data[i].EventDate), dateTimeReviver);
+                        evtTime = data[i].EventTime;
+                        dte = evtDate.getFullYear() + "-" + (evtDate.getMonth().toString() + 1) + "-" + (evtDate.getDate());
+                        title = data[i].Title;
+                    }
+                    tmp = {
+                        'date': dte,
+                        'badge': false,
+                        'title': title + "|" + evtTime
+                    };
+                    eventData.push(tmp);
+                })
+
+                //for (var i = 0; i < data.length; i++) {
+
+                //    var evtDate = JSON.parse(JSON.stringify(data[i].EventDate), dateTimeReviver);
+                //    var evtTime = data[i].EventTime;
+                //    var dte = evtDate.getFullYear() + "-" + (evtDate.getMonth().toString() + 1) + "-" + (evtDate.getDate());
+                //    var title = data[i].Title;
+                //    tmp = {
+                //        'date': dte,
+                //        'badge': false,
+                //        'title': title + "|" + evtTime
+                //    };
+                //    eventData.push(tmp);
+                //}
+                //tmp = {
+                //    'date': today,
+                //    'badge': true,
+                //    'title': 'Todays Date'
+                //};
+                //eventData.push(tmp);
+                $("#calendar").zabuto_calendar({
+                    action: function (data) {
+
+                        var date = $("#" + this.id).data("date");
+                        var title = jQuery(this).attr('title');
+                        var splt = title.split('|');
+                        var splTitle = splt[0].split(',');
+                        var splTime = splt[1].split(',');
+                        var hasEvent = $("#" + this.id).data("hasEvent");
+                        if (hasEvent) {
+                            $("#todaysevents").html(date);
+                            var list = "";
+                            for (var i = 0; i < splTitle.length; i++) {
+                                if (splTitle[i] != "") {
+                                    list += '<li class="order-item"><div class="row"><div class="col-lg-4 col-md-3 col-sm-3 col-xs-3 item-left"><div class="item-price"><span class="price">' + splTime[i] + '</span></div></div><div class="col-lg-8 col-md-9 col-sm-9 col-xs-9 item-right"><div class="item-booker">' + splTitle[i] + '</div></div></div><a class="item-more" href=""><i></i></a></li>';
+                                }
+                            }
+                            $('.orders-list').html(list);
+                        }
+                    },
+                    action_nav: function () {
+                        //alert(this.id);
+                    },
+                    data: eventData,
+                });
+            },
+            error: function () {
+
+            }
+        });
+
+        function dateTimeReviver(key, value) {
+            var a;
+            if (typeof value === 'string') {
+                a = /\/Date\((\d*)\)\//.exec(value);
+                if (a) {
+                    return new Date(+a[1]);
+                }
+            }
+            return value;
+        }
+
+        $("#Dashboard").addClass("active");
+
+        BindRecentEvents();
+
+        $('#jstree').jstree();
+
+        (function () {
+            var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
+            var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+            Date.prototype.getMonthName = function () {
+                return months[this.getMonth()];
+            };
+            Date.prototype.getDayName = function () {
+                return days[this.getDay()];
+            };
+        })();
+
+        //var now = new Date();
+        //var day = now.getDay();
+        //var dayname = now.getDayName();
+        //var month = now.getMonthName();
+        //month = month.substring(0, 3);
+        var dateform = "Today - " + today;
+        $("#todaysevents").html(dateform);
+    });
+
+    function BindRecentEvents() {
+
+        var responsiveHelper = undefined;
+        var breakpointDefinition = {
+            desktop: Infinity,
+            tablet: 1024,
+            tabletlandscape: 768,
+            phone: 480
+        };
+        var tableElement = $('#tblRecentActivities');
+        tableElement.dataTable({
+            autoWidth: false,
+            preDrawCallback: function () {
+                if (!responsiveHelper) {
+                    responsiveHelper = new ResponsiveDatatablesHelper(tableElement, breakpointDefinition);
+                }
+            },
+            rowCallback: function (nRow) {
+                responsiveHelper.createExpandIcon(nRow);
+            },
+            drawCallback: function (oSettings) {
+                responsiveHelper.respond();
+
+            },
+            //"order": [[$("#HD_SortValue").val(), "" + $("#HD_SortDirection").val() + ""]],
+            "aLengthMenu": [[10, 25, 50, 100], [10, 25, 50, 100]],
+            //"iDisplayStart": parseInt($("#HD_PageIndex").val()),
+            //"iDisplayLength": parseInt($("#HD_PageSize").val()),   txtOwnership
+            "pagingType": "full_numbers",
+            //"processing": true,
+            "serverSide": true,
+            "bFilter": false,
+            "sAjaxSource": "DBoard/getRecentAppointments",
+            "bPaginate": false,
+            //'columnDefs': [{ 'orderable': false, 'targets': 0 }], // hide sort icon on header of first column
+            //'aaSorting': [[, 'desc']], // start to sort data in second column
+            "fnInitComplete": function () {
+                this.css("visibility", "visible");
+            },
+
+            "fnServerParams": function (aoData) {
+
+                aoData.push(
+
+                    { "name": "Keyword_RecentEvents", "value": "" }
+                    );
+            },
+            "fnServerData": function (sSource, aoData, fnCallback) {
+                $.ajax({
+                    "dataType": 'json',
+                    "contentType": "application/json; charset=utf-8",
+                    "type": "GET",
+                    "url": sSource,
+                    "data": aoData,
+                    "success":
+                                function (msg) {
+                                    fnCallback(msg);
+                                }
+                });
+            },
+            "asStripeClasses": ['odd gradeX', 'even gradeC'],
+            "aoColumnDefs": [
+                {
+                    "targets": [0], "visible": true, "bSortable": true, "mDataProp": "Title",
+                    "render": function (data, type, row) {
+                        return "<a href=\"#\" onclick=\"return OpenAppointmentDetail('" + row["ID"] + "')\">" + row["Title"] + "</a>";
+                    }
+                },
+                 { "targets": [1], "visible": true, "bSortable": true, "mDataProp": "Location" },
+               {
+                   "targets": [2], "visible": true, "bSortable": true, "mDataProp": "Hostedby"
+               }
+            ],
+
+            "fnDrawCallback": function (oSettings) {
+            }
+        }).api();
+
+        $('#tblRecentActivities tbody').on('click', 'tr.group', function () {
+
+            var tableElement = $('#tblRecentActivities').DataTable();
+            var currentOrder = tableElement.order()[0];
+            if (currentOrder[0] === 6 && currentOrder[1] === 'desc') {
+                tableElement.order([6, 'asc']).draw();
+            }
+            else {
+                tableElement.order([6, 'desc']).draw();
+            }
+        });
+    }
+    function OpenAppointmentDetail(Appointmentid) {
+        var roleid = JSON.parse('@Html.Raw(Json.Encode(ViewData["RoleId"]))');
+
+        if (roleid == "2" || roleid == "1") {
+            window.location = "Scheduler/EditVentureAppointment?Appointmentid=" + Appointmentid;
+        }
+        else if (roleid == "4") {
+            window.location = "Scheduler/EditAppointment?Appointmentid=" + Appointmentid + "&Page=DBoard";
+        }
+
+
+    }
+</script>

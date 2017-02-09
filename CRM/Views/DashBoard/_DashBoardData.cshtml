@@ -1,0 +1,540 @@
+﻿@model CRMHub.ViewModel.DashboardStatusCount
+
+<div class="col-sm-12">
+    <div class="row">
+        <div class="col-sm-6 col-xs-12 five-three five-four">
+            <div class="row">
+
+                <div class="col-sm-6 col-xs-6">
+                    <div class="small-box bg-teal">
+                        <div class="inner" style="text-align:center">
+                            <h3>
+                                @Model.CRMDashboardStatusCountlatestdetailsLst[0].Companies
+                            </h3>
+                            <p>
+                                Companies
+                            </p>
+                        </div>
+                       
+
+                    </div>
+                </div>
+
+
+                <div class="col-sm-6 col-xs-6">
+                    <div class="small-box bg-aqua">
+                        <div class="inner" style="text-align:center">
+                            <h3>
+                                @Model.CRMDashboardStatusCountlatestdetailsLst[0].IsContact
+
+
+
+                            </h3>
+                            <p>
+                                Contacts
+                            </p>
+                        </div>
+                      
+
+                    </div>
+                </div>
+               
+                <!-- end inner row -->
+            </div>
+        </div>
+        <div class="col-sm-6 col-xs-12 five-two five-one">
+            <div class="row">
+
+
+
+                <div class="col-sm-6 col-xs-6">
+                    <div class="small-box bg-green">
+                        <div class="inner" style="text-align:center">
+                            <h3>
+                                @Model.CRMDashboardStatusCountlatestdetailsLst[0].IsLeads
+
+
+
+                            </h3>
+                            <p>
+                                Leads
+                            </p>
+                        </div>
+
+
+                    </div>
+                </div>
+
+                <div class="col-sm-6 col-xs-6">
+                    <div class="small-box bg-yellow">
+                        <div class="inner" style="text-align:center">
+                            <h3>
+                                @Model.CRMDashboardStatusCountlatestdetailsLst[0].IsOpportunity
+
+
+
+                            </h3>
+                            <p>
+                                Opportunities
+                            </p>
+                        </div>
+                      
+                    </div>
+                </div><!-- end inner row -->
+
+
+
+            </div><!-- end inner row -->
+        </div>
+    </div><!-- end outer row -->
+    @*!!! Start of Implement Invoice Details Dashboard*@
+ 
+    <div class="col-sm-6 col-xs-12">
+        <div class="row">
+            <div class="panel">
+                <div class="panel-heading">
+                    <span class="panel-title">Invoice&nbsp;Overview</span>
+                </div>
+                <div class="panel-body buttons-with-margins">
+
+                    <div class="row">
+                        <div class="col-sm-3 col-xs-6">
+                            <div>
+                                <span style="color:blueviolet;font-style:oblique">@Model.CRMPaymentDetailslst[0].InvoiceSent</span>
+
+                            </div>
+                        </div>
+                        <div class="col-sm-9 col-xs-6">
+                            <div>
+                                <span style="color:blueviolet;font-style:oblique"> Invoice Posted</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-3 col-xs-6">
+                            <div>
+
+                                <span style="color:red;font-style:oblique">@Model.CRMPaymentDetailslst[0].InvoiceNotSent</span>
+
+                            </div>
+                        </div>
+                        <div class="col-sm-9 col-xs-6">
+                            <div>
+
+                                <span style="color:red;font-style:oblique"> Invoice not Posted</span>
+                            </div>
+                        </div>
+                    </div>
+                   
+                    
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="panel">
+                <div class="panel-heading">
+                    <span class="panel-title">Estimate&nbsp;Overview</span>
+                </div>
+                <div class="panel-body buttons-with-margins">
+                    <div class="row">
+                        <div class="col-sm-3 col-xs-6">
+                            <div>
+                                <span style="color:blueviolet;font-style:oblique"> @Model.CRMPaymentDetailslst[0].EstimateSent</span>
+
+                            </div>
+                        </div>
+                        <div class="col-sm-9 col-xs-6">
+                            <div>
+                                <span style="color:blueviolet;font-style:oblique"> Estimate sent to Invoice</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-3 col-xs-6">
+                            <div>
+                                <span style="color:red;font-style:oblique"> @Model.CRMPaymentDetailslst[0].EstimateNotSent</span>
+
+                            </div>
+                        </div>
+                        <div class="col-sm-9 col-xs-6">
+                            <div>
+                                <span style="color:red;font-style:oblique"> Estimate Not Sent to invoice</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    @*<div class="row">
+                        <div class="col-sm-3 col-xs-6">
+                            <div>
+                                &nbsp;
+                            </div>
+                        </div>
+                        <div class="col-sm-9 col-xs-6">
+                            <div>
+                                &nbsp;
+                            </div>
+                        </div>
+                    </div>*@
+                    @*<div class="row">
+                        <div class="col-sm-3 col-xs-6">
+                            <div>
+                                &nbsp;
+                            </div>
+                        </div>
+                        <div class="col-sm-9 col-xs-6">
+                            <div>
+                                &nbsp;
+                            </div>
+                        </div>
+                    </div>*@
+
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="panel">
+                <div class="panel-heading">
+                    <span class="panel-title">Payments&nbsp;Overview</span>
+                </div>
+                <div class="panel-body buttons-with-margins">
+
+                    <div class="row">
+                        <div class="col-sm-2 col-xs-6">
+                            <div>
+                                <span style="color:red;font-style:oblique">@Model.CRMPaymentDetailslst[0].PaymentNotInitiated</span>
+
+                            </div>
+                        </div>
+                        <div class="col-sm-10 col-xs-6">
+                            <div>
+                                <span style="color:red;font-style:oblique"> Invoice&nbsp;Payments&nbsp;not&nbsp;Initiated</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-2 col-xs-6">
+                            <div>
+                                <span style="color:green;font-style:oblique">@Model.CRMPaymentDetailslst[0].InvoicePaid</span>
+
+                            </div>
+                        </div>
+                        <div class="col-sm-10 col-xs-6">
+                            <div>
+                                <span style="color:green;font-style:oblique">Invoice&nbsp;Payments&nbsp;Total&nbsp;Received&nbsp;</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-2 col-xs-6">
+                            <div>
+                                <span style="color:maroon;font-style:oblique">@Model.CRMPaymentDetailslst[0].Invoicepartiallypaid</span>
+
+                            </div>
+                        </div>
+                        <div class="col-sm-10 col-xs-6">
+                            <div>
+                                <span style="color:maroon;font-style:oblique">Invoice&nbsp;Payments&nbsp;Partially&nbsp;Received&nbsp;</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-2 col-xs-6">
+                            <div>
+                                <span style="color:blueviolet;font-style:oblique">@Model.CRMPaymentDetailslst[0].PaymentReceivedToday</span>
+
+                            </div>
+                        </div>
+                        <div class="col-sm-10 col-xs-6">
+                            <div>
+                                <span style="color:blueviolet;font-style:oblique"> Invoice&nbsp;Payments&nbsp;Recevied&nbsp;Today</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+  
+  
+
+
+
+
+    <div class="col-sm-6 col-xs-12">
+        <div class="panel">
+            <div class="panel-heading">
+                <span class="panel-title">Activities</span>
+            </div>
+            <div id="ActivityDBoardPV">
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+</div>
+
+
+
+<div class="row">
+    @*<div class="col-sm-12 col-xs-12">
+        <div class="panel">
+            <div class="panel-heading">
+             
+
+                <span class="panel-title">Payments&nbsp;recevied&nbsp;for&nbsp;Current&nbsp;Week&nbsp;from&nbsp;&nbsp;&nbsp;</span>
+
+
+                <span style="color:red">
+                    @Html.DisplayFor(m => m.DBTitles.FromDate, new { })
+                </span>
+                <span>&nbsp;&nbsp;To&nbsp;&nbsp;</span>
+                <span style="color:red">
+                    @Html.DisplayFor(m => m.DBTitles.ToDate, new { })
+
+                </span>
+
+            </div>
+            <div class="panel-body buttons-with-margins">
+                <div id="chartContainerPayment" style="width:100%;height:300px;">A column 3D chart will load here!</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-6 col-xs-12">
+        <div class="panel">
+            <div class="panel-heading">
+                <span class="panel-title">Contacts</span>
+            </div>
+            <div class="panel-body buttons-with-margins">
+                <div id="chartContainer" style="width:100%;height:300px;">A column 3D chart will load here!</div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="col-sm-6 col-xs-12">
+        <div class="panel">
+            <div class="panel-heading">
+                <span class="panel-title">Companies</span>
+            </div>
+            <div class="panel-body buttons-with-margins">
+                <div id="chartContainer3" style="width:100%;height:300px;">A column 3D chart will load here!</div>
+            </div>
+        </div>
+    </div>*@
+</div>
+
+
+
+@*<script src="~/Content/dashboardAssets/js/fusioncharts.js"></script>
+<script src="~/Content/dashboardAssets/js/themes/fusioncharts.theme.fint.js"></script>
+<script type="text/javascript" src="//www.google.com/jsapi"></script>
+
+<script type="text/javascript">
+    google.load('visualization', '1', { packages: ['corechart'] });
+</script>
+
+<script>
+    init.push(function () {
+        $('ul.bs-tabdrop-example').tabdrop();
+    });
+</script>*@
+
+
+<script type="text/javascript">
+
+
+    $(document).ready(function () {
+        bindActivityDashBoardData();
+        //  Weeklypayment();
+
+        //$.ajax({
+        //    type: 'GET',
+        //    dataType: 'json',
+        //    contentType: 'application/json',
+        //    //url: 'DashBoard/LoadPaymentCharts',
+        //    url: 'DashBoard/GetWeeklyPaymentCharts',
+        //    success:
+        //        function (response1) {
+
+        //            var datpayment = returnpaymentdate(response1)
+        //            drawVisualizationPayments(datpayment);
+
+        //        }
+        //});
+
+
+
+        //$.ajax({
+        //    type: 'GET',
+        //    dataType: 'json',
+        //    contentType: 'application/json',
+        //    url: 'DashBoard/LoadDashboardCharts',
+        //    success:
+        //        function (response) {
+        //            //var dataOpportunity = ReturnFilterDataOpportunity(response);
+        //            //drawVisualBubble(dataOpportunity);
+        //            var dataCompanies = ReturnFilterDataCompanies(response);
+        //            drawVisualBubble(dataCompanies);
+
+        //            //var dataCompanies = ReturnFilterDataLeads(response);
+        //            //drawVisualization(dataCompanies);
+
+        //            //var dataSales = ReturnFilterDataSales(response);
+        //            //drawVisualSales(dataSales);
+
+        //            var dataContact = ReturnFilterDataContact(response);
+        //            drawVisual(dataContact);
+        //        }
+        //});
+    });
+
+    //var objdata = [];
+
+
+    //function ReturnFilterDataCompanies(response) {
+
+    //    var objdata = [];
+    //    $(response).filter(function (index, data) {
+    //        if (data.Chart == "Companies") {
+
+    //            var obj = new Object();
+    //            obj.total = data.Total;
+    //            obj.year = data.Year;
+    //            objdata.push(obj);
+    //        }
+    //    });
+    //    return objdata;
+    //}
+
+    //function ReturnFilterDataContact(response) {
+    //    var objdata = [];
+
+    //    $(response).filter(function (index, data) {
+
+    //        if (data.Chart == "Contact") {
+
+
+    //            var obj = new Object();
+    //            obj.total = data.Total;
+    //            obj.year = data.Year;
+    //            objdata.push(obj);
+    //        }
+    //    });
+    //    return objdata;
+    //}
+
+    //function drawVisual(dataValues) {
+
+    //    var data = new google.visualization.DataTable(dataValues);
+    //    data.addColumn('string', 'label');
+    //    data.addColumn('number', 'value');
+
+    //    for (var i = 0; i < dataValues.length; i++) {
+    //        //if (dataValues[i].year != '2015')
+    //        data.addRow([dataValues[i].year, dataValues[i].total]);
+    //    }
+    //    var options = {
+
+    //        //title: 'Contacts Pie Chart',
+    //        is3D: true,
+    //        pieHole: 0.4,
+    //    };
+    //    new google.visualization.PieChart(document.getElementById('chartContainer')).draw(data, options);
+    //}
+
+
+
+
+
+    //function drawVisualBubble(dataValues) {
+
+    //    var data = new google.visualization.DataTable();
+    //    data.addColumn('string', 'label');
+    //    data.addColumn('number', 'value');
+    //    for (var i = 0; i < dataValues.length; i++) {
+    //        data.addRow([dataValues[i].year, dataValues[i].total]);
+    //    }
+
+    //    var options = {
+    //        //title: 'Opportunity Donut Chart',
+    //        pieHole: 0.1,
+    //        //is3D: true,
+    //    };
+
+    //    new google.visualization.PieChart(document.getElementById('chartContainer3')).draw(data, options);
+    //}
+
+
+
+
+    //function returnpaymentdate(response1) {
+
+    //    var objdata = [];
+    //    $(response1).filter(function (index, data) {
+    //        //if (data.Chart == "Leads") {
+
+    //        var obj = new Object();
+    //        obj.AmountPaid = data.AmountPaid;
+    //        obj.DayType = data.DayType;
+    //        //obj.TotalBalance = data.TotalBalance;
+    //        //obj.PStatus = data.PStatus;
+    //        //obj.TotalInvoice = data.TotalInvoice;
+    //        objdata.push(obj);
+    //        //}
+    //    });
+    //    return objdata;
+    //}
+
+    //function drawVisualizationPayments(dataValues) {
+
+    //    var data = new google.visualization.DataTable();
+    //    data.addColumn('string', 'label');
+    //    data.addColumn('number', 'value');
+    //    // data.addColumn('number', 'amount');
+    //    for (var i = 0; i < dataValues.length; i++) {
+    //        data.addRow([dataValues[i].DayType, dataValues[i].AmountPaid]);
+    //        // data.addRow([dataValues[i].PStatus, dataValues[i].TotalBalance]);
+    //    }
+
+    //    var options = {
+    //        // title: 'Leads Column Chart',
+    //    };
+
+    //    new google.visualization.ColumnChart(document.getElementById('chartContainerPayment')).draw(data, options);
+    //}
+
+
+
+
+    function bindActivityDashBoardData() {
+        $.ajax({
+            url: '@Url.Action("_ActivityDashBoardMain", "DashBoard")',          
+            dataType: "html",
+            type: "GET",
+            async: false,         
+            success: function (response) {
+                $('#ActivityDBoardPV').empty();
+                $("#ActivityDBoardPV").html(response);
+
+            },
+            error: function (x, e) {
+
+                alert("Failed");
+                alert(x.responseText);
+
+            }
+        });
+    }
+
+
+</script>
+

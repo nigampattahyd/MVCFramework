@@ -1,0 +1,510 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="CRMClientsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Clients">
+          <Key>
+            <PropertyRef Name="ClientNumber" />
+          </Key>
+          <Property Name="ClientNumber" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ClientID" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="ConnectionString" Type="varbinary" MaxLength="500" />
+          <Property Name="ServerName" Type="varchar" MaxLength="100" />
+          <Property Name="CompanyName" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="Country" Type="varchar" MaxLength="3" />
+          <Property Name="Timesheet_Type" Type="varchar" MaxLength="100" />
+          <Property Name="Timesheet" Type="varchar" MaxLength="10" />
+          <Property Name="address1" Type="nvarchar" MaxLength="150" />
+          <Property Name="address2" Type="nvarchar" MaxLength="150" />
+          <Property Name="city" Type="char" MaxLength="50" />
+          <Property Name="companyphone" Type="nvarchar" MaxLength="12" />
+          <Property Name="fax" Type="nvarchar" MaxLength="15" />
+          <Property Name="companywebsite" Type="nvarchar" MaxLength="150" />
+          <Property Name="companylogo" Type="varchar" MaxLength="500" />
+          <Property Name="state" Type="char" MaxLength="50" />
+          <Property Name="zipcode" Type="nvarchar" MaxLength="50" />
+          <Property Name="createddate" Type="datetime" />
+          <Property Name="companytype" Type="nvarchar" MaxLength="50" />
+          <Property Name="expirydate" Type="datetime" />
+          <Property Name="active" Type="bit" />
+          <Property Name="site_type" Type="varchar" MaxLength="100" />
+          <Property Name="AttachmentUrl" Type="varchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="Custom_DbError">
+          <Key>
+            <PropertyRef Name="ErrorId" />
+          </Key>
+          <Property Name="ErrorId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ErrorNo" Type="varchar" MaxLength="20" />
+          <Property Name="ErrorSeverity" Type="varchar" MaxLength="20" />
+          <Property Name="ErrorState" Type="varchar" MaxLength="20" />
+          <Property Name="ErrorLine" Type="varchar" MaxLength="20" />
+          <Property Name="ProcedureName" Type="varchar" MaxLength="100" />
+          <Property Name="ErrorMessage" Type="varchar(max)" />
+          <Property Name="CreatedOn" Type="datetime" />
+        </EntityType>
+        <EntityType Name="ExcelImportFiles">
+          <Key>
+            <PropertyRef Name="Fileid" />
+          </Key>
+          <Property Name="Fileid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Excelfile" Type="varchar" MaxLength="150" />
+          <Property Name="Status" Type="varchar" MaxLength="100" />
+          <Property Name="Module" Type="varchar" MaxLength="100" />
+          <Property Name="Importoption" Type="varchar" MaxLength="50" />
+          <Property Name="ClientId" Type="varchar" MaxLength="150" />
+          <Property Name="UId" Type="varchar" MaxLength="200" />
+          <Property Name="ActualFName" Type="varchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="ImportHistory">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ExcelFile" Type="varchar" MaxLength="200" />
+          <Property Name="TotalRecords" Type="int" />
+          <Property Name="FailedRecords" Type="int" />
+          <Property Name="ClientId" Type="varchar" MaxLength="50" />
+          <Property Name="Filepath" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Mentor_Clients.dbo.UserMaster' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="UserMaster">
+          <Key>
+            <PropertyRef Name="Userid" />
+          </Key>
+          <Property Name="Userid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Username" Type="varchar" MaxLength="100" />
+          <Property Name="password" Type="varchar" MaxLength="100" />
+          <Property Name="Name" Type="varchar" MaxLength="100" />
+          <Property Name="Email" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <Function Name="CRM_CheckifUserExists" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Username" Type="varchar" Mode="In" />
+          <Parameter Name="password" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="CRM_Getclients" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="CRM_GetExcelfilesbasedonstatus" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Status" Type="varchar" Mode="In" />
+          <Parameter Name="Module" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="CRM_GetLogin" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Username" Type="varchar" Mode="In" />
+          <Parameter Name="Password" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="CRM_InsertClientDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ClientID" Type="varchar" Mode="In" />
+          <Parameter Name="ClientName" Type="varchar" Mode="In" />
+          <Parameter Name="companytype" Type="nvarchar" Mode="In" />
+          <Parameter Name="Country" Type="varchar" Mode="In" />
+          <Parameter Name="address1" Type="nvarchar" Mode="In" />
+          <Parameter Name="address2" Type="nvarchar" Mode="In" />
+          <Parameter Name="city" Type="char" Mode="In" />
+          <Parameter Name="companywebsite" Type="nvarchar" Mode="In" />
+          <Parameter Name="ConnectionString" Type="varbinary" Mode="In" />
+          <Parameter Name="ServerName" Type="varchar" Mode="In" />
+          <Parameter Name="CompanyLogo" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="CRM_UpdateClientDetailsByClientId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ClientID" Type="varchar" Mode="In" />
+          <Parameter Name="ClientName" Type="varchar" Mode="In" />
+          <Parameter Name="companytype" Type="nvarchar" Mode="In" />
+          <Parameter Name="Country" Type="varchar" Mode="In" />
+          <Parameter Name="address1" Type="nvarchar" Mode="In" />
+          <Parameter Name="address2" Type="nvarchar" Mode="In" />
+          <Parameter Name="city" Type="char" Mode="In" />
+          <Parameter Name="CompanyLogo" Type="varchar" Mode="In" />
+          <Parameter Name="companywebsite" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="CRM_UpdateImportExcel" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="FieldId" Type="nvarchar" Mode="In" />
+          <Parameter Name="Status" Type="varchar" Mode="In" />
+          <Parameter Name="Module" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="USP_VALIDATE_CLIENT_EXPIRY_BY_TYPE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CLIENTID" Type="varchar" Mode="In" />
+          <Parameter Name="SITE_TYPE" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="VALIDATE_CLIENT_BY_TYPE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CLIENTID" Type="varchar" Mode="In" />
+          <Parameter Name="SITE_TYPE" Type="varchar" Mode="In" />
+        </Function>
+        <EntityContainer Name="CRMClientsModelStoreContainer">
+          <EntitySet Name="Clients" EntityType="Self.Clients" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Custom_DbError" EntityType="Self.Custom_DbError" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ExcelImportFiles" EntityType="Self.ExcelImportFiles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ImportHistory" EntityType="Self.ImportHistory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserMaster" EntityType="Self.UserMaster" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [UserMaster].[Userid] AS [Userid], 
+    [UserMaster].[Username] AS [Username], 
+    [UserMaster].[password] AS [password], 
+    [UserMaster].[Name] AS [Name], 
+    [UserMaster].[Email] AS [Email]
+    FROM [dbo].[UserMaster] AS [UserMaster]</DefiningQuery>
+          </EntitySet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="CRMClientsModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="CRMMasterClientsEntities" annotation:LazyLoadingEnabled="true">
+          <FunctionImport Name="USP_VALIDATE_CLIENT_EXPIRY_BY_TYPE" ReturnType="Collection(String)">
+            <Parameter Name="CLIENTID" Mode="In" Type="String" />
+            <Parameter Name="SITE_TYPE" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="VALIDATE_CLIENT_BY_TYPE" ReturnType="Collection(CRMClientsModel.VALIDATE_CLIENT_BY_TYPE_Result)">
+            <Parameter Name="CLIENTID" Mode="In" Type="String" />
+            <Parameter Name="SITE_TYPE" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="CRM_GetLogin" ReturnType="Collection(CRMClientsModel.CRM_GetLogin_Result)">
+            <Parameter Name="Username" Mode="In" Type="String" />
+            <Parameter Name="Password" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="CRM_CheckifUserExists" ReturnType="Collection(Int32)">
+            <Parameter Name="Username" Mode="In" Type="String" />
+            <Parameter Name="password" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="CRM_Getclients" ReturnType="Collection(CRMClientsModel.CRM_Getclients_Result)" />
+          <FunctionImport Name="CRM_InsertClientDetails">
+            <Parameter Name="ClientID" Mode="In" Type="String" />
+            <Parameter Name="ClientName" Mode="In" Type="String" />
+            <Parameter Name="companytype" Mode="In" Type="String" />
+            <Parameter Name="Country" Mode="In" Type="String" />
+            <Parameter Name="address1" Mode="In" Type="String" />
+            <Parameter Name="address2" Mode="In" Type="String" />
+            <Parameter Name="city" Mode="In" Type="String" />
+            <Parameter Name="companywebsite" Mode="In" Type="String" />
+            <Parameter Name="ConnectionString" Mode="In" Type="Binary" />
+            <Parameter Name="ServerName" Mode="In" Type="String" />
+            <Parameter Name="CompanyLogo" Mode="In" Type="String" />
+          </FunctionImport>
+          <EntitySet Name="Clients" EntityType="CRMClientsModel.Client" />
+          <EntitySet Name="Custom_DbError" EntityType="CRMClientsModel.Custom_DbError" />
+          <FunctionImport Name="CRM_UpdateClientDetailsByClientId">
+            <Parameter Name="ClientID" Mode="In" Type="String" />
+            <Parameter Name="ClientName" Mode="In" Type="String" />
+            <Parameter Name="companytype" Mode="In" Type="String" />
+            <Parameter Name="Country" Mode="In" Type="String" />
+            <Parameter Name="address1" Mode="In" Type="String" />
+            <Parameter Name="address2" Mode="In" Type="String" />
+            <Parameter Name="city" Mode="In" Type="String" />
+            <Parameter Name="CompanyLogo" Mode="In" Type="String" />
+            <Parameter Name="companywebsite" Mode="In" Type="String" />
+          </FunctionImport>
+          <EntitySet Name="UserMasters" EntityType="CRMClientsModel.UserMaster" />
+          <EntitySet Name="ExcelImportFiles" EntityType="CRMClientsModel.ExcelImportFile" />
+          <EntitySet Name="ImportHistories" EntityType="CRMClientsModel.ImportHistory" />
+          <FunctionImport Name="CRM_UpdateImportExcel">
+            <Parameter Name="FieldId" Mode="In" Type="String" />
+            <Parameter Name="Status" Mode="In" Type="String" />
+            <Parameter Name="Module" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="CRM_GetExcelfilesbasedonstatus" ReturnType="Collection(CRMClientsModel.CRM_GetExcelfilesbasedonstatus_Result)">
+            <Parameter Name="Status" Mode="In" Type="String" />
+            <Parameter Name="Module" Mode="In" Type="String" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="VALIDATE_CLIENT_BY_TYPE_Result">
+          <Property Type="String" Name="CLIENTID" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="Result" Nullable="false" MaxLength="1" />
+          <Property Type="Boolean" Name="active" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="CRM_GetLogin_Result">
+          <Property Type="Int32" Name="Userid" Nullable="false" />
+          <Property Type="String" Name="Username" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="password" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Name" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Email" Nullable="true" MaxLength="100" />
+        </ComplexType>
+        <ComplexType Name="CRM_Getclients_Result">
+          <Property Type="Int64" Name="ClientNumber" Nullable="false" />
+          <Property Type="String" Name="ClientID" Nullable="false" MaxLength="100" />
+          <Property Type="Binary" Name="ConnectionString" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="ServerName" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="CompanyName" Nullable="false" MaxLength="200" />
+          <Property Type="String" Name="Country" Nullable="true" MaxLength="3" />
+          <Property Type="String" Name="Timesheet_Type" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Timesheet" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="address1" Nullable="true" MaxLength="150" />
+          <Property Type="String" Name="address2" Nullable="true" MaxLength="150" />
+          <Property Type="String" Name="city" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="companyphone" Nullable="true" MaxLength="12" />
+          <Property Type="String" Name="fax" Nullable="true" MaxLength="15" />
+          <Property Type="String" Name="companywebsite" Nullable="true" MaxLength="150" />
+          <Property Type="String" Name="companylogo" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="state" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="zipcode" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="createddate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="companytype" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="expirydate" Nullable="true" Precision="23" />
+          <Property Type="Boolean" Name="active" Nullable="true" />
+          <Property Type="String" Name="site_type" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="AttachmentUrl" Nullable="true" MaxLength="200" />
+        </ComplexType>
+        <EntityType Name="Client">
+          <Key>
+            <PropertyRef Name="ClientNumber" />
+          </Key>
+          <Property Name="ClientNumber" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ClientID" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ConnectionString" Type="Binary" MaxLength="500" FixedLength="false" />
+          <Property Name="ServerName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CompanyName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Country" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="Timesheet_Type" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Timesheet" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="address1" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="address2" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="city" Type="String" MaxLength="50" FixedLength="true" Unicode="false" />
+          <Property Name="companyphone" Type="String" MaxLength="12" FixedLength="false" Unicode="true" />
+          <Property Name="fax" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="companywebsite" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="companylogo" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="state" Type="String" MaxLength="50" FixedLength="true" Unicode="false" />
+          <Property Name="zipcode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="createddate" Type="DateTime" Precision="3" />
+          <Property Name="companytype" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="expirydate" Type="DateTime" Precision="3" />
+          <Property Name="active" Type="Boolean" />
+          <Property Name="site_type" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="AttachmentUrl" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Custom_DbError">
+          <Key>
+            <PropertyRef Name="ErrorId" />
+          </Key>
+          <Property Name="ErrorId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ErrorNo" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="ErrorSeverity" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="ErrorState" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="ErrorLine" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="ProcedureName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ErrorMessage" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedOn" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="UserMaster">
+          <Key>
+            <PropertyRef Name="Userid" />
+          </Key>
+          <Property Name="Userid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Username" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="password" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="ExcelImportFile">
+          <Key>
+            <PropertyRef Name="Fileid" />
+          </Key>
+          <Property Name="Fileid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Excelfile" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="Status" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Module" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Importoption" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ClientId" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="UId" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="ActualFName" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="ImportHistory">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ExcelFile" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="TotalRecords" Type="Int32" />
+          <Property Name="FailedRecords" Type="Int32" />
+          <Property Name="ClientId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Filepath" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <ComplexType Name="CRM_GetExcelfilesbasedonstatus_Result">
+          <Property Type="Int32" Name="Fileid" Nullable="false" />
+          <Property Type="String" Name="Excelfile" Nullable="true" MaxLength="150" />
+          <Property Type="String" Name="Status" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Module" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Importoption" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="ClientId" Nullable="true" MaxLength="150" />
+          <Property Type="String" Name="UId" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="ActualFName" Nullable="true" MaxLength="200" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="CRMClientsModelStoreContainer" CdmEntityContainer="CRMMasterClientsEntities">
+          <FunctionImportMapping FunctionImportName="USP_VALIDATE_CLIENT_EXPIRY_BY_TYPE" FunctionName="CRMClientsModel.Store.USP_VALIDATE_CLIENT_EXPIRY_BY_TYPE" />
+          <FunctionImportMapping FunctionImportName="VALIDATE_CLIENT_BY_TYPE" FunctionName="CRMClientsModel.Store.VALIDATE_CLIENT_BY_TYPE">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="CRMClientsModel.VALIDATE_CLIENT_BY_TYPE_Result">
+                <ScalarProperty Name="CLIENTID" ColumnName="CLIENTID" />
+                <ScalarProperty Name="Result" ColumnName="Result" />
+                <ScalarProperty Name="active" ColumnName="active" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="CRM_GetLogin" FunctionName="CRMClientsModel.Store.CRM_GetLogin">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="CRMClientsModel.CRM_GetLogin_Result">
+                <ScalarProperty Name="Userid" ColumnName="Userid" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="CRM_CheckifUserExists" FunctionName="CRMClientsModel.Store.CRM_CheckifUserExists" />
+          <FunctionImportMapping FunctionImportName="CRM_Getclients" FunctionName="CRMClientsModel.Store.CRM_Getclients">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="CRMClientsModel.CRM_Getclients_Result">
+                <ScalarProperty Name="ClientNumber" ColumnName="ClientNumber" />
+                <ScalarProperty Name="ClientID" ColumnName="ClientID" />
+                <ScalarProperty Name="ConnectionString" ColumnName="ConnectionString" />
+                <ScalarProperty Name="ServerName" ColumnName="ServerName" />
+                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="Timesheet_Type" ColumnName="Timesheet_Type" />
+                <ScalarProperty Name="Timesheet" ColumnName="Timesheet" />
+                <ScalarProperty Name="address1" ColumnName="address1" />
+                <ScalarProperty Name="address2" ColumnName="address2" />
+                <ScalarProperty Name="city" ColumnName="city" />
+                <ScalarProperty Name="companyphone" ColumnName="companyphone" />
+                <ScalarProperty Name="fax" ColumnName="fax" />
+                <ScalarProperty Name="companywebsite" ColumnName="companywebsite" />
+                <ScalarProperty Name="companylogo" ColumnName="companylogo" />
+                <ScalarProperty Name="state" ColumnName="state" />
+                <ScalarProperty Name="zipcode" ColumnName="zipcode" />
+                <ScalarProperty Name="createddate" ColumnName="createddate" />
+                <ScalarProperty Name="companytype" ColumnName="companytype" />
+                <ScalarProperty Name="expirydate" ColumnName="expirydate" />
+                <ScalarProperty Name="active" ColumnName="active" />
+                <ScalarProperty Name="site_type" ColumnName="site_type" />
+                <ScalarProperty Name="AttachmentUrl" ColumnName="AttachmentUrl" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="CRM_InsertClientDetails" FunctionName="CRMClientsModel.Store.CRM_InsertClientDetails" />
+          <EntitySetMapping Name="Clients">
+            <EntityTypeMapping TypeName="CRMClientsModel.Client">
+              <MappingFragment StoreEntitySet="Clients">
+                <ScalarProperty Name="AttachmentUrl" ColumnName="AttachmentUrl" />
+                <ScalarProperty Name="site_type" ColumnName="site_type" />
+                <ScalarProperty Name="active" ColumnName="active" />
+                <ScalarProperty Name="expirydate" ColumnName="expirydate" />
+                <ScalarProperty Name="companytype" ColumnName="companytype" />
+                <ScalarProperty Name="createddate" ColumnName="createddate" />
+                <ScalarProperty Name="zipcode" ColumnName="zipcode" />
+                <ScalarProperty Name="state" ColumnName="state" />
+                <ScalarProperty Name="companylogo" ColumnName="companylogo" />
+                <ScalarProperty Name="companywebsite" ColumnName="companywebsite" />
+                <ScalarProperty Name="fax" ColumnName="fax" />
+                <ScalarProperty Name="companyphone" ColumnName="companyphone" />
+                <ScalarProperty Name="city" ColumnName="city" />
+                <ScalarProperty Name="address2" ColumnName="address2" />
+                <ScalarProperty Name="address1" ColumnName="address1" />
+                <ScalarProperty Name="Timesheet" ColumnName="Timesheet" />
+                <ScalarProperty Name="Timesheet_Type" ColumnName="Timesheet_Type" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+                <ScalarProperty Name="ServerName" ColumnName="ServerName" />
+                <ScalarProperty Name="ConnectionString" ColumnName="ConnectionString" />
+                <ScalarProperty Name="ClientID" ColumnName="ClientID" />
+                <ScalarProperty Name="ClientNumber" ColumnName="ClientNumber" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Custom_DbError">
+            <EntityTypeMapping TypeName="CRMClientsModel.Custom_DbError">
+              <MappingFragment StoreEntitySet="Custom_DbError">
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="ErrorMessage" ColumnName="ErrorMessage" />
+                <ScalarProperty Name="ProcedureName" ColumnName="ProcedureName" />
+                <ScalarProperty Name="ErrorLine" ColumnName="ErrorLine" />
+                <ScalarProperty Name="ErrorState" ColumnName="ErrorState" />
+                <ScalarProperty Name="ErrorSeverity" ColumnName="ErrorSeverity" />
+                <ScalarProperty Name="ErrorNo" ColumnName="ErrorNo" />
+                <ScalarProperty Name="ErrorId" ColumnName="ErrorId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="CRM_UpdateClientDetailsByClientId" FunctionName="CRMClientsModel.Store.CRM_UpdateClientDetailsByClientId" />
+          <EntitySetMapping Name="UserMasters">
+            <EntityTypeMapping TypeName="CRMClientsModel.UserMaster">
+              <MappingFragment StoreEntitySet="UserMaster">
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Userid" ColumnName="Userid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ExcelImportFiles">
+            <EntityTypeMapping TypeName="CRMClientsModel.ExcelImportFile">
+              <MappingFragment StoreEntitySet="ExcelImportFiles">
+                <ScalarProperty Name="ActualFName" ColumnName="ActualFName" />
+                <ScalarProperty Name="UId" ColumnName="UId" />
+                <ScalarProperty Name="ClientId" ColumnName="ClientId" />
+                <ScalarProperty Name="Importoption" ColumnName="Importoption" />
+                <ScalarProperty Name="Module" ColumnName="Module" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Excelfile" ColumnName="Excelfile" />
+                <ScalarProperty Name="Fileid" ColumnName="Fileid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ImportHistories">
+            <EntityTypeMapping TypeName="CRMClientsModel.ImportHistory">
+              <MappingFragment StoreEntitySet="ImportHistory">
+                <ScalarProperty Name="Filepath" ColumnName="Filepath" />
+                <ScalarProperty Name="ClientId" ColumnName="ClientId" />
+                <ScalarProperty Name="FailedRecords" ColumnName="FailedRecords" />
+                <ScalarProperty Name="TotalRecords" ColumnName="TotalRecords" />
+                <ScalarProperty Name="ExcelFile" ColumnName="ExcelFile" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="CRM_UpdateImportExcel" FunctionName="CRMClientsModel.Store.CRM_UpdateImportExcel" />
+          <FunctionImportMapping FunctionImportName="CRM_GetExcelfilesbasedonstatus" FunctionName="CRMClientsModel.Store.CRM_GetExcelfilesbasedonstatus">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="CRMClientsModel.CRM_GetExcelfilesbasedonstatus_Result">
+                <ScalarProperty Name="Fileid" ColumnName="Fileid" />
+                <ScalarProperty Name="Excelfile" ColumnName="Excelfile" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Module" ColumnName="Module" />
+                <ScalarProperty Name="Importoption" ColumnName="Importoption" />
+                <ScalarProperty Name="ClientId" ColumnName="ClientId" />
+                <ScalarProperty Name="UId" ColumnName="UId" />
+                <ScalarProperty Name="ActualFName" ColumnName="ActualFName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,17 @@
+<div>
+	<table cellspacing="0" rules="all" border="1" style="border-collapse:collapse;">
+		<tr>
+			<th scope="col">AccountName</th><th scope="col">LeadName</th><th scope="col">Phone</th><th scope="col">Email</th><th scope="col">SalesMgr1</th><th scope="col">LeadStatus</th><th scope="col">Source</th><th scope="col">CreatedDate</th><th scope="col">ModifiedDate</th>
+		</tr><tr>
+			<td>Dave Infotech</td><td>LeadTest69</td><td>&nbsp;</td><td>&nbsp;</td><td>sadmin, sadmin</td><td>None</td><td>Word of Mouth</td><td>12/31/2014</td><td>5/4/2015</td>
+		</tr><tr>
+			<td>PriyaSharma321</td><td>LeadTest70</td><td>&nbsp;</td><td>&nbsp;</td><td>sadmin, sadmin</td><td>Attempted </td><td>Word of Mouth</td><td>12/31/2014</td><td>5/21/2015</td>
+		</tr><tr>
+			<td>IEL</td><td>LeadTest75</td><td>&nbsp;</td><td>&nbsp;</td><td>sadmin, sadmin</td><td>Attempted </td><td>Newspaper</td><td>1/5/2015</td><td>5/22/2015</td>
+		</tr><tr>
+			<td>CMC1</td><td>cmc</td><td>(123) 456-7895</td><td>pspl@gmail.com</td><td>sadmin, sadmin</td><td>None</td><td>Word of Mouth</td><td>1/9/2015</td><td>&nbsp;</td>
+		</tr><tr>
+			<td>Next Sphere</td><td>NS1</td><td>(123)456-7895</td><td>ns1@gmail.com</td><td>sadmin, sadmin</td><td>None</td><td>Word of Mouth</td><td>1/13/2015</td><td>5/4/2015</td>
+		</tr>
+	</table>
+</div>

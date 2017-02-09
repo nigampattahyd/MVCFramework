@@ -1,0 +1,320 @@
+﻿@model IEnumerable<CRMHub.EntityFramework.Client>
+    @{
+        ViewBag.Title = "GenerateScript";
+        Layout = "~/Views/Clientmaster/_LayoutClientsmaster.cshtml";
+    }
+
+
+
+
+
+    <div id="content-wrapper">
+        <div id="CustomBootstrapAlertBox">
+        </div>
+        <div class="row">
+            <div class="panel">
+                <div class="panel-heading">
+                    <div class="row">
+                        <!-- Page header, center on small screens -->
+                        <span class="col-xs-6 col-sm-4 text-left text-left-sm panel-title">&nbsp;Execute&nbsp;Script</span>
+                    </div>
+                </div>
+
+                <div class="panel-body">
+                    <div class="wizard ui-wizard-example">
+                        <div class="wizard-wrapper">
+                            <ul class="wizard-steps" style="left: 0px;">
+                                <li data-target="#wizardexamplestep1" id="wizard1" style="width: 268px; max-width: 268px; min-width: 268px;" class="active" onclick="hideWizard3    ()">
+                                    <span class="wizard-step-number">1</span>
+                                    <span class="wizard-step-caption">
+                                        Step 1
+
+                                        <span class="wizard-step-description">Upload sql script file</span>
+                                    </span>
+                                </li>
+                                <li data-target="#wizardexamplestep2" id="wizard2" style="width: 268px; max-width: 268px; min-width: 268px;">
+                                    <!-- ! Remove space between elements by dropping close angle -->
+                                    <span class="wizard-step-number">2</span>
+                                    <span class="wizard-step-caption">
+                                        Step 2
+
+                                        <span class="wizard-step-description">Select clients for script to be executed</span>
+                                    </span>
+                                </li>
+                                <li data-target="#wizardexamplestep3" id="wizard3" style="width: 268px; max-width: 268px; min-width: 268px;">
+                                    <!-- ! Remove space between elements by dropping close angle -->
+                                    <span class="wizard-step-number">3</span>
+                                    <span class="wizard-step-caption">
+                                        Step 3
+
+                                        <span class="wizard-step-description">Execute script</span>
+                                    </span>
+                                </li>
+
+                            </ul>
+                            <!-- / .wizard-steps -->
+                        </div>
+
+
+
+                        <div class="row">
+                            <div class="col-sm-12" style="background-color: #f5f5f5; padding-top: 6px; padding-bottom: 6px; text-align: right;">
+
+                                @*<div class="panel-body">*@
+
+
+
+                                @*</div>*@
+
+
+                                @*<ul class="table-nav-item">
+                                        <li class="btn btn-flat btn-labeled btn-primary" id="btnmargin_top">
+                                            <span class="btn-label icon  fa fa-pencil-square-o" style="margin-right:6px;"> </span>
+                                            <a style="color: #fff; text-decoration: none; padding: 0px; font-weight: normal" id="btnAdd" href="@Url.Action("Index","CreateClients" )">
+                                                Create
+                                            </a>
+                                        </li>
+
+                                    </ul>*@
+                            </div>
+
+
+                        </div>
+                        <div class="row" id="Genscript">
+                            <div class="col-sm-3">
+                            </div>
+                            <div class="col-sm-4" id="fleid">
+                                <div class="form-group no-margin-hr">
+                                    <label class="control-label">Upload script :</label>
+                                    <script>
+                                    init.push(function () {
+                                        $('.styled-finputs-example').pixelFileInput({ placeholder: 'No file selected...' });
+                                    })
+                                    </script>
+
+                                    <input type="file" name="file" id="uploadScript" class="styled-finputs-example">
+
+                                </div>
+                            </div>
+
+                            <div class="col-sm-4" id="exescript" style="display:none;">
+                                <div class="form-group" style="padding-top:27px;">
+                                    <label class="control-label">&nbsp;</label>
+
+
+                                    <button class="btn btn-flat btn-labeled btn-primary" id="btnSave">
+                                        <span class="btn-label icon fa fa-save"></span>
+                                        ExecuteScript
+                                    </button>
+
+
+
+                                </div>
+
+                            </div>
+                            <div class="col-sm-4" id="getscript">
+                                <div class="form-group" style="padding-top:27px;">
+                                    <label class="control-label">&nbsp;</label>
+
+                                    <a class="btn btn-flat btn-labeled btn-primary" style="color: #fff; text-decoration: none; padding: 0px; font-weight: normal" id="scriptbtn">
+                                        <span class="btn-label icon  fa  fa-plus-circle" style="margin-right:6px;"> </span>
+                                        Get Script
+                                    </a>
+
+
+
+
+                                </div>
+
+                            </div>
+
+                            <div class="col-sm-3">
+                            </div>
+
+
+
+                        </div>
+
+                        <div class="row" id="tblDiv" style="display:none">
+
+                            <div class="table-primary table-striped">
+                                <table class="table table-striped table-bordered" id="tblCompanies" style="width:100%;">
+                                    <thead>
+                                        <tr>
+                                            <th class="no-sort"><input class="fa fa-square-o" type="checkbox" id="chkHeader" /></th>
+                                            <th data-class="expand">ClientName</th>
+                                            <th>CompanyType</th>
+                                            <th>SiteType</th>
+                                            <th data-hide="phone">CompanyPhone</th>
+                                            <th data-hide="tablet,tabletlandscape,phone">ExpiryDate</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model)
+                                        {
+                                            <tr>
+                                                <td><input type="checkbox" value="" id="@item.ClientID" data-val-1="@item.ClientID" name="chkItem" class="chkItem" /></td>
+
+                                                <td>@Html.DisplayFor(model => item.CompanyName) </td>
+                                                <td>@Html.DisplayFor(model => item.companytype)</td>
+                                                <td>@Html.DisplayFor(model => item.site_type)</td>
+                                                <td>@Html.DisplayFor(model => item.companyphone)</td>
+                                                <td>@Html.DisplayFor(model => item.expirydate)</td>
+
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#scriptbtn').bind("click", function () {
+                var scriptfile = $('#uploadScript').val();
+                var file = scriptfile.split('\\').pop();
+                var fileext = scriptfile.split('.').pop();
+                if (fileext == "sql") {
+                    $('#tblDiv').attr("style", "display:block;");
+                    $('#exescript').attr("style", "display:block;");
+                    $('#getscript').attr("style", "display:none;");
+                   // $('#fleid').attr("style", "display:none;");
+
+                    $("#wizard2").addClass("active");
+                    $("#wizard3").addClass("inactive");
+                }
+                else {
+                    alert("File Type error ! Please Select Script File !!!");
+                    $('#tblDiv').attr("style", "display:none;");
+                    $('#exescript').attr("style", "display:none;");
+                    $('#getscript').attr("style", "display:block;");
+                  //  $('#fleid').attr("style", "display:block;");
+                }
+            });
+
+            $('#uploadScript').change(function () {
+                $('#tblDiv').attr("style", "display:none;");
+                $('#exescript').attr("style", "display:none;");
+                $('#getscript').attr("style", "display:block;");
+            });
+
+            var responsiveHelper_example = undefined;
+            var breakpointDefinition = {
+                desktop: Infinity,
+                tablet: 1024,
+                phone: 480
+            };
+
+            $('#tblCompanies').dataTable({
+                "autoWidth": false,
+                "searching": true,
+                "preDrawCallback": function () {
+                    if (!responsiveHelper_example) {
+                        responsiveHelper_example = new ResponsiveDatatablesHelper($('#tblCompanies'), breakpointDefinition);
+                    }
+                },
+                "rowCallback": function (nRow) {
+                    responsiveHelper_example.createExpandIcon(nRow);
+                },
+                "drawCallback": function (oSettings) {
+                    responsiveHelper_example.respond();
+                },
+                "columnDefs": [{
+                    "targets": 'no-sort',
+                    "orderable": false,
+                }],
+            });
+        });
+        $("[type='search']").attr('placeholder', "Search")
+    </script>
+
+
+
+    <script>
+        $("#chkHeader").click(function () {
+            $('#tblCompanies input[name="chkItem"]').prop('checked', this.checked);
+        });
+
+        $('#tblCompanies input[name="chkItem"]').click(function () {
+            if ($('#tblCompanies input[name="chkItem"]').length == $('#tblCompanies input[name="chkItem"]:checked').length) {
+                $("#chkHeader").prop("checked", "checked");
+            }
+            else if ($('#tblCompanies input[name="chkItem"]').length != $('#tblCompanies input[name="chkItem"]:checked').length) {
+                $('#chkHeader').prop('checked', false);
+            }
+        });
+    </script>
+    <script type="text/javascript">
+        //init.push(function () {
+        //    $("#clientmanage").addClass("open active");
+        //    $("#client-1").addClass("active");
+        //});
+
+
+
+        $('#btnSave').click(function () {
+            var scriptfile = $('#uploadScript').val();
+
+            if (scriptfile != "") {
+                if ($('#tblCompanies input[name="chkItem"]:checked').length > 0) {
+                    var ClientIDs = $("#tblCompanies input:checkbox:checked").map(function () {
+                        return $(this).attr("data-val-1");
+                    }).get();
+
+
+                    ExecuteScriptforClients(ClientIDs);
+                }
+                else alert("Please Select Client(s) to Execute Script");
+            }
+            else alert("Please Select Script File to be Executed !!!");
+        });
+
+        function ExecuteScriptforClients(ClientIDs) {
+         
+            var formData = new FormData();
+            var scriptfile = $('#uploadScript')[0].files[0];
+            formData.append("FileUpload", scriptfile);
+            formData.append("ClientIDs", ClientIDs.toString());
+            $.ajax({
+                url: "Executescriptforclientsid",
+                type: "POST",
+                async: false,
+                data: formData,
+                dataType: 'html',
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                   
+
+                    if (data == "True") {
+
+                        $.growl.notice({ title: "Success", message: "Script Executed Successfully.", size: 'large' });
+
+                    }
+                    else {
+                        $.growl.warning({ title: "Fail", message: "Script Executed Failed.", size: 'large' });
+                    }
+                },
+                error: function (request, status, error) {
+                }
+            });
+
+        }
+
+    </script>
+
+
+
+

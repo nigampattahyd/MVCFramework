@@ -1,0 +1,225 @@
+﻿@model CRMHub.ViewModel.DashboardStatusCount
+
+
+<div class="row">
+    <div class="col-sm-12 col-xs-12">
+        <div class="panel">
+            <div class="panel-heading">
+                @*<span class="panel-title">Weekly&nbsp;Payments&nbsp;&nbsp;from&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>*@
+
+                <span class="panel-title">Payments&nbsp;recevied&nbsp;for&nbsp;Current&nbsp;Week&nbsp;from&nbsp;&nbsp;&nbsp;</span>
+
+
+                <span style="color:red">
+                    @Html.DisplayFor(m => m.DBTitles.FromDate, new { })
+                </span>
+                <span>&nbsp;&nbsp;To&nbsp;&nbsp;</span>
+                <span style="color:red">
+                    @Html.DisplayFor(m => m.DBTitles.ToDate, new { })
+
+                </span>
+
+            </div>
+            <div class="panel-body buttons-with-margins">
+                <div id="chartContainerPayment" style="width:100%;height:300px;">A column 3D chart will load here!</div>
+
+                @*<div class="pa-flot-container"><div class="pa-flot-info"></div><div style="width: 441px; height: 205px; padding: 0px; position: relative;" class="pa-flot-graph" id="jq-flot-pie"><canvas height="205" width="441" style="direction: ltr; position: absolute; left: 0px; top: 0px; width: 441px; height: 205px;" class="flot-base"></canvas><canvas height="205" width="441" style="direction: ltr; position: absolute; left: 0px; top: 0px; width: 441px; height: 205px;" class="flot-overlay"></canvas><span class="pieLabel" id="pieLabel0" style="position: absolute; top: 19px; left: 229.5px;"><div style="font-size:14px;text-align:center;padding:2px;color:white;">10%</div></span><span class="pieLabel" id="pieLabel1" style="position: absolute; top: 38px; left: 264px;"><div style="font-size:14px;text-align:center;padding:2px;color:white;">6%</div></span><span class="pieLabel" id="pieLabel2" style="position: absolute; top: 87px; left: 283.5px;"><div style="font-size:14px;text-align:center;padding:2px;color:white;">17%</div></span><span class="pieLabel" id="pieLabel3" style="position: absolute; top: 153px; left: 253.5px;"><div style="font-size:14px;text-align:center;padding:2px;color:white;">13%</div></span><span class="pieLabel" id="pieLabel4" style="position: absolute; top: 167px; left: 188.5px;"><div style="font-size:14px;text-align:center;padding:2px;color:white;">15%</div></span><span class="pieLabel" id="pieLabel5" style="position: absolute; top: 106px; left: 130.5px;"><div style="font-size:14px;text-align:center;padding:2px;color:white;">21%</div></span><span class="pieLabel" id="pieLabel6" style="position: absolute; top: 26px; left: 166.5px;"><div style="font-size:14px;text-align:center;padding:2px;color:white;">17%</div></span></div></div>*@
+
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-6 col-xs-12">
+        <div class="panel">
+            <div class="panel-heading">
+                <span class="panel-title">Contacts</span>
+            </div>
+            <div class="panel-body buttons-with-margins">
+                <div id="chartContainer" style="width:100%;height:300px;">A column 3D chart will load here!</div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="col-sm-6 col-xs-12">
+        <div class="panel">
+            <div class="panel-heading">
+                <span class="panel-title">Companies</span>
+            </div>
+            <div class="panel-body buttons-with-margins">
+                <div id="chartContainer3" style="width:100%;height:300px;">A column 3D chart will load here!</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="~/Content/dashboardAssets/js/fusioncharts.js"></script>
+<script src="~/Content/dashboardAssets/js/themes/fusioncharts.theme.fint.js"></script>
+<script type="text/javascript" src="//www.google.com/jsapi"></script>
+
+<script type="text/javascript">
+    google.load('visualization', '1', { packages: ['corechart'] });
+</script>
+
+<script>
+    init.push(function () {
+        $('ul.bs-tabdrop-example').tabdrop();
+    });
+</script>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        bindActivityDashBoardData();
+        //  Weeklypayment();
+
+        $.ajax({
+            type: 'GET',
+            dataType: 'json',
+            contentType: 'application/json',
+            //url: 'DashBoard/LoadPaymentCharts',
+            url: 'DashBoard/GetWeeklyPaymentCharts',
+            success:
+                function (response1) {
+
+                    var datpayment = returnpaymentdate(response1)
+                    drawVisualizationPayments(datpayment);
+
+                }
+        });
+
+
+
+        $.ajax({
+            type: 'GET',
+            dataType: 'json',
+            contentType: 'application/json',
+            url: 'DashBoard/LoadDashboardCharts',
+            success:
+                function (response) {                
+                    var dataCompanies = ReturnFilterDataCompanies(response);
+                    drawVisualBubble(dataCompanies);
+                    var dataContact = ReturnFilterDataContact(response);
+                    drawVisual(dataContact);
+                }
+        });
+    });
+
+    var objdata = [];
+
+
+    function ReturnFilterDataCompanies(response) {
+
+        var objdata = [];
+        $(response).filter(function (index, data) {
+            if (data.Chart == "Companies") {
+
+                var obj = new Object();
+                obj.total = data.Total;
+                obj.year = data.Year;
+                objdata.push(obj);
+            }
+        });
+        return objdata;
+    }
+
+    function ReturnFilterDataContact(response) {
+        var objdata = [];
+
+        $(response).filter(function (index, data) {
+
+            if (data.Chart == "Contact") {
+
+
+                var obj = new Object();
+                obj.total = data.Total;
+                obj.year = data.Year;
+                objdata.push(obj);
+            }
+        });
+        return objdata;
+    }
+
+    function drawVisual(dataValues) {
+
+        var data = new google.visualization.DataTable(dataValues);
+        data.addColumn('string', 'label');
+        data.addColumn('number', 'value');
+
+        for (var i = 0; i < dataValues.length; i++) {
+            //if (dataValues[i].year != '2015')
+            data.addRow([dataValues[i].year, dataValues[i].total]);
+        }
+        var options = {
+
+            //title: 'Contacts Pie Chart',
+            is3D: true,
+            pieHole: 0.4,
+        };
+        new google.visualization.PieChart(document.getElementById('chartContainer')).draw(data, options);
+    }
+
+
+
+
+
+    function drawVisualBubble(dataValues) {
+
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'label');
+        data.addColumn('number', 'value');
+        for (var i = 0; i < dataValues.length; i++) {
+            data.addRow([dataValues[i].year, dataValues[i].total]);
+        }
+
+        var options = {
+            //title: 'Opportunity Donut Chart',
+            pieHole: 0.1,
+            //is3D: true,
+        };
+
+        new google.visualization.PieChart(document.getElementById('chartContainer3')).draw(data, options);
+    }
+
+
+
+
+    function returnpaymentdate(response1) {
+
+        var objdata = [];
+        $(response1).filter(function (index, data) {
+            //if (data.Chart == "Leads") {
+
+            var obj = new Object();
+            obj.AmountPaid = data.AmountPaid;
+            obj.DayType = data.DayType;
+            //obj.TotalBalance = data.TotalBalance;
+            //obj.PStatus = data.PStatus;
+            //obj.TotalInvoice = data.TotalInvoice;
+            objdata.push(obj);
+            //}
+        });
+        return objdata;
+    }
+
+    function drawVisualizationPayments(dataValues) {
+
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'label');
+        data.addColumn('number', 'value');
+        // data.addColumn('number', 'amount');
+        for (var i = 0; i < dataValues.length; i++) {
+            data.addRow([dataValues[i].DayType, dataValues[i].AmountPaid]);
+            // data.addRow([dataValues[i].PStatus, dataValues[i].TotalBalance]);
+        }
+
+        var options = {
+            // title: 'Leads Column Chart',
+        };
+
+        new google.visualization.ColumnChart(document.getElementById('chartContainerPayment')).draw(data, options);
+    }
+
+
+</script>

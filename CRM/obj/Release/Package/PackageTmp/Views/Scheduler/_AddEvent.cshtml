@@ -1,0 +1,207 @@
+﻿@model CRMHub.EntityFramework.CalendarEvents
+
+<style>
+    .modal-open .modal {
+        padding: 0 !important;
+    }
+
+    .ui-form-split-lt, .ui-form-split-rt {
+        float: left;
+        vertical-align: top;
+        /*width: 66.667%;*/
+        height: 100%;
+        padding: 20px 20px 0;
+        position: relative;
+        overflow: auto;
+    }
+
+    down vote .row.vertical-divider {
+        overflow: hidden;
+    }
+
+    .row.vertical-divider > div[class^="col-"] {
+        text-align: center;
+        padding-bottom: 100px;
+        margin-bottom: -100px;
+        border-left: 3px solid #F2F7F9;
+        border-right: 3px solid #F2F7F9;
+    }
+
+    .row.vertical-divider div[class^="col-"]:first-child {
+        border-left: none;
+    }
+
+    .row.vertical-divider div[class^="col-"]:last-child {
+        border-right: none;
+    }
+
+    .datepicker {
+        z-index: 99999 !important;
+    }
+</style>
+
+
+<div id="modal-warning" class="bootbox modal fade modal-darkorange right fade in" style="display: block; padding:0 !important;" aria-hidden="true">
+    <div class="modal-dialog" style="width: 50% !important;">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title" id="mySmallModalLabel">Add Appointments</h4>
+            </div>
+            <div class="modal-body" style="height:100%; overflow:auto;">
+
+                <div id="CustomBootstrapAlertBox">
+                </div>
+                <div class="row">
+                    <span id="errorsymbol" style="color:red;display:none;margin-left:5px;" class="fa fa-exclamation-circle"></span>
+                    <div id="ErrorMessages" style="margin-left:20px;color:red;font-size:15px;">
+                    </div>
+                    <div class="col-sm-12" style="padding-top:10px;">
+                        <div class="panel-body">
+                            <div class="col-sm-12 no-padding-hr">
+                                <div class="col-sm-9 no-padding-hr ui-form-split-lt">
+
+                                    <div class="row">
+                                        <div class="col-sm-9">
+                                            <div class="form-group no-margin-hr">
+                                                <label class="control-label">Title :<span style="color: red">*</span></label>
+                                                @Html.TextBoxFor(m => m.Title, new { @class = "form-control input-sm", @id = "txtTile", @validate = "Required", @data_val_required = "Please enter Mentor Name" })
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <div class="form-group no-margin-hr">
+                                                        <label class="control-label">Attendes :<span style="color: red">*</span></label>
+                                                        @Html.TextBoxFor(m => m.MentorsList, new { @class = "form-control input-sm", @id = "txtMentorslist" })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-5">
+                                            <div class="form-group no-margin-hr">
+
+                                                <label class="control-label">Date 1:</label>
+                                                <div class="input-group">
+                                                    @Html.TextBoxFor(m => m.Date1, "{0:MM/dd/yyyy}", new { @id = "txtDate1", @class = "form-control input-sm", @MaxLength = "20" })
+                                                    <span class="input-group-addon">
+                                                        <i class="fa fa-calendar"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="form-group no-margin-hr">
+
+                                                <label class="control-label">Time 1:</label>
+                                                <div class="input-group">
+                                                    @Html.TextBoxFor(m => m.Time1, new { @id = "txtTimer1", @class = "form-control input-sm", @MaxLength = "20" })
+                                                    <span class="input-group-addon">
+                                                        <i class="fa fa-clock-o"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="row">
+
+                                        <div class="col-sm-5">
+                                            <div class="form-group no-margin-hr">
+                                                <label class="control-label">Date 2:</label>
+                                                <div class="input-group">
+                                                    @Html.TextBoxFor(m => m.Date2, "{0:MM/dd/yyyy}", new { @id = "txtDate2", @class = "form-control input-sm", @MaxLength = "20" })
+                                                    <span class="input-group-addon">
+                                                        <i class="fa fa-calendar"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="form-group no-margin-hr">
+
+                                                <label class="control-label">Time 2:</label>
+                                                <div class="input-group">
+                                                    @Html.TextBoxFor(m => m.Time2, new { @id = "txtTimer2", @class = "form-control input-sm", @MaxLength = "20" })
+                                                    <span class="input-group-addon">
+                                                        <i class="fa fa-clock-o "></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+
+                                        <div class="col-sm-5">
+                                            <div class="form-group no-margin-hr">
+
+                                                <label class="control-label">Date 3:</label>
+                                                <div class="input-group">
+                                                    @Html.TextBoxFor(m => m.Date3, "{0:MM/dd/yyyy}", new { @id = "txtDate3", @class = "form-control input-sm", @MaxLength = "20" })
+                                                    <span class="input-group-addon">
+                                                        <i class="fa fa-calendar"></i>
+                                                    </span>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="form-group no-margin-hr">
+
+                                                <label class="control-label">Time 3:</label>
+                                                <div class="input-group">
+                                                    @Html.TextBoxFor(m => m.Time3, new { @id = "txtTimer1", @class = "form-control input-sm", @MaxLength = "20" })
+                                                    <span class="input-group-addon">
+                                                        <i class="fa fa-clock-o "></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-9">
+                                            <div class="form-group no-margin-hr">
+                                                <label class="control-label">Location :</label>
+                                                @Html.TextBoxFor(m => m.Location, new { @id = "txtLocation", @class = "form-control input-sm", @cols = 38, @rows = 5, @MaxLength = "200", @style = "resize: none;" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-9">
+                                            <div class="form-group no-margin-hr">
+                                                <label class="control-label">Comment :</label>
+                                                @Html.TextAreaFor(m => m.Description, new { @id = "txtComment", @class = "form-control input-sm", @cols = 38, @rows = 5, @MaxLength = "200", @style = "resize: none;" })
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="col-sm-3 ui-form-split-lt">
+
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="form-group no-margin-hr">
+                                                <label class="control-label">Attendes :<span style="color: red">*</span></label>
+                                                @Html.TextBoxFor(m => m.MentorsList, new { @class = "form-control input-sm", @id = "txtMentorslist" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-default">Ok</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div>
+

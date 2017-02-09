@@ -1,0 +1,2509 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="CRMModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Accounts">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="150" />
+    <Property Name="Title" Type="varchar" MaxLength="200" />
+    <Property Name="FirstName" Type="varchar" MaxLength="50" />
+    <Property Name="LastName" Type="varchar" MaxLength="50" />
+    <Property Name="Phone" Type="varchar" MaxLength="20" />
+    <Property Name="Fax" Type="varchar" MaxLength="20" />
+    <Property Name="Email" Type="varchar" MaxLength="2000" />
+    <Property Name="Mobile" Type="varchar" MaxLength="20" />
+    <Property Name="EmailOptOut" Type="varchar" MaxLength="50" />
+    <Property Name="AccountTypeId" Type="int" />
+    <Property Name="Website" Type="varchar" MaxLength="50" />
+    <Property Name="Ownership" Type="varchar" MaxLength="50" />
+    <Property Name="TotalEmployees" Type="varchar" MaxLength="50" />
+    <Property Name="IndustryID" Type="int" />
+    <Property Name="AnnualRevenue" Type="nvarchar" MaxLength="50" />
+    <Property Name="Rating" Type="varchar" MaxLength="50" />
+    <Property Name="LeadStatus" Type="varchar" MaxLength="50" />
+    <Property Name="LeadSource" Type="varchar" MaxLength="100" />
+    <Property Name="MailingAddress" Type="varchar" MaxLength="250" />
+    <Property Name="MailingAddress2" Type="varchar" MaxLength="250" />
+    <Property Name="Mailingcity" Type="varchar" MaxLength="100" />
+    <Property Name="MailingstateID" Type="int" />
+    <Property Name="Mailingzip" Type="nvarchar" MaxLength="50" />
+    <Property Name="MailingcountryID" Type="int" />
+    <Property Name="BillingAddress" Type="varchar" MaxLength="250" />
+    <Property Name="BillingAddress2" Type="varchar" MaxLength="250" />
+    <Property Name="Billingcity" Type="varchar" MaxLength="100" />
+    <Property Name="BillingstateID" Type="int" />
+    <Property Name="Billingzip" Type="nvarchar" MaxLength="50" />
+    <Property Name="BillingcountryID" Type="varchar" MaxLength="50" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="ModifiedDate" Type="datetime" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="ModifiedBy" Type="int" />
+    <Property Name="Description" Type="varchar" MaxLength="2500" />
+    <Property Name="SeachIndex" Type="varchar" MaxLength="900" />
+    <Property Name="FacebookUsername" Type="varchar" MaxLength="60" />
+    <Property Name="TwitterUsername" Type="varchar" MaxLength="60" />
+    <Property Name="LinkedInUsername" Type="varchar" MaxLength="60" />
+    <Property Name="SkypeUsername" Type="varchar" MaxLength="60" />
+    <Property Name="ContactTypeID" Type="int" />
+    <Property Name="CompanyID" Type="int" />
+    <Property Name="CompanyName" Type="varchar(max)" />
+    <Property Name="OwnerID" Type="int" />
+    <Property Name="EstimateBudget" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="CloseDate" Type="datetime" />
+    <Property Name="StageID" Type="int" />
+    <Property Name="BusinessTypeID" Type="int" />
+    <Property Name="Probability" Type="nvarchar" MaxLength="50" />
+    <Property Name="NextStep" Type="nvarchar" MaxLength="50" />
+    <Property Name="ExpectedRevenue" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="OppurtunitySourceID" Type="int" />
+    <Property Name="ContactID" Type="int" />
+    <Property Name="IsLead" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Activity">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ModuleID" Type="int" />
+    <Property Name="ActivityTypeID" Type="int" />
+    <Property Name="StatusID" Type="int" />
+    <Property Name="PriorityID" Type="int" />
+    <Property Name="AssignedTo" Type="int" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="ModifiedDate" Type="datetime" />
+    <Property Name="Createdby" Type="int" />
+    <Property Name="Modifiedby" Type="int" />
+    <Property Name="DueDate" Type="datetime" />
+    <Property Name="RemindDate" Type="datetime" />
+    <Property Name="CompletedDate" Type="datetime" />
+    <Property Name="DueTime" Type="varchar" MaxLength="50" />
+    <Property Name="RemindTime" Type="varchar" MaxLength="50" />
+    <Property Name="NotificationFlag" Type="bit" />
+    <Property Name="Notes" Type="nvarchar" MaxLength="2500" />
+  </EntityType>
+  <EntityType Name="activity_types">
+    <Key>
+      <PropertyRef Name="Aid" />
+    </Key>
+    <Property Name="Aid" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="100" />
+    <Property Name="Type" Type="varchar" MaxLength="100" />
+    <Property Name="Status" Type="varchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="activityLog">
+    <Key>
+      <PropertyRef Name="LogId" />
+    </Key>
+    <Property Name="LogId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ActivityId" Type="bigint" />
+    <Property Name="ModifiedBy" Type="bigint" />
+    <Property Name="ActivityType" Type="varchar" MaxLength="50" />
+    <Property Name="Status" Type="varchar" MaxLength="50" />
+    <Property Name="ModifiedDate" Type="datetime" />
+    <Property Name="Type" Type="varchar" MaxLength="50" />
+    <Property Name="AssignedTo" Type="numeric" Precision="10" Scale="0" />
+    <Property Name="ExportTest" Type="varchar" MaxLength="10" />
+  </EntityType>
+  <EntityType Name="AdvertisementSources">
+    <Key>
+      <PropertyRef Name="AdvertisementId" />
+    </Key>
+    <Property Name="AdvertisementId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="AdvertisementSource" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Branch">
+    <Key>
+      <PropertyRef Name="BranchId" />
+    </Key>
+    <Property Name="BranchId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="BranchName" Type="varchar" MaxLength="50" />
+    <Property Name="BranchAddress1" Type="varchar" MaxLength="100" />
+    <Property Name="BranchAddress2" Type="varchar" MaxLength="100" />
+    <Property Name="BranchCity" Type="varchar" MaxLength="50" />
+    <Property Name="BranchStateCode" Type="varchar" MaxLength="50" />
+    <Property Name="BranchZip" Type="nvarchar" MaxLength="50" />
+    <Property Name="BranchPhone" Type="varchar" MaxLength="20" />
+    <Property Name="BranchPhoneExt" Type="varchar" MaxLength="20" />
+    <Property Name="BranchFax" Type="varchar" MaxLength="20" />
+    <Property Name="BranchEmail" Type="varchar" MaxLength="50" />
+    <Property Name="Comment" Type="varchar" MaxLength="500" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="ModifiedBy" Type="varchar" MaxLength="50" />
+    <Property Name="StateOther" Type="varchar" MaxLength="50" />
+    <Property Name="RoutingEmail" Type="varchar" MaxLength="50" />
+    <Property Name="BranchType" Type="varchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="CalendarEventRequests">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Title" Type="varchar(max)" />
+    <Property Name="Date1" Type="datetime" />
+    <Property Name="Time1" Type="varchar" MaxLength="50" />
+    <Property Name="Date2" Type="datetime" />
+    <Property Name="Time2" Type="varchar" MaxLength="50" />
+    <Property Name="Date3" Type="datetime" />
+    <Property Name="Time3" Type="varchar" MaxLength="50" />
+    <Property Name="Location" Type="varchar" MaxLength="250" />
+    <Property Name="Description" Type="varchar(max)" />
+    <Property Name="Venture" Type="int" />
+    <Property Name="CreatedBy" Type="bigint" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="ModifiedBy" Type="bigint" />
+    <Property Name="ModifiedDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="Company">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="250" />
+    <Property Name="ParentCompanyID" Type="int" />
+    <Property Name="Phone" Type="varchar" MaxLength="20" />
+    <Property Name="Fax" Type="varchar" MaxLength="20" />
+    <Property Name="Website" Type="varchar" MaxLength="50" />
+    <Property Name="CompanytypeID" Type="int" />
+    <Property Name="CompanyIndustryID" Type="int" />
+    <Property Name="Description" Type="nvarchar" MaxLength="2500" />
+    <Property Name="CompanySite" Type="varchar" MaxLength="50" />
+    <Property Name="CompanyCode" Type="nvarchar" MaxLength="50" />
+    <Property Name="AnnualRevenue" Type="nvarchar" MaxLength="50" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="ModifiedDate" Type="datetime" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="ModifiedBy" Type="int" />
+    <Property Name="TrickerSymbol" Type="nvarchar" MaxLength="50" />
+    <Property Name="OwnerID" Type="int" />
+    <Property Name="Ownership" Type="varchar" MaxLength="50" />
+    <Property Name="Employees" Type="varchar" MaxLength="50" />
+    <Property Name="SicCode" Type="nvarchar" MaxLength="30" />
+    <Property Name="Billingstreet" Type="varchar" MaxLength="250" />
+    <Property Name="Shippingstreet" Type="varchar" MaxLength="250" />
+    <Property Name="Billingcity" Type="varchar" MaxLength="100" />
+    <Property Name="Shippingcity" Type="varchar" MaxLength="100" />
+    <Property Name="BillingstateID" Type="int" />
+    <Property Name="ShippingstateID" Type="int" />
+    <Property Name="Billingzip" Type="nvarchar" MaxLength="50" />
+    <Property Name="Shippingzip" Type="nvarchar" MaxLength="50" />
+    <Property Name="BillingcountryID" Type="int" />
+    <Property Name="ShippingcountryID" Type="int" />
+    <Property Name="Naicscode" Type="nvarchar" MaxLength="30" />
+    <Property Name="MailingAddress" Type="varchar" MaxLength="250" />
+    <Property Name="BillingAddress" Type="varchar" MaxLength="250" />
+    <Property Name="ReferredBy" Type="varchar" MaxLength="50" />
+    <Property Name="CompanyStatusID" Type="int" />
+    <Property Name="SeachIndex" Type="varchar" MaxLength="900" />
+  </EntityType>
+  <EntityType Name="Country">
+    <Key>
+      <PropertyRef Name="CountryID" />
+    </Key>
+    <Property Name="CountryID" Type="int" Nullable="false" />
+    <Property Name="CountryName" Type="varchar" MaxLength="40" />
+  </EntityType>
+  <EntityType Name="CurrentStatus">
+    <Key>
+      <PropertyRef Name="CurrentStatusId" />
+    </Key>
+    <Property Name="CurrentStatusId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CurrentStatusName" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Custom_DbError">
+    <Key>
+      <PropertyRef Name="ErrorId" />
+    </Key>
+    <Property Name="ErrorId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ErrorNo" Type="varchar" MaxLength="20" />
+    <Property Name="ErrorSeverity" Type="varchar" MaxLength="20" />
+    <Property Name="ErrorState" Type="varchar" MaxLength="20" />
+    <Property Name="ErrorLine" Type="varchar" MaxLength="20" />
+    <Property Name="ProcedureName" Type="varchar" MaxLength="100" />
+    <Property Name="ErrorMessage" Type="varchar(max)" />
+    <Property Name="CreatedOn" Type="datetime" />
+  </EntityType>
+  <EntityType Name="Custom_DrpChkValues">
+    <Key>
+      <PropertyRef Name="DrpValueId" />
+    </Key>
+    <Property Name="DrpValueId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FieldId" Type="bigint" Nullable="false" />
+    <Property Name="DrpValue" Type="varchar" MaxLength="500" />
+    <Property Name="IsDefault" Type="bit" Nullable="false" />
+    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Custom_Manage_Master">
+    <Key>
+      <PropertyRef Name="UserID" />
+      <PropertyRef Name="Module" />
+      <PropertyRef Name="Column_Id" />
+      <PropertyRef Name="ActualColumnName" />
+    </Key>
+    <Property Name="FieldId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserID" Type="bigint" Nullable="false" />
+    <Property Name="Module" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="Column_Id" Type="int" Nullable="false" />
+    <Property Name="ActualColumnName" Type="varchar" MaxLength="200" Nullable="false" />
+    <Property Name="Column_Label" Type="varchar" MaxLength="200" Nullable="false" />
+    <Property Name="Column_Type" Type="varchar" MaxLength="200" Nullable="false" />
+    <Property Name="Field_Type" Type="varchar" MaxLength="200" Nullable="false" />
+    <Property Name="Column_Description" Type="varchar" MaxLength="200" />
+    <Property Name="HoverText" Type="varchar" MaxLength="200" />
+    <Property Name="InputDataType" Type="varchar" MaxLength="200" />
+    <Property Name="DefaultValue" Type="varchar" MaxLength="200" />
+    <Property Name="DisplayPosition" Type="int" />
+    <Property Name="MaxLength" Type="int" />
+    <Property Name="RequiredField" Type="bit" />
+    <Property Name="MultiValued" Type="bit" />
+    <Property Name="ColumnDrpChkValues" Type="varchar" MaxLength="2000" />
+    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="ModifiedDate" Type="datetime" Nullable="false" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="IsShowInJoinNow" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Custom_Value_Master">
+    <Key>
+      <PropertyRef Name="CValueId" />
+    </Key>
+    <Property Name="CValueId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserID" Type="bigint" Nullable="false" />
+    <Property Name="Module" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="ModuleRecordId" Type="bigint" />
+    <Property Name="ModuleRecordIdTmp" Type="bigint" />
+    <Property Name="MasterFieldId" Type="bigint" />
+    <Property Name="CustomFieldvalue" Type="varchar(max)" />
+    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="ModifiedDate" Type="datetime" Nullable="false" />
+    <Property Name="SearchIndex" Type="varchar" MaxLength="900" />
+  </EntityType>
+  <EntityType Name="Error_Log">
+    <Key>
+      <PropertyRef Name="ErrorId" />
+    </Key>
+    <Property Name="ErrorId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ErrorMessage" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="ErrorPage" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="EventDetails">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="MeetingId" Type="bigint" />
+    <Property Name="MentorId" Type="bigint" />
+    <Property Name="IsAccepted" Type="bit" />
+    <Property Name="IsDenied" Type="bit" />
+    <Property Name="ModifiedDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="Events">
+    <Key>
+      <PropertyRef Name="EventId" />
+    </Key>
+    <Property Name="EventId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Title" Type="varchar" MaxLength="100" />
+    <Property Name="EventDate" Type="date" />
+    <Property Name="EventTime" Type="char" MaxLength="20" />
+    <Property Name="Location" Type="varchar" MaxLength="50" />
+    <Property Name="Description" Type="varchar" MaxLength="200" />
+    <Property Name="Mentors" Type="varchar(max)" />
+    <Property Name="VentureId" Type="bigint" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="ModifedBy" Type="int" />
+    <Property Name="ModifiedDate" Type="datetime" />
+    <Property Name="MeetingId" Type="int" />
+  </EntityType>
+  <EntityType Name="Mentor">
+    <Key>
+      <PropertyRef Name="MentorId" />
+    </Key>
+    <Property Name="MentorId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="VentureId" Type="bigint" />
+    <Property Name="Name" Type="varchar" MaxLength="50" />
+    <Property Name="MentorTypeId" Type="int" />
+    <Property Name="StartDate" Type="datetime" />
+    <Property Name="EndDate" Type="datetime" />
+    <Property Name="HaverelevantExp" Type="bit" />
+    <Property Name="WillhelpifNeeded" Type="bit" />
+    <Property Name="Recruited" Type="bit" />
+    <Property Name="Interested" Type="bit" />
+    <Property Name="Conflict/FinancialInterest" Type="bit" />
+    <Property Name="Comment" Type="varchar" MaxLength="4000" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="ModifiedDate" Type="datetime" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="ModifiedBy" Type="int" />
+    <Property Name="UserId" Type="int" />
+    <Property Name="Email" Type="varchar" MaxLength="50" />
+    <Property Name="VmsStatus" Type="int" />
+  </EntityType>
+  <EntityType Name="MentorAcceptedDateTime">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="AcceptedDateTime" Type="datetime" />
+    <Property Name="MentorId" Type="varchar" MaxLength="50" />
+    <Property Name="MeetingId" Type="int" />
+  </EntityType>
+  <EntityType Name="MentorDetails">
+    <Key>
+      <PropertyRef Name="MentorDetailsId" />
+    </Key>
+    <Property Name="MentorDetailsId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Prefix" Type="varchar" MaxLength="5" />
+    <Property Name="FirstName" Type="varchar" MaxLength="50" />
+    <Property Name="MiddleName" Type="varchar" MaxLength="50" />
+    <Property Name="LastName" Type="varchar" MaxLength="50" />
+    <Property Name="Suffix" Type="varchar" MaxLength="20" />
+    <Property Name="NickName" Type="varchar" MaxLength="20" />
+    <Property Name="Organization" Type="varchar" MaxLength="50" />
+    <Property Name="Title" Type="varchar" MaxLength="50" />
+    <Property Name="Street1" Type="varchar" MaxLength="50" />
+    <Property Name="AddressLine1" Type="varchar" MaxLength="50" />
+    <Property Name="City1" Type="varchar" MaxLength="50" />
+    <Property Name="StateProvinceRegion1" Type="varchar" MaxLength="50" />
+    <Property Name="ZIP1" Type="varchar" MaxLength="50" />
+    <Property Name="Country1" Type="varchar" MaxLength="50" />
+    <Property Name="Street2" Type="varchar" MaxLength="50" />
+    <Property Name="AddressLine2" Type="varchar" MaxLength="50" />
+    <Property Name="City2" Type="varchar" MaxLength="50" />
+    <Property Name="StateProvinceRegion2" Type="varchar" MaxLength="50" />
+    <Property Name="ZIP2" Type="varchar" MaxLength="50" />
+    <Property Name="Country2" Type="varchar" MaxLength="50" />
+    <Property Name="PrimaryEmail" Type="varchar" MaxLength="50" />
+    <Property Name="SecondaryEmail" Type="varchar" MaxLength="50" />
+    <Property Name="SkypeAddress" Type="varchar" MaxLength="50" />
+    <Property Name="TwitterAddress" Type="varchar" MaxLength="50" />
+    <Property Name="LinkedIn" Type="varchar" MaxLength="50" />
+    <Property Name="Telephone1" Type="varchar" MaxLength="50" />
+    <Property Name="Telephone2" Type="varchar" MaxLength="50" />
+    <Property Name="Telephone3" Type="varchar" MaxLength="50" />
+    <Property Name="PublicProfile" Type="varchar(max)" />
+    <Property Name="Resume" Type="varchar(max)" />
+    <Property Name="QuestionStat" Type="bit" />
+    <Property Name="MentorId" Type="bigint" />
+  </EntityType>
+  <EntityType Name="MentorQuestionaries">
+    <Key>
+      <PropertyRef Name="MentorQuestionaryId" />
+    </Key>
+    <Property Name="MentorQuestionaryId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Startups" Type="varchar" MaxLength="200" />
+    <Property Name="BusinessModel" Type="varchar" MaxLength="200" />
+    <Property Name="Funding" Type="varchar" MaxLength="200" />
+    <Property Name="Others1" Type="varchar" MaxLength="50" />
+    <Property Name="Software" Type="varchar" MaxLength="200" />
+    <Property Name="LifeSciences" Type="varchar" MaxLength="200" />
+    <Property Name="IndustryOther" Type="varchar" MaxLength="200" />
+    <Property Name="Others2" Type="varchar" MaxLength="50" />
+    <Property Name="FunctionalAreas" Type="varchar(max)" />
+    <Property Name="Others3" Type="varchar" MaxLength="50" />
+    <Property Name="MentorId" Type="bigint" />
+  </EntityType>
+  <EntityType Name="MentorType">
+    <Key>
+      <PropertyRef Name="MentorTypeId" />
+    </Key>
+    <Property Name="MentorTypeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="MentorType" Type="varchar" MaxLength="50" />
+    <Property Name="IsActive" Type="bit" />
+  </EntityType>
+  <EntityType Name="ModuleType">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="AccountTypeName" Type="nvarchar" MaxLength="50" />
+    <Property Name="Description" Type="nvarchar" MaxLength="50" />
+    <Property Name="Active" Type="bit" />
+  </EntityType>
+  <EntityType Name="Priority">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PriorityName" Type="nvarchar" MaxLength="50" />
+    <Property Name="Description" Type="nvarchar" MaxLength="2500" />
+  </EntityType>
+  <EntityType Name="role">
+    <Key>
+      <PropertyRef Name="RoleId" />
+    </Key>
+    <Property Name="RoleId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="RoleName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Description" Type="varchar" MaxLength="100" />
+    <Property Name="Status" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="SMSProviderList">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Carrier" Type="varchar" MaxLength="500" />
+    <Property Name="Email" Type="varchar" MaxLength="500" />
+    <Property Name="Emailused" Type="varchar" MaxLength="500" />
+    <Property Name="DateCreated" Type="datetime" />
+  </EntityType>
+  <EntityType Name="State">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CountryID" Type="int" />
+    <Property Name="StateName" Type="nvarchar" MaxLength="50" />
+    <Property Name="Abbreviation" Type="nvarchar" MaxLength="10" />
+  </EntityType>
+  <EntityType Name="Status">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="StatusName" Type="varchar" MaxLength="50" />
+    <Property Name="Description" Type="varchar" MaxLength="2500" />
+  </EntityType>
+  <EntityType Name="tbl_AssociateList">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="active" Type="bit" />
+    <Property Name="branchId" Type="int" />
+    <Property Name="stateCode" Type="varchar" MaxLength="50" />
+    <Property Name="fullName" Type="varchar" MaxLength="200" />
+    <Property Name="phone" Type="varchar" MaxLength="20" />
+    <Property Name="userId" Type="int" />
+    <Property Name="gender" Type="varchar" MaxLength="50" />
+    <Property Name="mobile" Type="varchar" MaxLength="20" />
+    <Property Name="uniqueDifferentiators" Type="varchar(max)" />
+    <Property Name="workphone" Type="varchar" MaxLength="20" />
+    <Property Name="location" Type="varchar" MaxLength="100" />
+    <Property Name="email" Type="varchar" MaxLength="100" />
+    <Property Name="status" Type="varchar" MaxLength="30" />
+    <Property Name="createdDate" Type="datetime" />
+    <Property Name="modifieddate" Type="datetime" />
+    <Property Name="type" Type="varchar" MaxLength="25" />
+    <Property Name="assoType" Type="varchar" MaxLength="25" />
+    <Property Name="office" Type="varchar" MaxLength="20" />
+    <Property Name="FirstName" Type="varchar" MaxLength="100" />
+    <Property Name="LastName" Type="varchar" MaxLength="100" />
+    <Property Name="CellNumber" Type="varchar" MaxLength="20" />
+    <Property Name="Address" Type="varchar" MaxLength="1000" />
+    <Property Name="postalCode" Type="varchar" MaxLength="15" />
+    <Property Name="Zip/Postal" Type="varchar" MaxLength="15" />
+    <Property Name="DateCreated" Type="datetime" />
+    <Property Name="DateUpdated" Type="datetime" />
+    <Property Name="DateOfBirth" Type="datetime" />
+    <Property Name="cellno" Type="varchar" MaxLength="20" />
+    <Property Name="imageStatus" Type="varchar" MaxLength="20" />
+    <Property Name="RecruiterNames" Type="varchar" MaxLength="100" />
+    <Property Name="yearOfExperience" Type="varchar" MaxLength="10" />
+    <Property Name="employeenumber" Type="varchar" MaxLength="100" />
+    <Property Name="statename" Type="varchar" MaxLength="50" />
+    <Property Name="employmentType" Type="varchar" MaxLength="500" />
+    <Property Name="shift" Type="varchar" MaxLength="500" />
+    <Property Name="Bilingual" Type="varchar" MaxLength="20" />
+    <Property Name="transportation" Type="varchar" MaxLength="50" />
+    <Property Name="pee" Type="varchar" MaxLength="900" />
+    <Property Name="SeachIndex" Type="varchar" MaxLength="900" />
+  </EntityType>
+  <EntityType Name="tbl_ContactType">
+    <Key>
+      <PropertyRef Name="ContactTypeId" />
+    </Key>
+    <Property Name="ContactTypeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ContactType" Type="varchar" MaxLength="50" />
+    <Property Name="Description" Type="varchar" MaxLength="2500" />
+    <Property Name="Status" Type="bit" />
+  </EntityType>
+  <EntityType Name="tbl_crm_industry">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Industry" Type="varchar" MaxLength="200" />
+  </EntityType>
+  <EntityType Name="tbl_EstimateInvoice">
+    <Key>
+      <PropertyRef Name="EstInvoiceID" />
+    </Key>
+    <Property Name="EstInvoiceID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="EstInvoiceNo" Type="nvarchar" MaxLength="10" />
+    <Property Name="CustomerID" Type="int" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="TaxPercent" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="TaxAmount" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="DiscountPercent" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Discount" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="EstInvoiceAmount" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Total" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="GrandTotal" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Posted" Type="int" />
+    <Property Name="IsDrafted" Type="bit" />
+    <Property Name="Memo" Type="nvarchar(max)" />
+    <Property Name="Description" Type="nvarchar(max)" />
+    <Property Name="IsCreditMemo" Type="bit" />
+    <Property Name="isPaid" Type="bit" />
+    <Property Name="ModifiedDate" Type="datetime" />
+    <Property Name="CreatedBy" Type="varchar" MaxLength="100" />
+    <Property Name="ModifiedBy" Type="int" />
+    <Property Name="Active" Type="bit" />
+    <Property Name="LateFee" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="InvoiceType" Type="varchar" MaxLength="50" />
+    <Property Name="OrderNo" Type="varchar" MaxLength="50" />
+    <Property Name="JobLocation" Type="varchar" MaxLength="100" />
+    <Property Name="JobPhone" Type="varchar" MaxLength="50" />
+    <Property Name="invCretaedDate" Type="datetime" />
+    <Property Name="MiscellaneousAmount" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="LaborAmount" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="MaterialAmount" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="SoldTo" Type="nvarchar" MaxLength="100" />
+    <Property Name="CreateByUserID" Type="int" />
+    <Property Name="CompanyId" Type="int" />
+    <Property Name="EquipmentAmount" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Companyname" Type="varchar" MaxLength="100" />
+    <Property Name="ParentEstimateInvoiceID" Type="int" />
+  </EntityType>
+  <EntityType Name="tbl_EstimateInvoiceItem">
+    <Key>
+      <PropertyRef Name="EstimateInvoiceItemId" />
+    </Key>
+    <Property Name="EstimateInvoiceItemId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="EstInvoiceID" Type="int" />
+    <Property Name="EstInvoiceNo" Type="nvarchar" MaxLength="10" />
+    <Property Name="ItemId" Type="int" />
+    <Property Name="RatePerUnit" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Quantity" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="ItemTotal" Type="decimal" Precision="18" Scale="2" />
+  </EntityType>
+  <EntityType Name="tbl_Invoice">
+    <Key>
+      <PropertyRef Name="InvoiceID" />
+    </Key>
+    <Property Name="InvoiceID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="InvoiceNo" Type="nvarchar" MaxLength="10" />
+    <Property Name="CustomerID" Type="int" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="DueDate" Type="datetime" />
+    <Property Name="TermsID" Type="int" />
+    <Property Name="TaxPercent" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="TaxAmount" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="DiscountPercent" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Discount" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="InvoiceAmount" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="BalanceAmount" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="GrandTotal" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Posted" Type="int" />
+    <Property Name="IsDrafted" Type="bit" />
+    <Property Name="Memo" Type="nvarchar(max)" />
+    <Property Name="Description" Type="nvarchar(max)" />
+    <Property Name="IsCreditMemo" Type="bit" />
+    <Property Name="isPaid" Type="bit" />
+    <Property Name="ModifiedDate" Type="datetime" />
+    <Property Name="CreatedBy" Type="varchar" MaxLength="100" />
+    <Property Name="ModifiedBy" Type="int" />
+    <Property Name="Active" Type="bit" />
+    <Property Name="LateFee" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="InvoiceType" Type="varchar" MaxLength="50" />
+    <Property Name="OrderNo" Type="varchar" MaxLength="50" />
+    <Property Name="JobLocation" Type="varchar" MaxLength="100" />
+    <Property Name="JobPhone" Type="varchar" MaxLength="50" />
+    <Property Name="invCretaedDate" Type="datetime" />
+    <Property Name="MiscellaneousAmount" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="LaborAmount" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="MaterialAmount" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="SoldTo" Type="nvarchar" MaxLength="100" />
+    <Property Name="CreateByUserID" Type="int" />
+    <Property Name="CompanyId" Type="int" />
+    <Property Name="EquipmentAmount" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Companyname" Type="varchar" MaxLength="100" />
+    <Property Name="ItemID" Type="int" />
+    <Property Name="Quantity" Type="int" />
+    <Property Name="EstInvoiceID" Type="int" />
+    <Property Name="EstInvoiceNo" Type="nvarchar" MaxLength="10" />
+  </EntityType>
+  <EntityType Name="tbl_InvoiceItem">
+    <Key>
+      <PropertyRef Name="InvoiceItemId" />
+    </Key>
+    <Property Name="InvoiceItemId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Invoiceid" Type="int" />
+    <Property Name="Invoiceno" Type="nvarchar" MaxLength="10" />
+    <Property Name="ItemId" Type="int" />
+    <Property Name="RatePerUnit" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Quantity" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="ItemTotal" Type="decimal" Precision="18" Scale="2" />
+  </EntityType>
+  <EntityType Name="tbl_Items">
+    <Key>
+      <PropertyRef Name="ItemID" />
+    </Key>
+    <Property Name="ItemID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ItemTypeID" Type="int" />
+    <Property Name="MeasureID" Type="int" />
+    <Property Name="ItemLocID" Type="int" />
+    <Property Name="ItemCode" Type="nvarchar" MaxLength="20" />
+    <Property Name="ItemName" Type="nvarchar" MaxLength="50" />
+    <Property Name="Description" Type="nvarchar(max)" />
+    <Property Name="PrimaryVendorID" Type="int" />
+    <Property Name="AlternateVendorID" Type="int" />
+    <Property Name="AccountNO" Type="nvarchar" MaxLength="100" />
+    <Property Name="RateperUnit" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Saleprice" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="MinimumQty" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="ReorderQty" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="QtyonHand" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="ItemLocation" Type="nvarchar" MaxLength="50" />
+    <Property Name="ItemUnits" Type="nvarchar" MaxLength="50" />
+    <Property Name="Warranty" Type="nvarchar" MaxLength="10" />
+    <Property Name="Active" Type="bit" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="modifiedDate" Type="datetime" />
+    <Property Name="updatedby" Type="nvarchar" MaxLength="20" />
+    <Property Name="PartNumber" Type="nvarchar" MaxLength="50" />
+    <Property Name="CompanyID" Type="int" />
+    <Property Name="IsDeleted" Type="bit" />
+    <Property Name="NonStock" Type="bit" />
+    <Property Name="QtyCommitted" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="QtyOnOrder" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Checked" Type="bit" />
+    <Property Name="ManufacturerID" Type="int" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'Mentor.dbo.tbl_Itemtype' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="tbl_Itemtype">
+    <Key>
+      <PropertyRef Name="ItemtypeId" />
+    </Key>
+    <Property Name="ItemtypeId" Type="int" Nullable="false" />
+    <Property Name="Inventory" Type="varchar" MaxLength="100" />
+    <Property Name="NonInventory" Type="varchar" MaxLength="100" />
+    <Property Name="Service" Type="varchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="tbl_Menus">
+    <Key>
+      <PropertyRef Name="MenuId" />
+    </Key>
+    <Property Name="MenuId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="MenuDescription" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="NavigateURL" Type="nvarchar" MaxLength="50" />
+    <Property Name="ParentMenuId" Type="int" />
+    <Property Name="ActionName" Type="nvarchar" MaxLength="50" />
+    <Property Name="ControllerName" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="tbl_Payments">
+    <Key>
+      <PropertyRef Name="PaymentID" />
+    </Key>
+    <Property Name="PaymentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PaymentNo" Type="nvarchar" MaxLength="50" />
+    <Property Name="InvoiceID" Type="int" />
+    <Property Name="BatchID" Type="int" />
+    <Property Name="CheckNo" Type="nvarchar" MaxLength="50" />
+    <Property Name="InvoiceAmount" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="InvoiceBalance" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="LateFee" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Tax" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Discount" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Memo" Type="nvarchar(max)" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="AccountID" Type="int" />
+    <Property Name="CompanyID" Type="int" />
+    <Property Name="CustomerID" Type="int" />
+    <Property Name="IsMSAPayment" Type="bit" />
+    <Property Name="CreditCardNo" Type="nvarchar" MaxLength="30" />
+    <Property Name="ModifiedDate" Type="datetime" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="ModifiedBy" Type="int" />
+    <Property Name="Status" Type="varchar" MaxLength="50" />
+    <Property Name="PaymentMode" Type="nvarchar" MaxLength="20" />
+    <Property Name="AmountPaid" Type="decimal" Precision="18" Scale="2" />
+  </EntityType>
+  <EntityType Name="tbl_ProjectDetails">
+    <Key>
+      <PropertyRef Name="ProjectId" />
+    </Key>
+    <Property Name="ProjectId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Projectname" Type="varchar" MaxLength="200" />
+    <Property Name="Contact" Type="int" />
+    <Property Name="Status" Type="varchar" MaxLength="20" />
+    <Property Name="URL" Type="varchar" MaxLength="200" />
+    <Property Name="DateCreated" Type="datetime" />
+    <Property Name="Description" Type="varchar" MaxLength="2500" />
+  </EntityType>
+  <EntityType Name="tbl_RoleMenus">
+    <Key>
+      <PropertyRef Name="RoleMenuId" />
+    </Key>
+    <Property Name="RoleMenuId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="RoleId" Type="int" Nullable="false" />
+    <Property Name="MenuId" Type="int" Nullable="false" />
+    <Property Name="IsChecked" Type="bit" />
+  </EntityType>
+  <EntityType Name="tbl_ShowAllZIPCodes">
+    <Key>
+      <PropertyRef Name="ZIPCode" />
+    </Key>
+    <Property Name="ZIPCode" Type="nvarchar" MaxLength="5" Nullable="false" />
+    <Property Name="City" Type="nvarchar" MaxLength="28" />
+    <Property Name="StateAbbreviation" Type="nvarchar" MaxLength="2" />
+  </EntityType>
+  <EntityType Name="tbl_ZIPCodes">
+    <Key>
+      <PropertyRef Name="ZIPCode" />
+    </Key>
+    <Property Name="ZIPCode" Type="nvarchar" MaxLength="5" Nullable="false" />
+    <Property Name="Latitude" Type="nvarchar" MaxLength="10" />
+    <Property Name="Longitude" Type="nvarchar" MaxLength="10" />
+    <Property Name="Class" Type="nvarchar" MaxLength="1" />
+    <Property Name="City" Type="nvarchar" MaxLength="28" />
+    <Property Name="StateCode" Type="nvarchar" MaxLength="2" />
+  </EntityType>
+  <EntityType Name="UserAccessModules">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Userid" Type="bigint" Nullable="false" />
+    <Property Name="DashBoard" Type="bit" Nullable="false" />
+    <Property Name="Scheduler" Type="bit" Nullable="false" />
+    <Property Name="CRM" Type="bit" Nullable="false" />
+    <Property Name="ROI" Type="bit" Nullable="false" />
+    <Property Name="Applicants" Type="bit" Nullable="false" />
+    <Property Name="Jobs" Type="bit" Nullable="false" />
+    <Property Name="Timesheet" Type="bit" Nullable="false" />
+    <Property Name="Mail" Type="bit" Nullable="false" />
+    <Property Name="Reports" Type="bit" Nullable="false" />
+    <Property Name="Accounting" Type="bit" Nullable="false" />
+    <Property Name="Setup" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="UserAccessSetting">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Userid" Type="bigint" />
+    <Property Name="Branch" Type="varchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="users">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="LoginId" Type="varchar" MaxLength="200" Nullable="false" />
+    <Property Name="Password" Type="varchar" MaxLength="200" />
+    <Property Name="FirstName" Type="varchar" MaxLength="250" />
+    <Property Name="MiddleInitial" Type="varchar" MaxLength="50" />
+    <Property Name="LastName" Type="varchar" MaxLength="50" />
+    <Property Name="Phone" Type="varchar" MaxLength="20" />
+    <Property Name="PhoneExt" Type="varchar" MaxLength="20" />
+    <Property Name="Fax" Type="varchar" MaxLength="20" />
+    <Property Name="Email" Type="varchar" MaxLength="250" />
+    <Property Name="AddressLine1" Type="varchar" MaxLength="250" />
+    <Property Name="AddressLine2" Type="varchar" MaxLength="250" />
+    <Property Name="City" Type="varchar" MaxLength="100" />
+    <Property Name="State" Type="varchar" MaxLength="100" />
+    <Property Name="PostalCode" Type="nvarchar" MaxLength="50" />
+    <Property Name="Comment" Type="varchar" MaxLength="500" />
+    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="LastModified" Type="datetime" />
+    <Property Name="StateCode" Type="varchar" MaxLength="100" />
+    <Property Name="RoleId" Type="bigint" />
+    <Property Name="Status" Type="bit" />
+    <Property Name="ModifiedBy" Type="varchar" MaxLength="50" />
+    <Property Name="BranchId" Type="varchar" MaxLength="50" />
+    <Property Name="Cellno" Type="varchar" MaxLength="20" />
+    <Property Name="AccountId" Type="int" />
+    <Property Name="ContactId" Type="varchar" MaxLength="50" />
+    <Property Name="DateOfBirth" Type="datetime" />
+    <Property Name="IsAllowsedingSMS" Type="bit" />
+    <Property Name="SMTPEmail" Type="varchar" MaxLength="100" />
+    <Property Name="SMTPPassword" Type="varchar" MaxLength="100" />
+    <Property Name="SMTPAddress" Type="varchar" MaxLength="100" />
+    <Property Name="SMTPPort" Type="varchar" MaxLength="100" />
+    <Property Name="OutlookEmail" Type="varchar" MaxLength="50" />
+    <Property Name="Gender" Type="varchar" MaxLength="100" />
+    <Property Name="IsCorporate" Type="bit" />
+  </EntityType>
+  <EntityType Name="usStates">
+    <Key>
+      <PropertyRef Name="StateCode" />
+    </Key>
+    <Property Name="StateCode" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="StateName" Type="varchar" MaxLength="50" />
+    <Property Name="CountryCode" Type="varchar" MaxLength="20" />
+  </EntityType>
+  <EntityType Name="Venture">
+    <Key>
+      <PropertyRef Name="VentureId" />
+    </Key>
+    <Property Name="VentureId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="VentureName" Type="varchar" MaxLength="50" />
+    <Property Name="LeadMentor" Type="varchar" MaxLength="50" />
+    <Property Name="VmsStatusId" Type="int" />
+    <Property Name="PrimaryContact" Type="varchar" MaxLength="50" />
+    <Property Name="PrimaryEmail" Type="varchar" MaxLength="50" />
+    <Property Name="SecondaryContact" Type="varchar" MaxLength="50" />
+    <Property Name="SecondaryEmail" Type="varchar" MaxLength="50" />
+    <Property Name="DropBox" Type="varchar" MaxLength="500" />
+    <Property Name="Description" Type="varchar(max)" />
+    <Property Name="DropBoxFolder" Type="varchar" MaxLength="500" />
+    <Property Name="PublicDesc" Type="varchar(max)" />
+    <Property Name="ContactInfo" Type="varchar(max)" />
+    <Property Name="VmsMailList" Type="varchar" MaxLength="50" />
+    <Property Name="SignUpReturned" Type="varchar" MaxLength="50" />
+    <Property Name="Address" Type="varchar(max)" />
+    <Property Name="Address1" Type="varchar(max)" />
+    <Property Name="Phone" Type="varchar" MaxLength="50" />
+    <Property Name="Fax" Type="nchar" MaxLength="10" />
+    <Property Name="Cellular" Type="varchar" MaxLength="50" />
+    <Property Name="WebSite" Type="varchar" MaxLength="50" />
+    <Property Name="MITLink" Type="varchar" MaxLength="50" />
+    <Property Name="StudentIdeaBasedOnResearch" Type="bit" />
+    <Property Name="ResearchIdeaDisclosedToTLO" Type="bit" />
+    <Property Name="LegalEntityAtEnrollment" Type="bit" />
+    <Property Name="RefferedBy" Type="varchar" MaxLength="50" />
+    <Property Name="FirstMentorMeeting" Type="varchar" MaxLength="50" />
+    <Property Name="Comments" Type="varchar(max)" />
+    <Property Name="IntakeNotes" Type="varchar" MaxLength="50" />
+    <Property Name="IntakeNoteSummary" Type="varchar(max)" />
+    <Property Name="SecondContact" Type="varchar" MaxLength="50" />
+    <Property Name="Introduced" Type="bit" />
+    <Property Name="SeachIndex" Type="varchar(max)" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="ModifiedDate" Type="datetime" />
+    <Property Name="CreatedBY" Type="int" />
+    <Property Name="ModifiedBY" Type="int" />
+    <Property Name="UserId" Type="int" />
+  </EntityType>
+  <EntityType Name="VentureDetails">
+    <Key>
+      <PropertyRef Name="VentureDetailsId" />
+    </Key>
+    <Property Name="VentureDetailsId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Street" Type="varchar" MaxLength="100" />
+    <Property Name="City" Type="varchar" MaxLength="100" />
+    <Property Name="State" Type="varchar" MaxLength="50" />
+    <Property Name="ZIP" Type="varchar" MaxLength="50" />
+    <Property Name="IndustryCategoryName" Type="varchar" MaxLength="50" />
+    <Property Name="CategoryOthers" Type="varchar" MaxLength="100" />
+    <Property Name="PrimaryPhoneNo" Type="varchar" MaxLength="50" />
+    <Property Name="PrimaryRoleInVenture" Type="varchar" MaxLength="100" />
+    <Property Name="PrimaryColaborationAffiliation" Type="varchar" MaxLength="100" />
+    <Property Name="SecondaryPhoneNo" Type="varchar" MaxLength="50" />
+    <Property Name="SecondaryRoleInVenture" Type="varchar" MaxLength="100" />
+    <Property Name="ScondaryColaborationAffiliation" Type="varchar" MaxLength="100" />
+    <Property Name="Advertisement" Type="varchar(max)" />
+    <Property Name="WouldLikeToElaborateSpecifics" Type="varchar" MaxLength="200" />
+    <Property Name="WhatDoYouDo" Type="varchar(max)" />
+    <Property Name="WhatIsTheProblem" Type="varchar(max)" />
+    <Property Name="WhoHasIt" Type="varchar(max)" />
+    <Property Name="HowWillUSolveTheProblem" Type="varchar(max)" />
+    <Property Name="HowWillUMakeMoney" Type="varchar(max)" />
+    <Property Name="WhtIsTheSecretSauce" Type="varchar(max)" />
+    <Property Name="IsThereIP" Type="varchar(max)" />
+    <Property Name="WhatIsYourCurrentStatus" Type="varchar(max)" />
+    <Property Name="WhatTypeOfVMSHelpStartUpNeeds" Type="varchar(max)" />
+    <Property Name="VentureId" Type="bigint" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'Mentor.dbo.VMSHelp' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="VMSHelp">
+    <Key>
+      <PropertyRef Name="VMShelpId" />
+    </Key>
+    <Property Name="VMShelpId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="VMShelpName" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="VMSStatus">
+    <Key>
+      <PropertyRef Name="StatusId" />
+    </Key>
+    <Property Name="StatusId" Type="int" Nullable="false" />
+    <Property Name="Status" Type="varchar" MaxLength="50" />
+    <Property Name="Description" Type="varchar" MaxLength="200" />
+    <Property Name="IsActive" Type="bit" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'Mentor.dbo.tbl1' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="tbl1">
+    <Key>
+      <PropertyRef Name="logId" />
+    </Key>
+    <Property Name="logId" Type="numeric" Precision="10" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="activityId" Type="numeric" Precision="10" Scale="0" />
+    <Property Name="modifiedBy" Type="numeric" Precision="10" Scale="0" />
+    <Property Name="activityType" Type="varchar" MaxLength="50" />
+    <Property Name="status" Type="varchar" MaxLength="50" />
+    <Property Name="modifiedDate" Type="datetime" />
+    <Property Name="type" Type="varchar" MaxLength="50" />
+    <Property Name="assignedTo" Type="numeric" Precision="10" Scale="0" />
+    <Property Name="exportTest" Type="varchar" MaxLength="10" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'Mentor.dbo.tbl2' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="tbl2">
+    <Key>
+      <PropertyRef Name="logId" />
+    </Key>
+    <Property Name="logId" Type="numeric" Precision="10" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="activityId" Type="numeric" Precision="10" Scale="0" />
+    <Property Name="modifiedBy" Type="numeric" Precision="10" Scale="0" />
+    <Property Name="activityType" Type="varchar" MaxLength="50" />
+    <Property Name="status" Type="varchar" MaxLength="50" />
+    <Property Name="modifiedDate" Type="datetime" />
+    <Property Name="type" Type="varchar" MaxLength="50" />
+    <Property Name="assignedTo" Type="numeric" Precision="10" Scale="0" />
+    <Property Name="exportTest" Type="varchar" MaxLength="10" />
+  </EntityType>
+  <Function Name="Appointments_GetAllAppointmentsbyMentorId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="keyword" Type="varchar" Mode="In" />
+    <Parameter Name="StartIndex" Type="int" Mode="In" />
+    <Parameter Name="PageSize" Type="int" Mode="In" />
+    <Parameter Name="Sorting" Type="varchar" Mode="In" />
+    <Parameter Name="TotalRecordsCount" Type="int" Mode="InOut" />
+    <Parameter Name="Id" Type="bigint" Mode="In" />
+    <Parameter Name="IsMentor" Type="int" Mode="In" />
+    <Parameter Name="Isdashborad" Type="int" Mode="In" />
+    <Parameter Name="roleid" Type="int" Mode="In" />
+  </Function>
+  <Function Name="CandidateRating" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="varchar">
+    <Parameter Name="Keyword" Type="varchar" Mode="In" />
+    <Parameter Name="UserId" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="CRM_AccountContactDetailsByID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="OpprId" Type="int" Mode="In" />
+  </Function>
+  <Function Name="CRM_AccountOpportunityDetailsByID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="OpprId" Type="int" Mode="In" />
+  </Function>
+  <Function Name="CRM_AcivityDashboard_StatusCount" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="FromDate" Type="datetime" Mode="In" />
+    <Parameter Name="ToDate" Type="datetime" Mode="In" />
+  </Function>
+  <Function Name="CRM_ActivityDetailsByID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="ActivityId" Type="int" Mode="In" />
+  </Function>
+  <Function Name="CRM_Add_ContactType" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="contacttype" Type="varchar" Mode="In" />
+    <Parameter Name="Status" Type="bit" Mode="In" />
+    <Parameter Name="Description" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="CRM_Add_UserRoles" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="RoleName" Type="varchar" Mode="In" />
+    <Parameter Name="Status" Type="varchar" Mode="In" />
+    <Parameter Name="Description" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="CRM_AddEditCustomFields" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="FieldId" Type="bigint" Mode="In" />
+    <Parameter Name="UserID" Type="bigint" Mode="In" />
+    <Parameter Name="Module" Type="varchar" Mode="In" />
+    <Parameter Name="Column_Id" Type="int" Mode="In" />
+    <Parameter Name="ActualColumnName" Type="varchar" Mode="In" />
+    <Parameter Name="Column_Label" Type="varchar" Mode="In" />
+    <Parameter Name="Column_Description" Type="varchar" Mode="In" />
+    <Parameter Name="HoverText" Type="varchar" Mode="In" />
+    <Parameter Name="Column_Type" Type="varchar" Mode="In" />
+    <Parameter Name="InputDataType" Type="varchar" Mode="In" />
+    <Parameter Name="DefaultValue" Type="varchar" Mode="In" />
+    <Parameter Name="MaxLength" Type="int" Mode="In" />
+    <Parameter Name="RequiredField" Type="bit" Mode="In" />
+    <Parameter Name="IsActive" Type="bit" Mode="In" />
+    <Parameter Name="flag" Type="int" Mode="In" />
+  </Function>
+  <Function Name="CRM_AddEditCustomFieldsNew" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="FieldId" Type="bigint" Mode="In" />
+    <Parameter Name="UserID" Type="bigint" Mode="In" />
+    <Parameter Name="Module" Type="varchar" Mode="In" />
+    <Parameter Name="Column_Id" Type="int" Mode="In" />
+    <Parameter Name="ActualColumnName" Type="varchar" Mode="In" />
+    <Parameter Name="Column_Label" Type="varchar" Mode="In" />
+    <Parameter Name="Column_Description" Type="varchar" Mode="In" />
+    <Parameter Name="HoverText" Type="varchar" Mode="In" />
+    <Parameter Name="Column_Type" Type="varchar" Mode="In" />
+    <Parameter Name="InputDataType" Type="varchar" Mode="In" />
+    <Parameter Name="DefaultValue" Type="varchar" Mode="In" />
+    <Parameter Name="MaxLength" Type="int" Mode="In" />
+    <Parameter Name="RequiredField" Type="bit" Mode="In" />
+    <Parameter Name="IsActive" Type="bit" Mode="In" />
+    <Parameter Name="flag" Type="int" Mode="In" />
+    <Parameter Name="NewFieldId" Type="int" Mode="InOut" />
+  </Function>
+  <Function Name="CRM_AddItem" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="ItemTypeID" Type="int" Mode="In" />
+    <Parameter Name="MeasureID" Type="int" Mode="In" />
+    <Parameter Name="ItemLocID" Type="int" Mode="In" />
+    <Parameter Name="ItemCode" Type="nvarchar" Mode="In" />
+    <Parameter Name="ItemName" Type="nvarchar" Mode="In" />
+    <Parameter Name="Description" Type="nvarchar(max)" Mode="In" />
+    <Parameter Name="PrimaryVendorID" Type="int" Mode="In" />
+    <Parameter Name="AlternateVendorID" Type="int" Mode="In" />
+    <Parameter Name="AccountNO" Type="nvarchar" Mode="In" />
+    <Parameter Name="RateperUnit" Type="decimal" Mode="In" />
+    <Parameter Name="Saleprice" Type="decimal" Mode="In" />
+    <Parameter Name="MinimumQty" Type="decimal" Mode="In" />
+    <Parameter Name="ReorderQty" Type="decimal" Mode="In" />
+    <Parameter Name="QtyonHand" Type="decimal" Mode="In" />
+    <Parameter Name="ItemLocation" Type="nvarchar" Mode="In" />
+    <Parameter Name="ItemUnits" Type="nvarchar" Mode="In" />
+    <Parameter Name="Warranty" Type="nvarchar" Mode="In" />
+    <Parameter Name="Active" Type="bit" Mode="In" />
+    <Parameter Name="CreatedDate" Type="datetime" Mode="In" />
+    <Parameter Name="modifiedDate" Type="datetime" Mode="In" />
+    <Parameter Name="updatedby" Type="nvarchar" Mode="In" />
+    <Parameter Name="PartNumber" Type="nvarchar" Mode="In" />
+    <Parameter Name="CompanyID" Type="int" Mode="In" />
+    <Parameter Name="IsDeleted" Type="bit" Mode="In" />
+    <Parameter Name="NonStock" Type="bit" Mode="In" />
+    <Parameter Name="QtyCommitted" Type="decimal" Mode="In" />
+    <Parameter Name="QtyOnOrder" Type="decimal" Mode="In" />
+    <Parameter Name="Checked" Type="bit" Mode="In" />
+    <Parameter Name="ManufacturerID" Type="int" Mode="In" />
+  </Function>
+  <Function Name="CRM_Addproject" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Projectname" Type="varchar" Mode="In" />
+    <Parameter Name="Contact" Type="int" Mode="In" />
+    <Parameter Name="Status" Type="varchar" Mode="In" />
+    <Parameter Name="URL" Type="varchar" Mode="In" />
+    <Parameter Name="DateCreated" Type="datetime" Mode="In" />
+    <Parameter Name="Description" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="CRM_addUpdateCompanySetup" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="name" Type="varchar" Mode="In" />
+    <Parameter Name="adminEmail" Type="varchar" Mode="In" />
+    <Parameter Name="logoFileName" Type="varchar" Mode="In" />
+    <Parameter Name="modifiedBy" Type="varchar" Mode="In" />
+    <Parameter Name="URL" Type="varchar" Mode="In" />
+    <Parameter Name="twitterId" Type="varchar" Mode="In" />
+    <Parameter Name="twitterPWD" Type="varchar" Mode="In" />
+    <Parameter Name="facebookId" Type="varchar" Mode="In" />
+    <Parameter Name="facebookPWD" Type="varchar" Mode="In" />
+    <Parameter Name="linkedInId" Type="varchar" Mode="In" />
+    <Parameter Name="linkedInPWD" Type="varchar" Mode="In" />
+    <Parameter Name="logoImage" Type="varchar" Mode="In" />
+    <Parameter Name="CompanyURL" Type="varchar" Mode="In" />
+    <Parameter Name="JoinNowLogo" Type="varchar" Mode="In" />
+    <Parameter Name="From" Type="varchar" Mode="In" />
+    <Parameter Name="AssociateBranch" Type="int" Mode="In" />
+    <Parameter Name="Position" Type="varchar" Mode="In" />
+    <Parameter Name="HomeContent" Type="varchar(max)" Mode="In" />
+    <Parameter Name="TimeZone" Type="varchar" Mode="In" />
+    <Parameter Name="CalculatePTOOn" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="CRM_checkUsers" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="loginId" Type="varchar" Mode="In" />
+    <Parameter Name="IsExists" Type="int" Mode="InOut" />
+  </Function>
+  <Function Name="CRM_CreateBranch" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="branchName" Type="varchar" Mode="In" />
+    <Parameter Name="addressLine1" Type="varchar" Mode="In" />
+    <Parameter Name="addressLine2" Type="varchar" Mode="In" />
+    <Parameter Name="city" Type="varchar" Mode="In" />
+    <Parameter Name="stateCode" Type="varchar" Mode="In" />
+    <Parameter Name="postalCode" Type="varchar" Mode="In" />
+    <Parameter Name="mobile" Type="varchar" Mode="In" />
+    <Parameter Name="phoneExt" Type="varchar" Mode="In" />
+    <Parameter Name="fax" Type="varchar" Mode="In" />
+    <Parameter Name="email" Type="varchar" Mode="In" />
+    <Parameter Name="comment" Type="varchar" Mode="In" />
+    <Parameter Name="otherState" Type="varchar" Mode="In" />
+    <Parameter Name="routingEmail" Type="varchar" Mode="In" />
+    <Parameter Name="BranchType" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="CRM_Custom_Manage_Dynamic_Fields" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="CutomFieldId" Type="bigint" Mode="In" />
+    <Parameter Name="IsActive" Type="int" Mode="In" />
+    <Parameter Name="flag" Type="int" Mode="In" />
+  </Function>
+  <Function Name="CRM_Dashboard_ChartStatusCount" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="CRM_DashBoard_GetData_ActivityDashBoard" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="UserId" Type="varchar" Mode="In" />
+    <Parameter Name="RoleId" Type="varchar" Mode="In" />
+    <Parameter Name="OfficeId" Type="varchar" Mode="In" />
+    <Parameter Name="FromDate" Type="datetime" Mode="In" />
+    <Parameter Name="ToDate" Type="datetime" Mode="In" />
+    <Parameter Name="flag" Type="int" Mode="In" />
+  </Function>
+  <Function Name="CRM_Dashboard_ModulesCountdetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="loginID" Type="varchar" Mode="In" />
+    <Parameter Name="roleId" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="CRM_Dashboard_PaymentsDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="CRM_deleteBranchByBranchId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="branchId" Type="int" Mode="In" />
+  </Function>
+  <Function Name="CRM_DeleteCandidate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="userid" Type="int" Mode="In" />
+  </Function>
+  <Function Name="CRM_DeleteCustomfields" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="FieldId" Type="bigint" Mode="In" />
+  </Function>
+  <Function Name="CRM_deleteItemByItemId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="ItemID" Type="int" Mode="In" />
+  </Function>
+  <Function Name="CRM_DeleteMenu" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="MenuID" Type="bigint" Mode="In" />
+  </Function>
+  <Function Name="CRM_deleteProjectByProjectId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="projectId" Type="int" Mode="In" />
+  </Function>
+  <Function Name="CRM_DeleteSMSProvider" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="ID" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="CRM_DeleteTask" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="historyId" Type="numeric" Mode="In" />
+  </Function>
+  <Function Name="CRM_Dshbord_ActivitymoduleCount" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="CRM_EmailExistsOrNot" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="email" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="CRM_ExportCompaniesDatawithCustomField" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="office" Type="varchar" Mode="In" />
+    <Parameter Name="RoleID" Type="varchar" Mode="In" />
+    <Parameter Name="logInId" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="CRM_ExportCompaniesDate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Account_office" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="CRM_Get_Activity_Notifications" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="loginId" Type="varchar" Mode="In" />
+    <Parameter Name="roleid" Type="varchar" Mode="In" />
+    <Parameter Name="FromDate" Type="varchar" Mode="In" />
+    <Parameter Name="ToDate" Type="varchar" Mode="In" />
+    <Parameter Name="officeId" Type="varchar" Mode="In" />
+    <Parameter Name="employeeId" Type="varchar" Mode="In" />
+    <Parameter Name="Keyword" Type="varchar" Mode="In" />
+    <Parameter Name="StartIndex" Type="int" Mode="In" />
+    <Parameter Name="PageSize" Type="int" Mode="In" />
+    <Parameter Name="Sorting" Type="varchar" Mode="In" />
+    <Parameter Name="Status" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="CRM_GET_ACTIVTY_TYPE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="type" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="CRM_GET_ALL_Opportunity_Count" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="office" Type="varchar" Mode="In" />
+    <Parameter Name="roleId" Type="varchar" Mode="In" />
+    <Parameter Name="loginID" Type="varchar" Mode="In" />
+    <Parameter Name="FromDate" Type="varchar" Mode="In" />
+    <Parameter Name="ToDate" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="CRM_GET_AllContactTypes" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Contacttype" Type="varchar" Mode="In" />
+    <Parameter Name="Status" Type="varchar" Mode="In" />
+    <Parameter Name="StartIndex" Type="int" Mode="In" />
+    <Parameter Name="PageSize" Type="int" Mode="In" />
+    <Parameter Name="Sorting" Type="varchar" Mode="In" />
+    <Parameter Name="TotalRecordsCount" Type="int" Mode="InOut" />
+  </Function>
+  <Function Name="CRM_GET_ContactIdfrmAcntId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="AccountId" Type="int" Mode="In" />
+  </Function>
+  <Function Name="CRM_Get_Contacts_Projects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="office" Type="varchar" Mode="In" />
+    <Parameter Name="roleId" Type="varchar" Mode="In" />
+    <Parameter Name="loginID" Type="varchar" Mode="In" />
+    <Parameter Name="StartIndex" Type="int" Mode="In" />
+    <Parameter Name="PageSize" Type="int" Mode="In" />
+    <Parameter Name="Sorting" Type="varchar" Mode="In" />
+    <Parameter Name="TotalRecords" Type="int" Mode="InOut" />
+  </Function>
+  <Function Name="CRM_GET_ESTIMATEINVOICEDETAILSBY_ID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="EstInvoiceId" Type="int" Mode="In" />
+  </Function>
+  <Function Name="CRM_GET_INVOICELIST_BYCUSID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="CustomerId" Type="int" Mode="In" />
+  </Function>
+  <Function Name="CRM_GET_Projectslist" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Projectname" Type="varchar" Mode="In" />
+    <Parameter Name="Status" Type="varchar" Mode="In" />
+    <Parameter Name="StartIndex" Type="int" Mode="In" />
+    <Parameter Name="PageSize" Type="int" Mode="In" />
+    <Parameter Name="Sorting" Type="varchar" Mode="In" />
+    <Parameter Name="TotalRecordsCount" Type="int" Mode="InOut" />
+  </Function>
+  <Function Name="CRM_GET_SystemSetup" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="CRM_Get_Username" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="firstname" Type="varchar(max)" Mode="In" />
+    <Parameter Name="lastname" Type="varchar(max)" Mode="In" />
+  </Function>
+  <Function Name="CRM_GetAccountIdFromCompanyName" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="CompanyName" Type="varchar" Mode="In" />
+    <Parameter Name="outCompanyId" Type="int" Mode="InOut" />
+  </Function>
+  <Function Name="CRM_GetActivitiesListByCompanyID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="ID" Type="int" Mode="In" />
+    <Parameter Name="AccountType" Type="int" Mode="In" />
+    <Parameter Name="Module" Type="varchar" Mode="In" />
+    <Parameter Name="StartIndex" Type="int" Mode="In" />
+    <Parameter Name="PageSize" Type="int" Mode="In" />
+    <Parameter Name="Sorting" Type="varchar" Mode="In" />
+    <Parameter Name="TotalRecordsCount" Type="int" Mode="InOut" />
+  </Function>
+  <Function Name="CRM_GetActivityByType" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="type" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="CRM_getAdmin" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="CRM_GetAdminDetail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="userId" Type="int" Mode="In" />
+  </Function>
+  <Function Name="CRM_GETALL_Activities" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="keyword" Type="varchar" Mode="In" />
+    <Parameter Name="Type" Type="varchar" Mode="In" />
+    <Parameter Name="Priority" Type="varchar" Mode="In" />
+    <Parameter Name="Status" Type="varchar" Mode="In" />
+    <Parameter Name="StartIndex" Type="int" Mode="In" />
+    <Parameter Name="PageSize" Type="int" Mode="In" />
+    <Parameter Name="Sorting" Type="varchar" Mode="In" />
+    <Parameter Name="TotalRecordsCount" Type="int" Mode="InOut" />
+  </Function>
+  <Function Name="CRM_GETALL_Projectslist" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Projectname" Type="varchar" Mode="In" />
+    <Parameter Name="Status" Type="varchar" Mode="In" />
+    <Parameter Name="StartIndex" Type="int" Mode="In" />
+    <Parameter Name="PageSize" Type="int" Mode="In" />
+    <Parameter Name="Sorting" Type="varchar" Mode="In" />
+    <Parameter Name="TotalRecordsCount" Type="int" Mode="InOut" />
+  </Function>
+  <Function Name="CRM_GetAllAccountContacts" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Createdby" Type="int" Mode="In" />
+    <Parameter Name="keyword" Type="varchar" Mode="In" />
+    <Parameter Name="CompanyID" Type="int" Mode="In" />
+    <Parameter Name="OwnerID" Type="int" Mode="In" />
+    <Parameter Name="StartIndex" Type="int" Mode="In" />
+    <Parameter Name="PageSize" Type="int" Mode="In" />
+    <Parameter Name="Sorting" Type="varchar" Mode="In" />
+    <Parameter Name="TotalRecordsCount" Type="int" Mode="InOut" />
+  </Function>
+  <Function Name="CRM_GetAllAccountLeads" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="keyword" Type="varchar" Mode="In" />
+    <Parameter Name="OwnerID" Type="int" Mode="In" />
+    <Parameter Name="StartIndex" Type="int" Mode="In" />
+    <Parameter Name="PageSize" Type="int" Mode="In" />
+    <Parameter Name="Sorting" Type="varchar" Mode="In" />
+    <Parameter Name="TotalRecordsCount" Type="int" Mode="InOut" />
+  </Function>
+  <Function Name="CRM_GetAllAccountOpportunities" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="keyword" Type="varchar" Mode="In" />
+    <Parameter Name="CompanyID" Type="int" Mode="In" />
+    <Parameter Name="OwnerID" Type="int" Mode="In" />
+    <Parameter Name="StageID" Type="int" Mode="In" />
+    <Parameter Name="StartIndex" Type="int" Mode="In" />
+    <Parameter Name="PageSize" Type="int" Mode="In" />
+    <Parameter Name="Sorting" Type="varchar" Mode="In" />
+    <Parameter Name="TotalRecordsCount" Type="int" Mode="InOut" />
+  </Function>
+  <Function Name="CRM_GetAllActivitiesList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="keyword" Type="varchar" Mode="In" />
+    <Parameter Name="Userid" Type="int" Mode="In" />
+    <Parameter Name="roleid" Type="int" Mode="In" />
+    <Parameter Name="StartIndex" Type="int" Mode="In" />
+    <Parameter Name="PageSize" Type="int" Mode="In" />
+    <Parameter Name="Sorting" Type="varchar" Mode="In" />
+    <Parameter Name="TotalRecordsCount" Type="int" Mode="InOut" />
+  </Function>
+  <Function Name="CRM_GetAllBranchList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Name" Type="varchar" Mode="In" />
+    <Parameter Name="Email" Type="varchar" Mode="In" />
+    <Parameter Name="City" Type="varchar" Mode="In" />
+    <Parameter Name="Phone" Type="nvarchar" Mode="In" />
+    <Parameter Name="Keyword" Type="varchar" Mode="In" />
+    <Parameter Name="state" Type="varchar" Mode="In" />
+    <Parameter Name="zip" Type="varchar" Mode="In" />
+    <Parameter Name="StartIndex" Type="int" Mode="In" />
+    <Parameter Name="PageSize" Type="int" Mode="In" />
+    <Parameter Name="Sorting" Type="varchar" Mode="In" />
+    <Parameter Name="TotalRecordsCount" Type="int" Mode="InOut" />
+  </Function>
+  <Function Name="CRM_GetAllCompanies" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="keyword" Type="varchar" Mode="In" />
+    <Parameter Name="OwnerID" Type="int" Mode="In" />
+    <Parameter Name="StartIndex" Type="int" Mode="In" />
+    <Parameter Name="PageSize" Type="int" Mode="In" />
+    <Parameter Name="Sorting" Type="varchar" Mode="In" />
+    <Parameter Name="TotalRecordsCount" Type="int" Mode="InOut" />
+  </Function>
+  <Function Name="CRM_GetAllCompanyContacts" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="CompanyID" Type="int" Mode="In" />
+    <Parameter Name="StartIndex" Type="int" Mode="In" />
+    <Parameter Name="PageSize" Type="int" Mode="In" />
+    <Parameter Name="Sorting" Type="varchar" Mode="In" />
+    <Parameter Name="TotalRecordsCount" Type="int" Mode="InOut" />
+  </Function>
+  <Function Name="CRM_GetAllEstimateInvoicesList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="StartIndex" Type="int" Mode="In" />
+    <Parameter Name="PageSize" Type="int" Mode="In" />
+    <Parameter Name="Sorting" Type="varchar" Mode="In" />
+    <Parameter Name="TotalRecords" Type="int" Mode="InOut" />
+  </Function>
+  <Function Name="CRM_GetAllInvoicesList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="QueryType" Type="varchar" Mode="In" />
+    <Parameter Name="StartIndex" Type="int" Mode="In" />
+    <Parameter Name="PageSize" Type="int" Mode="In" />
+    <Parameter Name="Sorting" Type="varchar" Mode="In" />
+    <Parameter Name="TotalRecords" Type="int" Mode="InOut" />
+  </Function>
+  <Function Name="CRM_GETALLMentoringNotifications" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="keyword" Type="varchar" Mode="In" />
+    <Parameter Name="id" Type="int" Mode="In" />
+    <Parameter Name="roleid" Type="int" Mode="In" />
+    <Parameter Name="StartIndex" Type="int" Mode="In" />
+    <Parameter Name="PageSize" Type="int" Mode="In" />
+    <Parameter Name="Sorting" Type="varchar" Mode="In" />
+    <Parameter Name="TotalRecordsCount" Type="int" Mode="InOut" />
+  </Function>
+  <Function Name="CRM_GETALLNotification" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="StartIndex" Type="int" Mode="In" />
+    <Parameter Name="PageSize" Type="int" Mode="In" />
+    <Parameter Name="Sorting" Type="varchar" Mode="In" />
+    <Parameter Name="TotalRecordsCount" Type="int" Mode="InOut" />
+  </Function>
+  <Function Name="CRM_GetAllOpportunitiesList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="StartIndex" Type="int" Mode="In" />
+    <Parameter Name="PageSize" Type="int" Mode="In" />
+    <Parameter Name="Sorting" Type="varchar" Mode="In" />
+    <Parameter Name="TotalRecordsCount" Type="int" Mode="InOut" />
+  </Function>
+  <Function Name="CRM_GetAllPaymentsbyinvoiceId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="invoiceid" Type="varchar" Mode="In" />
+    <Parameter Name="StartIndex" Type="int" Mode="In" />
+    <Parameter Name="PageSize" Type="int" Mode="In" />
+    <Parameter Name="Sorting" Type="varchar" Mode="In" />
+    <Parameter Name="TotalRecords" Type="int" Mode="InOut" />
+  </Function>
+  <Function Name="CRM_getBranchDetailByBranchId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="branchId" Type="int" Mode="In" />
+  </Function>
+  <Function Name="CRM_GetBranchListAll" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="CRM_GetCompanyInvoicesList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="companyId" Type="int" Mode="In" />
+    <Parameter Name="QueryType" Type="varchar" Mode="In" />
+    <Parameter Name="StartIndex" Type="int" Mode="In" />
+    <Parameter Name="PageSize" Type="int" Mode="In" />
+    <Parameter Name="Sorting" Type="varchar" Mode="In" />
+    <Parameter Name="TotalRecords" Type="int" Mode="InOut" />
+  </Function>
+  <Function Name="CRM_GetContactActivityType" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="CRM_GetContactIdfrmFName" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Fname" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="CRM_GETCONTACTMAILS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Type" Type="varchar" Mode="In" />
+    <Parameter Name="sender" Type="varchar" Mode="In" />
+    <Parameter Name="subject" Type="varchar" Mode="In" />
+    <Parameter Name="body" Type="varchar" Mode="In" />
+    <Parameter Name="loginid" Type="varchar" Mode="In" />
+    <Parameter Name="userid" Type="varchar" Mode="In" />
+    <Parameter Name="StartIndex" Type="int" Mode="In" />
+    <Parameter Name="PageSize" Type="int" Mode="In" />
+    <Parameter Name="Sorting" Type="varchar" Mode="In" />
+    <Parameter Name="TotalRecordsCount" Type="int" Mode="InOut" />
+  </Function>
+  <Function Name="CRM_GETCONTACTSFORCOMPANY" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="CompanyId" Type="bigint" Mode="In" />
+  </Function>
+  <Function Name="CRM_GetCountryIdFromCountryName" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="CountryName" Type="varchar" Mode="In" />
+    <Parameter Name="outCountryId" Type="int" Mode="InOut" />
+  </Function>
+  <Function Name="CRM_GetCustomFields" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="UserID" Type="bigint" Mode="In" />
+    <Parameter Name="Module" Type="varchar" Mode="In" />
+    <Parameter Name="flag" Type="int" Mode="In" />
+  </Function>
+  <Function Name="CRM_GetCustomFieldsbyFieldId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="FieldId" Type="bigint" Mode="In" />
+  </Function>
+  <Function Name="CRM_GetDynamicMenuByRoleId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="RoleId" Type="int" Mode="In" />
+  </Function>
+  <Function Name="CRM_GETEMPLOYEENotification" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="employeeId" Type="varchar" Mode="In" />
+    <Parameter Name="Status" Type="varchar" Mode="In" />
+    <Parameter Name="Sorting" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="CRM_GETINVOICEDETAILSBYINVID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="InvoiceId" Type="int" Mode="In" />
+  </Function>
+  <Function Name="CRM_GETItemByItemID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="ItemID" Type="int" Mode="In" />
+  </Function>
+  <Function Name="CRM_GetLeadActivityType" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="CRM_GetLevels" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="crm_GetMenubyMenuId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="MenuID" Type="int" Mode="In" />
+  </Function>
+  <Function Name="CRM_GetMenuByRoleId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="RoleId" Type="int" Mode="In" />
+  </Function>
+  <Function Name="CRM_GetMenus" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="CRM_GetMenusbyMenuId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="MenuID" Type="int" Mode="In" />
+  </Function>
+  <Function Name="CRM_GetNotificationsList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="CRM_getprojectById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="ProjectId" Type="int" Mode="In" />
+  </Function>
+  <Function Name="CRM_GETProjectDetailsByProjectID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="ProjectId" Type="int" Mode="In" />
+  </Function>
+  <Function Name="CRM_getSalesRepresentative" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="loginID" Type="varchar" Mode="In" />
+    <Parameter Name="RoleID" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="CRM_GetSMSProvider" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="CRM_GetSMSProviderbyID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="ID" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="CRM_GetState" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="CRM_GetStatecode" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="CRM_GetStateIdFromStateName" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="StateName" Type="varchar" Mode="In" />
+    <Parameter Name="outStateId" Type="int" Mode="InOut" />
+  </Function>
+  <Function Name="CRM_GetUserBranch" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="loginID" Type="varchar" Mode="In" />
+    <Parameter Name="RoleID" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="CRM_GetUserBranchbyBranchId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="loginID" Type="varchar" Mode="In" />
+    <Parameter Name="RoleID" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="CRM_GetUserBranchList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="loginID" Type="varchar" Mode="In" />
+    <Parameter Name="RoleId" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="CRM_GetUSERIdFromUSERName" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="UserName" Type="varchar" Mode="In" />
+    <Parameter Name="outUserId" Type="int" Mode="InOut" />
+  </Function>
+  <Function Name="CRM_getUsers" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="BranchId" Type="int" Mode="In" />
+  </Function>
+  <Function Name="CRM_GetUsersByRole" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="name" Type="varchar" Mode="In" />
+    <Parameter Name="email" Type="varchar" Mode="In" />
+    <Parameter Name="roleId" Type="varchar" Mode="In" />
+    <Parameter Name="logInId" Type="varchar" Mode="In" />
+    <Parameter Name="StartIndex" Type="int" Mode="In" />
+    <Parameter Name="PageSize" Type="int" Mode="In" />
+    <Parameter Name="Sorting" Type="varchar" Mode="In" />
+    <Parameter Name="TotalRecordsCount" Type="int" Mode="InOut" />
+  </Function>
+  <Function Name="CRM_GetUsersListByRoleId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="loginId" Type="varchar" Mode="In" />
+    <Parameter Name="roleId" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="CRM_INSERT_UPDATE_LEAD_ACTIVITY" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="LeadhistoryId" Type="bigint" Mode="In" />
+    <Parameter Name="HistoryType" Type="varchar" Mode="In" />
+    <Parameter Name="startTime" Type="varchar" Mode="In" />
+    <Parameter Name="endtime" Type="varchar" Mode="In" />
+    <Parameter Name="status" Type="varchar" Mode="In" />
+    <Parameter Name="details" Type="varchar" Mode="In" />
+    <Parameter Name="CreatedBy" Type="varchar" Mode="In" />
+    <Parameter Name="eventType" Type="varchar" Mode="In" />
+    <Parameter Name="Leadid" Type="bigint" Mode="In" />
+    <Parameter Name="startDate" Type="datetime" Mode="In" />
+    <Parameter Name="priority" Type="varchar" Mode="In" />
+    <Parameter Name="remindDate" Type="varchar" Mode="In" />
+    <Parameter Name="remindTime" Type="varchar" Mode="In" />
+    <Parameter Name="completedDate" Type="datetime" Mode="In" />
+    <Parameter Name="assignedTo" Type="varchar" Mode="In" />
+    <Parameter Name="AccountId" Type="varchar" Mode="In" />
+    <Parameter Name="AccountName" Type="varchar" Mode="In" />
+    <Parameter Name="NotificationFlag" Type="bit" Mode="In" />
+    <Parameter Name="ActivityAttachment" Type="varchar" Mode="In" />
+    <Parameter Name="CreatedDate" Type="varchar" Mode="In" />
+    <Parameter Name="LeadHisId" Type="int" Mode="InOut" />
+  </Function>
+  <Function Name="CRM_InsertDashBoardDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="CRM_InsertErrorLog" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="ErrorMessage" Type="nvarchar(max)" Mode="In" />
+    <Parameter Name="ErrorPage" Type="nvarchar(max)" Mode="In" />
+    <Parameter Name="CreatedDate" Type="datetime" Mode="In" />
+  </Function>
+  <Function Name="CRM_InsertMenu" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="MenuDescription" Type="nvarchar" Mode="In" />
+    <Parameter Name="NavigateURL" Type="nvarchar" Mode="In" />
+    <Parameter Name="ParentMenuId" Type="int" Mode="In" />
+  </Function>
+  <Function Name="CRM_InsertMenuForRole" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="CRM_InsertOpportunityDetail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Lead_Name" Type="varchar" Mode="In" />
+    <Parameter Name="Title" Type="varchar" Mode="In" />
+    <Parameter Name="Phone" Type="varchar" Mode="In" />
+    <Parameter Name="fax" Type="varchar" Mode="In" />
+    <Parameter Name="Email" Type="nvarchar" Mode="In" />
+    <Parameter Name="Mobile" Type="varchar" Mode="In" />
+    <Parameter Name="PreferTime" Type="nvarchar" Mode="In" />
+    <Parameter Name="PreferMode" Type="nvarchar" Mode="In" />
+    <Parameter Name="EmailOptOut" Type="varchar" Mode="In" />
+    <Parameter Name="AccountId" Type="nvarchar" Mode="In" />
+    <Parameter Name="AccountName" Type="varchar" Mode="In" />
+    <Parameter Name="webSite" Type="varchar" Mode="In" />
+    <Parameter Name="Ownership" Type="varchar" Mode="In" />
+    <Parameter Name="Employees" Type="varchar" Mode="In" />
+    <Parameter Name="Industry" Type="varchar" Mode="In" />
+    <Parameter Name="AnnualRevenue" Type="nvarchar" Mode="In" />
+    <Parameter Name="Rating" Type="nvarchar" Mode="In" />
+    <Parameter Name="LeadStatus" Type="nvarchar" Mode="In" />
+    <Parameter Name="CurrentApplication" Type="nvarchar" Mode="In" />
+    <Parameter Name="mailingAddress" Type="varchar" Mode="In" />
+    <Parameter Name="mailingstreet" Type="varchar" Mode="In" />
+    <Parameter Name="mailingcity" Type="varchar" Mode="In" />
+    <Parameter Name="mailingstate" Type="varchar" Mode="In" />
+    <Parameter Name="mailingzip" Type="nvarchar" Mode="In" />
+    <Parameter Name="mailingcountry" Type="varchar" Mode="In" />
+    <Parameter Name="salesMgr1" Type="varchar" Mode="In" />
+    <Parameter Name="salesMgr2" Type="varchar" Mode="In" />
+    <Parameter Name="office" Type="varchar" Mode="In" />
+    <Parameter Name="CreatedBy" Type="bigint" Mode="In" />
+    <Parameter Name="ModifiedBy" Type="bigint" Mode="In" />
+    <Parameter Name="description" Type="varchar" Mode="In" />
+    <Parameter Name="Source" Type="varchar" Mode="In" />
+    <Parameter Name="LeadAssigned" Type="bigint" Mode="In" />
+    <Parameter Name="LeadStage" Type="varchar" Mode="In" />
+    <Parameter Name="FacebookUserName" Type="varchar" Mode="In" />
+    <Parameter Name="TwitterUserName" Type="varchar" Mode="In" />
+    <Parameter Name="LinkedInUserName" Type="varchar" Mode="In" />
+    <Parameter Name="GooglePlusUserName" Type="varchar" Mode="In" />
+    <Parameter Name="PInterestUserName" Type="varchar" Mode="In" />
+    <Parameter Name="SkypeUsername" Type="varchar" Mode="In" />
+    <Parameter Name="EstimatedCloseDate" Type="datetime" Mode="In" />
+    <Parameter Name="NextStep" Type="varchar" Mode="In" />
+    <Parameter Name="Probability" Type="varchar" Mode="In" />
+    <Parameter Name="BusinessType" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="CRM_InsertSMSProvider" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="providerName" Type="varchar" Mode="In" />
+    <Parameter Name="providerURL" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="CRM_InvoicePayment_ChartStatusCount" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="CRM_IscolumnlabelExists" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="columnlabel" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="CRM_IscolumnlabelExistsForModule" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="columnlabel" Type="varchar" Mode="In" />
+    <Parameter Name="modulename" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="CRM_IsCompanyExists" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="companyname" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="CRM_IsContactExists" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="contactname" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="CRM_LeadsColumnChart" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="CRM_LoadCustomFields" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="FilterExpression" Type="nvarchar(max)" Mode="In" />
+    <Parameter Name="Module" Type="varchar" Mode="In" />
+    <Parameter Name="logInId" Type="bigint" Mode="In" />
+    <Parameter Name="StartIndex" Type="int" Mode="In" />
+    <Parameter Name="PageSize" Type="int" Mode="In" />
+    <Parameter Name="Sorting" Type="varchar" Mode="In" />
+    <Parameter Name="TotalRecordsCount" Type="int" Mode="InOut" />
+  </Function>
+  <Function Name="CRM_LoadSMSProvidersList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="logInId" Type="bigint" Mode="In" />
+    <Parameter Name="roleId" Type="int" Mode="In" />
+    <Parameter Name="StartIndex" Type="int" Mode="In" />
+    <Parameter Name="PageSize" Type="int" Mode="In" />
+    <Parameter Name="Sorting" Type="varchar" Mode="In" />
+    <Parameter Name="TotalRecordsCount" Type="int" Mode="InOut" />
+  </Function>
+  <Function Name="CRM_MenusBinding" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="CRM_OpportunityChart" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="CRM_OpportunityDetailsByID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="OpprId" Type="int" Mode="In" />
+  </Function>
+  <Function Name="CRM_PieChart" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="CRM_procCreateAdmin" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="firstName" Type="varchar" Mode="In" />
+    <Parameter Name="middleInitial" Type="varchar" Mode="In" />
+    <Parameter Name="lastName" Type="varchar" Mode="In" />
+    <Parameter Name="addressLine1" Type="varchar" Mode="In" />
+    <Parameter Name="addressLine2" Type="varchar" Mode="In" />
+    <Parameter Name="city" Type="varchar" Mode="In" />
+    <Parameter Name="stateCode" Type="varchar" Mode="In" />
+    <Parameter Name="postalCode" Type="varchar" Mode="In" />
+    <Parameter Name="mobile" Type="varchar" Mode="In" />
+    <Parameter Name="phoneExt" Type="varchar" Mode="In" />
+    <Parameter Name="fax" Type="varchar" Mode="In" />
+    <Parameter Name="email" Type="varchar" Mode="In" />
+    <Parameter Name="comment" Type="varchar" Mode="In" />
+    <Parameter Name="OutlookEmail" Type="varchar" Mode="In" />
+    <Parameter Name="level" Type="numeric" Mode="In" />
+    <Parameter Name="branch" Type="varchar" Mode="In" />
+    <Parameter Name="cellno" Type="varchar" Mode="In" />
+    <Parameter Name="isCorporate" Type="bit" Mode="In" />
+    <Parameter Name="isSMS" Type="bit" Mode="In" />
+    <Parameter Name="smsEmail" Type="varchar" Mode="In" />
+    <Parameter Name="smsPwd" Type="varchar" Mode="In" />
+    <Parameter Name="smsSMTP" Type="varchar" Mode="In" />
+    <Parameter Name="smsPort" Type="varchar" Mode="In" />
+    <Parameter Name="loginId" Type="varchar" Mode="In" />
+    <Parameter Name="Password" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="CRM_SearchAdminList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Name" Type="varchar" Mode="In" />
+    <Parameter Name="Email" Type="varchar" Mode="In" />
+    <Parameter Name="City" Type="varchar" Mode="In" />
+    <Parameter Name="Phone" Type="varchar" Mode="In" />
+    <Parameter Name="Keyword" Type="varchar" Mode="In" />
+    <Parameter Name="state" Type="varchar" Mode="In" />
+    <Parameter Name="zip" Type="varchar" Mode="In" />
+    <Parameter Name="level" Type="nvarchar(max)" Mode="In" />
+    <Parameter Name="branch" Type="varchar" Mode="In" />
+    <Parameter Name="loginId" Type="varchar" Mode="In" />
+    <Parameter Name="roleId" Type="bigint" Mode="In" />
+    <Parameter Name="StartIndex" Type="int" Mode="In" />
+    <Parameter Name="PageSize" Type="int" Mode="In" />
+    <Parameter Name="Sorting" Type="varchar" Mode="In" />
+    <Parameter Name="TotalRecordsCount" Type="int" Mode="InOut" />
+  </Function>
+  <Function Name="CRM_SearchContactListForExport" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="keyword" Type="varchar" Mode="In" />
+    <Parameter Name="office" Type="varchar" Mode="In" />
+    <Parameter Name="Type" Type="varchar" Mode="In" />
+    <Parameter Name="roleId" Type="varchar" Mode="In" />
+    <Parameter Name="loginID" Type="varchar" Mode="In" />
+    <Parameter Name="salesRep" Type="varchar" Mode="In" />
+    <Parameter Name="FilterExpression" Type="varchar(max)" Mode="In" />
+    <Parameter Name="funnelSuspects" Type="varchar" Mode="In" />
+    <Parameter Name="SkillSerachOption" Type="varchar" Mode="In" />
+    <Parameter Name="SkillId" Type="varchar(max)" Mode="In" />
+    <Parameter Name="StartIndex" Type="int" Mode="In" />
+    <Parameter Name="PageSize" Type="int" Mode="In" />
+    <Parameter Name="Sorting" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="CRM_SecureLogin" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="UserName" Type="varchar" Mode="In" />
+    <Parameter Name="Password" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="CRM_UpdateAdminDetail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="userId" Type="decimal" Mode="In" />
+    <Parameter Name="firstName" Type="varchar" Mode="In" />
+    <Parameter Name="middleInitial" Type="varchar" Mode="In" />
+    <Parameter Name="lastName" Type="varchar" Mode="In" />
+    <Parameter Name="addressLine1" Type="varchar" Mode="In" />
+    <Parameter Name="addressLine2" Type="varchar" Mode="In" />
+    <Parameter Name="city" Type="varchar" Mode="In" />
+    <Parameter Name="stateCode" Type="varchar" Mode="In" />
+    <Parameter Name="postalCode" Type="varchar" Mode="In" />
+    <Parameter Name="mobile" Type="varchar" Mode="In" />
+    <Parameter Name="phoneExt" Type="varchar" Mode="In" />
+    <Parameter Name="fax" Type="varchar" Mode="In" />
+    <Parameter Name="email" Type="varchar" Mode="In" />
+    <Parameter Name="comment" Type="varchar" Mode="In" />
+    <Parameter Name="OutlookEmail" Type="varchar" Mode="In" />
+    <Parameter Name="level" Type="numeric" Mode="In" />
+    <Parameter Name="branch" Type="varchar" Mode="In" />
+    <Parameter Name="cellno" Type="varchar" Mode="In" />
+    <Parameter Name="loginId" Type="varchar" Mode="In" />
+    <Parameter Name="password" Type="varchar" Mode="In" />
+    <Parameter Name="IsAllowsedingSMS" Type="bit" Mode="In" />
+    <Parameter Name="smsEmail" Type="varchar" Mode="In" />
+    <Parameter Name="smsPwd" Type="varchar" Mode="In" />
+    <Parameter Name="smsSMTP" Type="varchar" Mode="In" />
+    <Parameter Name="smsPort" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="CRM_UpdateAdminSMTPDetail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="userId" Type="int" Mode="In" />
+    <Parameter Name="isSMS" Type="bit" Mode="In" />
+    <Parameter Name="smsEmail" Type="varchar" Mode="In" />
+    <Parameter Name="smsPwd" Type="varchar" Mode="In" />
+    <Parameter Name="smsSMTP" Type="varchar" Mode="In" />
+    <Parameter Name="smsPort" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="CRM_UpdateBranchDetailByBranchId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="branchId" Type="int" Mode="In" />
+    <Parameter Name="Name" Type="varchar" Mode="In" />
+    <Parameter Name="addressLine1" Type="varchar" Mode="In" />
+    <Parameter Name="addressLine2" Type="varchar" Mode="In" />
+    <Parameter Name="city" Type="varchar" Mode="In" />
+    <Parameter Name="stateCode" Type="varchar" Mode="In" />
+    <Parameter Name="postalCode" Type="varchar" Mode="In" />
+    <Parameter Name="mobile" Type="varchar" Mode="In" />
+    <Parameter Name="phoneExt" Type="varchar" Mode="In" />
+    <Parameter Name="fax" Type="varchar" Mode="In" />
+    <Parameter Name="email" Type="varchar" Mode="In" />
+    <Parameter Name="comment" Type="varchar" Mode="In" />
+    <Parameter Name="otherState" Type="varchar" Mode="In" />
+    <Parameter Name="routingEmail" Type="varchar" Mode="In" />
+    <Parameter Name="BranchType" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="CRM_UpdateContactsPersonal" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="ContactId" Type="int" Mode="In" />
+    <Parameter Name="Initial" Type="nvarchar" Mode="In" />
+    <Parameter Name="fname" Type="varchar" Mode="In" />
+    <Parameter Name="phone" Type="nvarchar" Mode="In" />
+    <Parameter Name="fax" Type="nvarchar" Mode="In" />
+    <Parameter Name="email" Type="varchar" Mode="In" />
+    <Parameter Name="title" Type="varchar" Mode="In" />
+    <Parameter Name="source" Type="varchar" Mode="In" />
+    <Parameter Name="mobile" Type="nvarchar" Mode="In" />
+    <Parameter Name="AccountId" Type="nvarchar" Mode="In" />
+    <Parameter Name="homephone" Type="nvarchar" Mode="In" />
+    <Parameter Name="otherphone" Type="nvarchar" Mode="In" />
+    <Parameter Name="Asstphone" Type="nvarchar" Mode="In" />
+    <Parameter Name="assistant" Type="varchar" Mode="In" />
+    <Parameter Name="EmailOptOut" Type="varchar" Mode="In" />
+    <Parameter Name="description" Type="varchar" Mode="In" />
+    <Parameter Name="ReportTo" Type="varchar" Mode="In" />
+    <Parameter Name="birthdate" Type="datetime" Mode="In" />
+    <Parameter Name="department" Type="varchar" Mode="In" />
+    <Parameter Name="mailingstreet" Type="varchar" Mode="In" />
+    <Parameter Name="otherstreet" Type="varchar" Mode="In" />
+    <Parameter Name="mailingcity" Type="varchar" Mode="In" />
+    <Parameter Name="othercity" Type="varchar" Mode="In" />
+    <Parameter Name="mailingstate" Type="varchar" Mode="In" />
+    <Parameter Name="otherstate" Type="varchar" Mode="In" />
+    <Parameter Name="mailingzip" Type="nvarchar" Mode="In" />
+    <Parameter Name="otherzip" Type="nvarchar" Mode="In" />
+    <Parameter Name="mailingcountry" Type="varchar" Mode="In" />
+    <Parameter Name="othercountry" Type="varchar" Mode="In" />
+    <Parameter Name="suspect_prospect" Type="varchar" Mode="In" />
+    <Parameter Name="salesMgr1" Type="varchar" Mode="In" />
+    <Parameter Name="salesMgr2" Type="varchar" Mode="In" />
+    <Parameter Name="contact_office" Type="varchar" Mode="In" />
+    <Parameter Name="mailingAdd" Type="varchar" Mode="In" />
+    <Parameter Name="billingAdd" Type="varchar" Mode="In" />
+    <Parameter Name="isCorporate" Type="bit" Mode="In" />
+    <Parameter Name="isAllowSMS" Type="bit" Mode="In" />
+    <Parameter Name="ProviderId" Type="varchar" Mode="In" />
+    <Parameter Name="contact_type" Type="varchar" Mode="In" />
+    <Parameter Name="FacebookUserName" Type="varchar" Mode="In" />
+    <Parameter Name="TwitterUserName" Type="varchar" Mode="In" />
+    <Parameter Name="LinkedInUserName" Type="varchar" Mode="In" />
+    <Parameter Name="GooglePlusUserName" Type="varchar" Mode="In" />
+    <Parameter Name="PInterestUserName" Type="varchar" Mode="In" />
+    <Parameter Name="SkypeUsername" Type="varchar" Mode="In" />
+    <Parameter Name="loginId" Type="varchar" Mode="In" />
+    <Parameter Name="Password" Type="varchar" Mode="In" />
+    <Parameter Name="NickName" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="CRM_UpdatedashBoard" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="ModuleId" Type="int" Mode="In" />
+    <Parameter Name="ModuleName" Type="varchar" Mode="In" />
+    <Parameter Name="ModuleHeading" Type="varchar" Mode="In" />
+    <Parameter Name="ModuleHover" Type="varchar" Mode="In" />
+    <Parameter Name="IsShow" Type="int" Mode="In" />
+  </Function>
+  <Function Name="CRM_UpdateItemDetailsByItemId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="ItemID" Type="int" Mode="In" />
+    <Parameter Name="ItemTypeID" Type="int" Mode="In" />
+    <Parameter Name="MeasureID" Type="int" Mode="In" />
+    <Parameter Name="ItemLocID" Type="int" Mode="In" />
+    <Parameter Name="ItemCode" Type="nvarchar" Mode="In" />
+    <Parameter Name="ItemName" Type="nvarchar" Mode="In" />
+    <Parameter Name="Description" Type="nvarchar(max)" Mode="In" />
+    <Parameter Name="PrimaryVendorID" Type="int" Mode="In" />
+    <Parameter Name="AlternateVendorID" Type="int" Mode="In" />
+    <Parameter Name="AccountNO" Type="nvarchar" Mode="In" />
+    <Parameter Name="RateperUnit" Type="decimal" Mode="In" />
+    <Parameter Name="Saleprice" Type="decimal" Mode="In" />
+    <Parameter Name="MinimumQty" Type="decimal" Mode="In" />
+    <Parameter Name="ReorderQty" Type="decimal" Mode="In" />
+    <Parameter Name="QtyonHand" Type="decimal" Mode="In" />
+    <Parameter Name="ItemLocation" Type="nvarchar" Mode="In" />
+    <Parameter Name="ItemUnits" Type="nvarchar" Mode="In" />
+    <Parameter Name="Warranty" Type="nvarchar" Mode="In" />
+    <Parameter Name="Active" Type="bit" Mode="In" />
+    <Parameter Name="CreatedDate" Type="datetime" Mode="In" />
+    <Parameter Name="modifiedDate" Type="datetime" Mode="In" />
+    <Parameter Name="updatedby" Type="nvarchar" Mode="In" />
+    <Parameter Name="PartNumber" Type="nvarchar" Mode="In" />
+    <Parameter Name="CompanyID" Type="int" Mode="In" />
+    <Parameter Name="IsDeleted" Type="bit" Mode="In" />
+    <Parameter Name="NonStock" Type="bit" Mode="In" />
+    <Parameter Name="QtyCommitted" Type="decimal" Mode="In" />
+    <Parameter Name="QtyOnOrder" Type="decimal" Mode="In" />
+    <Parameter Name="Checked" Type="bit" Mode="In" />
+    <Parameter Name="ManufacturerID" Type="int" Mode="In" />
+  </Function>
+  <Function Name="CRM_UpdateMenuByMenuId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="MenuID" Type="int" Mode="In" />
+    <Parameter Name="MenuDescription" Type="nvarchar" Mode="In" />
+    <Parameter Name="NavigateURL" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="CRM_UpdatePassword" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="userid" Type="decimal" Mode="In" />
+    <Parameter Name="password" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="CRM_UpdateProjectDetailsByProjectId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="ProjectId" Type="int" Mode="In" />
+    <Parameter Name="Projectname" Type="varchar" Mode="In" />
+    <Parameter Name="Contact" Type="int" Mode="In" />
+    <Parameter Name="Status" Type="varchar" Mode="In" />
+    <Parameter Name="URL" Type="varchar" Mode="In" />
+    <Parameter Name="DateCreated" Type="datetime" Mode="In" />
+    <Parameter Name="Description" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="CRM_UpdateSMSProvider" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="ID" Type="varchar" Mode="In" />
+    <Parameter Name="ProviderName" Type="varchar" Mode="In" />
+    <Parameter Name="url" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="CRM_UpdateUserDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="userId" Type="decimal" Mode="In" />
+    <Parameter Name="firstName" Type="varchar" Mode="In" />
+    <Parameter Name="lastName" Type="varchar" Mode="In" />
+    <Parameter Name="addressLine1" Type="varchar" Mode="In" />
+    <Parameter Name="addressLine2" Type="varchar" Mode="In" />
+    <Parameter Name="city" Type="varchar" Mode="In" />
+    <Parameter Name="stateCode" Type="varchar" Mode="In" />
+    <Parameter Name="postalCode" Type="varchar" Mode="In" />
+    <Parameter Name="mobile" Type="varchar" Mode="In" />
+    <Parameter Name="phoneExt" Type="varchar" Mode="In" />
+    <Parameter Name="fax" Type="varchar" Mode="In" />
+    <Parameter Name="comment" Type="varchar" Mode="In" />
+    <Parameter Name="cellno" Type="varchar" Mode="In" />
+    <Parameter Name="dateofbirth" Type="datetime" Mode="In" />
+    <Parameter Name="gender" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="CRM_Usp_DashBoard_Manage_DashBoardModules" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="ModuleId" Type="int" Mode="In" />
+    <Parameter Name="ModuleName" Type="varchar" Mode="In" />
+    <Parameter Name="ModuleHeading" Type="varchar" Mode="In" />
+    <Parameter Name="ModuleHover" Type="varchar" Mode="In" />
+    <Parameter Name="IsShow" Type="int" Mode="In" />
+    <Parameter Name="PreferencesOrder" Type="varchar" Mode="In" />
+    <Parameter Name="UserId" Type="numeric" Mode="In" />
+    <Parameter Name="flag" Type="int" Mode="In" />
+  </Function>
+  <Function Name="CRM_USP_GET_ACTIVTY_TYPE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="type" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="CRM_WeeklyPayment_ChartDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="FromDate" Type="varchar" Mode="In" />
+    <Parameter Name="ToDate" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="DistanceFunc" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="decimal">
+    <Parameter Name="Latitude1" Type="decimal" Mode="In" />
+    <Parameter Name="Longitude1" Type="decimal" Mode="In" />
+    <Parameter Name="Latitude2" Type="decimal" Mode="In" />
+    <Parameter Name="Longitude2" Type="decimal" Mode="In" />
+  </Function>
+  <Function Name="ExactKeyword" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="varchar(max)">
+    <Parameter Name="keyword" Type="varchar(max)" Mode="In" />
+  </Function>
+  <Function Name="Factorial" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int">
+    <Parameter Name="iNumber" Type="int" Mode="In" />
+  </Function>
+  <Function Name="fn_RatingSingleChar" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="nvarchar(max)">
+    <Parameter Name="OrigString" Type="nvarchar(max)" Mode="In" />
+    <Parameter Name="LookFor" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="fn_Split" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="text" Type="varchar" Mode="In" />
+    <Parameter Name="delimiter" Type="varchar" Mode="In" />
+    <ReturnType>
+      <CollectionType>
+        <RowType>
+          <Property Name="position" Type="int" Nullable="false" />
+          <Property Name="value" Type="varchar" MaxLength="8000" />
+        </RowType>
+      </CollectionType>
+    </ReturnType>
+  </Function>
+  <Function Name="fnStandardPhone" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="varchar">
+    <Parameter Name="PhoneNumber" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="FORMAT_SSN" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="varchar">
+    <Parameter Name="ssn" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="FormatAssignmentId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="nvarchar">
+    <Parameter Name="assignId" Type="char" Mode="In" />
+  </Function>
+  <Function Name="FormatPhone" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="nvarchar">
+    <Parameter Name="phone" Type="char" Mode="In" />
+  </Function>
+  <Function Name="FormatPhoneOutlook" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="nvarchar">
+    <Parameter Name="phone" Type="char" Mode="In" />
+  </Function>
+  <Function Name="FormatPhoneTest" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="nvarchar">
+    <Parameter Name="phone" Type="char" Mode="In" />
+  </Function>
+  <Function Name="FormatSSN" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="nvarchar">
+    <Parameter Name="SSN" Type="char" Mode="In" />
+  </Function>
+  <Function Name="func_ConvertCommaSeparatedValues_to_Integers" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="list" Type="ntext" Mode="In" />
+    <ReturnType>
+      <CollectionType>
+        <RowType>
+          <Property Name="listpos" Type="int" Nullable="false" />
+          <Property Name="number" Type="varchar(max)" Nullable="false" />
+        </RowType>
+      </CollectionType>
+    </ReturnType>
+  </Function>
+  <Function Name="Function_SplitValues" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="psCSString" Type="nvarchar(max)" Mode="In" />
+    <Parameter Name="SplitSymbol" Type="varchar" Mode="In" />
+    <ReturnType>
+      <CollectionType>
+        <RowType>
+          <Property Name="ID" Type="nvarchar(max)" />
+        </RowType>
+      </CollectionType>
+    </ReturnType>
+  </Function>
+  <Function Name="GET_Events" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="PageSize" Type="int" Mode="In" />
+    <Parameter Name="StartIndex" Type="int" Mode="In" />
+    <Parameter Name="TotalRecordsCount" Type="int" Mode="InOut" />
+  </Function>
+  <Function Name="Get_Supervisor_Name" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="varchar">
+    <Parameter Name="userid" Type="numeric" Mode="In" />
+  </Function>
+  <Function Name="Get_Telerik_DateTime" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="varchar">
+    <Parameter Name="date" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="Get_Username_Email" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="varchar(max)">
+    <Parameter Name="firstname" Type="varchar(max)" Mode="In" />
+    <Parameter Name="lastname" Type="varchar(max)" Mode="In" />
+    <Parameter Name="Randon" Type="bigint" Mode="In" />
+  </Function>
+  <Function Name="GetAccountAddress" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="varchar">
+    <Parameter Name="AccountId" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="GetAllMentorsAcceptedDateTime" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="keyword" Type="varchar" Mode="In" />
+    <Parameter Name="StartIndex" Type="int" Mode="In" />
+    <Parameter Name="PageSize" Type="int" Mode="In" />
+    <Parameter Name="Sorting" Type="varchar" Mode="In" />
+    <Parameter Name="TotalRecordsCount" Type="int" Mode="InOut" />
+    <Parameter Name="Id" Type="bigint" Mode="In" />
+  </Function>
+  <Function Name="getBranchName" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="varchar">
+    <Parameter Name="branchId" Type="int" Mode="In" />
+  </Function>
+  <Function Name="GetContactAddress" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="varchar">
+    <Parameter Name="ContactId" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="getCRMIndustry" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="GetFirstDayOfWeek" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="datetime">
+    <Parameter Name="pInputDate" Type="datetime" Mode="In" />
+  </Function>
+  <Function Name="GetLastDayOfWeek" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="datetime">
+    <Parameter Name="pInputDate" Type="datetime" Mode="In" />
+  </Function>
+  <Function Name="getParentMenu" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="getStaffingManagerName" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="varchar">
+    <Parameter Name="userId" Type="int" Mode="In" />
+  </Function>
+  <Function Name="GetTotalCntCompanies" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="GetTotalCntContact" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="GetTotalCntLead" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="GetTotalCntOpportunity" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="GetTotalCntSales" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="Mentor_CreateMentor" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Email" Type="varchar" Mode="In" />
+    <Parameter Name="UserName" Type="varchar" Mode="In" />
+    <Parameter Name="Password" Type="varchar" Mode="In" />
+    <Parameter Name="Name" Type="varchar" Mode="In" />
+    <Parameter Name="VentureId" Type="bigint" Mode="In" />
+    <Parameter Name="MentorTypeId" Type="int" Mode="In" />
+    <Parameter Name="StartDate" Type="datetime" Mode="In" />
+    <Parameter Name="EndDate" Type="datetime" Mode="In" />
+    <Parameter Name="HaverelevantExp" Type="bit" Mode="In" />
+    <Parameter Name="WillhelpifNeeded" Type="bit" Mode="In" />
+    <Parameter Name="Recruited" Type="bit" Mode="In" />
+    <Parameter Name="Interested" Type="bit" Mode="In" />
+    <Parameter Name="ConflictFinancialInterest" Type="bit" Mode="In" />
+    <Parameter Name="Comment" Type="varchar(max)" Mode="In" />
+    <Parameter Name="CreatedDate" Type="datetime" Mode="In" />
+    <Parameter Name="CreatedBy" Type="int" Mode="In" />
+    <Parameter Name="Vmsstatus" Type="int" Mode="In" />
+  </Function>
+  <Function Name="Mentor_CreateMentorDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="FirstName" Type="varchar" Mode="In" />
+    <Parameter Name="LastName" Type="varchar" Mode="In" />
+    <Parameter Name="Organization" Type="varchar" Mode="In" />
+    <Parameter Name="Title" Type="varchar" Mode="In" />
+    <Parameter Name="Street1" Type="varchar" Mode="In" />
+    <Parameter Name="AddressLine1" Type="varchar" Mode="In" />
+    <Parameter Name="City1" Type="varchar" Mode="In" />
+    <Parameter Name="StateProvinceRegion1" Type="varchar" Mode="In" />
+    <Parameter Name="ZIP1" Type="varchar" Mode="In" />
+    <Parameter Name="Telephone1" Type="varchar" Mode="In" />
+    <Parameter Name="Telephone2" Type="varchar" Mode="In" />
+    <Parameter Name="PrimaryEmail" Type="varchar" Mode="In" />
+    <Parameter Name="LinkedIn" Type="varchar" Mode="In" />
+    <Parameter Name="Resume" Type="varchar(max)" Mode="In" />
+    <Parameter Name="UserName" Type="varchar" Mode="In" />
+    <Parameter Name="Password" Type="varchar" Mode="In" />
+    <Parameter Name="CreatedDate" Type="datetime" Mode="In" />
+    <Parameter Name="outID" Type="bigint" Mode="InOut" />
+  </Function>
+  <Function Name="Mentor_CreateUserDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="firstName" Type="varchar" Mode="In" />
+    <Parameter Name="middleInitial" Type="varchar" Mode="In" />
+    <Parameter Name="lastName" Type="varchar" Mode="In" />
+    <Parameter Name="addressLine1" Type="varchar" Mode="In" />
+    <Parameter Name="addressLine2" Type="varchar" Mode="In" />
+    <Parameter Name="city" Type="varchar" Mode="In" />
+    <Parameter Name="stateCode" Type="varchar" Mode="In" />
+    <Parameter Name="postalCode" Type="varchar" Mode="In" />
+    <Parameter Name="mobile" Type="varchar" Mode="In" />
+    <Parameter Name="phoneExt" Type="varchar" Mode="In" />
+    <Parameter Name="fax" Type="varchar" Mode="In" />
+    <Parameter Name="email" Type="varchar" Mode="In" />
+    <Parameter Name="comment" Type="varchar" Mode="In" />
+    <Parameter Name="OutlookEmail" Type="varchar" Mode="In" />
+    <Parameter Name="level" Type="numeric" Mode="In" />
+    <Parameter Name="branch" Type="varchar" Mode="In" />
+    <Parameter Name="cellno" Type="varchar" Mode="In" />
+    <Parameter Name="dateofbirth" Type="datetime" Mode="In" />
+    <Parameter Name="isCorporate" Type="bit" Mode="In" />
+    <Parameter Name="isSMS" Type="bit" Mode="In" />
+    <Parameter Name="smsEmail" Type="varchar" Mode="In" />
+    <Parameter Name="smsPwd" Type="varchar" Mode="In" />
+    <Parameter Name="smsSMTP" Type="varchar" Mode="In" />
+    <Parameter Name="smsPort" Type="varchar" Mode="In" />
+    <Parameter Name="loginId" Type="varchar" Mode="In" />
+    <Parameter Name="Password" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="Mentor_GetAllMentors" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="keyword" Type="varchar" Mode="In" />
+    <Parameter Name="StartIndex" Type="int" Mode="In" />
+    <Parameter Name="PageSize" Type="int" Mode="In" />
+    <Parameter Name="Sorting" Type="varchar" Mode="In" />
+    <Parameter Name="TotalRecordsCount" Type="int" Mode="InOut" />
+    <Parameter Name="Id" Type="int" Mode="In" />
+    <Parameter Name="roleid" Type="varchar" Mode="In" />
+    <Parameter Name="Isfrom" Type="varchar" Mode="In" />
+    <Parameter Name="Alphanumericsort" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="Mentor_Questionnaries" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Prefix" Type="varchar" Mode="In" />
+    <Parameter Name="FirstName" Type="varchar" Mode="In" />
+    <Parameter Name="MiddleName" Type="varchar" Mode="In" />
+    <Parameter Name="LastName" Type="varchar" Mode="In" />
+    <Parameter Name="Suffix" Type="varchar" Mode="In" />
+    <Parameter Name="NickName" Type="varchar" Mode="In" />
+    <Parameter Name="Organization" Type="varchar" Mode="In" />
+    <Parameter Name="Title" Type="varchar" Mode="In" />
+    <Parameter Name="Street1" Type="varchar" Mode="In" />
+    <Parameter Name="AddressLine1" Type="varchar" Mode="In" />
+    <Parameter Name="City1" Type="varchar" Mode="In" />
+    <Parameter Name="StateProvinceRegion1" Type="varchar" Mode="In" />
+    <Parameter Name="ZIP1" Type="varchar" Mode="In" />
+    <Parameter Name="Country1" Type="varchar" Mode="In" />
+    <Parameter Name="Street2" Type="varchar" Mode="In" />
+    <Parameter Name="AddressLine2" Type="varchar" Mode="In" />
+    <Parameter Name="City2" Type="varchar" Mode="In" />
+    <Parameter Name="StateProvinceRegion2" Type="varchar" Mode="In" />
+    <Parameter Name="ZIP2" Type="varchar" Mode="In" />
+    <Parameter Name="Country2" Type="varchar" Mode="In" />
+    <Parameter Name="PrimaryEmail" Type="varchar" Mode="In" />
+    <Parameter Name="SecondaryEmail" Type="varchar" Mode="In" />
+    <Parameter Name="SkypeAddress" Type="varchar" Mode="In" />
+    <Parameter Name="TwitterAddress" Type="varchar" Mode="In" />
+    <Parameter Name="LinkedIn" Type="varchar" Mode="In" />
+    <Parameter Name="Telephone1" Type="varchar" Mode="In" />
+    <Parameter Name="Telephone2" Type="varchar" Mode="In" />
+    <Parameter Name="Telephone3" Type="varchar" Mode="In" />
+    <Parameter Name="PublicProfile" Type="varchar(max)" Mode="In" />
+    <Parameter Name="Startups" Type="varchar" Mode="In" />
+    <Parameter Name="BusinessModel" Type="varchar" Mode="In" />
+    <Parameter Name="Funding" Type="varchar" Mode="In" />
+    <Parameter Name="Others1" Type="varchar" Mode="In" />
+    <Parameter Name="Software" Type="varchar" Mode="In" />
+    <Parameter Name="LifeSciences" Type="varchar" Mode="In" />
+    <Parameter Name="IndustryOther" Type="varchar" Mode="In" />
+    <Parameter Name="Others2" Type="varchar" Mode="In" />
+    <Parameter Name="FunctionalAreas" Type="varchar(max)" Mode="In" />
+    <Parameter Name="Others3" Type="varchar" Mode="In" />
+    <Parameter Name="UserName" Type="varchar" Mode="In" />
+    <Parameter Name="Password" Type="varchar" Mode="In" />
+    <Parameter Name="MentorId" Type="bigint" Mode="In" />
+  </Function>
+  <Function Name="procCreateAdmin" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="firstName" Type="varchar" Mode="In" />
+    <Parameter Name="middleInitial" Type="varchar" Mode="In" />
+    <Parameter Name="lastName" Type="varchar" Mode="In" />
+    <Parameter Name="addressLine1" Type="varchar" Mode="In" />
+    <Parameter Name="addressLine2" Type="varchar" Mode="In" />
+    <Parameter Name="city" Type="varchar" Mode="In" />
+    <Parameter Name="stateCode" Type="varchar" Mode="In" />
+    <Parameter Name="postalCode" Type="varchar" Mode="In" />
+    <Parameter Name="mobile" Type="varchar" Mode="In" />
+    <Parameter Name="phoneExt" Type="varchar" Mode="In" />
+    <Parameter Name="fax" Type="varchar" Mode="In" />
+    <Parameter Name="email" Type="varchar" Mode="In" />
+    <Parameter Name="comment" Type="varchar" Mode="In" />
+    <Parameter Name="level" Type="numeric" Mode="In" />
+    <Parameter Name="branch" Type="varchar" Mode="In" />
+    <Parameter Name="cellno" Type="varchar" Mode="In" />
+    <Parameter Name="isCorporate" Type="bit" Mode="In" />
+    <Parameter Name="isSMS" Type="bit" Mode="In" />
+    <Parameter Name="smsEmail" Type="varchar" Mode="In" />
+    <Parameter Name="smsPwd" Type="varchar" Mode="In" />
+    <Parameter Name="smsSMTP" Type="varchar" Mode="In" />
+    <Parameter Name="smsPort" Type="varchar" Mode="In" />
+    <Parameter Name="loginId" Type="varchar" Mode="In" />
+    <Parameter Name="Password" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="ProperWord" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="varchar">
+    <Parameter Name="str" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="RadiusFunc" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="ZipCode" Type="nchar" Mode="In" />
+    <Parameter Name="Miles" Type="decimal" Mode="In" />
+    <ReturnType>
+      <CollectionType>
+        <RowType>
+          <Property Name="Latitude" Type="decimal" Precision="10" Scale="8" />
+          <Property Name="Longitude" Type="decimal" Precision="11" Scale="8" />
+          <Property Name="MaxLatitude" Type="decimal" Precision="10" Scale="8" />
+          <Property Name="MinLatitude" Type="decimal" Precision="10" Scale="8" />
+          <Property Name="MaxLongitude" Type="decimal" Precision="11" Scale="8" />
+          <Property Name="MinLongitude" Type="decimal" Precision="11" Scale="8" />
+        </RowType>
+      </CollectionType>
+    </ReturnType>
+  </Function>
+  <Function Name="RadiusZip" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="ZipCode" Type="nchar" Mode="In" />
+    <Parameter Name="Miles" Type="decimal" Mode="In" />
+    <ReturnType>
+      <CollectionType>
+        <RowType>
+          <Property Name="Zip" Type="nvarchar" MaxLength="5" />
+          <Property Name="City" Type="nvarchar" MaxLength="50" />
+          <Property Name="Distance" Type="decimal" Precision="11" Scale="6" />
+        </RowType>
+      </CollectionType>
+    </ReturnType>
+  </Function>
+  <Function Name="RemoveNonNumericChar" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="char">
+    <Parameter Name="phone" Type="char" Mode="In" />
+  </Function>
+  <Function Name="Roles_GetAllRoles" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="keyword" Type="varchar" Mode="In" />
+    <Parameter Name="StartIndex" Type="int" Mode="In" />
+    <Parameter Name="PageSize" Type="int" Mode="In" />
+    <Parameter Name="Sorting" Type="varchar" Mode="In" />
+    <Parameter Name="TotalRecordsCount" Type="int" Mode="InOut" />
+  </Function>
+  <Function Name="RoundQuarterHour" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="decimal">
+    <Parameter Name="dt" Type="decimal" Mode="In" />
+    <Parameter Name="roundToQuarter" Type="bit" Mode="In" />
+    <Parameter Name="timesheetType" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="RoundQuarterHour1" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="decimal">
+    <Parameter Name="dt" Type="decimal" Mode="In" />
+    <Parameter Name="roundToQuarter" Type="bit" Mode="In" />
+    <Parameter Name="timesheetType" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="Scheduler_GetAllMeetings" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Role" Type="char" Mode="In" />
+    <Parameter Name="Id" Type="bigint" Mode="In" />
+    <Parameter Name="Keyword" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="SearchAdminList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="loginId" Type="varchar" Mode="In" />
+    <Parameter Name="roleId" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="Split" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="RowData" Type="nvarchar(max)" Mode="In" />
+    <Parameter Name="SplitOn" Type="nvarchar" Mode="In" />
+    <ReturnType>
+      <CollectionType>
+        <RowType>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Data" Type="nvarchar" MaxLength="100" />
+        </RowType>
+      </CollectionType>
+    </ReturnType>
+  </Function>
+  <Function Name="test" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <ReturnType>
+      <CollectionType>
+        <RowType>
+          <Property Name="userId" Type="numeric" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="loginId" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="password" Type="varchar" MaxLength="200" />
+          <Property Name="firstName" Type="varchar" MaxLength="250" />
+          <Property Name="middleInitial" Type="varchar" MaxLength="50" />
+          <Property Name="lastName" Type="varchar" MaxLength="50" />
+          <Property Name="phone" Type="nvarchar" MaxLength="50" />
+          <Property Name="phoneExt" Type="numeric" Precision="6" Scale="0" />
+          <Property Name="Fax" Type="numeric" Precision="12" Scale="0" />
+          <Property Name="email" Type="varchar" MaxLength="250" />
+          <Property Name="addressLine1" Type="varchar" MaxLength="250" />
+          <Property Name="addressLine2" Type="varchar" MaxLength="250" />
+          <Property Name="city" Type="varchar" MaxLength="100" />
+          <Property Name="state" Type="varchar" MaxLength="100" />
+          <Property Name="postalCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="postalCodeExt" Type="numeric" Precision="6" Scale="0" />
+          <Property Name="comment" Type="varchar" MaxLength="500" />
+          <Property Name="createdDate" Type="datetime" Nullable="false" />
+          <Property Name="lastModified" Type="datetime" />
+          <Property Name="stateCode" Type="varchar" MaxLength="100" />
+          <Property Name="roleId" Type="numeric" Precision="10" Scale="0" />
+          <Property Name="status" Type="bit" />
+          <Property Name="modifiedBy" Type="varchar" MaxLength="50" />
+          <Property Name="willReceiveMail" Type="bit" />
+          <Property Name="result" Type="varchar" MaxLength="10" />
+          <Property Name="resumeID" Type="numeric" Precision="10" Scale="0" />
+          <Property Name="Note" Type="text" />
+          <Property Name="branchId" Type="varchar" MaxLength="50" />
+          <Property Name="cellno" Type="numeric" Precision="12" Scale="0" />
+          <Property Name="associateFlag" Type="varchar" MaxLength="10" />
+          <Property Name="isCorporate" Type="bit" />
+          <Property Name="AccountId" Type="int" />
+          <Property Name="ContactId" Type="varchar" MaxLength="50" />
+          <Property Name="ApplicantId" Type="nvarchar" MaxLength="50" />
+          <Property Name="ynUnsubscribeEmail" Type="int" />
+          <Property Name="DateOfBirth" Type="datetime" />
+          <Property Name="Salutation" Type="varchar" MaxLength="50" />
+          <Property Name="Relocate1" Type="varchar" MaxLength="50" />
+          <Property Name="Relocate2" Type="varchar" MaxLength="500" />
+          <Property Name="Travel" Type="varchar" MaxLength="500" />
+          <Property Name="Employment_Locally" Type="bit" />
+          <Property Name="Employment_CrossCountry" Type="bit" />
+          <Property Name="Employment_Overseas" Type="bit" />
+          <Property Name="email2" Type="varchar" MaxLength="100" />
+          <Property Name="PhoneDay" Type="varchar" MaxLength="50" />
+          <Property Name="PhoneEve" Type="varchar" MaxLength="50" />
+          <Property Name="isAllowsedingSMS" Type="bit" />
+          <Property Name="SMTPEmail" Type="varchar" MaxLength="100" />
+          <Property Name="SMTPPassword" Type="varchar" MaxLength="100" />
+          <Property Name="SMTPAddress" Type="varchar" MaxLength="100" />
+          <Property Name="SMTPPort" Type="varchar" MaxLength="100" />
+          <Property Name="IsDBExport" Type="varchar" MaxLength="50" />
+          <Property Name="OutlookEmail" Type="varchar" MaxLength="50" />
+          <Property Name="pee" Type="varchar(max)" />
+          <Property Name="Gender" Type="varchar" MaxLength="100" />
+          <Property Name="export_PersonId" Type="varchar" MaxLength="50" />
+          <Property Name="export_CompanyId" Type="varchar" MaxLength="50" />
+          <Property Name="export_RecruiterId" Type="varchar" MaxLength="50" />
+          <Property Name="IsExported" Type="bit" />
+          <Property Name="export_UserId" Type="varchar" MaxLength="50" />
+          <Property Name="Recruiter_UserId" Type="varchar" MaxLength="500" />
+          <Property Name="ProfilePicture" Type="varchar" MaxLength="200" />
+        </RowType>
+      </CollectionType>
+    </ReturnType>
+  </Function>
+  <Function Name="udf_DayOfWeek" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="varchar">
+    <Parameter Name="dtDate" Type="datetime" Mode="In" />
+  </Function>
+  <Function Name="udf_StripHTML" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="varchar(max)">
+    <Parameter Name="HTMLText" Type="varchar(max)" Mode="In" />
+  </Function>
+  <Function Name="User_GetAllUsers" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="keyword" Type="varchar" Mode="In" />
+    <Parameter Name="StartIndex" Type="int" Mode="In" />
+    <Parameter Name="PageSize" Type="int" Mode="In" />
+    <Parameter Name="Sorting" Type="varchar" Mode="In" />
+    <Parameter Name="TotalRecordsCount" Type="int" Mode="InOut" />
+  </Function>
+  <Function Name="uSp_BindData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="USP_GET_ACTIVTY_TYPE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="type" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="USP_GetUsersByRoleInOfficeLevel" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="roleId" Type="varchar" Mode="In" />
+    <Parameter Name="logInId" Type="varchar" Mode="In" />
+    <Parameter Name="StartIndex" Type="int" Mode="In" />
+    <Parameter Name="PageSize" Type="int" Mode="In" />
+    <Parameter Name="Sorting" Type="varchar" Mode="In" />
+    <Parameter Name="TotalRecordsCount" Type="int" Mode="InOut" />
+  </Function>
+  <Function Name="Usp_GetZipCode_AroundSpecificZipCode" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="SpecifiedZip" Type="nvarchar" Mode="In" />
+    <Parameter Name="Dist" Type="decimal" Mode="In" />
+  </Function>
+  <Function Name="Venture_CreateVenture" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Email" Type="varchar" Mode="In" />
+    <Parameter Name="UserName" Type="varchar" Mode="In" />
+    <Parameter Name="Password" Type="varchar" Mode="In" />
+    <Parameter Name="Venturename" Type="varchar" Mode="In" />
+    <Parameter Name="Leadmentor" Type="varchar" Mode="In" />
+    <Parameter Name="VmsStatusId" Type="int" Mode="In" />
+    <Parameter Name="PrimaryContact" Type="varchar" Mode="In" />
+    <Parameter Name="PrimaryEmail" Type="varchar" Mode="In" />
+    <Parameter Name="SecondaryContact" Type="varchar" Mode="In" />
+    <Parameter Name="SecondaryEmail" Type="varchar" Mode="In" />
+    <Parameter Name="DropBox" Type="varchar" Mode="In" />
+    <Parameter Name="DropBoxFolder" Type="varchar" Mode="In" />
+    <Parameter Name="Description" Type="varchar(max)" Mode="In" />
+    <Parameter Name="PublicDesc" Type="varchar(max)" Mode="In" />
+    <Parameter Name="ContactInfo" Type="varchar(max)" Mode="In" />
+    <Parameter Name="VmsMailList" Type="varchar" Mode="In" />
+    <Parameter Name="SignUpReturned" Type="varchar" Mode="In" />
+    <Parameter Name="Address" Type="varchar(max)" Mode="In" />
+    <Parameter Name="Address1" Type="varchar(max)" Mode="In" />
+    <Parameter Name="Phone" Type="varchar" Mode="In" />
+    <Parameter Name="Fax" Type="nchar" Mode="In" />
+    <Parameter Name="Cellular" Type="varchar" Mode="In" />
+    <Parameter Name="WebSite" Type="varchar" Mode="In" />
+    <Parameter Name="MITLink" Type="varchar" Mode="In" />
+    <Parameter Name="StudentIdeaBasedOnResearch" Type="bit" Mode="In" />
+    <Parameter Name="ResearchIdeaDisclosedToTLO" Type="bit" Mode="In" />
+    <Parameter Name="LegalEntityAtEnrollment" Type="bit" Mode="In" />
+    <Parameter Name="RefferedBy" Type="varchar" Mode="In" />
+    <Parameter Name="FirstMentorMeeting" Type="varchar" Mode="In" />
+    <Parameter Name="Comments" Type="varchar(max)" Mode="In" />
+    <Parameter Name="IntakeNotes" Type="varchar" Mode="In" />
+    <Parameter Name="IntakeNoteSummary" Type="varchar(max)" Mode="In" />
+    <Parameter Name="SecondContact" Type="varchar" Mode="In" />
+    <Parameter Name="Introduced" Type="bit" Mode="In" />
+    <Parameter Name="SeachIndex" Type="varchar(max)" Mode="In" />
+    <Parameter Name="CreatedDate" Type="datetime" Mode="In" />
+    <Parameter Name="CreatedBY" Type="int" Mode="In" />
+    <Parameter Name="ModifiedDate" Type="datetime" Mode="In" />
+  </Function>
+  <Function Name="Venture_CreateVentureDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="VentureName" Type="varchar" Mode="In" />
+    <Parameter Name="VmsStatusId" Type="int" Mode="In" />
+    <Parameter Name="PrimaryContact" Type="varchar" Mode="In" />
+    <Parameter Name="PrimaryEmail" Type="varchar" Mode="In" />
+    <Parameter Name="SecondaryContact" Type="varchar" Mode="In" />
+    <Parameter Name="SecondaryEmail" Type="varchar" Mode="In" />
+    <Parameter Name="LegalEntityAtEnrollment" Type="bit" Mode="In" />
+    <Parameter Name="CreatedDate" Type="datetime" Mode="In" />
+    <Parameter Name="Comments" Type="varchar(max)" Mode="In" />
+    <Parameter Name="Street" Type="varchar" Mode="In" />
+    <Parameter Name="City" Type="varchar" Mode="In" />
+    <Parameter Name="State" Type="varchar" Mode="In" />
+    <Parameter Name="ZIP" Type="varchar" Mode="In" />
+    <Parameter Name="IndustryCategoryName" Type="varchar" Mode="In" />
+    <Parameter Name="CategoryOthers" Type="varchar" Mode="In" />
+    <Parameter Name="PrimaryPhoneNo" Type="varchar" Mode="In" />
+    <Parameter Name="PrimaryRoleInVenture" Type="varchar" Mode="In" />
+    <Parameter Name="PrimaryColaborationAffiliation" Type="varchar" Mode="In" />
+    <Parameter Name="SecondaryPhoneNo" Type="varchar" Mode="In" />
+    <Parameter Name="SecondaryRoleInVenture" Type="varchar" Mode="In" />
+    <Parameter Name="ScondaryColaborationAffiliation" Type="varchar" Mode="In" />
+    <Parameter Name="Advertisement" Type="varchar(max)" Mode="In" />
+    <Parameter Name="WouldLikeToElaborateSpecifics" Type="varchar" Mode="In" />
+    <Parameter Name="WhatDoYouDo" Type="varchar(max)" Mode="In" />
+    <Parameter Name="WhatIsTheProblem" Type="varchar(max)" Mode="In" />
+    <Parameter Name="WhoHasIt" Type="varchar(max)" Mode="In" />
+    <Parameter Name="HowWillUSolveTheProblem" Type="varchar(max)" Mode="In" />
+    <Parameter Name="HowWillUMakeMoney" Type="varchar(max)" Mode="In" />
+    <Parameter Name="WhtIsTheSecretSauce" Type="varchar(max)" Mode="In" />
+    <Parameter Name="IsThereIP" Type="varchar(max)" Mode="In" />
+    <Parameter Name="WhatIsYourCurrentStatus" Type="varchar(max)" Mode="In" />
+    <Parameter Name="WhatTypeOfVMSHelpStartUpNeeds" Type="varchar(max)" Mode="In" />
+    <Parameter Name="UserName" Type="varchar" Mode="In" />
+    <Parameter Name="Password" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="Venture_GetAllVentures" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="ventureid" Type="int" Mode="In" />
+    <Parameter Name="keyword" Type="varchar" Mode="In" />
+    <Parameter Name="StartIndex" Type="int" Mode="In" />
+    <Parameter Name="PageSize" Type="int" Mode="In" />
+    <Parameter Name="Sorting" Type="varchar" Mode="In" />
+    <Parameter Name="Alphanumericsort" Type="varchar" Mode="In" />
+    <Parameter Name="TotalRecordsCount" Type="int" Mode="InOut" />
+  </Function>
+  <Function Name="Venture_GetPendingVentureDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="strventureid" Type="bigint" Mode="In" />
+  </Function>
+  <Function Name="Venture_GetVentureDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="strventureid" Type="bigint" Mode="In" />
+  </Function>
+  <Function Name="Venture_GetVMSStatus" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="Venture_IsVentureExists" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="VentureName" Type="varchar" Mode="In" />
+  </Function>
+  <EntityContainer Name="CRMModelStoreContainer">
+    <EntitySet Name="Accounts" EntityType="Self.Accounts" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Activity" EntityType="Self.Activity" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="activity_types" EntityType="Self.activity_types" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="activityLog" EntityType="Self.activityLog" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AdvertisementSources" EntityType="Self.AdvertisementSources" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Branch" EntityType="Self.Branch" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CalendarEventRequests" EntityType="Self.CalendarEventRequests" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Company" EntityType="Self.Company" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Country" EntityType="Self.Country" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CurrentStatus" EntityType="Self.CurrentStatus" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Custom_DbError" EntityType="Self.Custom_DbError" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Custom_DrpChkValues" EntityType="Self.Custom_DrpChkValues" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Custom_Manage_Master" EntityType="Self.Custom_Manage_Master" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Custom_Value_Master" EntityType="Self.Custom_Value_Master" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Error_Log" EntityType="Self.Error_Log" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="EventDetails" EntityType="Self.EventDetails" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Events" EntityType="Self.Events" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Mentor" EntityType="Self.Mentor" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MentorAcceptedDateTime" EntityType="Self.MentorAcceptedDateTime" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MentorDetails" EntityType="Self.MentorDetails" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MentorQuestionaries" EntityType="Self.MentorQuestionaries" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MentorType" EntityType="Self.MentorType" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ModuleType" EntityType="Self.ModuleType" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Priority" EntityType="Self.Priority" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="role" EntityType="Self.role" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SMSProviderList" EntityType="Self.SMSProviderList" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="State" EntityType="Self.State" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Status" EntityType="Self.Status" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_AssociateList" EntityType="Self.tbl_AssociateList" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_ContactType" EntityType="Self.tbl_ContactType" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_crm_industry" EntityType="Self.tbl_crm_industry" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_EstimateInvoice" EntityType="Self.tbl_EstimateInvoice" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_EstimateInvoiceItem" EntityType="Self.tbl_EstimateInvoiceItem" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_Invoice" EntityType="Self.tbl_Invoice" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_InvoiceItem" EntityType="Self.tbl_InvoiceItem" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_Items" EntityType="Self.tbl_Items" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_Menus" EntityType="Self.tbl_Menus" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_Payments" EntityType="Self.tbl_Payments" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_ProjectDetails" EntityType="Self.tbl_ProjectDetails" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_RoleMenus" EntityType="Self.tbl_RoleMenus" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_ShowAllZIPCodes" EntityType="Self.tbl_ShowAllZIPCodes" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_ZIPCodes" EntityType="Self.tbl_ZIPCodes" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UserAccessModules" EntityType="Self.UserAccessModules" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UserAccessSetting" EntityType="Self.UserAccessSetting" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="users" EntityType="Self.users" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="usStates" EntityType="Self.usStates" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Venture" EntityType="Self.Venture" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="VentureDetails" EntityType="Self.VentureDetails" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="VMSStatus" EntityType="Self.VMSStatus" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_Itemtype" EntityType="Self.tbl_Itemtype" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [tbl_Itemtype].[ItemtypeId] AS [ItemtypeId], 
+    [tbl_Itemtype].[Inventory] AS [Inventory], 
+    [tbl_Itemtype].[NonInventory] AS [NonInventory], 
+    [tbl_Itemtype].[Service] AS [Service]
+    FROM [dbo].[tbl_Itemtype] AS [tbl_Itemtype]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="VMSHelp" EntityType="Self.VMSHelp" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [VMSHelp].[VMShelpId] AS [VMShelpId], 
+    [VMSHelp].[VMShelpName] AS [VMShelpName]
+    FROM [dbo].[VMSHelp] AS [VMSHelp]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="tbl1" EntityType="Self.tbl1" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [tbl1].[logId] AS [logId], 
+    [tbl1].[activityId] AS [activityId], 
+    [tbl1].[modifiedBy] AS [modifiedBy], 
+    [tbl1].[activityType] AS [activityType], 
+    [tbl1].[status] AS [status], 
+    [tbl1].[modifiedDate] AS [modifiedDate], 
+    [tbl1].[type] AS [type], 
+    [tbl1].[assignedTo] AS [assignedTo], 
+    [tbl1].[exportTest] AS [exportTest]
+    FROM [dbo].[tbl1] AS [tbl1]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="tbl2" EntityType="Self.tbl2" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [tbl2].[logId] AS [logId], 
+    [tbl2].[activityId] AS [activityId], 
+    [tbl2].[modifiedBy] AS [modifiedBy], 
+    [tbl2].[activityType] AS [activityType], 
+    [tbl2].[status] AS [status], 
+    [tbl2].[modifiedDate] AS [modifiedDate], 
+    [tbl2].[type] AS [type], 
+    [tbl2].[assignedTo] AS [assignedTo], 
+    [tbl2].[exportTest] AS [exportTest]
+    FROM [dbo].[tbl2] AS [tbl2]</DefiningQuery>
+    </EntitySet>
+  </EntityContainer>
+</Schema>

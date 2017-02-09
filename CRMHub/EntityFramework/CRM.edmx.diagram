@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="107dffbeb8654f6ea705fe53b5a2f933" Name="Diagram1" ZoomLevel="72">
+        <EntityTypeShape EntityType="CRMModel.Custom_DbError" Width="1.5" PointX="10.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CRMModel.role" Width="1.5" PointX="12.75" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CRMModel.tbl_crm_industry" Width="1.5" PointX="10.75" PointY="15.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CRMModel.tbl_Menus" Width="1.5" PointX="18.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CRMModel.usState" Width="1.5" PointX="18.75" PointY="14.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CRMModel.activityLog" Width="1.5" PointX="13.375" PointY="22.75" />
+        <EntityTypeShape EntityType="CRMModel.Custom_DrpChkValues" Width="1.5" PointX="0.75" PointY="24.75" />
+        <EntityTypeShape EntityType="CRMModel.Custom_Manage_Master" Width="1.5" PointX="15.375" PointY="0.75" />
+        <EntityTypeShape EntityType="CRMModel.activity_types" Width="1.5" PointX="3.375" PointY="21.75" />
+        <EntityTypeShape EntityType="CRMModel.tbl_ShowAllZIPCodes" Width="1.5" PointX="25.375" PointY="20.75" />
+        <EntityTypeShape EntityType="CRMModel.tbl_ZIPCodes" Width="1.5" PointX="11.375" PointY="26.75" />
+        <EntityTypeShape EntityType="CRMModel.Branch" Width="1.5" PointX="15.375" PointY="25.75" />
+        <EntityTypeShape EntityType="CRMModel.tbl_AssociateList" Width="1.5" PointX="23.375" PointY="26.75" />
+        <EntityTypeShape EntityType="CRMModel.user" Width="1.5" PointX="25.375" PointY="26.75" />
+        <EntityTypeShape EntityType="CRMModel.tbl_ProjectDetails" Width="1.5" PointX="21.375" PointY="8.75" />
+        <EntityTypeShape EntityType="CRMModel.tbl_ContactType" Width="1.5" PointX="19.375" PointY="17.75" />
+        <EntityTypeShape EntityType="CRMModel.tbl_Items" Width="1.5" PointX="21.75" PointY="12.75" />
+        <EntityTypeShape EntityType="CRMModel.tbl_Itemtype" Width="1.5" PointX="0.75" PointY="21.75" />
+        <EntityTypeShape EntityType="CRMModel.tbl_Invoice" Width="1.5" PointX="27.375" PointY="0.75" />
+        <EntityTypeShape EntityType="CRMModel.tbl_EstimateInvoice" Width="1.5" PointX="0.75" PointY="27.75" />
+        <EntityTypeShape EntityType="CRMModel.tbl_EstimateInvoiceItem" Width="1.5" PointX="21.75" PointY="20.75" />
+        <EntityTypeShape EntityType="CRMModel.tbl_InvoiceItem" Width="1.5" PointX="2.75" PointY="27.75" />
+        <EntityTypeShape EntityType="CRMModel.tbl_Payments" Width="1.5" PointX="27.375" PointY="10.75" />
+        <EntityTypeShape EntityType="CRMModel.Custom_Value_Master" Width="1.5" PointX="27.375" PointY="17.75" />
+        <EntityTypeShape EntityType="CRMModel.tbl_RoleMenus" Width="1.5" PointX="17.375" PointY="3.75" />
+        <EntityTypeShape EntityType="CRMModel.Country" Width="1.5" PointX="29.375" PointY="9.75" />
+        <EntityTypeShape EntityType="CRMModel.State" Width="1.5" PointX="11.375" PointY="29.75" />
+        <EntityTypeShape EntityType="CRMModel.SMSProviderList" Width="1.5" PointX="0.75" PointY="15.75" />
+        <EntityTypeShape EntityType="CRMModel.Error_Log" Width="1.5" PointX="3.375" PointY="0.75" />
+        <EntityTypeShape EntityType="CRMModel.Status" Width="1.5" PointX="3.375" PointY="3.75" />
+        <EntityTypeShape EntityType="CRMModel.Priority" Width="1.5" PointX="5.375" PointY="0.75" />
+        <EntityTypeShape EntityType="CRMModel.Company" Width="1.5" PointX="7.375" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CRMModel.UserAccessModule" Width="1.5" PointX="0.75" PointY="3.75" />
+        <EntityTypeShape EntityType="CRMModel.UserAccessSetting" Width="1.5" PointX="0.75" PointY="8.75" />
+        <EntityTypeShape EntityType="CRMModel.Account" Width="1.5" PointX="5.375" PointY="9.75" />
+        <EntityTypeShape EntityType="CRMModel.VMSStatu" Width="1.5" PointX="0.75" PointY="11.75" />
+        <EntityTypeShape EntityType="CRMModel.MentorType" Width="1.5" PointX="11.875" PointY="4.75" />
+        <EntityTypeShape EntityType="CRMModel.tbl1" Width="1.5" PointX="9.375" PointY="7.75" />
+        <EntityTypeShape EntityType="CRMModel.tbl2" Width="1.5" PointX="9.375" PointY="11.75" />
+        <EntityTypeShape EntityType="CRMModel.ModuleType" Width="1.5" PointX="3.375" PointY="6.75" />
+        <EntityTypeShape EntityType="CRMModel.Activity" Width="1.5" PointX="15.375" PointY="6.75" />
+        <EntityTypeShape EntityType="CRMModel.CalendarEventRequest" Width="1.5" PointX="13.375" PointY="12.75" />
+        <EntityTypeShape EntityType="CRMModel.EventDetail" Width="1.5" PointX="15.375" PointY="12.75" />
+        <EntityTypeShape EntityType="CRMModel.MentorAcceptedDateTime" Width="1.5" PointX="17.375" PointY="6.75" />
+        <EntityTypeShape EntityType="CRMModel.Venture" Width="1.5" PointX="7.375" PointY="15.75" />
+        <EntityTypeShape EntityType="CRMModel.Event1" Width="1.5" PointX="19.375" PointY="3.75" />
+        <EntityTypeShape EntityType="CRMModel.Event" Width="1.5" PointX="17.375" PointY="9.75" />
+        <EntityTypeShape EntityType="CRMModel.VentureDetail" Width="1.5" PointX="9.375" PointY="18.75" />
+        <EntityTypeShape EntityType="CRMModel.Mentor" Width="1.5" PointX="21.375" PointY="0.75" />
+        <EntityTypeShape EntityType="CRMModel.MentorQuestionary" Width="1.5" PointX="15.375" PointY="15.75" />
+        <EntityTypeShape EntityType="CRMModel.MentorDetail" Width="1.5" PointX="17.375" PointY="20.75" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

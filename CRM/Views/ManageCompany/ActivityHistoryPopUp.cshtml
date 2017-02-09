@@ -1,0 +1,169 @@
+﻿@model CRMHub.ViewModel.CompanyModel
+
+
+<link href="~/Scripts/datatable-responsive/datatables.responsive.css" rel="stylesheet" />
+<link href="~/Scripts/datatable-responsive/TableTools/css/dataTables.tableTools.css" rel="stylesheet" />
+
+<script src="~/Scripts/datatable-responsive/datatables.responsive.js"></script>
+<script src="~/Scripts/datatable-responsive/TableTools/dataTables.tableTools.js"></script>
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+      
+        BindActivityHistoryPopUp();
+    });
+
+    function BindActivityHistoryPopUp() {
+        var responsiveHelper = undefined;
+        var breakpointDefinition = {
+            desktop: Infinity,
+            tablet: 1024,
+            tabletlandscape: 768,
+            phone: 480
+        };
+        var tableElement = $('#jq-datatables-ActivityHistoryPopup');
+        tableElement.dataTable({
+            autoWidth: false,
+            preDrawCallback: function () {
+                if (!responsiveHelper) {
+                    responsiveHelper = new ResponsiveDatatablesHelper(tableElement, breakpointDefinition);
+                }
+            },
+            rowCallback: function (nRow) {
+                responsiveHelper.createExpandIcon(nRow);
+            },
+            drawCallback: function (oSettings) {
+                responsiveHelper.respond();
+            },
+            "aLengthMenu": [[10, 25, 50], [10, 25, 50]],
+            "columnDefs": [{ targets: 'no-sort', orderable: false, targets: [0, 1] }],
+            "pagingType": "full_numbers",
+            "processing": true
+        }).api();
+        $('#jq-datatables-ActivityHistoryPopup').on('click', 'th input:checkbox', function () {
+            var that = this;
+            $(this).closest('table').find('tr > td:first-child input:checkbox').each(function () {
+                this.checked = that.checked;
+                $(this).closest('tr').toggleClass('selected');
+            });
+        });
+        $('#jq-datatables-ActivityHistoryPopup tbody').click(function () {
+            
+            if ($('#jq-datatables-ActivityHistoryPopup input[name="chkItem"]:checked').length == $('#jq-datatables-ActivityHistoryPopup input[name="chkItem"]').length) {
+                $("#selectall").prop("checked", true);
+            } else {
+                $("#selectall").prop("checked", false);
+            }
+        });
+    }
+
+    function OpenAttachment(HistoryID) {
+        var URL = "ManageCompany/Attachment";
+        $.ajax({
+            url: URL,
+            type: "GET",
+            async: false,
+            data: { HistoryID: HistoryID },
+            success: function (data) {
+                
+                if (data != null) {
+                    $('#tblModalAttachment').empty();
+                    $('#tblModalAttachment').empty().append(data);
+                }
+            },
+            error: function (error) {
+                
+
+            }
+        });
+        $('#myModalAttachment').modal("show");
+    }
+    
+</script>
+
+<table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="jq-datatables-ActivityHistoryPopup" width="100%">
+    <thead>
+        <tr>
+            <th>
+                <input class="fa fa-square-o" type="checkbox" id="selectall" />
+            </th>
+            <th data-hide="phone">Created By</th>
+            <th data-class="expand">Created Date</th>
+            <th data-hide="phone">Completed Date</th>
+            <th data-hide="phone,tablet">Type</th>
+            <th data-hide="phone,tablet,tabletlandscape">Company Name</th>
+            <th data-hide="phone,tablet,tabletlandscape,desktop">Contact Person</th>
+            <th data-hide="phone,tablet,tabletlandscape,desktop">Applicant</th>
+            <th data-hide="phone,tablet,tabletlandscape,desktop">Comments</th>
+            <th data-hide="phone,tablet">Attachment</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.lstCompanyActivity != null)
+        {
+            foreach (var item in Model.lstCompanyActivity)
+            {
+                <tr>
+                    <td>
+                        <input type="checkbox" name="chkItem" data-activity="@item.HistoryId" />
+                    </td>
+                    <td>
+                        @item.createdBy
+                    </td>
+                    <td>
+                        @item.CreatedDate
+                    </td>
+                    <td>
+                        @item.CompletedDate
+                    </td>
+                    <td>
+                        @item.HistoryType
+                    </td>
+                    <td>
+                        @item.CompanyName
+                    </td>
+                    <td>
+                        @item.ContactName
+                    </td>
+                    <td>
+                        @item.ApplicantName
+                    </td>
+                    <td>
+                        @item.CommentedBy
+                    </td>
+                    <td>
+                        <a href="#" onclick="OpenAttachment(@item.HistoryId)">Attachment</a>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+
+<div class="modal fade" id="myModalAttachment">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Attachment</h4>
+            </div>
+            <div class="modal-body">
+
+                <div class="row">
+                    <div style="text-align:left;font-size:12px;padding:5px">
+                    </div>
+                    <div class="col-sm-12">
+
+                        <div class="table-primary table-striped" id="tblModalAttachment">
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

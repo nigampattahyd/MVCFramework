@@ -1,0 +1,602 @@
+﻿@model CRMHub.EntityFramework.tbl_history
+@{
+    ViewBag.Title = "CreateContactActivity";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/Content/assets/css/pixel-admin.min.css" rel="stylesheet" />
+<style type="text/css">
+    .pfi-clear {
+        display: none !important;
+    }
+</style>
+
+@using (Html.BeginForm("CreateContactActivity", "Contact", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken();
+    @Html.ValidationSummary(true)
+
+<div id="content-wrapper">
+    <div id="CustomBootstrapAlertBox">
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel">
+                <div class="panel-heading">
+                    <div class="row">
+                        <!-- Page header, center on small screens -->
+                        <h1 class="col-xs-6 col-sm-4 text-left text-left-sm panel-title">
+                            <i class="fa fa-user page-header-icon"></i>&nbsp; New Activity
+                        </h1>
+                        <div class="col-xs-6 col-sm-8">
+
+
+                            <div class="row">
+                                <div class="pull-right">
+                                    @*<a href="#" class="btn btn-flat btn-labeled btn-primary" tabindex="-1"
+                                       data-toggle="modal" data-target="#uidemo-modals-alerts-info"><span class="btn-label icon fa fa-question-circle"></span>Help</a>*@
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="panel-body">
+ 
+                      <div class="row" style="text-align:right;">
+                                 
+
+                                        <label class="control-label">
+                                          
+                                        </label>
+
+                                        <button class="btn btn-flat btn-labeled btn-primary" id="btnSave">
+                                            <span class="btn-label icon fa fa-save"></span>Save
+                                        </button>
+                                       
+                                      
+                         
+                              <a style="color: #fff; text-decoration: none; padding: 0px; font-weight: normal" class="btn btn-flat btn-labeled btn-primary" href="@Url.Action("RedirectActivityGrid", "Contact")">
+                                  <span class="btn-label icon fa fa-backward" style="margin-right:6px;"> </span>
+                                  Back
+                              </a>
+                          
+ 
+                                
+ 
+
+                            </div>
+                       
+                    <label class="control-label">
+                        <asp:Label ID="lblMessage" runat="server" ForeColor="Red"></asp:Label>
+                    </label>
+                    <span id="errorsymbol" style="color:red;display:none;margin-left:5px;" class="fa fa-exclamation-circle"></span><div id="ErrorMessages" style="margin-left:20px;color:red;font-size:15px;margin-top:-19px">
+
+                    </div>
+                    <div class="row">
+
+                       
+                            <div class="panel-group">
+
+
+
+                                <div class="panel">
+                                    <div id="collapse2" class="panel-collapse collapse in" style="height: auto;">
+                                        <div class="panel-body">
+                                            <div class="col-sm-12 no-padding-hr">
+
+                                                <div class="row">
+                                                    <div class="row">
+                                                     
+                                                        <div class="col-sm-4">
+                                                            <div class="form-group no-margin-hr">
+                                                                <label class="control-label">Type :<span style="color: red">*</span></label>
+
+
+                                                                @Html.DropDownListFor(m => m.HistoryType, new SelectList(Model.TypeList, "name", "name"), new { @id = "ddlHistoryType", @class = "form-control input-sm", @validate = "dropdown", @data_val_required = "Type" })
+
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="col-sm-4">
+                                                            <div class="form-group no-margin-hr">
+                                                                <label class="control-label">Priority :<span style="color: red">*</span></label>
+
+                                                                @Html.DropDownListFor(m => m.Priority, new List<SelectListItem>
+                                                                          {
+                                                                              new SelectListItem{Text="Select",Value="Select"},
+                                                                              new SelectListItem{Text="High",Value="High"},
+                                                                              new SelectListItem{Text="Low",Value="Low"},
+                                                                              new SelectListItem{Text="Medium",Value="Medium"},
+                                                                          }, new { @class = "form-control input-sm", @id = "ddlPriority", @validate = "dropdown", @data_val_required = "Priority" })
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-sm-4">
+                                                            <div class="form-group no-margin-hr">
+                                                                <label class="control-label">Status :<span style="color: red">*</span></label>
+
+                                                                @Html.DropDownListFor(m => m.Status, new List<SelectListItem>
+                                                                          {
+                                                                              new SelectListItem{Text="Select",Value="Select"},
+                                                                              new SelectListItem{Text="Open",Value="Open"},
+                                                                              new SelectListItem{Text="Completed",Value="Completed"},
+
+                                                                          }, new { @class = "form-control input-sm", @id = "ddlStatus", @validate = "dropdown", @data_val_required = "Status" })
+                                                            </div>
+                                                            @Html.HiddenFor(m => m.ModuleType, new { Value = "Contact" })
+                                                        </div>
+
+                                                        <div class="col-sm-4">
+                                                            <div class="form-group no-margin-hr">
+                                                                <label class="control-label">Due Date :<span style="color: red">*</span></label>
+                                                                <div class="row">
+                                                                    <div class="col-sm-12">
+
+                                                                        @Html.TextBoxFor(m => m.StartDate, new { @class = "form-control input-sm", @maxlength = 12, @id = "txtDate", @validate = "Required", @data_val_required = "Due Date" })
+                                                                    </div>
+
+                                                                    @*<div class="col-sm-4">
+                                                                        @Html.DropDownListFor(m => m.StartTime, new List<SelectListItem>
+                                                                          {
+                                                                              new SelectListItem{Text="12:00 AM",Value="12:00 AM"},
+                                                                              new SelectListItem{Text="12:30 AM",Value="12:30 AM"},
+                                                                              new SelectListItem{Text="1:00 AM",Value="1:00 AM"},
+                                                                              new SelectListItem{Text="1:30 AM",Value="1:30 AM"},
+                                                                              new SelectListItem{Text="2:00 AM",Value="2:00 AM"},
+                                                                              new SelectListItem{Text="2:30 AM",Value="2:30 AM"},
+                                                                              new SelectListItem{Text="3:00 AM",Value="3:00 AM"},
+                                                                              new SelectListItem{Text="3:30 AM",Value="3:30 AM"},
+                                                                              new SelectListItem{Text="4:00 AM",Value="4:00 AM"},
+                                                                              new SelectListItem{Text="4:30 AM",Value="4:30 AM"},
+                                                                              new SelectListItem{Text="5:00 AM",Value="5:00 AM"},
+                                                                              new SelectListItem{Text="5:30 AM",Value="5:30 AM"},
+                                                                              new SelectListItem{Text="6:00 AM",Value="6:00 AM"},
+                                                                              new SelectListItem{Text="6:30 AM",Value="6:30 AM"},
+                                                                              new SelectListItem{Text="7:00 AM",Value="7:00 AM"},
+                                                                              new SelectListItem{Text="7:30 AM",Value="7:30 AM"},
+                                                                              new SelectListItem{Text="8:00 AM",Value="8:00 AM"},
+                                                                              new SelectListItem{Text="8:30 AM",Value="8:30 AM"},
+                                                                              new SelectListItem{Text="9:00 AM",Value="9:00 AM"},
+                                                                              new SelectListItem{Text="9:30 AM",Value="9:30 AM"},
+                                                                              new SelectListItem{Text="10:00 AM",Value="10:00 AM"},
+                                                                              new SelectListItem{Text="10:30 AM",Value="10:30 AM"},
+                                                                              new SelectListItem{Text="11:00 AM",Value="11:00 AM"},
+                                                                              new SelectListItem{Text="11:30 AM",Value="11:30 AM"},
+                                                                              new SelectListItem{Text="12:00 PM",Value="12:00 PM"},
+                                                                              new SelectListItem{Text="12:30 PM",Value="12:30 PM"},
+                                                                              new SelectListItem{Text="1:00 PM",Value="1:00 PM"},
+                                                                              new SelectListItem{Text="1:30 PM",Value="1:30 PM"},
+                                                                              new SelectListItem{Text="2:00 PM",Value="2:00 PM"},
+                                                                              new SelectListItem{Text="2:30 PM",Value="2:30 PM"},
+                                                                              new SelectListItem{Text="3:00 PM",Value="3:00 PM"},
+                                                                              new SelectListItem{Text="3:30 PM",Value="3:30 PM"},
+                                                                              new SelectListItem{Text="4:00 PM",Value="4:00 PM"},
+                                                                              new SelectListItem{Text="4:30 PM",Value="4:30 PM"},
+                                                                              new SelectListItem{Text="5:00 PM",Value="5:00 PM"},
+                                                                              new SelectListItem{Text="5:30 PM",Value="5:30 PM"},
+                                                                              new SelectListItem{Text="6:00 PM",Value="6:00 PM"},
+                                                                              new SelectListItem{Text="6:30 PM",Value="6:30 PM"},
+                                                                              new SelectListItem{Text="7:00 PM",Value="7:00 PM"},
+                                                                              new SelectListItem{Text="7:30 PM",Value="7:30 PM"},
+                                                                              new SelectListItem{Text="8:00 PM",Value="8:00 PM"},
+                                                                              new SelectListItem{Text="8:30 PM",Value="8:30 PM"},
+                                                                              new SelectListItem{Text="9:00 PM",Value="9:00 PM"},
+                                                                              new SelectListItem{Text="9:30 PM",Value="9:30 PM"},
+                                                                              new SelectListItem{Text="10:00 PM",Value="10:00 PM"},
+                                                                              new SelectListItem{Text="10:30 PM",Value="10:30 PM"},
+                                                                              new SelectListItem{Text="11:00 PM",Value="11:00 PM"},
+                                                                              new SelectListItem{Text="11:30 PM",Value="11:30 PM"},
+                                                                          }, new { @class = "form-control input-sm", @id = "ddlStartTime" })
+                                                                    </div>*@
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-sm-4">
+                                                            <div class="form-group no-margin-hr">
+                                                                <label class="control-label">Reminder :<span style="color: red">*</span> </label>
+
+                                                                <div class="row">
+                                                                    <div class="col-sm-12">
+
+                                                                        @Html.TextBoxFor(m => m.RemindDate, new { @class = "form-control input-sm", @id = "txtReminder", @validate = "Required", @data_val_required = "Remind Date" })
+                                                                    </div>
+
+                                                                    @*<div class="col-sm-4">
+                                                                        @Html.DropDownListFor(m => m.RemindTime, new List<SelectListItem>
+                                                                          {
+                                                                              new SelectListItem{Text="12:00 AM",Value="12:00 AM"},
+                                                                              new SelectListItem{Text="12:30 AM",Value="12:30 AM"},
+                                                                              new SelectListItem{Text="1:00 AM",Value="1:00 AM"},
+                                                                              new SelectListItem{Text="1:30 AM",Value="1:30 AM"},
+                                                                              new SelectListItem{Text="2:00 AM",Value="2:00 AM"},
+                                                                              new SelectListItem{Text="2:30 AM",Value="2:30 AM"},
+                                                                              new SelectListItem{Text="3:00 AM",Value="3:00 AM"},
+                                                                              new SelectListItem{Text="3:30 AM",Value="3:30 AM"},
+                                                                              new SelectListItem{Text="4:00 AM",Value="4:00 AM"},
+                                                                              new SelectListItem{Text="4:30 AM",Value="4:30 AM"},
+                                                                              new SelectListItem{Text="5:00 AM",Value="5:00 AM"},
+                                                                              new SelectListItem{Text="5:30 AM",Value="5:30 AM"},
+                                                                              new SelectListItem{Text="6:00 AM",Value="6:00 AM"},
+                                                                              new SelectListItem{Text="6:30 AM",Value="6:30 AM"},
+                                                                              new SelectListItem{Text="7:00 AM",Value="7:00 AM"},
+                                                                              new SelectListItem{Text="7:30 AM",Value="7:30 AM"},
+                                                                              new SelectListItem{Text="8:00 AM",Value="8:00 AM"},
+                                                                              new SelectListItem{Text="8:30 AM",Value="8:30 AM"},
+                                                                              new SelectListItem{Text="9:00 AM",Value="9:00 AM"},
+                                                                              new SelectListItem{Text="9:30 AM",Value="9:30 AM"},
+                                                                              new SelectListItem{Text="10:00 AM",Value="10:00 AM"},
+                                                                              new SelectListItem{Text="10:30 AM",Value="10:30 AM"},
+                                                                              new SelectListItem{Text="11:00 AM",Value="11:00 AM"},
+                                                                              new SelectListItem{Text="11:30 AM",Value="11:30 AM"},
+                                                                              new SelectListItem{Text="12:00 PM",Value="12:00 PM"},
+                                                                              new SelectListItem{Text="12:30 PM",Value="12:30 PM"},
+                                                                              new SelectListItem{Text="1:00 PM",Value="1:00 PM"},
+                                                                              new SelectListItem{Text="1:30 PM",Value="1:30 PM"},
+                                                                              new SelectListItem{Text="2:00 PM",Value="2:00 PM"},
+                                                                              new SelectListItem{Text="2:30 PM",Value="2:30 PM"},
+                                                                              new SelectListItem{Text="3:00 PM",Value="3:00 PM"},
+                                                                              new SelectListItem{Text="3:30 PM",Value="3:30 PM"},
+                                                                              new SelectListItem{Text="4:00 PM",Value="4:00 PM"},
+                                                                              new SelectListItem{Text="4:30 PM",Value="4:30 PM"},
+                                                                              new SelectListItem{Text="5:00 PM",Value="5:00 PM"},
+                                                                              new SelectListItem{Text="5:30 PM",Value="5:30 PM"},
+                                                                              new SelectListItem{Text="6:00 PM",Value="6:00 PM"},
+                                                                              new SelectListItem{Text="6:30 PM",Value="6:30 PM"},
+                                                                              new SelectListItem{Text="7:00 PM",Value="7:00 PM"},
+                                                                              new SelectListItem{Text="7:30 PM",Value="7:30 PM"},
+                                                                              new SelectListItem{Text="8:00 PM",Value="8:00 PM"},
+                                                                              new SelectListItem{Text="8:30 PM",Value="8:30 PM"},
+                                                                              new SelectListItem{Text="9:00 PM",Value="9:00 PM"},
+                                                                              new SelectListItem{Text="9:30 PM",Value="9:30 PM"},
+                                                                              new SelectListItem{Text="10:00 PM",Value="10:00 PM"},
+                                                                              new SelectListItem{Text="10:30 PM",Value="10:30 PM"},
+                                                                              new SelectListItem{Text="11:00 PM",Value="11:00 PM"},
+                                                                              new SelectListItem{Text="11:30 PM",Value="11:30 PM"},
+                                                                          }, new { @class = "form-control input-sm", @onblur = "return Timecheck(this);", @id = "ddlReminderTime" })
+                                                                    </div>*@
+                                                                </div>
+
+
+
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="col-sm-4">
+                                                            <div class="form-group no-margin-hr" id="Td12">
+                                                                <label class="control-label" id="lblAssignTo" runat="server">Assigned to :</label>
+                                                                @Html.DropDownListFor(m => m.AssignedTo, new SelectList(Model.userlist, "UserId", "FirstName"), new { @id = "ddlAssignedto", @class = "form-control input-sm" })
+                                                            </div>
+                                                        </div>
+                                                    </div>   
+                                                    <div class="row">
+                                                        
+                                                        <div class="col-sm-4">
+                                                            <div class="form-group no-margin-hr">
+                                                                <label class="control-label">Company Name:</label>
+
+                                                                <div id="Table1" runat="server">
+                                                                    @Html.TextBoxFor(m => m.CompanyName, new { @class = "form-control input-sm", @id = "txtCompanyName", @maxlength = "100", @readonly = false })
+
+
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+
+
+                                                        <div class="col-sm-4">
+                                                            <div class="form-group no-margin-hr">
+                                                                <label class="control-label">Contact Name :</label>
+
+                                                                <div class="input-group" id="tblContact" runat="server">
+
+                                                                    @Html.TextBoxFor(m => m.ContactName, new { @class = "form-control input-sm", @id = "txtContactName", @maxlength = "100", @readonly = false })
+                                                                    <span class="input-group-btn">
+                                                                        <a class="btn" href="#" id="ImageButton4" title="Select Contact"
+                                                                           onclick="return show_NewContactPopUp(580, 420);" style="cursor: pointer"><i class="fa fa-search"></i></a>
+
+                                                                        <input name="hdParentAccountId" type="hidden" id="hdParentAccountId" value="0">
+                                                                    </span>
+
+                                                                </div>
+
+
+
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-sm-4">
+                                                            <div class="form-group no-margin-hr">
+                                                                <label class="control-label">Contact Phone :</label>
+                                                                @Html.TextBoxFor(m => m.contactPhone, new { @class = "form-control input-sm", @id = "txtcontactPhone", @maxlength = "100", @readonly = false })
+
+                                                            </div>
+                                                        </div>
+
+
+                                                        <div class="col-sm-4">
+                                                            <div class="form-group no-margin-hr">
+                                                                <label class="control-label">Contact Mobile :</label>
+                                                                @Html.TextBoxFor(m => m.contactMobile, new { @class = "form-control input-sm", @id = "txtcontactMobile", @maxlength = "100", @readonly = false })
+
+                                                            </div>
+                                                        </div>
+
+
+
+                                                        <div class="col-sm-4">
+                                                            <div class="form-group no-margin-hr">
+                                                                <label class="control-label">Attachment : </label>
+
+                                                                <script>
+                                                                    init.push(function () {
+                                                                        $('.styled-finputs-example').pixelFileInput({ placeholder: 'No file selected...' });
+                                                                    })
+                                                                </script>
+                                                                <input type="file" name="file" id="uploadFile" class="styled-finputs-example">
+
+                                                            </div>
+                                                        </div>
+
+                                                        
+
+
+                                                    </div>  
+                                                    <div class="row">
+                                                        <div class="col-sm-8">
+                                                            <div class="form-group no-margin-hr">
+                                                                <label class="control-label">Comment :</label>
+
+                                                                @Html.TextAreaFor(m => m.Details, new { @id = "txtHistoryDetail", @class = "form-control", @maxlength = "5000" })
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                            @Html.HiddenFor(m => m.Contactid)
+                                                            @Html.HiddenFor(m => m.HistoryId)
+
+                                                         
+                                                      
+                                                            <div class="col-sm-12 ">
+                                                                <div class="pull-right">
+                                                                    Date:&nbsp;<asp:Label ID="lblCreatedDate" runat="server">
+                                                                        @Html.LabelFor(m => m.CreatedDate, new { @id = "lblCreatedDate" })
+                                                                    </asp:Label>
+                                                                </div>
+
+                                                            </div>
+                                                       
+                                                    
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                         
+                    </div>
+                </div>
+
+
+                <a id="aCopyEmail" runat="server" cssclass="form-control input-sm" style="color: Blue; display: none; cursor: pointer">Click here to copy sent email content into Comment. </a>
+                <!-- / Info -->
+            </div>
+        </div>
+    </div>
+
+    <asp:PlaceHolder ID="PlaceHolder2" runat="server">
+
+        <div id="conform" style="position: absolute; margin-left: 300px; margin-top: 120px; background-color: #FFFFFF; border-color: #245DDB; border-width: thin; border-style: ridge; visibility: hidden;">
+            <asp:Panel runat="server" ID="pnl">
+                <table style="vertical-align: middle; height: 150px; border-spacing: 0px; border-collapse: collapse; width: 300px">
+                    <tr>
+                        <td colspan="2" style="text-align: center">Do you want to add more activity?</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 50%; text-align: right">
+                            <input type="button" value="Yes" id="btnYes" onclick="return openActivityPopup();" />
+                        </td>
+                        <td style="text-align: left; width: 50%">
+                            <input type="button" value="No" id="btnNo" onclick="return hideConformDiv();" />
+                        </td>
+                    </tr>
+                </table>
+            </asp:Panel>
+        </div>
+        </div>
+        }
+        <script type="text/javascript">
+            $("#ddlReminderTime").prop("disabled", true);
+            $("#ddlStartTime").prop("disabled", true);
+
+            $("#txtDate").datepicker({
+                changeMonth: true,
+                changeYear: true,
+                autoclose: true,
+                yearRange: '1900:+15',
+                onSelect: function () {
+                  
+                    //if (new Date(DueDate) <= new Date()) {
+                    //    alert("DueDate Should be greaterthan the CurrentDate");
+                    //    $("#txtDate").val('');
+                    //}               
+                      
+                   
+                            var Isvalid = true;
+                            var duedate = $("#txtDate").val();
+                            var reminderdate = $("#txtReminder").val();
+                            var startDay = new Date(duedate);
+                            var endDay = new Date(reminderdate);
+                            var millisecondsPerDay = 1000 * 60 * 60 * 24;
+                            var millisBetween = startDay.getTime() - endDay.getTime();
+                            var days = millisBetween / millisecondsPerDay;
+                            var diffdate = Math.floor(days);
+                            if (duedate < reminderdate) {
+                                $.growl.error({ title: "Error", message: "Due Date Must be greater than Reminder date.", size: 'large' });
+                                Isvalid = false;
+                            }
+                            if (diffdate > 15) {
+                                $.growl.error({ title: "Error", message: "Due Date should be 15 day Prior to Reminder Date.", size: 'large' });
+                                Isvalid = false;
+                            }
+                            if (duedate == reminderdate) {
+                                $.growl.error({ title: "Error", message: "Due Date should be 24hours greater Reminder Date.", size: 'large' });
+                                Isvalid = false;
+                            }
+                            if (new Date(duedate) <= new Date()) {
+
+                                $.growl.error({ title: "Error", message: "DueDate Should be greaterthan the CurrentDate.", size: 'large' });
+                                $("#txtDate").val('');
+                                Isvalid = false;
+                            }
+                            else {
+                                Isvalid = true;
+                            }
+                            return Isvalid;
+                        }
+                    });
+                    
+
+                
+            
+
+
+                
+          
+            //function remaindertimeCheck(control) {
+                
+            //    var remainderdate = $("#txtReminder").val();
+            //    var duedate = $("#txtDate").val();
+            //    var Isvalid = true;
+            //    if (duedate != "") {
+            //        if (remainderdate > duedate) {
+            //            alert("Remainder Date Must be less than Due date");
+            //            $("#txtReminder").focus();
+            //            $("#txtReminder").val('');
+            //            return Isvalid = false;
+            //        }
+            //        else {
+            //            return Isvalid = true;
+            //        }
+            //    }
+            //    return Isvalid;
+            //}
+            $("#txtReminder").datepicker({
+                changeMonth: true,
+                changeYear: true,
+                yearRange: '1900:+15',
+                autoclose: true,
+                onSelect: function (date) {
+                  
+                    var reminderdate1 = date;
+                    var Isvalid = true;
+                    var duedate = $("#txtDate").val();
+                    var reminderdate = reminderdate1;
+                    var startDay = new Date(duedate);
+                    var endDay = new Date(reminderdate);
+                    var millisecondsPerDay = 1000 * 60 * 60 * 24;
+                    var millisBetween = startDay.getTime() - endDay.getTime();
+                    var days = millisBetween / millisecondsPerDay;
+                    var diffdate = Math.floor(days);
+                    if (reminderdate > duedate) {
+                        //alert("Remainder Date Must be less than Due date");
+                        $.growl.error({ title: "Error", message: "Reminder Date Must be less than Due date.", size: 'large' });
+                        // $("#txtReminder").focus();
+                        $("#txtReminder").val('');
+                        return Isvalid = false;
+                    }
+                    if (diffdate <= 0 || diffdate > 15) {
+                        //alert("Date Not Vaild");
+                        $.growl.error({ title: "Error", message: "Remind Date should be 15 day Prior to DueDate.", size: 'large' });
+                        $("#txtReminder").val('');
+                        return Isvalid = false;
+                    }
+                    else {
+                        //alert("Date Vaild");
+                        return Isvalid = true;
+                    }
+                    return Isvalid;
+                }
+            });
+
+            function Timecheck(control) {
+                
+                var remainderdate = $("#txtReminder").val();
+                var duedate = $("#txtDate").val();
+
+                var Isvalid = true;
+                //getHour24(control);
+                var starttime = ($("#ddlStartTime").val());
+                var remaindertime = ($("#ddlReminderTime").val());
+
+                //var time = document.getElementById('txttime').value;
+                var hrs = Number(remaindertime.match(/^(\d+)/)[1]);
+                var mnts = Number(remaindertime.match(/:(\d+)/)[1]);
+                var format = remaindertime.match(/\s(.*)$/)[1];
+                if (format == "PM" && hrs < 12) hrs = hrs + 12;
+                if (format == "AM" && hrs == 12) hrs = hrs - 12;
+                var hours = hrs.toString();
+                var minutes = mnts.toString();
+                if (hrs < 10) hours = "0" + hours;
+                if (mnts < 10) minutes = "0" + minutes;
+                if (duedate != "" && remainderdate != "") {
+                    if (duedate == remainderdate) {
+                        
+                        if (starttime < hours) {
+                            alert("Remainder time must be less than start time");
+                            $("#ddlReminderTime").focus();
+                            return Isvalid = false;
+                        }
+                    }
+                }
+                else {
+                    return Isvalid = true;
+                }
+                return Isvalid;
+            }
+
+          
+    $(document).ready(function () {
+        //$("#txtDate").datepicker({
+        //    changeMonth: true,
+        //    changeYear: true,
+        //    yearRange: '1900:+15'
+        //});
+        //$("#txtReminder").datepicker({
+        //    changeMonth: true,
+        //    changeYear: true,
+        //    yearRange: '1900:+15'
+        //});
+
+
+            var param1 = new Date();
+            var param2 = param1.getDate() + '/' + (param1.getMonth() + 1) + '/' + param1.getFullYear() + ' ' + param1.getHours() + ':' + param1.getMinutes() + ':' + param1.getSeconds();
+            $('#lblCreatedDate').text(param2)
+        
+    });
+
+            $("#btnSave").click(function (e) {
+                if ($("#ddlStatus").val() == "select") {
+                    alert("Please Select Status");
+                    e.preventDefault();
+                }
+                if ($("#ddlPriority").val() == "select") {
+                    alert("Please Select Priority");
+                    e.preventDefault();
+                }
+                Isvalid = true;
+                return Validate(this.form);
+
+
+            });
+
+           
+       
+    </script>

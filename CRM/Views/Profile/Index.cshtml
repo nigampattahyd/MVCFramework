@@ -1,0 +1,477 @@
+﻿@model CRMHub.ViewModel.UsersModel
+@{
+    ViewBag.Title = "Index";
+    var success = ViewBag.success;
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+}
+
+<script src="~/Scripts/jquery-2.1.1.min.js"></script>
+<script src="~/Scripts/script.js"></script>
+<script src="~/Scripts/UserValidations/Validation.js"></script>
+<script>
+    function Validatephoneno(phnno) {
+        var expr = /^((\+[1-9]{1,4}[ \-]*)|(\([0-9]{2,3}\)[ \-]*)|([0-9]{2,4})[ \-]*)*?[0-9]{3,4}?[ \-]*[0-9]{3,4}?$/;
+        return expr.test(email);
+    };
+
+   
+    $(document).ready(function () {
+        
+        var x = '@ViewBag.success';
+        if (x == 'success')
+        {
+            $.growl.notice({ title: "Success", message: "Profile Updated Successfully", size: 'large' });
+        }
+      
+            //if (ViewBag.success == "success") {
+            //    $.growl.notice({ title: "Success", message: "Profile Updated Successfully", size: 'large' });
+            //}
+            //else {
+            //    $.growl.error({ title: "Fail", message: "Profile not Updated", size: 'large' });
+            //}
+       
+       
+        $('#txtPhone').keydown(function (e) {
+            //PhoneMask(e, '#txtphone');
+            
+            var key = e.which || e.charCode || e.keyCode || 0;
+            $phone = $(this);
+
+            // Don't let them remove the starting '('
+            if ($phone.val().length === 1 && (key === 8 || key === 46)) {
+                $phone.val('(');
+                return false;
+            }
+                // Reset if they highlight and type over first char.
+            else if ($phone.val().charAt(0) !== '(') {
+                $phone.val('(' + $phone.val());
+            }
+
+            // Auto-format- do not expose the mask as the user begins to type
+            if (key !== 8 && key !== 9) {
+                if ($phone.val().length === 4) {
+                    $phone.val($phone.val() + ')');
+                }
+                if ($phone.val().length === 5) {
+                    $phone.val($phone.val() + ' ');
+                }
+                if ($phone.val().length === 9) {
+                    $phone.val($phone.val() + '-');
+                }
+            }
+
+            // Allow numeric (and tab, backspace, delete) keys only
+            return (key == 8 ||
+                    key == 9 ||
+                    key == 46 ||
+                    (key >= 48 && key <= 57) ||
+                    (key >= 96 && key <= 105));
+        });
+
+        $('#txtDate').datepicker();
+        $("#txtconfirmpwd").on("blur", function () {
+            
+            if ($("#txtnewpwd").val() === $("#txtconfirmpwd").val()) {
+                $("#lblerror").hide();
+            } else {
+                $("#lblerror").show();
+            }
+        });
+
+        $("#txtnewpwd").on("blur", function () {
+            
+            if ($("#txtnewpwd").val() == "") {
+                $("#lblpwdnew").show();
+               
+            } else {
+                $("#lblpwdnew").hide();
+            }
+            if($("#txtnewpwd").val()===$("#txtcurrentpwd").val())
+            {
+                $("#lblnewpwdc").show();
+                $("#txtnewpwd").val("");
+                $("#txtnewpwd").focus();
+                return false;
+            }
+            else {
+                $("#lblnewpwdc").hide();
+            }
+        });
+        $("#txtconfirmpwd").on("blur", function () {
+            
+            if ($("#txtconfirmpwd").val() != "") {
+                $("#lblpwdempty").hide();
+            } else {
+                $("#lblpwdempty").show();
+            }
+        });
+
+        $("#txtcurrentpwd").on("blur", function () {
+            
+          
+            var pwd = $("#txtcurrentpwd").val();
+            if (pwd == "")
+            {
+                $("#lblerrorcpwd").show();
+               
+            }
+            else
+            {
+                $("#lblerrorcpwd").hide();
+            $.ajax({
+                type: "GET",
+                url: "Profile/CheckPwd",
+                data: { password: '' + pwd + '' },
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                async: false,
+                success: function (r) {
+                    if (r == true) {
+                        $("#lblinvalidpwd").hide();
+                    }
+                    else {
+                      
+                        $("#lblinvalidpwd").show();
+                        $("#txtcurrentpwd").val("");
+                        $("#txtcurrentpwd").focus();
+                        return false;
+                    }
+                },
+                error: function (r) {
+                }
+            });
+                }
+
+        });
+
+        $("#btncancel").click(function () {
+            
+            $("#txtconfirmpwd").val('');
+            $("#txtcurrentpwd").val('');
+            $("#txtnewpwd").val('');
+
+        });
+        $("#btnsavepwd").click(function () {
+            if ($("#txtnewpwd").val() === $("#txtcurrentpwd").val()) {
+                $("#lblnewpwdc").show();
+                $("#txtnewpwd").val("");
+                $("#txtnewpwd").focus();
+                return false;
+            }
+           var password =$("#txtconfirmpwd").val();
+            
+            if ($("#txtcurrentpwd").val() == "") {
+                $("#lblerrorcpwd").show();
+                $("#txtcurrentpwd").focus();
+                return false;
+            }
+            else if ($("#txtnewpwd").val() == "") {
+                $("#lblpwdnew").show();
+                $("#lblpwdnew").focus();
+              
+            }
+           else if ($("#txtnewpwd").val() === $("#txtcurrentpwd").val()) {
+                $("#lblnewpwdc").show();
+                $("#txtnewpwd").val("");
+                $("#txtnewpwd").focus();
+                return false;
+            }
+            else if ($("#txtconfirmpwd").val() == "") {
+                $("#lblpwdempty").show();
+                return false;
+               
+            }
+            else if($("#txtnewpwd").val() !== $("#txtconfirmpwd").val())
+            {
+                $("#lblerror").show();
+                return false;
+            }
+           
+            //var password = $("#txtconfirmpwd").val();
+            //if ($("#txtconfirmpwd").val() == "" && $("#txtcurrentpwd").val() == "" && $("#txtnewpwd").val() == "") {
+            //    alert("please enter password")
+            //    return false;
+            //}
+            else {
+                $.ajax({
+                    type: "GET",
+                    url: "Profile/ChangePassword",
+                    data: { password: '' + password + '' },
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    async: false,
+                    success: function (r) {
+                        if (r == true) {
+                            $("#lblpwdempty").hide();
+                            $.growl.notice({ title: "Success", message: "Password Changed Successfully", size: 'large' });
+                            return false;
+
+                        }
+                        else {
+                            $.growl.error({ title: "Fail", message: "Password not Changed", size: 'large' });
+                            //$("#lblpwdempty").show();
+                            return false;
+                        }
+                    },
+                    error: function (r) {
+                    }
+                });
+            }
+
+            });
+        
+
+
+    });
+
+</script>
+
+@using (Html.BeginForm("UpdateUserDetailsbyloginID", "Profile", FormMethod.Post))
+{
+    <form name="userform">
+        <div class="widget">
+            <div class="widget-header bordered-bottom bordered-themesecondary">
+                <i class="widget-icon fa fa-tags themesecondary"></i>
+                <span class="widget-caption themesecondary">Personal Settings / Edit Profile</span>
+            </div><!--Widget Header-->
+            <div class="widget-body">
+                <div class="row">
+                    <div id="Getleads">
+
+                        <div class="col-sm-12">
+                            <div class="col-sm-12 no-padding-hr">
+                                <div class="row">
+                                    <div class="profile-container">
+                                        <div class="profile-body">
+                                            <div class="row">
+                                                <div class="col-lg-12">
+                                                    <div class="tabbable">
+                                                        <ul class="nav nav-tabs tabs-flat  nav-justified" id="myTab11">
+                                                            <li class="active">
+                                                                <a data-toggle="tab" href="#profile">
+                                                                    EDIT PROFILE
+                                                                </a>
+                                                            </li>
+                                                            <li class="tab-red">
+                                                                <a data-toggle="tab" href="#password">
+                                                                    CHANGE PASSWORD
+                                                                </a>
+                                                            </li>
+                                                        </ul>
+                                                        <div class="tab-content tabs-flat">
+                                                            <div id="profile" class="tab-pane active">
+                                                                <div class="row">
+                                                                    <div class="col-sm-8">
+                                                                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                                                        <div class="form-group">
+                                                                            <div class="row">
+                                                                                <label class="col-sm-3">First Name :<span style="color:red">*</span></label>
+                                                                                <div class="col-sm-9">
+                                                                                    @Html.TextBoxFor(m => m.users.FirstName, new { @id = "txtAdminFirstName", @class = " form-control input-sm", @maxlength = "50", @tabindex = "1", @validate = "Required", @required = "required", @placeholder = "Please enter First Name" })
+                                                                                    @Html.ValidationMessageFor(m => m.users.FirstName, "", new { @class = "text-danger" })
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <div class="row">
+                                                                                <label class="col-sm-3">Last Name :</label>
+                                                                                <div class="col-sm-9">
+                                                                                    @Html.TextBoxFor(m => m.users.LastName, new { @id = "txtlastName", @class = "form-control input-sm", @maxlength = "50", @tabindex = "3" })
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <div class="row">
+                                                                                <label class="col-sm-3">Address1 :<span style="color:red">*</span></label>
+                                                                                <div class="col-sm-9">
+                                                                                    @Html.TextBoxFor(m => m.users.AddressLine1, new { @id = "txtAddress1", @class = " required form-control input-sm", @maxlength = "100", @tabindex = "4", @validate = "Required", @data_val_required = "please enter address1" })
+                                                                                    @Html.ValidationMessageFor(m => m.users.AddressLine1, "", new { @class = "text-danger" })
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <div class="row">
+                                                                                <label class="col-sm-3">Address2 :</label>
+                                                                                <div class="col-sm-9">
+                                                                                    @Html.TextBoxFor(m => m.users.AddressLine2, new { @id = "txtAddress2", @class = "form-control input-sm", @maxlength = "100", @tabindex = "5" })
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <div class="row">
+                                                                                <label class="col-sm-3">City :</label>
+                                                                                <div class="col-sm-9">
+                                                                                    @Html.TextBoxFor(m => m.users.City, new { @id = "txtCity", @class = "form-control input-sm", @maxlength = "50", @tabindex = "6"})
+                                                                                    @Html.ValidationMessageFor(m => m.users.City, "", new { @class = "text-danger" })
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <div class="row">
+                                                                                <label class="col-sm-3">Date Of Birth :</label>
+                                                                                <div class="col-sm-9">
+                                                                                    @Html.TextBoxFor(m => m.users.DateOfBirth, "{0:MM/dd/yyyy}", new { @id = "txtDate", @class = "form-control input-sm" })
+                                                                                    @Html.ValidationMessageFor(m => m.users.DateOfBirth, "", new { @class = "text-danger" })
+
+                                                                                    @*<input type="date" name="txtDOB" />*@
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <div class="row">
+                                                                                <label class="col-sm-3">Gender :</label>
+                                                                                <div class="col-sm-9">
+                                                                                    @{
+    List<SelectListItem> listitem = new List<SelectListItem>();
+    listitem.Add(new SelectListItem { Text = "Male", Value = "Male" });
+    listitem.Add(new SelectListItem { Text = "FeMale", Value = "FeMale" });
+                                                                                    }
+                                                                                    @Html.DropDownListFor(m => m.users.Gender, listitem, "-Select-", new { @id = "ddlgender", @class = "form-control input-sm", @validate = "dropdown", @data_val_required = "Gender" })
+
+                                                                                </div>
+
+
+                                                                            </div>
+                                                                        </div>
+
+
+                                                                        <div class="form-group">
+                                                                            <div class="row">
+                                                                                <label class="col-sm-3">State :</label>
+                                                                                <div class="col-sm-9">
+                                                                                    @Html.DropDownListFor(m => m.users.StateCode, ViewBag.StateList as List<SelectListItem>, new { @id = "ddluserState", @class = "form-control input-sm", @tabindex = "7" })
+                                                                                    @Html.ValidationMessageFor(m => m.users.StateCode, "", new { @class = "text-danger" })
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <div class="row">
+                                                                                <label class="col-sm-3">Postal code :</label>
+                                                                                <div class="col-sm-9">
+                                                                                    @Html.TextBoxFor(m => m.users.PostalCode, new { @id = "txtPostalCode", @class = "form-control zipmask", @maxlength = "20", @tabindex = "8" })
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <div class="row">
+                                                                                <label class="col-sm-3">Mobile :<span style="color:red">*</span></label>
+                                                                                <div class="col-sm-9">
+                                                                                    @Html.TextBoxFor(m => m.users.Phone, new { @id = "txtPhone", @class = " required form-control input-sm ", @maxlength = "20", @tabindex = "9", @validate = "Required", @data_val_required = "Please enter Mobile No", @onkeypress = "return onlynumbers(event,this);" })
+                                                                                    @Html.ValidationMessageFor(m => m.users.Phone, "", new { @class = "text-danger" })
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>Please
+                                                                        <div class="form-group">
+                                                                            <div class="row">
+                                                                                <label class="col-sm-3">Phone Ext :</label>
+                                                                                <div class="col-sm-9">
+                                                                                    @Html.TextBoxFor(m => m.users.PhoneExt, new { @id = "txtPhoneExt", @class = "form-control input-sm ", @maxlength = "20", @tabindex = "9", @onkeypress = "return onlynumbers(event,this);" })
+                                                                                    @Html.ValidationMessageFor(m => m.users.PhoneExt, "", new { @class = "text-danger" })
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <div class="row">
+                                                                                <label class="col-sm-3">Fax :</label>
+                                                                                <div class="col-sm-9">
+                                                                                    @Html.TextBoxFor(m => m.users.Fax, new { @id = "txtFax", @class = "form-control input-sm ", @maxlength = "20", @tabindex = "10", @onkeypress = "return onlynumbers(event,this);" })
+                                                                                    @Html.ValidationMessageFor(m => m.users.Fax, "", new { @class = "text-danger" })
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <div class="row">
+                                                                                <label class="col-sm-3">Cell No :</label>
+                                                                                <div class="col-sm-9">
+                                                                                    @Html.TextBoxFor(m => m.users.Cellno, new { @id = "txtCellNo", @class = "form-control input-sm ", @maxlength = "20", @tabindex = "11", @onkeypress = "return onlynumbers(event,this);" })
+                                                                                    @Html.ValidationMessageFor(m => m.users.Cellno, "", new { @class = "text-danger" })
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <div class="row">
+                                                                                <label class="col-sm-3">Comment :</label>
+                                                                                <div class="col-sm-9">
+                                                                                    @Html.TextBoxFor(m => m.users.Comment, new { @id = "txtComments", @class = "form-control input-sm", @maxlength = "50", @tabindex = "12" })
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        
+                                                                    </div>
+                                                                    <div class="col-sm-4">
+                                                                        <div class="row">
+                                                                            <div class="profile-header row" style="box-shadow:none;float:none;margin:0;">
+                                                                                <div class="col-sm-12 text-center">
+                                                                                    <img src="~/Images/no_image.png" alt="" class="header-avatar" style="margin:0;">
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                    <div class="row" style="padding-top:24px; text-align:center;">
+                                                                        <div class="col-sm-12">
+                                                                            <button class="btn btn-flat btn-labeled btn-primary" id="btnsave">
+                                                                                <span class="btn-label icon fa fa-save"></span>Save Changes
+                                                                            </button>
+                                                                        </div>
+                                                                    </div>
+                                                            </div>
+                                                            <div id="password" class="tab-pane">
+                                                                <div class="row">
+                                                                    <div class="col-sm-7">
+                                                                        <div class="form-group">
+                                                                            <label>Current Password</label><span style="color:red">*</span>
+                                                                            <input class="form-control" id="txtcurrentpwd" placeholder="Current password" />
+                                                                            <label class="test" id="lblerrorcpwd" style="color:red;display:none;">Please enter current Password</label>
+                                                                            <label class="test" id="lblinvalidpwd" style="color:red;display:none;">Invalid Password</label>
+
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-7">
+                                                                        <div class="form-group">
+                                                                            <label>New Password</label><span style="color:red">*</span>
+                                                                            <input class="form-control" id="txtnewpwd" placeholder="New password" />
+                                                                            <label class="test" id="lblpwdnew" style="color:red;display:none;">Please enter New password</label>
+                                                                            <label class="test" id="lblnewpwdc" style="color:red;display:none;">please donot enter same as current Password</label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-7">
+                                                                        <div class="form-group">
+                                                                            <label>Confirm Password</label><span style="color:red">*</span>
+                                                                            <input class="form-control" id="txtconfirmpwd" placeholder="New password" />
+                                                                            <label class="test" id="lblerror" style="color:red;display:none;">password is not match</label>
+                                                                            <label class="test" id="lblpwdempty" style="color:red;display:none;">Please enter cinfirm password</label>
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+                                                                <div class="row" style="padding-top:24px; text-align:center;">
+                                                                    <div class="col-sm-12" style="text-align:center;">
+                                                                        <button class="btn btn-flat btn-labeled btn-primary" id="btnsavepwd">
+                                                                            <span class="btn-label icon fa fa-save"></span>Save Changes
+                                                                        </button>
+                                                                        <a id="btncancel" href="#" class="btn btn-labeled btn-primary">
+                                                                            <i class="btn-label icon fa fa-eraser"></i>Clear
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+}
+
+

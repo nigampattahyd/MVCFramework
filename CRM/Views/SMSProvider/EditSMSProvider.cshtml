@@ -1,0 +1,218 @@
+﻿@model CRMHub.EntityFramework.SMSProviderList
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<html>
+<head>
+
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.8.2.js"></script>
+    <title>
+
+    </title>
+
+
+    <style>
+        /*#loading {
+            width: 100%;
+            height: 100%;
+            top: 0px;
+            left: 200px;
+            position: fixed;
+            display: block;
+            opacity: 0.7;
+            background-color: #fff;
+            z-index: 99;
+            text-align: center;
+        }
+
+        #loading-image {
+            position: absolute;
+            top: 300px;
+            left: 450px;
+            z-index: 100;
+        }*/
+
+        button {
+            background: none !important;
+            border: none;
+            padding: 0 !important;
+            /*optional*/
+            font: bold;
+            color: #069;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+
+@using (Html.BeginForm("EditSMSProvider", "SMSProvider", FormMethod.Post, new { id = "SMSProvidereditForm" }))
+{
+    <body>
+        @*<div style="width:100px">
+                <div id="loading">
+                    <img id="loading-image" src="../Content/assets/images/loader.gif" />
+                </div>
+            </div>*@
+        <div id="content-wrapper">
+
+            <div id="CustomBootstrapAlertBox">
+            </div>
+            <div class="row">
+
+                <div class="panel">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <!-- Page header, center on small screens -->
+                            <h1 class="col-xs-6 col-sm-4 text-left text-left-sm panel-title"><i class="fa fa-users page-header-icon"></i>&nbsp; Carrier/Provider Details </h1>
+                            <div class="col-xs-6 col-sm-8">
+                                <div class="row">
+                                    <div class="pull-right">
+                                        @*<a href="#" class="btn btn-flat btn-labeled btn-primary" tabindex="-1"
+                                            data-toggle="modal" data-target="#uidemo-modals-alerts-info"><span class="btn-label icon fa fa-question-circle"></span>Help</a>*@
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+
+
+
+
+
+
+                        <div class="row">
+
+
+
+
+                            <div class="panel">
+                                <div class="panel-heading">
+                                    <div class="row">
+                                        <h5 class="col-xs-4 col-sm-4 text-left text-left-sm"> Carrier/Provider Details</h5>
+                                        <div class="col-xs-8 col-sm-8">
+                                            <div class="row">
+                                                <div class="pull-right">
+                                                    <button class="btn btn-flat btn-labeled btn-primary" id="btnSave" style=" margin: 2px 3px 0px 10px; background: #1b80c2 !important; text-decoration:none;">
+                                                        <span class="btn-label icon fa fa-save"></span>Save
+                                                    </button>
+                                                    @*<span class="btn btn-flat btn-labeled btn-primary">
+                                                        <span class="btn-label icon fa fa-backward" style="margin-right:6px; "> </span>
+                                                        @Html.ActionLink("Back", "SMSServiceProviders", "SMSProvider", new { @id = "LnkBack", @style = "color:#fff; margin-top:2px; text-decoration:none;" })
+                                                    </span>*@
+                                                    <a style="color: #fff; text-decoration: none; padding: 0px; font-weight: normal" class="btn btn-flat btn-labeled btn-primary" href="@Url.Action("SMSServiceProviders", "SMSProvider")">
+                                                        <span class="btn-label icon fa fa-backward" style="margin-right:6px;"> </span>
+                                                        Back
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <!-- Tabs -->
+                                <div class="panel-body">
+
+                                    <div class="row">
+
+                                        <span style="color:red"> &nbsp; * indicates required fileds</span>
+                                    </div>
+                                    <br />
+                                    <div class="row">
+                                        <asp:Label ID="lblmessage" runat="server" Visible="false"></asp:Label>
+                                        <div class="col-sm-3">
+                                            <div class="form-group no-margin-hr">
+                                                <label class="control-label">Carrier/Provider :</label>
+                                                <span style="color:red">*</span>
+                                                @Html.TextBoxFor(m => m.Carrier, new { @id = "txtCarrier", @class = "form-control input-sm", @maxlength = "50" })
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-3">
+                                            <div class="form-group no-margin-hr">
+                                                <label class="control-label">URL :</label>
+                                                <span style="color:red">*</span>
+                                                @Html.TextBoxFor(m => m.Email, new { @id = "txtEmail", @class = "form-control input-sm", @maxlength = "50", })
+                                            </div>
+                                        </div>
+
+
+
+
+                                        @Html.HiddenFor(m => m.ID)
+                                        <!-- col-sm-6 -->
+                                        <!-- col-sm-6 -->
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+
+
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+    </body>
+}
+</html>
+<script language="javascript" type="text/javascript">
+    $(window).load(function () {
+        //$('#loading').hide();
+    });
+
+    $(document).on("click", "#btnSave", function (e) {
+        IsFormValid();
+        if (!IsFormValid()) {
+            e.preventDefault();
+            e.stopPropagation();
+            alert("Please Provide Complete Details");
+        }
+
+    })
+    function IsFormValid() {
+
+        var isValid = true;
+        if ($("#txtCarrier").val() == "") {
+            $("#txtCarrier").parent().addClass("state-error");
+            isValid = false;
+        } else {
+            $("#txtCarrier").parent().removeClass("state-error");
+            $("#txtCarrier").parent().addClass("state-success");
+        }
+
+        if ($("#txtEmail").val() == "") {
+            $("#txtEmail").parent().addClass("state-error");
+            isValid = false;
+        } else {
+
+            var txt = $('#txtEmail').val();
+            var re = /(http(s)?:\\)?([\w-]+\.)+[\w-]+[.com|.in|.org]+(\[\?%&=]*)?/
+            if (re.test(txt)) {
+
+                $("#txtEmail").parent().removeClass("state-error");
+                $("#txtEmail").parent().addClass("state-success");
+            }
+            else {
+                alert('Please Enter Valid URL');
+                isValid = false;
+            }
+            $("#txtEmail").parent().removeClass("state-error");
+            $("#txtEmail").parent().addClass("state-success");
+        }
+
+        return isValid;
+    }
+</script>
+
+
+
+

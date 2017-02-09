@@ -1,0 +1,1608 @@
+﻿@model CRMHub.ViewModel.VentureViewModel
+@{
+    ViewBag.Title = "getVenturedetails";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+}
+
+
+<style type="text/css">
+    .widget-body {
+        background-color: #fbfbfb;
+        -webkit-box-shadow: 1px 0 10px 1px rgba(0,0,0,.3);
+        -moz-box-shadow: 1px 0 10px 1px rgba(0,0,0,.3);
+        box-shadow: 1px 0 10px 1px rgba(0,0,0,.3);
+        padding: 0px;
+    }
+    .badge-primary, .label-primary {
+    background-color: transparent !important;
+
+}
+    input[type=checkbox] {
+        margin: 0px 0px 0px 6px;
+    }
+
+</style>
+@using (Html.BeginForm("UpdateVenture", "Venture", FormMethod.Post, new { id = "UpdateVenture" }))
+{
+    <div class="widget">
+        <div class="widget-header bordered-bottom bordered-themesecondary">
+            <i class="widget-icon fa fa-user themesecondary"></i>
+            <span class="widget-caption themesecondary">@Html.DisplayFor(m => m.objVenture.VentureName)</span>
+        </div><!--Widget Header-->
+        <div class="widget-body">
+
+            <span id="errorsymbol" style="color:red;display:none;margin-left:5px;" class="fa fa-exclamation-circle"></span>
+            <div id="ErrorMessages" style="margin-left:20px;color:red;font-size:15px; ">
+
+            </div>
+
+            <div class="panel">
+
+
+
+                <div class="panel-body">
+                    <span id="errorsymbol" style="color:red;display:none;margin-left:5px;" class="fa fa-exclamation-circle"></span>
+                    <div id="ErrorMessages" style="margin-left:20px;color:red;font-size:15px; ">
+
+                    </div>
+                    <div class="row">
+
+                        <!-- Tabs -->
+
+                        <ul class="nav nav-tabs bs-tabdrop-example" id="TabMenu" style="margin-top:20px;">
+                            <li id="TabStripAccountDetail" class="active"><a href="#TabStripAccountDetail_View" data-toggle="tab">Venture Detail</a></li>
+                            <li id="TabStripOpenActivity"><a href="#TabStripOpenActivity_View" data-toggle="tab">Mentor Team</a></li>
+                            <li id="TabStripApplicationDetail"><a href="#TabStripApplicationDetail_View" data-toggle="tab">Application Details</a> </li>
+                        </ul>
+
+                        <div class="tab-pane active" id="TabStripAccountDetail_View">
+
+                            <div id="Getleads">
+
+
+                                <div class="col-sm-12" style="padding-top:13px;padding-right:0px;">
+
+                                    <div class="col-xs-12 col-sm-12 text-right text-right-sm" id="white_bg">
+                                        <ul class="table-nav-item">
+                                            <button class="btn btn-flat btn-labeled btn-primary" id="btnEdit" style=" margin:0px 3px 0px 10px;">
+                                                <span class="btn-label icon fa fa-edit"></span>Update
+                                            </button>
+                                            <li class="btn btn-flat btn-labeled btn-primary" id="btnmargin_top">
+                                                <a style="color: #fff; text-decoration: none; padding: 0px; font-weight: normal" href="@Url.Action("Index", "Venture/")">
+                                                    <span class="btn-label icon fa fa-backward" style="margin-right:6px;"> </span>
+                                                    Back
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-12 text-left text-left-sm" id="white_bg" style="display:none;">
+                                        <ul class="table-nav-item">
+                                            <li class="btn btn-flat btn-labeled btn-primary" id="btnmargin_top">
+                                                <a style="color: #fff; text-decoration: none; padding: 0px; font-weight: normal"  id="btnprevious" >
+                                                    <span class="btn-label icon fa fa-backward" style="margin-right:6px;"> </span>
+                                                    Previous
+                                                </a>
+                                            </li>
+                                            <li class="btn btn-flat btn-labeled btn-primary" id="btnmargin_top">
+                                                <a style="color: #fff; text-decoration: none; padding: 0px; font-weight: normal" href="@Url.Action("Index", "Venture/")">
+                                                    <span class="btn-label icon fa fa-backward" style="margin-right:6px;"> </span>
+                                                    Return
+                                                </a>
+                                            </li>
+                                            <li class="btn btn-flat btn-labeled btn-primary" id="btnmargin_top">
+                                                <a style="color: #fff; text-decoration: none; padding: 0px; font-weight: normal"  id="btnnext">
+                                                    <span class="btn-label icon fa fa-backward" style="margin-right:6px;"> </span>
+                                                    Next
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                               
+
+
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="panel">
+
+
+                                            <div class="col-sm-12">
+                                                <!-- Page header, center on small screens -->
+                                                <div class="col-sm-12" style="background: #2ab8da; padding:10px;">
+                                                    <span class="label label-primary label-tag" style="font-size:14px;font-weight:800;"> Venture Details :</span>
+
+                                                </div>
+
+                                                <div class="col-xs-12 col-sm-12">
+                                                    <div class="row">
+                                                        <div class="pull-right">
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+
+
+
+                                            <!-- / .panel-heading -->
+
+                                            <div class="panel-body" style="padding-top: 53px;">
+                                                <div class="col-sm-12 no-padding-hr">
+                                                    <div class="row">
+
+
+                                                        <div class="col-sm-3">
+                                                            <div class="form-group no-margin-hr">
+                                                                <label class="control-label">Venture Name :<span style="color: red">*</span></label>
+                                                                @Html.TextBoxFor(m => m.objVenture.VentureName, new { @class = "form-control input-sm", @id = "txtVentureName", @validate = "Required", @data_val_required = "Venture Name", @disabled = "disabled" })
+                                                            </div>
+                                                        </div>
+
+                                                        @Html.HiddenFor(m => m.objVenture.VentureId, new { @id = "txtcmpID" })
+
+                                                        <div class="col-sm-3">
+                                                            <div class="form-group no-margin-hr">
+                                                                <label class="control-label">Lead Mentor: <span style="color: red">*</span> </label>
+
+                                                                @Html.DropDownListFor(m => m.objVenture.LeadMentor, new SelectList(Model.objlstmentor, "MentorId", "Name"), "Select Lead Mentor", new { @placeholder = "Select Lead Mentor", @id = "ddlmentor", @data_val_required = "Select Lead Mentor", @class = "form-control input-sm" })
+                                                                @Html.ValidationMessageFor(m => m.objVenture.LeadMentor, "", new { @class = "text-danger" })
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-sm-3">
+                                                            <div class="form-group no-margin-hr">
+                                                                <label class="control-label">Primary Contact Name:<span style="color: red">*</span></label>
+                                                                <div class="input-group">
+                                                                    @Html.TextBoxFor(m => m.objVenture.PrimaryContact, new { @id = "txtPrimaryContact", @class = "form-control input-sm", @MaxLength = "50", @validate = "Required", @data_val_required = "Please Enter Primary Contact Name" })
+
+                                                                    <span class="input-group-addon">
+                                                                        <i class="fa fa-phone"></i>
+                                                                    </span>
+                                                                </div>
+                                                                @Html.ValidationMessageFor(m => m.objVenture.PrimaryContact, "", new { @class = "text-danger" })
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-3">
+                                                            <div class="form-group no-margin-hr">
+                                                                <label class="control-label">Primary Email&nbsp;:</label>
+                                                                <div class="input-group">
+                                                                    @Html.TextBoxFor(m => m.objVenture.PrimaryEmail, new { @id = "txtPrimaryEmail", @class = "form-control input-sm", @MaxLength = "50", @disabled = "disabled" })
+                                                                    <span class="input-group-addon">
+                                                                        <i class="fa fa-envelope"></i>
+                                                                    </span>
+                                                                </div>
+                                                                </div>
+                                                        </div>
+                                                        </div>
+                                                    <div class="row">
+                                                        <div class="col-sm-3">
+                                                            <div class="form-group no-margin-hr">
+                                                                <label class="control-label">Secondary Contact Name:</label>
+
+                                                                <div class="input-group">
+                                                                    @Html.TextBoxFor(m => m.objVenture.SecondaryContact, new { @id = "txtSecondaryContact", @class = "form-control input-sm", @MaxLength = "20" })
+                                                                    <span class="input-group-addon">
+                                                                        <i class="fa fa-phone"></i>
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-3">
+                                                            <div class="form-group no-margin-hr">
+                                                                <label class="control-label">Secondary Email&nbsp;:</label>
+
+                                                                <div class="input-group">
+                                                                    @Html.TextBoxFor(m => m.objVenture.SecondaryEmail, new { @id = "txtSecondaryEmail", @class = "form-control input-sm", @MaxLength = "60" })
+
+                                                                    <span class="input-group-addon">
+                                                                        <i class="fa fa-envelope"></i>
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-3">
+                                                            <div class="form-group no-margin-hr">
+                                                                <label class="control-label">DropBox&nbsp;:</label>
+
+                                                                @Html.TextBoxFor(m => m.objVenture.DropBox, new { @id = "txtDropBox", @class = "form-control input-sm", @MaxLength = "200" })
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-3">
+                                                            <div class="form-group no-margin-hr">
+                                                                <label class="control-label">DropBox Folder&nbsp;:</label>
+
+                                                                @Html.TextBoxFor(m => m.objVenture.DropBoxFolder, new { @id = "txtDropBoxFolder", @class = "form-control input-sm", @MaxLength = "200" })
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+
+                                                        <div class="col-sm-3">
+                                                            <div class="form-group no-margin-hr">
+                                                                <label class="control-label">Website&nbsp;:</label>
+                                                                <div class="input-group">
+                                                                    @Html.TextBoxFor(m => m.objVenture.WebSite, new { @id = "txtWebSite", @class = "form-control input-sm", @MaxLength = "299" })
+                                                                    <span class="input-group-addon">
+                                                                        <i class="fa fa-globe"></i>
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-3">
+                                                            <div class="form-group no-margin-hr">
+                                                                <label class="control-label">Vms MailList&nbsp;:</label>
+                                                                @Html.TextBoxFor(m => m.objVenture.VmsMailList, new { @id = "txtVmsMailList", @class = "form-control input-sm", @MaxLength = "299" })
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-3">
+                                                            <div class="form-group no-margin-hr">
+                                                                <label class="control-label">SignUp Returned&nbsp;:</label>
+                                                                <div class="input-group datepicker1">
+                                                                    @Html.TextBoxFor(m => m.objVenture.SignUpReturned, new { @id = "txtSignUpReturned", @class = "form-control input-sm", @MaxLength = "20", @onkeypress = "return isNumberKey(event)" })
+                                                                    <span class="input-group-addon">
+                                                                        <i class="fa fa-calendar"></i>
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-3">
+                                                            <div class="form-group no-margin-hr">
+                                                                <label class="control-label">First Mentor Meeting&nbsp;:</label>
+                                                                <div class="input-group datepicker1">
+                                                                    @Html.TextBoxFor(m => m.objVenture.FirstMentorMeeting, new { @id = "txtFirstMentorMeeting", @class = "form-control input-sm", @MaxLength = "20", @onkeypress = "return isNumberKey(event)" })
+                                                                    <span class="input-group-addon">
+                                                                        <i class="fa fa-calendar"></i>
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+
+                                                    </div>
+
+                                                    <div class="row">
+
+                                                        <div class="col-sm-3">
+                                                            <div class="form-group no-margin-hr">
+                                                                <label class="control-label">MIT Link&nbsp;:</label>
+                                                                <div class="input-group">
+                                                                    @Html.TextBoxFor(m => m.objVenture.MITLink, new { @id = "txtMITLink", @class = "form-control input-sm", @MaxLength = "20" })
+                                                                    <span class="input-group-addon">
+                                                                        <i class="fa fa-globe"></i>
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-3">
+                                                            <div class="form-group no-margin-hr">
+                                                                <label class="control-label">Reffered By&nbsp;:</label>
+                                                                @Html.TextBoxFor(m => m.objVenture.RefferedBy, new { @id = "txtRefferedBy", @class = "form-control input-sm", @MaxLength = "20" })
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-3">
+                                                            <div class="form-group no-margin-hr">
+                                                                <label class="control-label">VMS Status&nbsp;:<span style="color: red">*</span></label>
+                                                                @Html.DropDownListFor(m => m.objVenture.Status, new SelectList(Model.lstMVSStatus, "StatusId", "Status"), "--Select--", new { @class = "form-control", @id = "drpSMSprovider", @style = "height:30px;", @Validate = "Required", @data_val_required = "Please select VMS Status" })
+                                                                @Html.ValidationMessageFor(m => m.objVenture.Status, "", new { @class = "text-danger" })
+                                                            </div>
+                                                        </div>
+                                                       
+
+                                                    </div>
+                                                    <div class="row">
+
+                                                        <div class="col-sm-3">
+                                                            <div class="form-group no-margin-hr">
+                                                                <div class="form-group">
+                                                                    <div class="checkbox">
+                                                                        <label>
+                                                                            @Html.CheckBoxFor(model => model.objVenture.StudentIdea, new { id = "chkStudentIdeaBasedOnResearch" })
+                                                                            <span class="text">Student Idea Based On Research</span>
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-3">
+                                                            <div class="form-group no-margin-hr">
+                                                                <div class="form-group">
+                                                                    <div class="checkbox">
+                                                                        <label>
+                                                                            @Html.CheckBoxFor(model => model.objVenture.ResearchIdea, new { id = "chkResearchIdeaDisclosedToTLO" })
+                                                                            <span class="text">Research Idea Disclosed To TLO</span>
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-3">
+                                                            <div class="form-group no-margin-hr">
+                                                                <div class="form-group">
+                                                                    <div class="checkbox">
+                                                                        <label>
+                                                                            @Html.CheckBoxFor(model => model.objVenture.LegalEntity, new { id = "chkLegalEntityAtEnrollment" })
+                                                                            <span class="text">Legal Entity At Enrollment</span>
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                       
+
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-sm-3">
+                                                            <div class="form-group no-margin-hr">
+                                                                <div class="form-group">
+                                                                    <div class="checkbox">
+                                                                        <label>
+                                                                            @Html.CheckBoxFor(model => model.objVenture.IsIntroduced, new { id = "chkIntroduced" })
+                                                                            <span class="text">Introduced</span>
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+
+                                        <div class="panel">
+
+
+                                            <div class="col-sm-12">
+                                                <!-- Page header, center on small screens -->
+                                                <div class="col-sm-12" style="background: #2ab8da; padding:10px;">
+                                                    <span class="label label-primary label-tag" style="font-size:14px;font-weight:800;">  Address Details</span>
+
+                                                </div>
+
+                                                <div class="col-xs-12 col-sm-12">
+                                                    <div class="row">
+                                                        <div class="pull-right">
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                            <!-- / .panel-heading -->
+
+                                            <div class="panel-body" style="padding-top: 53px;">
+                                                <div class="col-sm-12 no-padding-hr">
+
+                                                    <div class="row">
+                                                        <div class="col-sm-3">
+                                                            <div class="form-group no-margin-hr">
+                                                                <label class="control-label">Phone&nbsp;:</label>
+
+                                                                @Html.TextBoxFor(m => m.objVenture.Phone, new { @id = "txtPhone", @class = "form-control input-sm", @MaxLength = "20", @onkeypress = "return isNumberKey(event)" })
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-3">
+                                                            <div class="form-group no-margin-hr">
+                                                                <label class="control-label">Contact Info :</label>
+                                                                @Html.TextBoxFor(m => m.objVenture.ContactInfo, new { @id = "txtContactInfo", @class = "form-control", @onkeypress = "return isNumberKey(event)", })
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-3">
+                                                            <div class="form-group no-margin-hr">
+                                                                <label class="control-label">
+                                                                    Fax :
+                                                                </label>
+
+                                                                @Html.TextBoxFor(m => m.objVenture.Fax, new { @id = "txtFax", @class = "form-control input-sm", @maxlength = "10", @onkeypress = "return isNumberKey(event)" })
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-3">
+                                                            <div class="form-group no-margin-hr">
+                                                                <label class="control-label" id="lblStateProvince">
+                                                                    Cellular :
+                                                                </label>
+
+                                                                @*Dropdown list for State*@
+
+                                                                @Html.TextBoxFor(m => m.objVenture.Cellular, new { @id = "txtCellular", @class = "form-control input-sm", @maxlength = "50", @onkeypress = "return isNumberKey(event)" })
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-sm-3">
+                                                            <div class="form-group no-margin-hr">
+                                                                <label class="control-label">Address 1:</label>
+                                                                @Html.TextAreaFor(m => m.objVenture.Address, new { @id = "txtAddress", @class = "textEditor", @cols = 30, @rows = 5 })
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-3">
+                                                            <div class="form-group no-margin-hr">
+                                                                <label class="control-label">Address 2:</label>
+                                                                @Html.TextAreaFor(m => m.objVenture.Address1, new { @id = "txtAddress1", @class = "textEditor", @cols = 30, @rows = 5 })
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+
+                                        <div class="panel">
+
+
+
+                                            <div class="col-sm-12">
+                                                <!-- Page header, center on small screens -->
+                                                <div class="col-sm-12" style="background: #2ab8da; padding:10px;">
+                                                    <span class="label label-primary label-tag" style="font-size:14px;font-weight:800;">   Description</span>
+
+                                                </div>
+
+                                                <div class="col-xs-12 col-sm-12">
+                                                    <div class="row">
+                                                        <div class="pull-right">
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+
+
+                                            <!-- / .panel-heading -->
+
+                                            <div class="panel-body" style="padding-top: 53px;">
+
+                                                <div class="col-sm-3">
+                                                    <div class="form-group no-margin-hr">
+                                                        <label class="control-label">Description&nbsp;:</label>
+                                                        @Html.TextAreaFor(m => m.objVenture.Description, new { @id = "txtDescription", @class = "textEditor", @cols = 30, @rows = 5 })
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <div class="form-group no-margin-hr">
+                                                        <label class="control-label">Public Description&nbsp;:</label>
+                                                        @Html.TextAreaFor(m => m.objVenture.PublicDesc, new { @id = "txtPublicDesc", @class = "textEditor", @cols = 30, @rows = 5 })
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <div class="form-group no-margin-hr">
+                                                        <label class="control-label">Comments&nbsp;:</label>
+                                                        @Html.TextAreaFor(m => m.objVenture.Comments, new { @id = "txtComments", @class = "textEditor", @cols = 30, @rows = 5 })
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <div class="form-group no-margin-hr">
+                                                        <label class="control-label">Intake Notes&nbsp;:</label>
+                                                        @Html.TextAreaFor(m => m.objVenture.IntakeNotes, new { @id = "txtIntakeNotes", @class = "textEditor", @cols = 30, @rows = 5 })
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <div class="form-group no-margin-hr">
+                                                        <label class="control-label">Intake Note Summary&nbsp;:</label>
+                                                        @Html.TextAreaFor(m => m.objVenture.IntakeNoteSummary, new { @id = "txtIntakeNoteSummary", @class = "textEditor", @cols = 30, @rows = 5 })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- / .panel-body -->
+
+
+                                        </div>
+
+                                        @*Binding Custom Fields*@
+                                        <div class="panel">
+
+                                            <div class="panel-heading">
+
+                                                <div class="col-sm-12">
+                                                    <!-- Page header, center on small screens -->
+                                                    <div class="col-sm-12" style="background: #2ab8da; padding:10px;">
+                                                        <span class="label label-primary label-tag" style="font-size:14px;font-weight:800;">  Custom Fields</span>
+
+                                                    </div>
+
+                                                    <div class="col-xs-12 col-sm-12">
+                                                        <div class="row">
+                                                            <div class="pull-right">
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <!-- / .panel-heading -->
+
+                                            <div class="panel-body" style="padding-top: 53px;">
+                                                <div class="col-sm-12 no-padding-hr">
+                                                    <div class="row">
+                                                        @for (int i = 0; i < Model.lstcustomVM.Count; i++)
+                                                        {
+                                                            <div class="col-sm-4">
+                                                                <div class="form-group no-margin-hr">
+                                                                    @Html.HiddenFor(m => m.lstcustomVM[i].Column_Type)
+                                                                    @Html.HiddenFor(m => m.lstcustomVM[i].FieldId)
+                                                                    @Html.HiddenFor(m => m.lstcustomVM[i].CValueId)
+                                                                    @if (Model.lstcustomVM[i].Column_Type == "textbox")
+                                                                    {
+                                                                        @Html.DisplayFor(m => m.lstcustomVM[i].Column_Label)
+                                                                        if (@Model.lstcustomVM[i].RequiredField == true)
+                                                                        {
+                                                                            <span style="color: red">*</span>
+                                                                            @Html.TextBoxFor(m => m.lstcustomVM[i].CustomFieldvalue, new { @class = "form-control input-sm", @MaxLength = @Model.lstcustomVM[i].MaxLength, @TabIndex = "37", rows = "1", cols = "1", @validate = "Required", @data_val_required = @Model.lstcustomVM[i].Column_Label, @title = @Model.lstcustomVM[i].HoverText, @disabled = "disabled" })
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            @*@Html.TextBoxFor(m => m.lstcustomVM[i].CustomFieldvalue, new { @class = "form-control input-sm", @MaxLength = @Model.lstcustomVM[i].MaxLength, @TabIndex = "37", rows = "1", cols = "1", @validate = "Required", @data_val_required = @Model.lstcustomVM[i].Column_Label, @title = @Model.lstcustomVM[i].HoverText, })*@
+                                                                            @Html.TextBoxFor(m => m.lstcustomVM[i].CustomFieldvalue, new { @class = "form-control input-sm", @MaxLength = @Model.lstcustomVM[i].MaxLength, @TabIndex = "37", rows = "1", cols = "1", @disabled = "disabled" })
+                                                                        }
+
+                                                                    }
+
+
+                                                                    @if (Model.lstcustomVM[i].Column_Type == "textarea")
+                                                                    {
+                                                                        @Html.DisplayFor(m => m.lstcustomVM[i].Column_Label)
+                                                                        if (@Model.lstcustomVM[i].RequiredField == true)
+                                                                        {
+                                                                            <span style="color: red">*</span>
+                                                                            @Html.TextAreaFor(m => m.lstcustomVM[i].CustomFieldvalue, new { @class = "form-control input-sm", @MaxLength = @Model.lstcustomVM[i].MaxLength, @TabIndex = "37", rows = "1", cols = "1", @validate = "Required", @data_val_required = @Model.lstcustomVM[i].Column_Label, @title = @Model.lstcustomVM[i].HoverText, @disabled = "disabled" })
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            @Html.TextAreaFor(m => m.lstcustomVM[i].CustomFieldvalue, new { @class = "form-control input-sm", @MaxLength = @Model.lstcustomVM[i].MaxLength, @TabIndex = "37", rows = "1", cols = "1", @title = @Model.lstcustomVM[i].HoverText, @disabled = "disabled" })
+                                                                        }
+
+                                                                    }
+                                                                    @if (Model.lstcustomVM[i].Column_Type == "textfield")
+                                                                    {
+
+
+                                                                        @Html.DisplayFor(m => m.lstcustomVM[i].Column_Label)
+                                                                        if (@Model.lstcustomVM[i].RequiredField == true)
+                                                                        {
+                                                                            <span style="color: red">*</span>
+                                                                            @Html.TextBoxFor(m => m.lstcustomVM[i].CustomFieldvalue, new { @id = "TAActualColumnName1", @class = "form-control input-sm ", @title = @Model.lstcustomVM[i].HoverText, @MaxLength = @Model.lstcustomVM[i].MaxLength, @TabIndex = "37", rows = "1", cols = "1", @validate = "Required", @data_val_required = @Model.lstcustomVM[i].Column_Label, @disabled = "disabled" })
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            @Html.TextBoxFor(m => m.lstcustomVM[i].CustomFieldvalue, new { @id = "TAActualColumnName1", @class = "form-control input-sm ", @title = @Model.lstcustomVM[i].HoverText, @MaxLength = @Model.lstcustomVM[i].MaxLength, @TabIndex = "37", rows = "1", cols = "1", @disabled = "disabled" })
+                                                                        }
+
+
+                                                                    }
+                                                                    @if (Model.lstcustomVM[i].Column_Type == "date")
+                                                                    {
+
+                                                                        @Html.DisplayFor(m => m.lstcustomVM[i].Column_Label)
+                                                                        if (@Model.lstcustomVM[i].RequiredField == true)
+                                                                        {
+                                                                            <span style="color: red">*</span>
+                                                                            @Html.TextBoxFor(m => m.lstcustomVM[i].CustomFieldvalue, new { @id = "TAActualDate", @class = "form-control input-sm DateP ", @placeholder = "Select Date", @title = @Model.lstcustomVM[i].HoverText, @MaxLength = @Model.lstcustomVM[i].MaxLength, @TabIndex = "37", rows = "1", cols = "1", @validate = "Required", @data_val_required = @Model.lstcustomVM[i].Column_Label, @disabled = "disabled" })
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            @Html.TextBoxFor(m => m.lstcustomVM[i].CustomFieldvalue, new { @id = "TAActualDate", @class = "form-control input-sm DateP ", @placeholder = "Select Date", @title = @Model.lstcustomVM[i].HoverText, @MaxLength = @Model.lstcustomVM[i].MaxLength, @TabIndex = "37", rows = "1", cols = "1", @disabled = "disabled" })
+                                                                        }
+
+                                                                    }
+                                                                    @if (Model.lstcustomVM[i].Column_Type == "numeric")
+                                                                    {
+
+                                                                        @Html.DisplayFor(m => m.lstcustomVM[i].Column_Label)
+
+                                                                        if (@Model.lstcustomVM[i].RequiredField == true)
+                                                                        {
+                                                                            <span style="color: red">*</span>
+                                                                            @Html.TextBoxFor(m => m.lstcustomVM[i].CustomFieldvalue, new { @id = "TAActualColumnName", @class = "form-control input-sm", @title = @Model.lstcustomVM[i].HoverText, @MaxLength = @Model.lstcustomVM[i].MaxLength, @TabIndex = "37", rows = "1", cols = "1", @validate = "Required", @data_val_required = @Model.lstcustomVM[i].Column_Label, @disabled = "disabled" })
+
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            @Html.TextBoxFor(m => m.lstcustomVM[i].CustomFieldvalue, new { @id = "TAActualColumnName", @class = "form-control input-sm ", @title = @Model.lstcustomVM[i].HoverText, @MaxLength = @Model.lstcustomVM[i].MaxLength, @TabIndex = "37", rows = "1", cols = "1", @disabled = "disabled" })
+                                                                        }
+                                                                    }
+
+                                                                    @if (Model.lstcustomVM[i].Column_Type == "dropdown")
+                                                                    {
+
+                                                                        @Html.DisplayFor(m => m.lstcustomVM[i].Column_Label)
+                                                                        if (@Model.lstcustomVM[i].RequiredField == true)
+                                                                        {
+                                                                            <span style="color: red">*</span>
+                                                                            @Html.DropDownListFor(m => m.lstcustomVM[i].DefaultValue, new SelectList(Model.lstcustomVM[i].lstCustomOptionsVal, "DrpValueId", "DrpValue", Model.lstcustomVM[i].DefaultValue), "Select", new { @class = "form-control input-sm", @id = "dpOptions", @validate = "Required", @data_val_required = @Model.lstcustomVM[i].Column_Label, @title = @Model.lstcustomVM[i].HoverText, @disabled = "disabled" })
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            @Html.DropDownListFor(m => m.lstcustomVM[i].DefaultValue, new SelectList(Model.lstcustomVM[i].lstCustomOptionsVal, "DrpValueId", "DrpValue", Model.lstcustomVM[i].DefaultValue), "Select", new { @class = "form-control input-sm", @id = "dpOptions", @title = @Model.lstcustomVM[i].HoverText, @disabled = "disabled" })
+                                                                            @*@Html.DropDownListFor(m => m.lstcustomVM[i].CustomFieldvalue, new SelectList(Model.lstcustomVM[i].lstCustomOptionsVal, "DrpValueId", "DrpValue", Model.lstcustomVM[i].CustomFieldvalue), new { @class = "form-control input-sm", @id = "dpOptionsEdit" })*@
+                                                                        }
+
+                                                                    }
+
+                                                                    @if (Model.lstcustomVM[i].Column_Type == "radiobutton")
+                                                                    {
+                                                                        @Html.DisplayFor(m => m.lstcustomVM[i].Column_Label)
+                                                                        if (@Model.lstcustomVM[i].RequiredField == true)
+                                                                        {
+
+                                                                            <span style="color: red">*</span>
+                                                                            <div>
+
+                                                                                @for (int a = 0; a < Model.lstcustomVM[i].lstCustomOptionsVal.Count; a++)
+                                                                                {
+                                                                                    @Html.HiddenFor(m => m.lstcustomVM[i].lstCustomOptionsVal[a].DrpValueId)
+                                                                                    @Html.HiddenFor(m => m.lstcustomVM[i].lstCustomOptionsVal[a].FieldId)
+                                                                                    @*@Html.RadioButtonFor(m => m.lstcustomVM[i].CustomFieldvalue, Model.lstcustomVM[i].lstCustomOptionsVal[a].DrpValueId, new { isChecked = Model.lstcustomVM[i].lstCustomOptionsVal[a].IsDefault, @validate = "Required", @data_val_required = @Model.lstcustomVM[i].Column_Label })*@
+                                                                                    if (Model.lstcustomVM[i].lstCustomOptionsVal[a].IsDefault == true)
+                                                                                    {
+                                                                                        @Html.RadioButtonFor(m => m.lstcustomVM[i].DefaultValue, Model.lstcustomVM[i].lstCustomOptionsVal[a].DrpValueId, new { @checked = "checked", @title = @Model.lstcustomVM[i].HoverText, @validate = "Required", @data_val_required = @Model.lstcustomVM[i].Column_Label, @disabled = "disabled" })
+                                                                                    }
+                                                                                    else
+                                                                                    {
+                                                                                        @Html.RadioButtonFor(m => m.lstcustomVM[i].DefaultValue, Model.lstcustomVM[i].lstCustomOptionsVal[a].DrpValueId, new { @title = @Model.lstcustomVM[i].HoverText, @validate = "Required", @data_val_required = @Model.lstcustomVM[i].Column_Label, @disabled = "disabled" })
+                                                                                    }
+                                                                                    @Html.DisplayFor(m => m.lstcustomVM[i].lstCustomOptionsVal[a].DrpValue, new { @class = "checkbox-inline" })
+                                                                                }
+                                                                            </div>
+                                                                        }
+
+                                                                        else
+                                                                        {
+                                                                            <div>
+                                                                                @for (int a = 0; a < Model.lstcustomVM[i].lstCustomOptionsVal.Count; a++)
+                                                                                {
+                                                                                    @Html.HiddenFor(m => m.lstcustomVM[i].lstCustomOptionsVal[a].DrpValueId)
+                                                                                    @Html.HiddenFor(m => m.lstcustomVM[i].lstCustomOptionsVal[a].FieldId)
+                                                                                    @*@Html.RadioButtonFor(m => m.lstcustomVM[i].CustomFieldvalue, Model.lstcustomVM[i].lstCustomOptionsVal[a].DrpValueId, new { isChecked = Model.lstcustomVM[i].lstCustomOptionsVal[a].IsDefault })*@
+                                                                                    if (Model.lstcustomVM[i].lstCustomOptionsVal[a].IsDefault == true)
+                                                                                    {
+                                                                                        @Html.RadioButtonFor(m => m.lstcustomVM[i].DefaultValue, Model.lstcustomVM[i].lstCustomOptionsVal[a].DrpValueId, new { @checked = "checked", @title = @Model.lstcustomVM[i].HoverText, @disabled = "disabled" })
+                                                                                    }
+                                                                                    else
+                                                                                    {
+                                                                                        @Html.RadioButtonFor(m => m.lstcustomVM[i].DefaultValue, Model.lstcustomVM[i].lstCustomOptionsVal[a].DrpValueId, new { @title = @Model.lstcustomVM[i].HoverText, @disabled = "disabled" })
+                                                                                    }
+                                                                                    @Html.DisplayFor(m => m.lstcustomVM[i].lstCustomOptionsVal[a].DrpValue, new { @class = "checkbox-inline" })
+                                                                                }
+                                                                            </div>
+                                                                        }
+                                                                    }
+                                                                </div>
+                                                            </div>
+                                                        }
+                                                    </div>
+                                                    @Html.HiddenFor(m => m.objVenture.UserId)
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        @*End Of Binding Custom Fields*@
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div id="TabStripOpenActivity_View" class="tab-pane active">
+                            <div class="col-sm-12" style="padding-top:13px;padding-left:0px;">
+
+                                <div class="col-xs-12 col-sm-12 text-right text-right-sm" id="white_bg">
+                                    <ul class="table-nav-item">
+
+                                        <li class="btn btn-flat btn-labeled btn-primary" id="btnmargin_top" style="display:none;">
+                                            <a style="color: #fff; text-decoration: none; padding: 0px; font-weight: normal" href="@Url.Action("CreateMentor", "Mentor", new { @ventureid=@Model.objVenture.VentureId, @Module = "Venture"  })">
+                                                <span class="btn-label icon fa fa-backward" style="margin-right:6px;"> </span>
+                                                Add Mentor
+                                            </a>
+                                        </li>
+                                        <li class="btn btn-flat btn-labeled btn-primary" id="btnmargin_top">
+                                            <a style="color: #fff; text-decoration: none; padding: 0px; font-weight: normal" href="@Url.Action("Index", "Venture/")">
+                                                <span class="btn-label icon fa fa-backward" style="margin-right:6px;"> </span>
+                                                Back
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="row">
+                                    @Html.Partial("~/Views/Shared/_MentorDetails.cshtml")
+                                </div>
+
+                            </div>
+                        </div>
+
+
+                        <div id="TabStripApplicationDetail_View" class="tab-pane active">
+
+                            <div class="col-sm-12" style="padding-top:13px;padding-right:0px;">
+                                <div class="col-xs-12 col-sm-12 text-right text-right-sm" id="white_bg">
+                                    <ul class="table-nav-item">
+                                        <button class="btn btn-flat btn-labeled btn-primary" id="btnEditAppdetails" style=" margin:0px 3px 0px 10px;">
+                                            <span class="btn-label icon fa fa-edit"></span>Update
+                                        </button>
+                                        <li class="btn btn-flat btn-labeled btn-primary" id="btnmargin_top">
+                                            <a style="color: #fff; text-decoration: none; padding: 0px; font-weight: normal" href="@Url.Action("Index", "Venture/")">
+                                                <span class="btn-label icon fa fa-backward" style="margin-right:6px;"> </span>
+                                                Back
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                </div>
+                                <div id="panel123" class="panel">
+
+                                    <div class="col-sm-12">
+                                        <!-- Page header, center on small screens -->
+                                        <div class="col-sm-12" style="background: #2ab8da; padding:10px;">
+                                            <span class="label label-primary label-tag" style="font-size:14px;font-weight:800;">Application details:</span>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-12">
+                                            <div class="row">
+                                                <div class="pull-right">
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- / .panel-heading -->
+
+                                    <div class="panel-body" style="padding-top: 53px;">
+                                        <div class="col-sm-12 no-padding-hr">
+                                            <div class="row">
+                                                <div class="col-sm-3">
+                                                    <div class="form-group no-margin-hr">
+                                                        <label class="control-label">Street :</label>
+                                                        @Html.TextBoxFor(m => m.objVenture.Street, new { @class = "form-control input-sm", @id = "txtstreet" })
+                                                    </div>
+                                                </div>
+
+                                                @*@Html.HiddenFor(m => m.venturedetail.VentureId, new { @id = "txtcmpID" })*@
+
+                                                <div class="col-sm-3">
+                                                    <div class="form-group no-margin-hr">
+                                                        <label class="control-label">City :</label>
+
+                                                        @Html.TextBoxFor(m => m.objVenture.City, new { @id = "txtcity", @class = "form-control input-sm", @MaxLength = "20" })
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-sm-3">
+                                                    <div class="form-group no-margin-hr">
+                                                        <label class="control-label">State :</label>
+                                                        @Html.TextBoxFor(m => m.objVenture.State, new { @id = "txtState", @class = "form-control input-sm", @MaxLength = "50" })
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <div class="form-group no-margin-hr">
+                                                        <label class="control-label">ZIP:</label>
+                                                        @Html.TextBoxFor(m => m.objVenture.ZIP, new { @id = "txtZIP", @class = "form-control input-sm" })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-3">
+                                                    <div class="form-group no-margin-hr">
+                                                        <label class="control-label">Industry Categorization :</label>
+                                                        @Html.DropDownListFor(m => m.objVenture.IndustryCategoryName, new SelectList(Model.listofCategory, "Value", "Text"), "--Select--", new { @class = "form-control", @id = "drpCategory", @style = "height:30px;" })
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <div class="form-group no-margin-hr">
+                                                        <label class="control-label">If other, please specify:</label>
+
+                                                        @Html.TextBoxFor(m => m.objVenture.CategoryOthers, new { @id = "txtCategoryOthers", @class = "form-control input-sm" })
+
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <div class="form-group no-margin-hr">
+                                                        <label class="control-label">PrimaryPhoneNo :</label>
+
+                                                        @Html.TextBoxFor(m => m.objVenture.PrimaryPhoneNo, new { @id = "txtPrimaryPhoneNo", @class = "form-control input-sm", @MaxLength = "40" })
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <div class="form-group no-margin-hr">
+                                                        <label class="control-label">Primary Role In Venture&nbsp;:</label>
+
+                                                        @Html.TextBoxFor(m => m.objVenture.PrimaryRoleInVenture, new { @id = "txtPrimaryRoleInVenture", @class = "form-control input-sm", @MaxLength = "20" })
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+
+                                                <div class="col-sm-10">
+                                                    <div class="form-group no-margin-hr">
+                                                        <label class="control-label">Primary Colaboration Affiliation&nbsp;:</label>
+                                                        <div class="input-group">
+                                                            @foreach (var item in Model.ListPrimaryColaborationAffiliation)
+                                                        {
+                                                                @*@Html.HiddenFor(m=>item.ID)
+                                            @Html.CheckBoxFor(model =>item.IsChecked)
+                                            @Html.LabelFor(model=>item.Value,item.Value)*@
+                                                                @Html.CheckBox("chkcollbp", item.IsChecked, new { value = item.Value });<label>@item.Text</label>
+
+                                                        }
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-3">
+                                                    <div class="form-group no-margin-hr">
+                                                        <label class="control-label">SecondaryPhoneNo:</label>
+                                                        @Html.TextBoxFor(m => m.objVenture.SecondaryPhoneNo, new { @id = "txtSecondaryPhoneNo", @class = "form-control input-sm" })
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <div class="form-group no-margin-hr">
+                                                        <label class="control-label">Secondary Role In Venture&nbsp;:</label>
+                                                        @Html.TextBoxFor(m => m.objVenture.SecondaryRoleInVenture, new { @id = "txtSecondaryRoleInVenture", @class = "form-control input-sm", @MaxLength = "20" })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-10">
+                                                    <div class="form-group no-margin-hr">
+                                                        <label class="control-label">Scondary Colaboration Affiliation&nbsp;:</label>
+                                                        <div class="input-group">
+                                                            @foreach (var item in Model.ListSecondaryColaborationAffiliation)
+                                                        {
+                                                                @*@Html.HiddenFor(model => item.ID)
+                                            @Html.CheckBoxFor(model => item.IsChecked)
+                                            @Html.Label(item.Text)*@
+
+                                                                @Html.CheckBox("chkcollbs", item.IsChecked, new { value = item.Value });<label>@item.Text</label>
+                                                        }
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-sm-10">
+                                                    <div class="form-group no-margin-hr">
+                                                        <label class="control-label">How did you hear about NextTech VMS?&nbsp;:</label>
+                                                        <label class="control-label">Check all that apply&nbsp;:</label>
+                                                        <div class="input-group">
+                                                            @foreach (var item in Model.ListofAdvertisement)
+                                                        {
+                                                                @*@Html.HiddenFor(model => item.ID)
+                                            @Html.CheckBoxFor(model => item.IsChecked)
+                                            @Html.Label(item.Text)*@
+                                                                @Html.CheckBox("chkadvertise", item.IsChecked, new { value = item.Value });<label>@item.Text</label>
+                                                        }
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-4">
+                                                    <div class="form-group no-margin-hr">
+                                                        <label class="control-label">If you would like to elaborate with specifics, please do so below&nbsp;:</label>
+                                                        @Html.TextBoxFor(m => m.objVenture.WouldLikeToElaborateSpecifics, new { @id = "txtWouldLikeToElaborateSpecifics", @class = "form-control input-sm" })
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <div class="form-group no-margin-hr">
+                                                        <label class="control-label">1. What do you do?Please provide a succinct 1-sentence description of what you do : </label>
+                                                        @Html.TextAreaFor(m => m.objVenture.WhatDoYouDo, new { @id = "txtWhatDoYouDo", @class = "textEditor", @cols = 40, @rows = 5 })
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-sm-4">
+                                                    <div class="form-group no-margin-hr">
+                                                        <label class="control-label">2. What is the problem? In a few sentences, please describe what problem you are solving: </label>
+                                                        @Html.TextAreaFor(m => m.objVenture.WhatIsTheProblem, new { @id = "txtWhatIsTheProblem", @class = "textEditor", @cols = 40, @rows = 5 })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-4">
+                                                    <div class="form-group no-margin-hr">
+                                                        <label class="control-label">3. Who has it?In one or two sentences, describe who has this problem </label>
+                                                        @Html.TextAreaFor(m => m.objVenture.WhoHasIt, new { @id = "txtWhoHasIt", @class = "textEditor", @cols = 40, @rows = 5 })
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <div class="form-group no-margin-hr">
+                                                        <label class="control-label">4. How will you solve the problem? - In a few sentences and in completely NON-TECHNICAL terms, please describe how you expect to solve it:   </label>
+                                                        @Html.TextAreaFor(m => m.objVenture.HowWillUSolveTheProblem, new { @id = "txtHowWillUSolveTheProblem", @class = "textEditor", @cols = 40, @rows = 5 })
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-sm-4">
+                                                    <div class="form-group no-margin-hr">
+                                                        <label class="control-label">5. How will you make money?  In a few sentences, describe who will use it, who will pay you and how you envision selling to them. Again, you do not need to provide in-depth financial details.  </label>
+                                                        @Html.TextAreaFor(m => m.objVenture.HowWillUMakeMoney, new { @id = "txtHowWillUMakeMoney", @class = "textEditor", @cols = 40, @rows = 5 })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-4">
+                                                    <div class="form-group no-margin-hr">
+                                                        <label class="control-label">6. What is the secret sauce?  In a few sentences, describe what is special about your solution and product. What is its competitive advantage over existing products or solutions? </label>
+                                                        @Html.TextAreaFor(m => m.objVenture.WhtIsTheSecretSauce, new { @id = "txtWhtIsTheSecretSauce", @class = "textEditor", @cols = 40, @rows = 5 })
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <div class="form-group no-margin-hr">
+                                                        <label class="control-label">7. Is there IP?  In a few sentences describe the IP status. Also, if you are employed by, or affiliated with, a collaborator (PI, Mercy, BGSU or UT), does the collaborator have any legal rights to your IP?  </label>
+                                                        @Html.TextAreaFor(m => m.objVenture.IsThereIP, new { @id = "txtIsThereIP", @class = "textEditor", @cols = 40, @rows = 5 })
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <div class="form-group no-margin-hr">
+                                                        <label class="control-label">8. What is your current status?  It’s just fine to be very early in the process, even at the idea stage. Please check one:?&nbsp;:</label>
+                                                        <div class="input-group">
+                                                            @foreach (var item in Model.Listofstatus)
+                                                        {
+                                                                @*@Html.HiddenFor(model => item.ID)
+                                            @Html.CheckBoxFor(model => item.IsChecked)
+                                            @Html.Label(item.Text)*@
+                                                                @Html.CheckBox("chkstatus", item.IsChecked, new { value = item.Value });<label>@item.Text</label>
+                                                        }
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <div class="form-group no-margin-hr">
+                                                        <label class="control-label">9. What type(s) of VMS help do you think your startup needs?  (please check all that apply)&nbsp;:</label>
+                                                        <div class="input-group">
+                                                            @foreach (var item in Model.ListofVMShelp)
+                                                        {
+                                                                @*@Html.HiddenFor(model => item.ID)
+                                            @Html.CheckBoxFor(model => item.IsChecked)
+                                            @Html.Label(item.Text)*@
+                                                                @Html.CheckBox("chkvmsHelp", item.IsChecked, new { value = item.Value });<label>@item.Text</label>
+                                                        }
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <div class="form-group no-margin-hr">
+                                                        <label class="control-label">6. What is the secret sauce?  In a few sentences, describe what is special about your solution and product. What is its competitive advantage over existing products or solutions? </label>
+                                                        @Html.TextAreaFor(m => m.objVenture.Comments, new { @id = "txtcomments", @class = "textEditor", @cols = 50, @rows = 5 })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- / .panel-body -->
+                                </div>
+
+
+
+
+
+
+
+
+
+                            </div>
+
+
+
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+        </div>
+}
+
+
+<script type="text/javascript">
+
+   
+
+    $(document).ready(function () {
+
+        
+        var created = '@ViewBag.Created';
+        var updated = '@ViewBag.Updated';
+        if (created == 'MCreated') {
+            $.growl.notice({ title: "Success", message: "Mentor Created Successfully", size: 'large' });
+           
+        }
+        if (updated == 'MUpdated') {
+            $.growl.notice({ title: "Success", message: "Mentor Updated Successfully", size: 'large' });
+        }
+        $(function () {
+           
+            var dateToday = new Date();
+            $('.datepicker1').datetimepicker({
+                minDate: dateToday,
+                format: 'L'
+            });
+           
+        });
+        if('@Request.QueryString["Module"]'=='Mentor')
+        {
+            $('#TabStripAccountDetail_View').css("display", "none");
+            $('#TabStripOpenActivity_View').css("display", "block");
+            $('#TabStripApplicationDetail_View').css("display", "none");
+            $("#TabStripAccountDetail").removeClass("active");
+            $("#TabStripOpenActivity").addClass("active");
+            $("#TabStripApplicationDetail").removeClass("active");
+            //$("#tblMentors").dataTable().fnDestroy();
+            //BindMentors();
+        }
+        else{
+            $('#TabStripAccountDetail_View').css("display", "block");
+            $("#TabStripAccountDetail").addClass("active");
+            $("#TabStripOpenActivity").removeClass("active");
+            $("#TabStripApplicationDetail").removeClass("active");
+            $('#TabStripOpenActivity_View').css("display", "none");
+            $('#TabStripApplicationDetail_View').css("display", "none");
+        }
+        
+        var updateUsr = '@ViewBag.CompanyUpdate';
+        if (updateUsr != "") {
+            // $('#ErrorMessages').html('Company Details Updated Successfully.');
+            $.growl.notice({ title: "Success", message: "Company Details Updated Successfully.", size: 'large' });
+            EditCompanydetails();
+        }
+
+        $('#TabStripContacts').click(function () {
+            $('#TabStripAccountDetail_View').css("display", "none");
+            $('#TabStripOpenActivity_View').css("display", "none");
+           // $('#TabStripApplicationDetail_View').css("display", "none");
+            $("#TabStripAccountDetail").addClass("active");
+            $("#TabStripOpenActivity").removeClass("active");
+          //  $("#TabStripApplicationDetail").removeClass("active");
+        });
+
+        $('#TabStripAccountDetail').click(function () {
+            $('#TabStripAccountDetail_View').css("display", "block");
+            $("#TabStripAccountDetail").addClass("active");
+            $("#TabStripOpenActivity").removeClass("active");
+            $("#TabStripApplicationDetail").removeClass("active")
+            $('#TabStripOpenActivity_View').css("display", "none");
+            $('#TabStripApplicationDetail_View').css("display", "none");
+
+        });
+        $('#TabStripDocument').click(function () {
+
+            $('#TabStripAccountDetail_View').css("display", "none");
+            $("#TabStripAccountDetail").addClass("active");
+            $("#TabStripOpenActivity").removeClass("active");
+           // $("#TabStripApplicationDetail").removeClass("active");
+            $('#TabStripOpenActivity_View').css("display", "none");
+            //$('#TabStripApplicationDetail_View').css("display", "none");
+        });
+
+        $('#TabStripOpenActivity').click(function () {
+            
+            $('#TabStripAccountDetail_View').css("display", "none");
+            $('#TabStripApplicationDetail_View').css("display", "none");
+            $('#TabStripOpenActivity_View').css("display", "block");
+            $("#TabStripApplicationDetail").removeClass("active");
+            $("#TabStripAccountDetail").removeClass("active");
+            $("#TabStripOpenActivity").addClass("active");
+            //$("#tblMentors").dataTable().fnDestroy();
+          
+
+        });
+
+
+        $('#TabStripApplicationDetail').click(function () {
+            
+            $('#TabStripAccountDetail_View').css("display", "none");
+            $('#TabStripOpenActivity_View').css("display", "none");
+            $('#TabStripApplicationDetail_View').css("display", "block");
+            $("#TabStripAccountDetail").removeClass("active");
+            $("#TabStripOpenActivity").removeClass("active");
+            $("#TabStripApplicationDetail").addClass("active");
+            //$("#tblMentors").dataTable().fnDestroy();
+          
+
+        });
+
+
+
+        $('#TabStripInvoice').click(function () {
+            BindInvoiceList();
+
+            $('#TabStripAccountDetail_View').css("display", "none");
+
+            $('#TabStripOpenActivity_View').css("display", "none");
+           // $('#TabStripApplicationDetail_View').css("display", "none");
+            /// $("#jq-datatables-activity").dataTable().fnDestroy();
+            //$('#tblInvoice');
+            BindInvoiceList();
+
+        });
+
+        //$(".textEditor").jqte();
+
+
+        $(".jqte_editor").prop('contenteditable', 'false');
+
+
+
+    });
+
+
+
+    function EditCompanydetails() {
+        var Companyid = $('#txtcmpID').val();
+        $.ajax({
+            url: "../ManageCompany/_EditCompanybyID",
+            type: "GET",
+            async: false,
+            data: { CompanyId: Companyid },
+            success: function (data) {
+
+                if (data != null) {
+                    $("#Getleads").empty().append(data);
+
+                }
+            },
+            error: function () {
+
+            }
+        });
+    }
+    function deleteSelectedLead() {
+
+        var leadid = $('#txtID').val();
+        $.ajax({
+
+
+            url: '@Url.Action("DeleteCompanybyId", "ManageCompany")',
+            type: "POST",
+            async: false,
+            data: { leadid: leadid.toString() },
+            success: function (data) {
+
+                if (data == "True") {
+                    $.growl.notice({ title: "Success", message: "Lead Deleted Successfully.", size: 'large' });
+                    RedirectToindex();
+                }
+                else {
+                    $.growl.notice({ title: "Fail", message: "Lead Not Deleted .", size: 'large' });
+                }
+            },
+            error: function (request, status, error) {
+            }
+        });
+
+
+    }
+
+    function RedirectToindex() {
+        window.location = "Index";
+    }
+
+
+    // To Bind the Activities based on the company ID
+    function BindCompaniesActivity() {
+        $("#tblActivities").dataTable().fnDestroy();
+        var responsiveHelper = undefined;
+        var breakpointDefinition = {
+            desktop: Infinity,
+            tablet: 1024,
+            tabletlandscape: 768,
+            phone: 480
+        };
+        var tableElement = $('#tblActivities');
+        tableElement.dataTable({
+            autoWidth: false,
+            preDrawCallback: function () {
+                if (!responsiveHelper) {
+                    responsiveHelper = new ResponsiveDatatablesHelper(tableElement, breakpointDefinition);
+                }
+            },
+            rowCallback: function (nRow) {
+                responsiveHelper.createExpandIcon(nRow);
+            },
+            drawCallback: function (oSettings) {
+                responsiveHelper.respond();
+            },
+
+            "aLengthMenu": [[10, 25, 50, 100], [10, 25, 50, 100]],
+            "pagingType": "full_numbers",
+            "serverSide": true,
+            "bFilter": false,
+            "sAjaxSource": "getCompanyActivities",
+            "fnServerParams": function (aoData) {
+
+                aoData.push(
+                    // { "name": "Keyword", "value": "" + $("#txtActivityKeyword").val() + "" },
+                    //{ "name": "Type", "value": "" + $("#ddlActivityType").val() + "" },
+                    //{ "name": "Priority", "value": "" + $("#ddlPriority").val() + "" },
+                    //{ "name": "Status", "value": "" + $("#ddlStatus").val() + "" }
+                    { "name": "CompanyID", "value": +$('#txtcmpID').val() },
+                    { "name": "Keyword", "value": "" },
+                    { "name": "Type", "value": "-1" },
+                    { "name": "Priority", "value": "select" },
+                    { "name": "Status", "value": "select" }
+
+                    );
+            },
+            "fnServerData": function (sSource, aoData, fnCallback) {
+                $.ajax({
+                    "dataType": 'json',
+                    "contentType": "application/json; charset=utf-8",
+                    "type": "GET",
+                    "url": sSource,
+                    "data": aoData,
+                    "success":
+                                function (msg) {
+
+
+                                    $('#loading').css('display', 'none');
+
+                                    fnCallback(msg);
+
+                                }
+                });
+            },
+            "asStripeClasses": ['odd gradeX', 'even gradeC'],
+            "aoColumnDefs": [
+              {
+                  "targets": [0], "visible": true, "bSortable": false, "mDataProp": "ID",
+                  "render": function (data, type, row) {
+                      return "<input name=\"chkItem\" class =\"case\" type=\"checkbox\"  id=\"chkRow_" + row["ID"] + "\"data-val-1=\"" + row["ID"] + "\"data-val-mt=\"" + row["AccountTypeName"] + "\"  />";
+                  }
+              },
+                {
+                    "targets": [1], "visible": true, "bSortable": false,
+                    "render": function (data, type, row) {
+                        return "<span class=\"fa fa-times\" onclick=\"deleteEachActivity('" + row["ID"] + "','" + row["AccountTypeName"] + "');\"></span>";
+                        //return "<span class=\"fa fa-times\" onclick=\"deleteEachActivity('" + row["HistoryId"] + "');\"></span>";
+                    }
+                },
+
+
+                 {
+                     "targets": [2], "visible": true, "bSortable": true, "mDataProp": "ActivityName",
+                     "render": function (data, type, row) {
+                         return "<a style=\"cursor:pointer\"  onclick=\"OpenActivityDetail('" + row["ID"] + "','" + row["AccountTypeName"] + "')\">" + row["ActivityName"] + "</a>";
+                         //return "<a href=\"#\" id=\"aParentContactId\" onclick=\"OpenContactDetail('" + row["ContactId"] + "','" + row["Mobile"] + "','" + row["Phone"] + "','" + row["Account_Name"] + "','" + row["AccountId"] + "','" + row["Fname"] + "')\">" + row["Fname"] + "</a>";
+                     }
+                 },
+
+
+                //{ "targets": [2], "visible": true, "bSortable": true, "mDataProp": "HistoryType" },
+
+                 {
+                     "targets": [3], "visible": true, "bSortable": true, "mDataProp": "CreatedDate",
+                     "render": function (data, type, row) {
+                         var jsDate1 = data;
+                         if (jsDate1 == null) {
+                             return jsDate1 = "";
+                         }
+                         else if (jsDate1.value != "") {
+                             var jsDate = new Date(parseInt(row["CreatedDate"].substr(6)));
+                             return (jsDate.getMonth() + 1) + '/' + jsDate.getDate() + '/' + jsDate.getFullYear();
+                         }
+
+                     }
+                 },
+
+              {
+                  "targets": [4], "visible": true, "bSortable": true, "mDataProp": "DueDate",
+                  "render": function (data, type, row) {
+                      var jsDate1 = data;
+                      if (jsDate1 == null) {
+                          return jsDate1 = "";
+                      }
+                      else if (jsDate1.value != "") {
+                          var jsDate = new Date(parseInt(row["DueDate"].substr(6)));
+                          return (jsDate.getMonth() + 1) + '/' + jsDate.getDate() + '/' + jsDate.getFullYear();
+                      }
+
+                  }
+              },
+
+
+                 { "targets": [5], "visible": true, "bSortable": true, "mDataProp": "Priority" },
+                 { "targets": [6], "visible": true, "bSortable": true, "mDataProp": "Status" },
+                 { "targets": [7], "visible": true, "bSortable": true, "mDataProp": "AccountTypeName" }
+
+            ],
+            "fnDrawCallback": function (oSettings) {
+
+
+                $('#loading').css('display', 'none');
+            }
+        }).api();
+
+    }
+
+
+
+
+    function BindInvoiceList() {
+        $("#tblInvoice").dataTable().fnDestroy();
+        var responsiveHelper = undefined;
+        var breakpointDefinition = {
+            tablet: 1024,
+            tabletlandscape: 768,
+            phone: 480
+        };
+        var tableElement = $('#tblInvoice');
+
+        tableElement.dataTable({
+            autoWidth: false,
+            preDrawCallback: function () {
+                if (!responsiveHelper) {
+                    responsiveHelper = new ResponsiveDatatablesHelper(tableElement, breakpointDefinition);
+                }
+            },
+            rowCallback: function (nRow) {
+                responsiveHelper.createExpandIcon(nRow);
+            },
+            drawCallback: function (oSettings) {
+                responsiveHelper.respond();
+            },
+            // "order": [[$("#HD_SortValue").val(), "" + $("#HD_SortDirection").val() + ""]],
+            "aLengthMenu": [[10, 25, 50], [10, 25, 50]],
+            //"iDisplayStart": parseInt($("#HD_PageIndex").val()),
+            //"iDisplayLength": parseInt($("#HD_PageSize").val()),
+            //"oSearch": { "sSearch": $("#HD_SearchString").val() },
+
+            "pagingType": "full_numbers",
+
+            "bFilter": false,
+            //"processing": true,
+            "serverSide": true,
+
+            "sAjaxSource": "getCompanyInvoicelist",
+            "fnServerParams": function (aoData) {
+                aoData.push(
+                     { "name": "CompanyID", "value": +$('#txtcmpID').val() },
+                    { "name": "b_invoice", "value": "Invoice" }
+                    );
+
+            },
+            "fnServerData": function (sSource, aoData, fnCallback) {
+                $.ajax({
+                    "dataType": 'json',
+                    "contentType": "application/json; charset=utf-8",
+                    "type": "GET",
+                    "url": sSource,
+                    "data": aoData,
+                    "success":
+                                function (msg) {
+                                    //var json = jQuery.parseJSON(msg.d);
+                                    fnCallback(msg);
+                                    //$("#jq-datatables-example").show();
+                                }
+                });
+            },
+            "asStripeClasses": ['odd gradeX', 'even gradeC'],
+            "aoColumnDefs": [
+                {
+                    "targets": [0], "visible": true, "bSortable": false, "mDataProp": "InvoiceID",
+                    "render": function (data, type, row) {
+                        return "<input type=\"checkbox\" name=\"chkItem\" class=\"case\" id=\"chkRow_" + row["InvoiceID"] + "\"  data-invoiceid=\"" + row["InvoiceID"] + "\"    />";
+                        //if (row["BranchId"] != 1) {
+                        //    return "<input type=\"checkbox\" name=\"chkItem\" class=\"case\" id=\"chkRow_" + row["InvoiceID"] + "\"  data-invoiceid=\"" + row["InvoiceID"] + "\"    />";
+                        //}
+                        //else {
+                        //    return "";
+                        //}
+                    }
+                },
+                 {
+                     "targets": [1], "visible": true, "bSortable": false,
+                     "render": function (data, type, row) {
+
+                         // if (row["BranchId"] != 1) {
+                         //return "<input type=\"checkbox\" name=\"chkitems\" class=\"case\" id=\"chkRow_" + row["UserId"] + "\"  data-UserId=\"" + row["UserId"] + "\" data-RoleName=\"" + row["roleName"] + "\"/>";
+                         return "<span class=\"fa fa-edit\" onclick=\"OpeninvoiceDetail('" + row["InvoiceID"] + "');\"></span><span class=\"fa fa-times\" onclick=\"deleteEachinvoice('" + row["InvoiceID"] + "');\"></span>";
+                         //}
+                         //else {
+                         //    return "<span class=\"fa fa-edit\" onclick=\"OpenBranchDetail('" + row["InvoiceId"] + "');\"></span>";
+                         //}
+
+
+                     }
+                 },
+                {
+                    "targets": [2], "visible": true, "bSortable": true, "mDataProp": "InvoiceNo",
+
+                },
+                {
+
+                    "targets": [3], "visible": true, "bSortable": true, "mDataProp": "Fname",
+
+                },
+                { "targets": [4], "visible": true, "bSortable": true, "mDataProp": "GrandTotal", "sClass": "alignRight" },
+                 {
+                     "targets": [5], "visible": true, "bSortable": true, "mDataProp": "DueDate",
+                     "render": function (data, type, row) {
+                         var jsDate1 = data;
+                         if (jsDate1 == null) {
+                             return jsDate1 = "";
+                         }
+                         else if (jsDate1.value != "") {
+                             var jsDate = new Date(parseInt(row["DueDate"].substr(6)));
+                             return (jsDate.getMonth() + 1) + '/' + jsDate.getDate() + '/' + jsDate.getFullYear();
+                         }
+
+                     }
+                 },
+
+                  { "targets": [6], "visible": true, "bSortable": true, "mDataProp": "InvoiceType" },
+
+                   //{ "targets": [7], "visible": true, "bSortable": true, "mDataProp": "Status" },
+                   {
+                       "targets": [7], "visible": true, "bSortable": true, "mDataProp": "Status",
+                       "render": function (data, type, row) {
+
+                           if (row["Posted"] != 1) {
+
+                               return "<a class=\"btn btn-flat btn-labeled btn-primary\" href=\"#\" onclick=\"ConverttoPost('" + row["InvoiceID"] + "');\"><span class=\"btn-label icon  fa fa-pencil-square-o\" style=\"margin-right:6px;\"> </span>" + "Post Invoice" + "</a>";
+
+
+                           }
+                           else {
+                               return "Posted";
+                           }
+
+
+                       }
+
+                   },
+
+
+            ],
+            "fnDrawCallback": function (oSettings) {
+
+                $('#loading').css('display', 'none');
+
+            }
+        }).api();
+
+
+        $('#tblInvoice_wrapper .table-caption').text('');
+
+        // $('#tblOffice_wrapper .dataTables_filter input').attr('placeholder', 'Search...');
+
+
+    }
+
+    function isNumberKey(evt) {
+        var charCode = (evt.which) ? evt.which : event.keyCode;
+        if ((charCode < 48 || charCode > 57))
+            return false;
+
+        return true;
+    }
+
+    
+    $("#btnEdit").click(function () {
+        
+        var isvalid=false;
+        if($("#drpSMSprovider").val()!=0){
+         
+            var oldvmsstatus='@Html.Raw(Json.Encode(ViewData["OldVmsStatus"]))';
+            var oldvmsstatusid='@Html.Raw(Json.Encode(ViewData["OldVmsStatusId"]))';
+            var drpselectedtext=$("#drpSMSprovider option:selected").text();
+            if (oldvmsstatusid != $("#drpSMSprovider").val()) {
+                var Alerttext="Do you want to convert this " +oldvmsstatus+ " Venture to an " + drpselectedtext +" Venture ?";
+                isvalid=boortboxconformation(Alerttext);
+                return isvalid;
+            }
+
+            else{
+                $("#objVenture.Status").val(drpselectedtext);
+                $("#UpdateVenture").submit();
+                isvalid=true;
+            }
+            return isvalid;
+        }
+        else{
+            bootbox.alert("Please select VMS Status");
+         
+            return isvalid=false;
+        }
+        return isvalid;
+       
+    });
+    function boortboxconformation(Alerttext){
+        var isvalid=false;
+       
+        bootbox.confirm(Alerttext,function(flag){
+            
+            if(flag==true){
+                
+                isvalid=true;
+                $("#UpdateVenture").submit();
+            }
+            else{
+                isvalid=true;
+            }
+            return isvalid;
+        });
+        return isvalid;
+    }
+
+    $("#txtPrimaryEmail").blur(function () {
+
+        var isvalid;
+        isvalid = ValidateEmail($(this)[0]);
+        ValidateEmails($("#txtPrimaryEmail").val(), isvalid);
+    });
+
+    $("#txtSecondaryEmail").blur(function () {
+
+        var isvalid;
+        if ($("#txtSecondaryEmail").val() != "") {
+            if ($("#txtSecondaryEmail").val() == $("#txtPrimaryEmail").val()) {
+                bootbox.alert("Primary Email and Secondary Email Should not be same");
+                $("#txtSecondaryEmail").val('');
+            }
+            else {
+                isvalid = ValidateEmail($(this)[0]);
+                ValidateEmails($("#txtSecondaryEmail").val(), isvalid);
+            }
+        }
+    });
+
+    $("#txtWebSite").blur(function () {
+        var isvalid;
+        isvalid = ValidateWebsite($(this)[0]);
+        ValidateUrls($("#txtWebSite").val(), isvalid);
+    });
+    $("#txtMITLink").blur(function () {
+        var isvalid;
+        isvalid = ValidateWebsite($(this)[0]);
+        ValidateUrls($("#txtMITLink").val(), isvalid);
+    });
+    function ValidateEmails(objemailvalue, isvalid) {
+        if (isvalid == true) {
+
+
+        }
+
+        else {
+            if (objemailvalue != "") {
+                bootbox.alert("Email is not valid");
+            }
+
+        }
+    }
+
+    function ValidateUrls(objurlvalue, isvalid) {
+
+        if (isvalid == true) {
+
+        }
+        else {
+            if (objurlvalue != "") {
+                bootbox.alert("url is not valid");
+            }
+
+        }
+    }
+</script>

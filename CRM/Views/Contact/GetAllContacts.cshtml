@@ -1,0 +1,176 @@
+﻿@model CRMHub.EntityFramework.Account
+
+
+
+
+<html>
+<body>
+    <div style="width:100px;">
+        <div id="loading" style="display:none">
+            <img id="loading-image" src="~/Content/assets/images/loader.gif" />
+        </div>
+    </div>
+    <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="jq-datatables-ContactPopup" width="100%">
+        <thead>
+            <tr>               
+                <th data-hide="tablet,tabletlandscape,phone">Contact ID</th>
+                <th data-class="expand">Contact Name</th>
+                <th data-hide="phone,smartphone">Company Name</th>
+               
+            </tr>
+        </thead>
+        <tbody></tbody>
+       
+    </table>
+</body>
+</html>
+
+<script type="text/javascript">
+
+        $(document).ready(function () {
+
+            $('#loading').css('display', 'block');
+            bindContactGrid();
+
+
+            $('#jq-datatables-ContactPopup').on('length.dt', function (e, settings, len) {
+
+                $('#loading').css('display', 'block');
+            });
+
+            $('#jq-datatables-ContactPopup').on('page.dt', function () {
+
+                $('#loading').css('display', 'block');
+            });
+
+
+            // $('#loading').css('display', 'none');
+        });
+        function bindContactGrid() {
+
+
+
+            $('#loading').css('display', 'block');
+            var responsiveHelper = undefined;
+            var breakpointDefinition = {
+                desktop: Infinity,
+                tablet: 1024,
+                tabletlandscape: 768,
+                phone: 480
+            };
+            var tableElement = $('#jq-datatables-ContactPopup');
+            tableElement.dataTable({
+                autoWidth: false,
+                preDrawCallback: function () {
+                    if (!responsiveHelper) {
+                        responsiveHelper = new ResponsiveDatatablesHelper(tableElement, breakpointDefinition);
+                    }
+                },
+                rowCallback: function (nRow) {
+                    responsiveHelper.createExpandIcon(nRow);
+                },
+                drawCallback: function (oSettings) {
+                    responsiveHelper.respond();
+                },
+                //"order": [[$("#HD_SortValue").val(), "" + $("#HD_SortDirection").val() + ""]],
+                "aLengthMenu": [[10, 25, 50, 100], [10, 25, 50, 100]],
+                //"iDisplayStart": parseInt($("#HD_PageIndex").val()),
+                //"iDisplayLength": parseInt($("#HD_PageSize").val()),   url:  '',
+                "pagingType": "full_numbers",
+                //"processing": true,
+                "serverSide": true,
+                "bFilter": false,
+                "sAjaxSource": '@Url.Action("getContactsList", "Contact")',
+                //"sAjaxSource": "getContactsList",
+                //"sAjaxSource": "Contact/getContacts",
+                "fnServerParams": function (aoData) {
+                    aoData.push(
+                        { "name": "Contactkeyword", "value": "" + "" + "" },
+                         { "name": "CompanyName", "value": "" + "" + "" },
+                         { "name": "OwnerName", "value": "" + "" + "" }
+
+                        // { "name": "CompanyName", "value": "" + $("#txtCompanyName").val().trim() + "" },
+                        // { "name": "Contactkeyword", "value": "" + "" + "" },
+                        ////{ "name": "Contactkeyword", "value": "" + $("#txtKeyWord").val() + "" },
+                        //{ "name": "ContactBranch", "value": "" + "-1" + "" },
+                        //{ "name": "ContactSalesRepresentative", "value": "" + "0" + "" },
+                        //{ "name": "CompanyFilterString", "value": "" },
+                        //{ "name": "CompanyList_IsFromBack", "value": "" },
+                        //{ "name": "CompanyFilterString_ActualQueryCondition", "value": "" }
+                        );
+                },
+                "fnServerData": function (sSource, aoData, fnCallback) {
+                    $.ajax({
+                        "dataType": 'json',
+                        "contentType": "application/json; charset=utf-8",
+                        "type": "GET",
+                        "url": sSource,
+                        "data": aoData,
+                        "success":
+                                    function (msg) {
+
+                                        $('#loading').css('display', 'none');
+                                        //var json = jQuery.parseJSON(msg.d);
+                                        fnCallback(msg);
+                                        //$("#jq-datatables-example").show();
+                                    }
+                    });
+                },
+                "asStripeClasses": ['odd gradeX', 'even gradeC'],
+                "aoColumnDefs": [
+
+                    { "targets": [0], "visible": true, "bSortable": false, "mDataProp": "ID" },
+                    {
+                        "targets": [1], "visible": true, "bSortable": false, "mDataProp": "Fname",
+                        "render": function (data, type, row) {
+
+                            return "<a href=\"#\" id=\"aParentContactId\" onclick=\"OpenContactDetail('" + row["ID"] + "','" + row["CompanyName"] + "','" + row["CompanyID"] + "','" + row["LeadName"] + "')\">" + row["LeadName"] + "</a>";
+                            //return "<a href=\"#\" id=\"aParentContactId\" onclick=\"OpenContactDetail('" + row["ContactId"] + "','" + row["Mobile"] + "','" + row["Phone"] + "','" + row["Account_Name"] + "','" + row["AccountId"] + "')\">" + row["Fname"] + "</a>";
+                            // return "<a href=\"#\" id=\"aParentContactId\" data-contid=" + row["ContactId"] + "','data-mob=" + row["Mobile"] + "','data-phone=" + row["Phone"] + "','data-accname=" + row["Account_Name"] + "','data-accid=" + row["AccountId"] + "')\">" + row["Fname"] + "</a>";
+
+                        }
+                    },
+
+                    { "targets": [2], "visible": true, "bSortable": false, "mDataProp": "CompanyName" },
+
+
+                ],
+                "fnDrawCallback": function (oSettings) {
+
+                    $('#loading').css('display', 'none');
+                }
+            }).api();
+        }
+        function OpenContactDetail(contactId, Account_Name, AccountId, ContactName) {
+
+
+            var parentCont = ContactName;
+            var contid = contactId;
+            var CompanyName = Account_Name;
+            var CompanayId = AccountId;
+            //alert("ContactName" + parentCont);
+            $('#txtParentAccountid').val(CompanayId);
+            $('#txtAccountName').val(CompanyName);
+
+            $('#hdParentContactId').val(contid);
+            $('#HyperContact').val(parentCont);
+            //txtAccountName
+            //txtParentAccountid
+
+            //hdParentContactId
+            //HyperContact
+
+
+
+            //$('#hdParentAccountId').val(CompanayId);
+            //$('#txtCompanyName').val(CompanyName);
+            //$('#txtcontactMobile').val(contMob);
+            //$('#txtcontactPhone').val(contPhone);
+            //$('#txtContactName').val(parentCont);
+
+            //$('#hdParentContactId').val(contid);
+            $('#myModalContact').modal("hide");
+
+
+        }
+</script>

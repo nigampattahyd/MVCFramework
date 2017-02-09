@@ -1,0 +1,209 @@
+﻿@model IEnumerable<CRMHub.EntityFramework.Client>
+    @{
+        ViewBag.Title = "ClientManagerIndex";
+        Layout = "~/Views/Clientmaster/_LayoutClientsmaster.cshtml";
+    }
+
+
+    @* <h2>ClientManager</h2>*@
+    <div id="content-wrapper">
+        <div id="CustomBootstrapAlertBox">
+        </div>
+        <div class="row">
+            <div class="panel">
+                <div class="panel-heading">
+                    <div class="row">
+                        <!-- Page header, center on small screens -->
+                        <h1 class="col-xs-6 col-sm-4 text-left text-left-sm panel-title"><i class="fa fa-user page-header-icon"></i>&nbsp; Clients</h1>
+                    </div>
+                </div>
+
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-sm-12" style="background-color: #f5f5f5; padding-top: 6px; padding-bottom: 6px; text-align: right;">
+                            <ul class="table-nav-item">
+                                <li class="btn btn-flat btn-labeled btn-primary" id="btnmargin_top">
+                                    <span class="btn-label icon  fa fa-pencil-square-o" style="margin-right:6px;"> </span>
+                                    <a style="color: #fff; text-decoration: none; padding: 0px; font-weight: normal" id="btnAdd" href="@Url.Action("Index","CreateClients" )">
+                                        Create
+                                    </a>
+                                </li>
+                                @*<li class="btn btn-flat btn-labeled btn-primary" id="btnmargin_top">
+                                    @*<span class="btn-label icon fa fa-trash-o" style="margin-right:6px;"> </span>*@
+                                @*<a style="color: #fff; text-decoration: none; padding: 0px; font-weight: normal" id="DelClient" onclick="deleteSelectedClient()">
+                                        Delete
+                                    </a>*@
+                                @*</li>*@
+                                @* <li>*@
+                                @* <button class="btn btn-flat btn-labeled btn-primary" id="Btncreate" style="color: #fff; text-decoration: none; padding: 0px; font-weight: normal"><span class="btn-label icon fa fa-plus-circle" style="margin-right:6px;"> </span> Create </button>*@
+
+                                @* <a href="#" style="color:#fff; text-decoration:none; font-weight:normal">Create</a><span class="btn-label icon  fa  fa-plus-circle" style="margin-right:6px; "> </span>*@
+                                @*<button style="color:#fff;  text-decoration:none; font-weight:normal"class=" btn-label icon fa fa-plus-circle" id="Btncreate" argin-right:6px; ">
+                                    @* @Html.ActionLink("Back", "Index", new { @style = "color:#fff; text-decoration:none; " })<span class="btn-label icon fa fa-backward" style="margin-right:6px; "> </span>*@
+                                @*</button>*@
+                                @* </li>*@
+
+                                @*<li>*@
+
+                                @* <button class="btn btn-flat btn-labeled btn-primary" style="color: #fff; text-decoration: none; padding: 0px; font-weight: normal"><span class="btn-label icon  fa fa-trash-o" style="margin-right:6px;"> </span> Delete </button>*@
+
+                                @* </li>*@
+                            </ul>
+                        </div>
+
+
+                    </div>
+                    <div class="row">
+
+                        <div class="table-primary table-striped">
+                            <table class="table table-striped table-bordered" id="tblCompanies" style="width:100%;">
+                                <thead>
+                                    <tr>
+                                        @*<th class="no-sort"><input class="fa fa-square-o" type="checkbox" id="chkHeader" /></th>*@
+                                        <th class="no-sort"></th>
+                                        <th data-hide="tablet,tabletlandscape,phone">Client Id</th>
+                                        <th data-class="expand">Company Name</th>
+                                        <th>Company Type</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                          
+
+                                            @if ((item.ClientID == "CRM") || (item.ClientID == "CRM_PSPL"))
+                                            {
+                                                <td>&nbsp;</td>
+                                            }
+                                            else
+                                            {
+                                                <td>
+                                                    <span class="fa fa-times" onclick="deleteEachClient('@item.ClientID')"></span>
+                                                </td>
+                                            }
+                                            
+
+                                            <td>
+                                                <a id="btnEdit" href="@Url.Action("EditClient", "CreateClients", new { ClientID = item.ClientID})">
+                                                    @item.ClientID
+                                                </a>
+
+                                                @*@Html.DisplayFor(model => item.ClientID)*@
+                                            </td>
+
+
+                                            @*<td>@Html.DisplayFor(model => item.ClientID) </td>*@
+                                            <td>@Html.DisplayFor(model => item.CompanyName) </td>
+                                            <td>@Html.DisplayFor(model => item.companytype)</td>
+
+
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+
+            var responsiveHelper_example = undefined;
+            var breakpointDefinition = {
+                desktop: Infinity,
+                tablet: 1024,
+                phone: 480
+            };
+
+            $('#tblCompanies').dataTable({
+                "autoWidth": false,
+                "searching": true,
+                "preDrawCallback": function () {
+                    if (!responsiveHelper_example) {
+                        responsiveHelper_example = new ResponsiveDatatablesHelper($('#tblCompanies'), breakpointDefinition);
+                    }
+                },
+                "rowCallback": function (nRow) {
+                    responsiveHelper_example.createExpandIcon(nRow);
+                },
+                "drawCallback": function (oSettings) {
+                    responsiveHelper_example.respond();
+                },
+                "columnDefs": [{
+                    "targets": 'no-sort',
+                    "orderable": false,
+                }],
+            });
+        });
+        $("[type='search']").attr('placeholder', "Search")
+    </script>
+
+
+
+    <script>
+        $("#chkHeader").click(function () {
+            $('#tblCompanies input[name="chkItem"]').prop('checked', this.checked);
+        });
+
+        $('#tblCompanies input[name="chkItem"]').click(function () {
+            if ($('#tblCompanies input[name="chkItem"]').length == $('#tblCompanies input[name="chkItem"]:checked').length) {
+                $("#chkHeader").prop("checked", "checked");
+            }
+            else if ($('#tblCompanies input[name="chkItem"]').length != $('#tblCompanies input[name="chkItem"]:checked').length) {
+                $('#chkHeader').prop('checked', false);
+            }
+        });
+
+
+        function deleteEachClient(ClientDB) {
+            var DElDb = ClientDB;
+            if ((DElDb != "CRM") && (DElDb != "crm")) {
+                var flag = confirm('You are about to delete permanently.Are you sure you want to delete the Database ?');
+                if (flag) {
+                    $.ajax({
+                        url: '@Url.Action("RemoveDatabase", "CreateClients")',
+                        type: "POST",
+                        async: false,
+                        data: { DelDB: DElDb.toString() },
+                        success: function (data) {
+                            if (data == "True") {
+                                //document.location.href = document.location.href;
+                                //$.growl.notice({ title: "Success", message: "Database Deleted Successfully.", size: 'large' });
+
+                                refreshpage();
+                            }
+                            else {                               
+                                $.growl.error({ title: "Fail", message: "Database does not Exist .", size: 'large' });
+                                refreshpage();
+                            }
+                        },
+                        error: function () {
+
+                        }
+                    });
+
+                }               
+               
+
+            }
+            else {
+                $.growl.warning({ title: "Warning", message: "Access denied to delete this Database .", size: 'large' });
+            }
+
+        }
+
+            function refreshpage() {
+                setInterval(function () { document.location.href = document.location.href; }, 500);
+                $.growl.notice({ title: "Success", message: "Database Deleted Successfully.", size: 'large' });
+               
+
+            }
+    </script>
+

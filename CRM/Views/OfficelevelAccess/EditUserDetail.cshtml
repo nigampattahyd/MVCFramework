@@ -1,0 +1,487 @@
+﻿@model CRMHub.ViewModel.OfficeLevelAccessModel
+@{
+    ViewBag.Title = "EditUserDetail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+
+</style>
+@using (Html.BeginForm("UpdateUserDetailByUserId", "OfficeLevelAccess", FormMethod.Post))
+{
+<div id="content-wrapper">
+    <div id="CustomBootstrapAlertBox">
+    </div>
+    <div class="row">
+         
+           
+            <div class="panel">
+
+                <div class="panel-body">
+
+                    <div class="row">
+                        <div class="page-header">
+
+                            <div class="row">
+                                <!-- Page header, center on small screens -->
+                                <h1 class="col-xs-12 col-sm-2 text-center text-left-sm"><i class="fa fa-user page-header-icon"></i>&nbsp;&nbsp;User Detail</h1>
+
+                                <div class="col-xs-12 col-sm-10">
+                                    <div class="row">
+                                        <hr class="visible-xs no-grid-gutter-h">
+
+                                       
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+
+
+                    <div class="row">
+                        <div class="col-sm-12">
+
+                            <!-- Tabs -->
+
+                            <asp:CustomValidator ID="cvCheckPhone" runat="server" CssClass="smallheader" ErrorMessage="Invalid Phone No.entry"></asp:CustomValidator>
+                            <div class="row">
+
+                                <div class="col-sm-12 col-xs-12 text-right-sm" style="margin-bottom:5px;" >
+                                    <asp:Label ID="lblMessage" runat="server" Font-Bold="true" ForeColor="red"></asp:Label>
+                                    <div class="page-header-breadcrumb">
+
+                                        <label class="control-label">
+                                            <asp:Label ID="Label1" runat="server" ForeColor="Red"></asp:Label>
+                                        </label>
+
+                                        <ul class="table-nav-item">
+                                          
+    
+                                            <li style=" float:left; margin-left:5px;"><button class=" btn btn-flat btn-labeled btn-primary" id="btnSave"><span class="btn-label icon fa fa-save" style="margin-right:6px;"></span>Save</button></li>
+                                            <li class="btn btn-flat btn-labeled btn-primary" style=" float:right; margin-left:3px;">
+                                            <a id="btnback" style="color:#fff; padding:0px; text-decoration:none; font-weight:normal" href="@Url.Action("Index","OfficeLevelAccess")"> 
+                                                <span class="btn-label icon fa fa-backward" style="margin-right:6px;"> </span>
+
+                                                 Back</a></li>
+                                           
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <span id="errorsymbol" style="color:red;display:none;margin-left:5px;" class="fa fa-exclamation-circle"></span><div id="ErrorMessages" style="margin-left:20px;color:red;font-size:15px;margin-top:-19px">
+
+                            </div>
+                             
+
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="panel-group" id="accordion-example">
+                                            <!-- / .panel -->
+                                            <div class="panel">
+                                                <div class="panel-heading">
+                                                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion-example"
+                                                       href="#collapse2">Admin Detail</a>
+                                                </div>
+                                                <!-- / .panel-heading -->
+                                                <div id="collapse2" class="panel-collapse collapse in" style="height: auto;">
+                                                    <div class="panel-body">
+                                                        <div class="col-sm-12 no-padding-hr">
+                                                            <div class="row">
+
+                                                                <div class="col-sm-12" style="text-align: right">
+                                                                    @Html.HiddenFor(m => m.users.UserId)
+                                                                    <a id="a1" runat="server" class="buttonclass" style="text-decoration: none; color: white; cursor: pointer" href="#" title="Get Map" onclick="openMap();return false;">Get Map</a>
+                                                                    &nbsp;
+                                                                    <a id="aMail" runat="server" class="buttonclass" style="text-decoration: none; color: white; cursor: pointer" href="#" title="Email">Email</a>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+
+                                                                <div class="col-sm-3">
+                                                                    <div class="form-group no-margin-hr">
+                                                                        <label class="control-label">First Name :<span style="color: red">*</span></label>
+
+
+                                                                     
+                                                                        @Html.TextBoxFor(m => m.users.FirstName, new { @id = "txtAdminFirstName", @class = "form-control input-sm", @maxlength = "50", @tabindex = "1", @validate = "Required", @data_val_required = "FirstName" })
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-sm-3">
+                                                                    <div class="form-group no-margin-hr">
+                                                                        <label class="control-label">Middle Name :</label>
+                                                                      
+                                                                        @Html.TextBoxFor(m => m.users.MiddleInitial, new { @id = "txtMiddleName", @class = "form-control input-sm", @maxlength = "50", @tabindex = "2" })
+                                                                    </div>
+                                                                </div>
+
+
+                                                                <div class="col-sm-3">
+                                                                    <div class="form-group no-margin-hr">
+                                                                        <label class="control-label">Last Name :</label>
+
+
+                                                                     
+                                                                        @Html.TextBoxFor(m => m.users.LastName, new { @id = "txtlastName", @class = "form-control input-sm", @maxlength = "50", @tabindex = "3" })
+
+
+
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-sm-3">
+                                                                    <div class="form-group no-margin-hr">
+                                                                        <label class="control-label">Level :<span style="color: red">*</span></label>
+
+                                                                       
+                                                                        @Html.DropDownListFor(m => m.users.RoleId, new SelectList(Model.lstRoles, "roleId", "roleName"), new { @class = "form-control input-sm", @readonly = "readonly", @id = "ddllevel", @validate = "dropdown", @data_val_required = "Level" })
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+
+                                                            <div class="row">
+                                                                <div class="col-sm-3" id="trBranchHide" runat="server">
+                                                                    <div class="form-group no-margin-hr">
+                                                                        <label class="control-label">Office :<span style="color: red">*</span> </label>
+                                                                      
+                                                                        @Html.DropDownListFor(m => m.users.BranchId, new SelectList(Model.listBranch, "branchId", "branchName"), new { @class = "form-control input-sm", @id = "ddlBranch", @validate = "dropdown", @data_val_required = "Branch" })
+                                                                    </div>
+                                                                </div>
+
+                                                               
+                
+
+                                                                <div class="col-sm-3">
+                                                                    <div class="form-group no-margin-hr">
+                                                                        <label class="control-label">Phone :<span style="color: red">*</span></label>
+
+                                                                     
+                                                                        @Html.TextBoxFor(m => m.users.Phone, new { @id = "txtPhone", @class = "form-control phonemask", @maxlength = "19", @tabindex = "7", @validate = "Required", @data_val_required = "Phone Number" })
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-sm-3">
+                                                                    <div class="form-group no-margin-hr">
+                                                                        <label class="control-label">Address1 :<span style="color: red">*</span></label>
+                                                                       
+                                                                        @Html.TextBoxFor(m => m.users.AddressLine1, new { @id = "txtAddress1", @class = "form-control input-sm", @maxlength = "50", @tabindex = "8", @validate = "Required", @data_val_required = "Address" })
+
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-sm-3">
+                                                                    <div class="form-group no-margin-hr">
+                                                                        <label class="control-label">Address2 :</label>
+                                                                       
+                                                                        @Html.TextBoxFor(m => m.users.AddressLine2, new { @id = "txtAddress2", @class = "form-control input-sm", @maxlength = "50", @tabindex = "9" })
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-sm-3">
+                                                                    <div class="form-group no-margin-hr">
+                                                                        <label class="control-label">City :<span style="color: red">*</span></label>
+                                                                     
+                                                                        @Html.TextBoxFor(m => m.users.City, new { @id = "txtCity", @class = "form-control input-sm", @maxlength = "50", @tabindex = "8",@validate="Required" })
+
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-3">
+                                                                    <div class="form-group no-margin-hr">
+                                                                        <label class="control-label"> <label id="lblStateProvince" runat="server">State</label><span style="color: red">*</span></label>
+                                                                      
+                                                                        @Html.DropDownListFor(m => m.users.StateCode, ViewBag.StateList as List<SelectListItem>, new { @id = "ddluserState", @class = "form-control input-sm", @tabindex = "11", @validate = "dropdown", @data_val_required = "State" })
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-3">
+                                                                    <div class="form-group no-margin-hr">
+                                                                        <label class="control-label">Zip Code :<span style="color: red"></span></label>
+                                                                       
+                                                                        @Html.TextBoxFor(m => m.users.PostalCode, new { @id = "txtPostalCode", @class = "form-control zipmask", @maxlength = "9", @tabindex = "12",@minlength="5" })
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-sm-3">
+                                                                    <div class="form-group no-margin-hr">
+                                                                        <label class="control-label">Email :<span style="color: red">*</span></label>
+                                                                     
+                                                                        @Html.TextBoxFor(m => m.users.Email, new { @id = "txtEmail", @type = "email", @class = "form-control input-sm", @maxlength = "50", @tabindex = "12", @validate = "Required,Email", @data_val_required = "Email" })
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-12 no-padding-hr">
+                                                                <div class="row">
+                                                                    <div class="col-sm-3">
+                                                                        <div class="form-group no-margin-hr">
+                                                                            <label class="control-label">Fax :</label>
+                                                                           
+                                                                            @Html.TextBoxFor(m => m.users.Fax, new { @id = "txtFax", @class = "form-control input-sm", @maxlength = "50", @tabindex = "14" })
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-3">
+                                                                        <div class="form-group no-margin-hr">
+                                                                            <label class="control-label">Cell No. :</label>
+                                                                          
+                                                                            @Html.TextBoxFor(m => m.users.Cellno, new { @id = "txtCellNo", @class = "form-control input-sm", @maxlength = "50", @tabindex = "15" })
+                                                                        </div>
+                                                                    </div>
+                                                                 
+
+                                                                    <div class="col-sm-3">
+                                                                        <div class="form-group no-margin-hr">
+                                                                            <label class="control-label">Comments :</label>
+
+                                                                          
+                                                                            @Html.TextBoxFor(m => m.users.Comment, new { @id = "txtComments", @class = "form-control input-sm", @maxlength = "50", @tabindex = "16" })
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+
+
+                                                            <div class="row">
+                                                                <div class="col-sm-4" runat="server" id="tblblLogin">
+                                                                    <div class="form-group no-margin-hr">
+                                                                        <label class="control-label">Login Id :<span style="color: red">*</span></label>
+                                                                    
+                                                                        <asp:Label ID="lblLoginId" runat="server" class="control-label" ForeColor="red">Already Exist</asp:Label>
+                                                                        @Html.TextBoxFor(m => m.users.LoginId, new { @id = "txtLoginId", @class = "form-control input-sm", @maxlength = "50", @tabindex = "17", @validate = "Required", @data_val_required = "Login Id" })
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-4" runat="server" id="tblblPasswd">
+                                                                    <div class="form-group no-margin-hr">
+                                                                        <label class="control-label">Password :<span style="color: red">*</span></label>
+                                                                    
+                                                                        @Html.TextBoxFor(m => m.users.Password, new { @id = "txtPassword", @class = "form-control input-sm", @maxlength = "50", @tabindex = "18", @validate = "Required", @data_val_required = "Password" })
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-4" id="td_outlook1" runat="server">
+                                                                    <div class="form-group no-margin-hr">
+                                                                        <label class="control-label">Outlook Email :</label>
+                                                                      
+                                                                        @Html.TextBoxFor(m => m.users.OutlookEmail, new { @id = "txtOutlookEmail",@type="email", @class = "form-control input-sm", @maxlength = "50", @tabindex = "19" })
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+
+
+                                                        </div>
+                                                    </div>
+
+
+                                                </div>
+                                            </div>
+
+
+                                            <div class="panel">
+                                                <div class="panel-heading">
+                                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion-example"
+                                                       href="#collapse3">SMS Sender Detail</a>
+                                                </div>
+                                                <!-- / .panel-heading -->
+                                                <div id="collapse3" class="panel-collapse collapse" style="height: auto;">
+                                                    <div class="panel-body">
+                                                        <div class="col-sm-12 no-padding-hr">
+                                                            <div class="row">
+                                                                <div style="margin-left:10px;">
+                                                                    <div>
+                                                                        <label class="control-label">Allow SMS Sending :</label>
+                                                                     
+                                                                        @Html.CheckBoxFor(m => m.users.NoNullisAllowsedingSMS, new { @id = "chkisAllowsedingSMS", @class = "checkbox", @validate = "Checkbox" })
+                                                                     </div>
+                                                                </div>
+
+
+
+                                                                <div class="col-sm-4">
+                                                                    <div class="form-group no-margin-hr">
+
+                                                                        <label class="control-label">Email :</label>
+                                                                       
+                                                                        @Html.TextBoxFor(m => m.users.SMTPEmail, new { @id = "txtSMTPEmail", @class = "form-control input-sm", @tabindex = "21", @data_val_required = "SMTP Email" ,@type="email"})
+
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-sm-4">
+                                                                    <div class="form-group no-margin-hr">
+                                                                        <label class="control-label">Password :</label>
+                                                                      
+                                                                        @Html.TextBoxFor(m => m.users.SMTPPassword, new { @id = "txtSMTPPassword", @class = "form-control input-sm", @tabindex = "22", @data_val_required = "SMTP Password",@type="password" })
+
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-4">
+                                                                    <div class="form-group no-margin-hr">
+                                                                        <label class="control-label">Host/SMTP :</label>
+                                                                       
+                                                                        @Html.TextBoxFor(m => m.users.SMTPAddress, new { @id = "txtSMTPAddress", @class = "form-control input-sm", @maxlength = "50", @tabindex = "23", @data_val_required = "SMTP HostAddress" })
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-sm-4">
+                                                                    <div class="form-group no-margin-hr">
+
+                                                                        <label class="control-label">Port :</label>
+                                                                    
+                                                                        @Html.TextBoxFor(m => m.users.SMTPPort, new { @id = "txtSMTPPort", @class = "form-control input-sm", @maxlength = "50", @tabindex = "24", @data_val_required = "SMTP Port" })
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                 
+
+
+                            </div>
+
+
+
+
+
+
+                        </div>
+
+
+                    </div>
+
+
+
+                </div>
+             
+      </div>
+    </div>
+
+}
+<script type="text/javascript">
+    function deleteUser(userId) {
+        ;
+        var level = $("#ddllevel").val();
+        if (level == 18)
+        {
+            alert("Super Admin Can't be deleted!.....");
+            return false;
+        }
+        else
+        {
+            var flag = confirm('You are about to delete permanently. Are you sure you want to delete this record?');
+
+            if (flag) {
+                deleteSelectedUser(userId);
+                document.location.href = "OfficelevelAccess/Index";
+                alert("Deleted Successfully!!!");
+            }
+        }
+        
+    }
+
+    function deleteSelectedUser(userId) {
+        $.ajax({
+            url: "OfficelevelAccess/DeleteUserByuserid",
+            type: "GET",
+            async:false,
+            data: { userId: userId },
+            success: function (data) {
+                ;
+            },
+            error: function () {
+
+            }
+        });
+    }
+
+    $(document).ready(function () {
+        $("#lblErrormessage").hide();
+    });
+  
+
+    $("#ddlBranch").change(function (e) {
+        
+        var branchid = $("#ddlBranch").val();
+        if (branchid != -1) {
+            $.ajax({
+                url: "GetBranchDetailsById",
+                type: "GET",
+                async: false,
+                data: { branchid: branchid },
+                success: function (data) {
+                    ;
+                    if (data.branchPhone != "") {
+                        $("#txtPhone").val(data.branchPhone);
+
+                    }
+                    if (data.branchAddress1 != "") {
+                        $("#txtAddress1").val(data.branchAddress1);
+
+                    }
+                    if (data.branchAddress2 != "") {
+                        $("#txtAddress2").val(data.branchAddress2);
+
+                    }
+
+                    if (data.branchCity != "") {
+                        $("#txtCity").val(data.branchCity);
+
+                    }
+                    if (data.branchStateCode != "") {
+                        $("#ddlstate").val(data.branchStateCode);
+
+                    }
+                    if (data.branchZip != "") {
+                        $("#txtPostalCode").val(data.branchZip);
+
+                    }
+                    if (data.branchFax != "") {
+                        $("#txtFax").val(data.branchFax);
+
+                    }
+                    $("#errorsymbol").hide();
+                    $("#ErrorMessages").hide();
+                    $("#ddlBranch").removeAttr("style");
+                },
+                error: function () {
+
+                }
+            });
+        }
+        else {
+            //alert("Please select Office");
+        }
+
+
+    });
+
+
+    $("#btnSave").click(function () {
+       
+        //var formvalue = $("#Userform").val();
+
+        Isvalid = true;
+
+        return Validate(this.form);
+
+
+
+    });
+    
+
+</script>
+
+

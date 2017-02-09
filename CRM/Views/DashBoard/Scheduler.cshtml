@@ -1,0 +1,104 @@
+﻿@model CRMHub.ViewModel.DashboardViewModel
+@{
+    ViewBag.Title = "Scheduler";   
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/Content/fullcalendar/fullcalendar.css" rel="stylesheet" />
+<script src="~/Scripts/fullcalendar/fullcalendar.js"></script>
+<style>
+    #demo-settings, .DT-search {
+        display: none;
+    }
+
+    #calendar {
+        max-width: 90%;
+        margin: 0 auto;
+        font-size: 14px;
+    }
+
+    .qtip-content {
+        min-width: 250px;
+        width: auto;
+        background-color: white;
+        text-align: left;
+    }
+
+    .tooltipclass {
+        font-size: 12px;
+        width: 100%;
+        line-height: 20px;
+    }
+
+        .tooltipclass thead {
+            background-color: #e5e5e5;
+        }
+
+        .tooltipclass th {
+            padding: 5px;
+        }
+</style>
+
+<div id="content-wrapper">
+    <div id="CustomBootstrapAlertBox">
+    </div>
+    
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="page-header">
+                            <div class="row">
+                                <h1 class="col-xs-12 col-sm-2 text-center text-left-sm"><i class="fa fa-users page-header-icon"></i>&nbsp;&nbsp;Scheduler</h1>
+                                <div class="col-xs-12 col-sm-10 ">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="col-sm-3">
+                                <div class="panel panel-warning">
+                                    <div class="panel-heading">
+                                        <span class="panel-title">Team Calendars</span>
+                                        <div class="panel-heading-controls">
+                                            <div class="panel-heading-icon"></div>
+                                        </div>
+                                    </div>
+                                    <div class="panel-body" style="padding: 17px;">
+                                        <input id="rbjpbandplacement" type="radio" name="calfil" value="rbjpbandplacement" onclick="javascript:setTimeout('__doPostBack(\'rbjpbandplacement\',\'\')', 0)" checked="checked" tabindex="1"><label for="rbjpbandplacement">Job &amp; Placement</label><br>
+                                        <input id="rbJobOrder" type="radio" name="calfil" value="rbJobOrder" onclick="javascript:setTimeout('__doPostBack(\'rbJobOrder\',\'\')', 0)" tabindex="2"><label for="rbJobOrder">Job Order</label><br>
+                                        <input id="rbPlacement" type="radio" name="calfil" value="rbPlacement" onclick="javascript:setTimeout('__doPostBack(\'rbPlacement\',\'\')', 0)" tabindex="3"><label for="rbPlacement">Placement</label><br>
+                                        <input id="rbTimeSheet" type="radio" name="calfil" value="rbTimeSheet" onclick="javascript:setTimeout('__doPostBack(\'rbTimeSheet\',\'\')', 0)" tabindex="4"><label for="rbTimeSheet">TimeSheet</label><br>
+                                        <input id="rbMissedPunch" type="radio" name="calfil" value="rbMissedPunch" onclick="javascript:setTimeout('__doPostBack(\'rbMissedPunch\',\'\')', 0)" tabindex="5"><label for="rbMissedPunch">Missed Punch</label><br>
+                                        <input id="rbLeaves" type="radio" name="calfil" value="rbLeaves" onclick="javascript:setTimeout('__doPostBack(\'rbLeaves\',\'\')', 0)" tabindex="6"><label for="rbLeaves">Leaves</label>
+                                    </div>
+                                </div>
+                               
+                            </div>
+                            <div class="row">
+                                <div id='calendar'></div>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                   
+                    @*Calendar*@
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /11. $BOOTSTRAP_TAB_DROP -->
+    <!-- / Info -->
+</div>
+
+<script>
+
+
+</script>

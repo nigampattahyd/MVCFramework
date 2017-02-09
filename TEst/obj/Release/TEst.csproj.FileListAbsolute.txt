@@ -1,0 +1,5 @@
+E:\Mentoring_Hg\mentoring\TEst\bin\TEst.dll.config
+E:\Mentoring_Hg\mentoring\TEst\bin\TEst.dll
+E:\Mentoring_Hg\mentoring\TEst\bin\TEst.pdb
+E:\Mentoring_Hg\mentoring\TEst\obj\Release\TEst.dll
+E:\Mentoring_Hg\mentoring\TEst\obj\Release\TEst.pdb

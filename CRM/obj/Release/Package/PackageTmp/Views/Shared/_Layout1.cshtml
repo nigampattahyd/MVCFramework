@@ -1,0 +1,926 @@
+﻿@using CRMHub.EntityFramework;
+@using System.Web.Optimization
+
+<!DOCTYPE html>
+<html class="gt-ie8 gt-ie9 not-ie">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width" />
+    <title>Mentoring</title>
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,400,600,700,300&subset=latin" rel="stylesheet" type="text/css">
+    <link rel="shortcut icon" href="~/Content/AssetsNew/img/favicon.png" type="image/x-icon">
+
+    <!--Basic Styles-->
+    <link href="~/Content/AssetsNew/css/bootstrap.min.css" rel="stylesheet" />
+    <link id="bootstrap-rtl-link" href="#" rel="stylesheet" />
+    <link href="~/Content/AssetsNew/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/Content/AssetsNew/css/weather-icons.min.css" rel="stylesheet" />
+
+    <!--Fonts-->
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,400,600,700,300" rel="stylesheet" type="text/css">
+    <link href='http://fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>
+
+    <!--Beyond styles-->
+    <link href="~/Content/AssetsNew/css/beyond.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/AssetsNew/css/demo.min.css" rel="stylesheet" />
+    <link href="~/Content/AssetsNew/css/typicons.min.css" rel="stylesheet" />
+    <link href="~/Content/AssetsNew/css/animate.min.css" rel="stylesheet" />
+    <link href="~/Content/AssetsNew/css/custom.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/assets/css/pixel-admin.min.css" rel="stylesheet" />
+    <!--Skin Script: Place this script in head to load scripts for skins and rtl support-->
+    <script src="~/Content/AssetsNew/js/skins.min.js"></script>
+    <link href="~/Content/assets/css/jquery-te-1.4.0.css" rel="stylesheet" />
+
+    <link href="~/Scripts/datatable-responsive/datatables.responsive.css" rel="stylesheet" />
+    <link href="~/Scripts/datatable-responsive/TableTools/css/dataTables.tableTools.css" rel="stylesheet" />
+    <link href="~/Content/AssetsNew/css/jquery-ui.css" rel="stylesheet" />
+    <link rel="stylesheet" href="http://static.jstree.com/latest/assets/dist/themes/default/style.min.css" />
+    <link href="~/Scripts/DataTable/css/dataTables.bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/assets/css/DateTimePicker/bootstrap-datetimepicker.css" rel="stylesheet" />
+    <link href="~/Content/Timepicker/jquery.timepicker.css" rel="stylesheet" />
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryui")
+
+</head>
+
+<!-- Body -->
+<body>
+
+    <!-- Navbar -->
+    <div class="navbar">
+        <div class="navbar-inner">
+            <div class="navbar-container">
+                <!-- Navbar Barnd -->
+                <div class="navbar-header pull-left">
+                    <a href="#" class="navbar-brand">
+                        <small>
+                            <a href="@Url.Action("Index","DashboardHome")"><img src="~/Images/Logo/Digital55-Logo.png" id="cmpLogo" align="middle" alt="logo" style="  height: 40px; width: 110px;" ></a>
+</small>
+                    </a>
+                </div>
+                <!-- /Navbar Barnd -->
+                <!-- Sidebar Collapse -->
+                <div class="sidebar-collapse" id="sidebar-collapse">
+                    <i class="collapse-icon fa fa-bars"></i>
+                </div>
+                <!-- /Sidebar Collapse -->
+                <!-- Account Area and Settings --->
+                <div class="navbar-header pull-right">
+                    <div class="navbar-account">
+                        @{List<Activity> notification = (List<Activity>)Session["Notifications"];}
+                        @{int m = 0;}
+                        <ul class="account-area">
+                            <li>
+                                <a class=" dropdown-toggle" data-toggle="dropdown" title="Notifications" href="#">
+                                    <i class="icon fa fa-warning"></i>
+                                </a>
+                                <!--Notification Dropdown-->
+                                <ul class="pull-right dropdown-menu dropdown-arrow dropdown-notifications">
+                                    <li>
+                                        <a href="#">
+                                            <div class="clearfix">
+                                                <div class="notification-icon">
+                                                    <i class="fa fa-phone bg-themeprimary white"></i>
+                                                </div>
+                                                <div class="notification-body">
+                                                    <span class="title">Skype meeting with Patty</span>
+                                                    <span class="description">01:00 pm</span>
+                                                </div>
+                                                <div class="notification-extra">
+                                                    <i class="fa fa-clock-o themeprimary"></i>
+                                                    <span class="description">office</span>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <div class="clearfix">
+                                                <div class="notification-icon">
+                                                    <i class="fa fa-check bg-darkorange white"></i>
+                                                </div>
+                                                <div class="notification-body">
+                                                    <span class="title">Uncharted break</span>
+                                                    <span class="description">03:30 pm - 05:15 pm</span>
+                                                </div>
+                                                <div class="notification-extra">
+                                                    <i class="fa fa-clock-o darkorange"></i>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <div class="clearfix">
+                                                <div class="notification-icon">
+                                                    <i class="fa fa-gift bg-warning white"></i>
+                                                </div>
+                                                <div class="notification-body">
+                                                    <span class="title">Kate birthday party</span>
+                                                    <span class="description">08:30 pm</span>
+                                                </div>
+                                                <div class="notification-extra">
+                                                    <i class="fa fa-calendar warning"></i>
+                                                    <i class="fa fa-clock-o warning"></i>
+                                                    <span class="description">at home</span>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <div class="clearfix">
+                                                <div class="notification-icon">
+                                                    <i class="fa fa-glass bg-success white"></i>
+                                                </div>
+                                                <div class="notification-body">
+                                                    <span class="title">Dinner with friends</span>
+                                                    <span class="description">10:30 pm</span>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li class="dropdown-footer ">
+                                        <span>
+                                            Today, March 28
+                                        </span>
+                                        <span class="pull-right">
+                                            10°c
+                                            <i class="wi wi-cloudy"></i>
+                                        </span>
+                                    </li>
+                                </ul>
+                                <!--/Notification Dropdown-->
+                            </li>
+                            <li>
+                                <a class="dropdown-toggle" data-toggle="dropdown" title="Mails" href="#">
+                                    <i class="icon fa fa-envelope"></i>
+                                    <span class="badge"></span>
+                                </a>
+                                <!--Messages Dropdown-->
+                                <ul class="pull-right dropdown-menu dropdown-arrow dropdown-messages">
+                                    <li>
+                                        <a href="#">
+                                            <img src="~/Content/AssetsNew/img/avatars/divyia.jpg" class="message-avatar" alt="Divyia Austin">
+                                            <div class="message">
+                                                <span class="message-sender">
+                                                    Divyia Austin
+                                                </span>
+                                                <span class="message-time">
+                                                    2 minutes ago
+                                                </span>
+                                                <span class="message-subject">
+                                                    Here's the recipe for apple pie
+                                                </span>
+                                                <span class="message-body">
+                                                    to identify the sending application when the senders image is shown for the main icon
+                                                </span>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <img src="~/Content/AssetsNew/img/avatars/bing.png" class="message-avatar" alt="Microsoft Bing">
+                                            <div class="message">
+                                                <span class="message-sender">
+                                                    Bing.com
+                                                </span>
+                                                <span class="message-time">
+                                                    Yesterday
+                                                </span>
+                                                <span class="message-subject">
+                                                    Bing Newsletter: The January Issue‏
+                                                </span>
+                                                <span class="message-body">
+                                                    Discover new music just in time for the Grammy® Awards.
+                                                </span>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <img src="~/Content/AssetsNew/img/avatars/adam-jansen.jpg" class="message-avatar" alt="Divyia Austin">
+                                            <div class="message">
+                                                <span class="message-sender">
+                                                    Nicolas
+                                                </span>
+                                                <span class="message-time">
+                                                    Friday, September 22
+                                                </span>
+                                                <span class="message-subject">
+                                                    New 4K Cameras
+                                                </span>
+                                                <span class="message-body">
+                                                    The 4K revolution has come over the horizon and is reaching the general populous
+                                                </span>
+                                            </div>
+                                        </a>
+                                    </li>
+                                </ul>
+                                <!--/Messages Dropdown-->
+                            </li>
+                            <li>
+                                <a class="dropdown-toggle wave in" data-toggle="dropdown" title="Tasks" href="#">
+                                    <i class="icon fa fa-bell"></i>
+                                    <span class="badge">@notification.Count</span>
+                                </a>
+                                <!--Tasks Dropdown-->
+                                <ul class="pull-right dropdown-menu dropdown-tasks dropdown-arrow ">
+                                    <li class="dropdown-header bordered-darkorange">
+                                        <i class="fa fa-bell"></i>
+                                        @notification.Count Notification(s)
+                                    </li>
+                                    <li>
+                                        <a>
+                                            <div class="clearfix" id="main-navbar-notifications">
+                                                @for (int i = 0; i < notification.Count; i++)
+                                                {
+                                                    if (notification[i].RemindDate == notification[i].CurrentDate)
+                                                    {
+                                                        <div class="notification-body notify-body notify-body">
+
+                                                            @if (@notification[i].daysdiff == 0)
+                                                            {
+                                                                <div class="notification-title text-warning">@notification[i].AccountTypeName Activity</div>
+                                                            }
+                                                            else if (@notification[i].daysdiff < 0)
+                                                            {
+                                                                <div class="notification-title text-danger">@notification[i].AccountTypeName Activity</div>
+                                                            }
+                                                            else if (@notification[i].daysdiff > 0)
+                                                            {
+                                                                <div class="notification-title text-success custom">@notification[i].AccountTypeName Activity</div>
+                                                            }
+                                                            <div class="notification-ago">Due Date is on : @notification[i].DueDate</div>
+                                                            <div class="notification-ago">Remind Date is on : @notification[i].RemindDate</div>
+
+                                                        </div>
+                                                    }
+                                                    m = m + 1;
+                                                }
+                                                @if (m == 0)
+                                                {
+                                                    <div class="notification-title text-warning">There are no Notification Reminders for the Current Day</div>
+                                                }
+
+
+                                            </div>
+                                        </a>
+                                    <li class="dropdown-footer" style="background-color: #11a9cc; border-bottom: 0;color: #fff;text-align: center">
+                                        <span>
+                                            <a href="@Url.Action("GetUserNotifications", "ManageCompany" )" class="notifications-link" style="color:#ffffff;">
+                                                MORE NOTIFICATIONS
+                                            </a>
+                                        </span>
+                                    </li>
+
+                            </li>
+
+                        </ul>
+                        <!--/Tasks Dropdown-->
+                        </li>
+                        <li>
+                            <a class="login-area dropdown-toggle" data-toggle="dropdown">
+                                <div class="avatar" title="View your public profile">
+                                    <img src="~/Content/AssetsNew/img/avatars/adam-jansen.jpg" alt="profile pic">
+                                </div>
+                                <section>
+                                    <h2><span class="profile"><span>@(Session["Logeduser"])</span></span></h2>
+                                </section>
+                            </a>
+                            <!--Login Area Dropdown-->
+                            <ul class="pull-right dropdown-menu dropdown-arrow dropdown-login-area">
+                                @*
+                                    <li class="username"><a></a></li>*@
+                                <li class="email"><a>@(Session["RoleName"])</a></li>
+                                <!--Avatar Area-->
+                                <li>
+                                    <div class="avatar-area">
+                                        <img src="~/Content/AssetsNew/img/avatars/adam-jansen.jpg" class="avatar" alt="profile pic">
+                                        <span class="caption">Change Photo</span>
+                                    </div>
+                                </li>
+                                <!--Avatar Area-->
+                                <li class="edit">
+                                    <a href="@Url.Action("Index", "Profile")" class="pull-left">Profile</a>
+                                    <a href="#" class="pull-right">Setting</a>
+                                </li>
+                                <!--Theme Selector Area-->
+                                <li class="theme-area">
+                                    <ul class="colorpicker" id="skin-changer">
+                                        <li><a class="colorpick-btn" href="#" style="background-color:#5DB2FF;" rel="~/Content/AssetsNew/css/skins/blue.min.css"></a></li>
+                                        <li><a class="colorpick-btn" href="#" style="background-color:#2dc3e8;" rel="~/Content/AssetsNew/css/skins/azure.min.css"></a></li>
+                                        <li><a class="colorpick-btn" href="#" style="background-color:#03B3B2;" rel="~/Content/AssetsNew/css/skins/teal.min.css"></a></li>
+                                        <li><a class="colorpick-btn" href="#" style="background-color:#53a93f;" rel="~/Content/AssetsNew/css/skins/green.min.css"></a></li>
+                                        <li><a class="colorpick-btn" href="#" style="background-color:#FF8F32;" rel="~/Content/AssetsNew/css/skins/orange.min.css"></a></li>
+                                        <li><a class="colorpick-btn" href="#" style="background-color:#cc324b;" rel="~/Content/AssetsNew/css/skins/pink.min.css"></a></li>
+                                        <li><a class="colorpick-btn" href="#" style="background-color:#AC193D;" rel="~/Content/AssetsNew/css/skins/darkred.min.css"></a></li>
+                                        <li><a class="colorpick-btn" href="#" style="background-color:#8C0095;" rel="~/Content/AssetsNew/css/skins/purple.min.css"></a></li>
+                                        <li><a class="colorpick-btn" href="#" style="background-color:#0072C6;" rel="~/Content/AssetsNew/css/skins/darkblue.min.css"></a></li>
+                                        <li><a class="colorpick-btn" href="#" style="background-color:#585858;" rel="~/Content/AssetsNew/css/skins/gray.min.css"></a></li>
+                                        <li><a class="colorpick-btn" href="#" style="background-color:#474544;" rel="~/Content/AssetsNew/css/skins/black.min.css"></a></li>
+                                        <li><a class="colorpick-btn" href="#" style="background-color:#001940;" rel="~/Content/AssetsNew/css/skins/deepblue.min.css"></a></li>
+                                    </ul>
+                                </li>
+                                <!--/Theme Selector Area-->
+                                <li class="dropdown-footer">
+                                    <a href="@Url.Action("index","login")" title="Logout" class="text-bold">Sign out</a>
+                                    @*<a href="login.html">
+                                            Sign out
+                                        </a>*@
+                                </li>
+                            </ul>
+                            <!--/Login Area Dropdown-->
+                        </li>
+                        <!-- /Account Area -->
+                        <!--Note: notice that setting div must start right after account area list.
+                        no space must be between these elements-->
+                        <!-- Settings -->
+                        </ul>
+
+                        <!-- Settings -->
+                    </div>
+                </div>
+                <!-- /Account Area and Settings -->
+            </div>
+        </div>
+    </div>
+    <!-- /Navbar -->
+    <!-- Main Container -->
+    <div class="main-container container-fluid">
+        <!-- Page Container -->
+        <div class="page-container">
+
+            <!-- Page Sidebar -->
+            <div class="page-sidebar" id="sidebar">
+                <!-- Page Sidebar Header-->
+                <div class="sidebar-header-wrapper">
+                    <input type="text" class="searchinput" />
+                    <i class="searchicon fa fa-search"></i>
+                    <div class="searchhelper">Search Reports, Charts, Emails or Notifications</div>
+                </div>
+                <!-- /Page Sidebar Header -->
+                <!-- Sidebar Menu -->
+                <ul class="nav sidebar-menu">
+                    <!--Dashboard-->
+                    @{List<tbl_Menus> roleModel = (List<tbl_Menus>)Session["ssnDynamicMenus"];}
+                    @foreach (var item in roleModel)
+                    {
+                        if (@item.ParentMenuId == 0)
+                        {
+                            var query = (from menu in roleModel where @item.MenuId == menu.ParentMenuId select menu).ToList();
+
+                            if (query.Count == 0)
+                            {
+                                if (@item.MenuDescription == "Dashboard")
+                                {
+
+                                    <li id="Dashboard">
+                                        <a href="@Url.Action(@item.ActionName,@item.ControllerName)">
+                                            <i class="menu-icon fa fa-tachometer"></i>
+                                            <span class="menu-text">@item.MenuDescription</span>
+                                        </a>
+                                    </li>
+                                }
+                                else if (@item.MenuDescription == "Ventures")
+                                {
+
+                                    <li id="Ventures">
+                                        <a href="@Url.Action(@item.ActionName,@item.ControllerName)">
+                                            <i class="menu-icon fa fa-users"></i>
+                                            <span class="menu-text">@item.MenuDescription</span>
+                                        </a>
+                                    </li>
+                                }
+                                else if (@item.MenuDescription == "Mentors")
+                                {
+
+                                    <li id="Mentors">
+                                        <a href="@Url.Action(@item.ActionName,@item.ControllerName)">
+                                            <i class="menu-icon fa fa-user-times"></i>
+                                            <span class="menu-text">@item.MenuDescription</span>
+                                        </a>
+                                    </li>
+                                }
+                                else if (@item.MenuDescription == "Activities")
+                                {
+
+                                    <li id="Activities">
+                                        <a href="@Url.Action(@item.ActionName,@item.ControllerName)">
+                                            <i class="menu-icon fa fa-line-chart "></i>
+                                            <span class="menu-text">@item.MenuDescription</span>
+                                        </a>
+                                    </li>
+                                }
+                                else if (@item.MenuDescription == "Notifications")
+                                {
+
+                                    <li id="Notifications">
+                                        <a href="@Url.Action(@item.ActionName,@item.ControllerName)">
+                                            <i class="menu-icon fa fa-sliders"></i>
+                                            <span class="menu-text">@item.MenuDescription</span>
+                                        </a>
+                                    </li>
+                                }
+                                else if (@item.MenuDescription == "Events")
+                                {
+
+                                    <li id="activemenu" class="activemenu">
+                                        <a href="@Url.Action(@item.ActionName,@item.ControllerName)">
+                                            <i class="menu-icon fa fa-calendar"></i>
+                                            <span class="menu-text">@item.MenuDescription</span>
+                                        </a>
+                                    </li>
+                                }
+                                else
+                                {
+
+                                    <li id="home">
+                                        <a href="@Url.Action(@item.ActionName,@item.ControllerName)">
+                                            <i class="menu-icon fa fa-home"></i>
+                                            <span class="menu-text">@item.MenuDescription</span>
+                                        </a>
+                                    </li>
+                                }
+                            }
+                            else
+                            {
+
+                                <li id=@item.MenuDescription>
+                                    <a href="#" class="menu-dropdown">
+                                        @if (@item.MenuDescription == "Manage")
+                                        {
+                                            <i class="menu-icon  fa fa-group"></i>
+                                            <span class="menu-text"> @item.MenuDescription </span>
+                                        }
+                                        else if (@item.MenuDescription == "Setup")
+                                        {
+                                            <i class="menu-icon  fa fa-cogs"></i>
+                                            <span class="menu-text"> @item.MenuDescription </span>
+                                        }
+                                        else if (@item.MenuDescription == "Events")
+                                        {
+                                            <i class="menu-icon  fa fa-th"></i>
+                                            <span class="menu-text"> @item.MenuDescription </span>
+                                        }
+                                        else
+                                        {
+                                            <i class="menu-icon fa fa-th"></i>
+                                            <span class="menu-text"> @item.MenuDescription </span>
+                                        }
+
+                                        <i class="menu-expand"></i>
+                                    </a>
+                                    <ul class="submenu">
+                                        @foreach (var item1 in query)
+                                        {
+                                            var query1 = (from menu in roleModel where @item1.MenuId == menu.ParentMenuId select menu).ToList();
+                                            if (query1.Count == 0)
+                                            {
+
+                                                <li>
+                                                    <a href="@Url.Action(@item1.ActionName, @item1.ControllerName)"><span class="mm-text" >@item1.MenuDescription</span></a>
+                                                </li>
+                                            }
+                                            else
+                                            {
+
+                                                <li>
+                                                    <a href="#" class="menu-dropdown"><i class="menu-icon fa fa-files-o"></i><span class="mm-text">@item1.MenuDescription</span></a>
+                                                    <ul>
+                                                        @foreach (var item2 in query1)
+                                                        {
+                                                            <li>
+                                                                <a href="@Url.Action(@item2.ActionName, @item2.ControllerName)"><span class="mm-text">@item2.MenuDescription</span></a>
+                                                            </li>
+                                                        }
+                                                    </ul>
+                                                </li>
+                                            }
+                                        }
+                                    </ul>
+                                </li>
+                            }
+                        }
+                    }
+
+                </ul>
+                <!-- /Sidebar Menu -->
+            </div>
+            <!-- /Page Sidebar -->
+
+            <div class="page-content">
+
+                <!-- Page Header -->
+                <div class="page-header position-relative">
+                    <div class="header-title">
+                        <h1>
+                            <i class="fa fa-home"></i>
+                            <a href="~/DashboardHome">Home</a>
+                        </h1>
+                    </div>
+                    <!--Header Buttons-->
+                    <div class="header-buttons">
+                        <a class="sidebar-toggler" href="#">
+                            <i class="fa fa-arrows-h"></i>
+                        </a>
+                        <a class="refresh" id="refresh-toggler" href="#">
+                            <i class="glyphicon glyphicon-refresh"></i>
+                        </a>
+                        <a class="fullscreen" id="fullscreen-toggler" href="#">
+                            <i class="glyphicon glyphicon-fullscreen"></i>
+                        </a>
+                    </div>
+                    <!--Header Buttons End-->
+                </div>
+
+                <div class="page-body">
+                    @RenderBody()
+                </div>
+                <div class="footer"><h5>Version 1.0.0.1 </h5></div>
+
+            </div>
+
+        </div>
+        <!-- /Page Container -->
+        <!-- Main Container -->
+    </div>
+
+
+
+    <!--Basic Scripts-->
+    @*<script src="~/Content/AssetsNew/js/jquery.min.js"></script>*@
+    <script src="~/Content/AssetsNew/js/bootstrap.min.js"></script>
+    <script src="~/Content/AssetsNew/js/slimscroll/jquery.slimscroll.min.js"></script>
+
+    <!--Beyond Scripts-->
+    <script src="~/Content/AssetsNew/js/beyond.js"></script>
+
+    <!--Page Related Scripts-->
+    <!--Sparkline Charts Needed Scripts-->
+    <script src="~/Content/AssetsNew/js/charts/sparkline/jquery.sparkline.js"></script>
+    <script src="~/Content/AssetsNew/js/charts/sparkline/sparkline-init.js"></script>
+
+    <!--Easy Pie Charts Needed Scripts-->
+    <script src="~/Content/AssetsNew/js/charts/easypiechart/jquery.easypiechart.js"></script>
+    <script src="~/Content/AssetsNew/js/charts/easypiechart/easypiechart-init.js"></script>
+
+    <!--Flot Charts Needed Scripts-->
+    <script src="~/Content/AssetsNew/js/charts/flot/jquery.flot.js"></script>
+    <script src="~/Content/AssetsNew/js/charts/flot/jquery.flot.resize.js"></script>
+    <script src="~/Content/AssetsNew/js/charts/flot/jquery.flot.pie.js"></script>
+    <script src="~/Content/AssetsNew/js/charts/flot/jquery.flot.tooltip.js"></script>
+    <script src="~/Content/AssetsNew/js/charts/flot/jquery.flot.orderBars.js"></script>
+
+    <!--Old Scripts-->
+    <script src="~/Scripts/jquery.validate.js" type="text/javascript"></script>
+    <script src="~/Scripts/jquery-ui-1.11.2.min.js"></script>
+
+    @*
+        <script src="~/Scripts/bootstrap/bootstrap.min.js"></script>*@
+    <script src="~/Scripts/DataTable/js/dataTables.bootstrap.js"></script>
+    <script src="~/Scripts/PixelAdmin/pixel-admin.min.js"></script>
+    <script src="~/Scripts/jqte/jquery-te-1.4.0.min.js"></script>
+
+    <!--Scrpt Relate to BootBox-->
+    <script src="~/Content/AssetsNew/js/bootbox/bootbox.js"></script>
+
+
+    <script src="~/Scripts/InputMask/jquery.inputmask.js"></script>
+    <script src="~/Scripts/InputMask/jquery.inputmask.phone.extensions.js"></script>
+    <script src="~/Scripts/InputMask/jquery.inputmask.numeric.extensions.js"></script>
+    <script src="~/Scripts/InputMask/jquery.inputmask.regex.extensions.js"></script>
+    <script src="~/Scripts/InputMask/jquery.inputmask.regex.extensions.min.js"></script>
+
+    <script src="~/Scripts/script.js"></script>
+    @*
+        <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>*@
+    ><script src="~/Scripts/UserValidations/Validation.js"></script>
+
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+    <script src="~/Scripts/datatable-responsive/datatables.responsive.js"></script>
+
+    <script src="~/Scripts/datatable-responsive/TableTools/dataTables.tableTools.js"></script>
+    <script src="http://static.jstree.com/latest/assets/dist/jstree.min.js"></script>
+
+    <!--Page Related Scripts-->
+    <script src="~/Scripts/JsTree/tree-custom.min.js"></script>
+    <script src="~/Scripts/JsTree/treeview-init.js"></script>
+
+    <!--Bootstrap Date Time Picker-->
+    <script src="http://momentjs.com/downloads/moment.js"></script>
+    <script src="~/Scripts/moment-with-locales.js"></script>
+    <script src="~/Scripts/DateTimePicker/bootstrap-datetimepicker.js"></script>
+    <script src="~/Scripts/Timepicker/jquery.timepicker.min.js"></script>
+    <script>
+        jQuery(document).ready(function () {
+            UITree.init();
+        });
+        
+    </script>
+
+    <script>
+        // If you want to draw your charts with Theme colors you must run initiating charts after that current skin is loaded
+        $(window).bind("load", function () {
+            $("#txtDate1").datepicker();
+            /*Sets Themed Colors Based on Themes*/
+            themeprimary = getThemeColorFromCss('themeprimary');
+            themesecondary = getThemeColorFromCss('themesecondary');
+            themethirdcolor = getThemeColorFromCss('themethirdcolor');
+            themefourthcolor = getThemeColorFromCss('themefourthcolor');
+            themefifthcolor = getThemeColorFromCss('themefifthcolor');
+
+            //Sets The Hidden Chart Width
+            $('#dashboard-bandwidth-chart')
+                .data('width', $('.box-tabbs')
+                    .width() - 20);
+
+            //-------------------------Visitor Sources Pie Chart----------------------------------------//
+            var data = [
+                {
+                    data: [[1, 21]],
+                    color: '#fb6e52'
+                },
+                {
+                    data: [[1, 12]],
+                    color: '#e75b8d'
+                },
+                {
+                    data: [[1, 11]],
+                    color: '#a0d468'
+                },
+                {
+                    data: [[1, 10]],
+                    color: '#ffce55'
+                },
+                {
+                    data: [[1, 46]],
+                    color: '#5db2ff'
+                }
+            ];
+            var placeholder = $("#dashboard-pie-chart-sources");
+            placeholder.unbind();
+
+            $.plot(placeholder, data, {
+                series: {
+                    pie: {
+                        innerRadius: 0.45,
+                        show: true,
+                        stroke: {
+                            width: 4
+                        }
+                    }
+                }
+            });
+
+            //------------------------------Visit Chart------------------------------------------------//
+            var data2 = [{
+                color: themesecondary,
+                label: "Direct Visits",
+                data: [[3, 2], [4, 5], [5, 4], [6, 11], [7, 12], [8, 11], [9, 8], [10, 14], [11, 12], [12, 16], [13, 9],
+                [14, 10], [15, 14], [16, 15], [17, 9]],
+
+                lines: {
+                    show: true,
+                    fill: true,
+                    lineWidth: .1,
+                    fillColor: {
+                        colors: [{
+                            opacity: 0
+                        }, {
+                            opacity: 0.4
+                        }]
+                    }
+                },
+                points: {
+                    show: false
+                },
+                shadowSize: 0
+            },
+                {
+                    color: themeprimary,
+                    label: "Referral Visits",
+                    data: [[3, 10], [4, 13], [5, 12], [6, 16], [7, 19], [8, 19], [9, 24], [10, 19], [11, 18], [12, 21], [13, 17],
+                    [14, 14], [15, 12], [16, 14], [17, 15]],
+                    bars: {
+                        order: 1,
+                        show: true,
+                        borderWidth: 0,
+                        barWidth: 0.4,
+                        lineWidth: .5,
+                        fillColor: {
+                            colors: [{
+                                opacity: 0.4
+                            }, {
+                                opacity: 1
+                            }]
+                        }
+                    }
+                },
+                {
+                    color: themethirdcolor,
+                    label: "Search Engines",
+                    data: [[3, 14], [4, 11], [5, 10], [6, 9], [7, 5], [8, 8], [9, 5], [10, 6], [11, 4], [12, 7], [13, 4],
+                    [14, 3], [15, 4], [16, 6], [17, 4]],
+                    lines: {
+                        show: true,
+                        fill: false,
+                        fillColor: {
+                            colors: [{
+                                opacity: 0.3
+                            }, {
+                                opacity: 0
+                            }]
+                        }
+                    },
+                    points: {
+                        show: true
+                    }
+                }
+            ];
+            var options = {
+                legend: {
+                    show: false
+                },
+                xaxis: {
+                    tickDecimals: 0,
+                    color: '#f3f3f3'
+                },
+                yaxis: {
+                    min: 0,
+                    color: '#f3f3f3',
+                    tickFormatter: function (val, axis) {
+                        return "";
+                    },
+                },
+                grid: {
+                    hoverable: true,
+                    clickable: false,
+                    borderWidth: 0,
+                    aboveData: false,
+                    color: '#fbfbfb'
+
+                },
+                tooltip: true,
+                tooltipOpts: {
+                    defaultTheme: false,
+                    content: " <b>%x May</b> , <b>%s</b> : <span>%y</span>",
+                }
+            };
+            var placeholder = $("#dashboard-chart-visits");
+            var plot = $.plot(placeholder, data2, options);
+
+            //------------------------------Real-Time Chart-------------------------------------------//
+            var realTimedata = [],
+                realTimedata2 = [],
+                totalPoints = 300;
+
+            var getSeriesObj = function () {
+                return [
+                {
+                    data: getRandomData(),
+                    lines: {
+                        show: true,
+                        lineWidth: 1,
+                        fill: true,
+                        fillColor: {
+                            colors: [
+                                {
+                                    opacity: 0
+                                }, {
+                                    opacity: 1
+                                }
+                            ]
+                        },
+                        steps: false
+                    },
+                    shadowSize: 0
+                }, {
+                    data: getRandomData2(),
+                    lines: {
+                        lineWidth: 0,
+                        fill: true,
+                        fillColor: {
+                            colors: [
+                                {
+                                    opacity: .5
+                                }, {
+                                    opacity: 1
+                                }
+                            ]
+                        },
+                        steps: false
+                    },
+                    shadowSize: 0
+                }
+                ];
+            };
+            function getRandomData() {
+                if (realTimedata.length > 0)
+                    realTimedata = realTimedata.slice(1);
+
+                // Do a random walk
+
+                while (realTimedata.length < totalPoints) {
+
+                    var prev = realTimedata.length > 0 ? realTimedata[realTimedata.length - 1] : 50,
+                        y = prev + Math.random() * 10 - 5;
+
+                    if (y < 0) {
+                        y = 0;
+                    } else if (y > 100) {
+                        y = 100;
+                    }
+                    realTimedata.push(y);
+                }
+
+                // Zip the generated y values with the x values
+
+                var res = [];
+                for (var i = 0; i < realTimedata.length; ++i) {
+                    res.push([i, realTimedata[i]]);
+                }
+
+                return res;
+            }
+            function getRandomData2() {
+                if (realTimedata2.length > 0)
+                    realTimedata2 = realTimedata2.slice(1);
+
+                // Do a random walk
+
+                while (realTimedata2.length < totalPoints) {
+
+                    var prev = realTimedata2.length > 0 ? realTimedata[realTimedata2.length] : 50,
+                        y = prev - 25;
+
+                    if (y < 0) {
+                        y = 0;
+                    } else if (y > 100) {
+                        y = 100;
+                    }
+                    realTimedata2.push(y);
+                }
+
+
+                var res = [];
+                for (var i = 0; i < realTimedata2.length; ++i) {
+                    res.push([i, realTimedata2[i]]);
+                }
+
+                return res;
+            }
+            // Set up the control widget
+            var updateInterval = 500;
+            var plot = $.plot("#dashboard-chart-realtime", getSeriesObj(), {
+                yaxis: {
+                    color: '#f3f3f3',
+                    min: 0,
+                    max: 100,
+                    tickFormatter: function (val, axis) {
+                        return "";
+                    }
+                },
+                xaxis: {
+                    color: '#f3f3f3',
+                    min: 0,
+                    max: 100,
+                    tickFormatter: function (val, axis) {
+                        return "";
+                    }
+                },
+                grid: {
+                    hoverable: true,
+                    clickable: false,
+                    borderWidth: 0,
+                    aboveData: false
+                },
+                colors: ['#eee', themeprimary],
+            });
+
+            function update() {
+
+                plot.setData(getSeriesObj());
+
+                plot.draw();
+                setTimeout(update, updateInterval);
+            }
+            update();
+
+
+            //-------------------------Initiates Easy Pie Chart instances in page--------------------//
+            InitiateEasyPieChart.init();
+
+            //-------------------------Initiates Sparkline Chart instances in page------------------//
+            InitiateSparklineCharts.init();
+        });
+
+    </script>
+
+</body>
+<!--  /Body -->
+</html>

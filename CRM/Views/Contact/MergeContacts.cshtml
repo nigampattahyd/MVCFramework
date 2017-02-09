@@ -1,0 +1,658 @@
+﻿@model CRMHub.ViewModel.ContactModel
+<html>
+<head>
+    <title></title>
+    <style type="text/css">
+        .wrapword {
+            white-space: -moz-pre-wrap !important; /* Mozilla, since 1999 */
+            white-space: -pre-wrap; /* Opera 4-6 */
+            white-space: -o-pre-wrap; /* Opera 7 */
+            white-space: pre-wrap; /* css-3 */
+            word-wrap: break-word; /* Internet Explorer 5.5+ */
+            white-space: -webkit-pre-wrap; /* Newer versions of Chrome/Safari*/
+            word-break: break-all;
+            white-space: normal;
+            -webkit-hyphens: auto;
+            -moz-hyphens: auto;
+            hyphens: auto;
+        }
+    </style>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $("#Contact1_ContactId").prop("checked", true);
+            $("#Contact1_Fname").prop("checked", true);
+            $("#Contact1_Account_Name").prop("checked", true);
+            $("#Contact1_Phone").prop("checked", true);
+            $("#Contact1_Email").prop("checked", true);
+            $("#Contact1_MailingAddress").prop("checked", true);
+            $("#Contact1_Mailingstreet").prop("checked", true);
+            $("#Contact1_Mailingcity").prop("checked", true);
+            $("#Contact1_Mailingstate").prop("checked", true);
+            $("#Contact1_Mailingzip").prop("checked", true);
+            //$("#rdConc2").prop("checked", false);
+
+            $("#Contact2_Fname").prop("checked", false);
+            $("#Contact2_Account_Name").prop("checked", false);
+            $("#Contact2_Phone").prop("checked", false);
+            $("#Contact2_Email").prop("checked", false);
+            $("#Contact2_MailingAddress").prop("checked", false);
+            $("#Contact2_Mailingstreet").prop("checked", false);
+            $("#Contact2_Mailingcity").prop("checked", false);
+            $("#Contact2_Mailingstate").prop("checked", false);
+            $("#Contact2_Mailingzip").prop("checked", false);
+        });
+
+        $("#Contact1_ContactId").click(function () {
+
+            if ($("#Contact1_ContactId").prop("checked") == true) {
+
+                $("#Contact2_ContactId").prop("checked", false);
+                $("#Contact1_Fname").prop("checked", true);
+                $("#Contact1_Account_Name").prop("checked", true);
+                $("#Contact1_Phone").prop("checked", true);
+                $("#Contact1_Email").prop("checked", true);
+                $("#Contact1_MailingAddress").prop("checked", true);
+                $("#Contact1_Mailingstreet").prop("checked", true);
+                $("#Contact1_Mailingcity").prop("checked", true);
+                $("#Contact1_Mailingstate").prop("checked", true);
+                $("#Contact1_Mailingzip").prop("checked", true);
+
+                $("#Contact2_Fname").prop("checked", false);
+                $("#Contact2_Account_Name").prop("checked", false);
+                $("#Contact2_Phone").prop("checked", false);
+                $("#Contact2_Email").prop("checked", false);
+                $("#Contact2_MailingAddress").prop("checked", false);
+                $("#Contact2_Mailingstreet").prop("checked", false);
+                $("#Contact2_Mailingcity").prop("checked", false);
+                $("#Contact2_Mailingstate").prop("checked", false);
+                $("#Contact2_Mailingzip").prop("checked", false);
+            }
+        });
+
+
+        $("#Contact2_ContactId").click(function () {
+
+            if ($("#Contact2_ContactId").prop("checked") == true) {
+                $("#Contact1_ContactId").prop("checked", false);
+                $("#Contact2_Fname").prop("checked", true);
+                $("#Contact2_Account_Name").prop("checked", true);
+                $("#Contact2_Phone").prop("checked", true);
+                $("#Contact2_Email").prop("checked", true);
+                $("#Contact2_MailingAddress").prop("checked", true);
+                $("#Contact2_Mailingstreet").prop("checked", true);
+                $("#Contact2_Mailingcity").prop("checked", true);
+                $("#Contact2_Mailingstate").prop("checked", true);
+                $("#Contact2_Mailingzip").prop("checked", true);
+
+                $("#Contact1_Fname").prop("checked", false);
+                $("#Contact1_Account_Name").prop("checked", false);
+                $("#Contact1_Phone").prop("checked", false);
+                $("#Contact1_Email").prop("checked", false);
+                $("#Contact1_MailingAddress").prop("checked", false);
+                $("#Contact1_Mailingstreet").prop("checked", false);
+                $("#Contact1_Mailingcity").prop("checked", false);
+                $("#Contact1_Mailingstate").prop("checked", false);
+                $("#Contact1_Mailingzip").prop("checked", false);
+
+
+            }
+        });
+
+
+        $("#Contact1_Fname").click(function () {
+
+            $("#Contact1_Fname").prop("checked", true);
+            $("#Contact2_Fname").prop("checked", false);
+        });
+
+        $("#Contact2_Fname").click(function () {
+            $("#Contact2_Fname").prop("checked", true);
+            $("#Contact1_Fname").prop("checked", false);
+        });
+
+
+
+        $("#Contact1_Account_Name").click(function () {
+
+            $("#Contact1_Account_Name").prop("checked", true);
+            $("#Contact2_Account_Name").prop("checked", false);
+        });
+
+        $("#Contact2_Account_Name").click(function () {
+            $("#Contact2_Account_Name").prop("checked", true);
+            $("#Contact1_Account_Name").prop("checked", false);
+        });
+
+        $("#Contact1_Phone").click(function () {
+
+            $("#Contact1_Phone").prop("checked", true);
+            $("#Contact2_Phone").prop("checked", false);
+        });
+
+        $("#Contact2_Phone").click(function () {
+            $("#Contact2_Phone").prop("checked", true);
+            $("#Contact1_Phone").prop("checked", false);
+        });
+
+
+
+        $("#Contact1_Email").click(function () {
+
+            $("#Contact1_Email").prop("checked", true);
+            $("#Contact2_Email").prop("checked", false);
+        });
+
+        $("#Contact2_Email").click(function () {
+            $("#Contact2_Email").prop("checked", true);
+            $("#Contact1_Email").prop("checked", false);
+        });
+
+
+
+        $("#Contact1_MailingAddress").click(function () {
+
+            $("#Contact1_MailingAddress").prop("checked", true);
+            $("#Contact2_MailingAddress").prop("checked", false);
+        });
+
+        $("#Contact2_MailingAddress").click(function () {
+            $("#Contact2_MailingAddress").prop("checked", true);
+            $("#Contact1_MailingAddress").prop("checked", false);
+        });
+
+
+        $("#Contact1_Mailingstreet").click(function () {
+
+            $("#Contact1_Mailingstreet").prop("checked", true);
+            $("#Contact2_Mailingstreet").prop("checked", false);
+        });
+
+        $("#Contact2_Mailingstreet").click(function () {
+            $("#Contact2_Mailingstreet").prop("checked", true);
+            $("#Contact1_Mailingstreet").prop("checked", false);
+        });
+
+        $("#Contact1_Mailingcity").click(function () {
+
+            $("#Contact1_Mailingcity").prop("checked", true);
+            $("#Contact2_Mailingcity").prop("checked", false);
+        });
+
+        $("#Contact2_Mailingcity").click(function () {
+            $("#Contact2_Mailingcity").prop("checked", true);
+            $("#Contact1_Mailingcity").prop("checked", false);
+        });
+
+        $("#Contact1_Mailingstate").click(function () {
+
+            $("#Contact1_Mailingstate").prop("checked", true);
+            $("#Contact2_Mailingstate").prop("checked", false);
+        });
+
+        $("#Contact2_Mailingstate").click(function () {
+            $("#Contact2_Mailingstate").prop("checked", true);
+            $("#Contact1_Mailingstate").prop("checked", false);
+        });
+
+
+        $("#Contact1_Mailingzip").click(function () {
+
+            $("#Contact1_Mailingzip").prop("checked", true);
+            $("#Contact2_Mailingzip").prop("checked", false);
+        });
+
+        $("#Contact2_Mailingzip").click(function () {
+            $("#Contact2_Mailingzip").prop("checked", true);
+            $("#Contact1_Mailingzip").prop("checked", false);
+        });
+
+
+
+
+
+    </script>
+</head>
+<body>
+
+    @using (Html.BeginForm("MergeContacts", "Contact", FormMethod.Post))
+    {
+        <div class="modal-body">
+
+
+            <div id="divContact" runat="server">
+
+                <asp:Panel runat="server" ID="Panel4" GroupingText="Merge Record" Style="padding-left: 8px; padding-right: 8px; width: 98%">
+
+
+                    <div class="panel">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-sm-12" id="Panel4" runat="server">Merge Records</div>
+                            </div>
+                        </div>
+                        <div style="height: auto;" class="panel-collapse collapse in" id="Div4">
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="col-xs-2">
+                                            Select Primary
+                                        </div> <div class="col-xs-2">
+                                            Contact Name
+                                        </div> <div class="col-xs-2">
+                                            Contact Site
+                                        </div> <div class="col-xs-2">
+
+                                            Phone
+                                        </div> <div class="col-xs-2">
+
+                                            Email
+                                        </div> <div class="col-xs-2">
+
+                                            Creation Date
+                                        </div> <div class="col-xs-2">
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="col-xs-2">
+                                            @Html.RadioButtonFor(m => m.Contact1.ContactId, new { @id = "rdConc1", @class = "form-control input-sm" })
+                                            @Html.HiddenFor(m => m.Contact1.ContactId)
+                                            &nbsp;
+                                        </div>
+                                        <div class="col-xs-2">@Html.DisplayFor(m => m.Contact1.Fname, new { @id = "lblContactName1", @class = "form-control input-sm" })&nbsp;</div>
+                                        <div class="col-xs-2">@Html.DisplayFor(m => m.Contact1.Account_Name, new { @id = "lblContAccount1", @class = "form-control input-sm" })&nbsp;</div>
+                                        <div class="col-xs-2">@Html.DisplayFor(m => m.Contact1.Phone, new { @id = "lblContactPhone1", @class = "form-control input-sm" })&nbsp;</div>
+                                        <div class="col-xs-2 wrapword">@Html.DisplayFor(m => m.Contact1.Email, new { @id = "lblContactEmail1", @class = "form-control input-sm" })&nbsp;</div>
+                                        <div class="col-xs-2">@Html.DisplayFor(m => m.Contact1.CreatedDate, new { @id = "lblContactDate1", @class = "form-control input-sm" })&nbsp;</div>
+
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="col-xs-2">
+
+                                            @*<asp:RadioButton runat="server" ID="rdConc2" GroupName="Merge" />*@
+                                            @Html.RadioButtonFor(m => m.Contact2.ContactId, new { @id = "rdConc2", @class = "form-control input-sm" })
+                                            @Html.HiddenFor(m => m.Contact2.ContactId1)
+                                        </div><div class="col-xs-2">
+                                            @*<asp:Label runat="server" ID="lblContactName2" CssClass="smallblack"></asp:Label>*@
+                                            @Html.DisplayFor(m => m.Contact2.Fname, new { @id = "lblContactName2", @class = "form-control input-sm" }) &nbsp;
+                                        </div><div class="col-xs-2">
+                                            @*<asp:Label runat="server" ID="lblContAccount2" CssClass="smallblack"></asp:Label>*@
+                                            @Html.DisplayFor(m => m.Contact2.Account_Name, new { @id = "lblContAccount2", @class = "form-control input-sm" }) &nbsp;
+                                        </div><div class="col-xs-2">
+                                            @*<asp:Label runat="server" ID="lblContactPhone2" CssClass="smallblack"></asp:Label>*@
+                                            @Html.DisplayFor(m => m.Contact2.Phone, new { @id = "lblContactPhone2", @class = "form-control input-sm" }) &nbsp;
+                                        </div><div class="col-xs-2 wrapword">
+                                            @Html.DisplayFor(m => m.Contact2.Email, new { @id = "lblContactEmail2", @class = "form-control input-sm" })&nbsp;
+                                        </div><div class="col-xs-2">
+                                            @*<asp:Label runat="server" ID="lblContactDate2" CssClass="smallblack"></asp:Label>*@
+                                            @Html.DisplayFor(m => m.Contact2.CreatedDate, new { @id = "lblContactDate2", @class = "form-control input-sm" })&nbsp;
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col-sm-6">
+
+
+                            <div class="panel">
+
+                                <div class="panel-heading">
+                                    <div class="row">
+                                        <div class="col-sm-6" id="Panel2" runat="server">Record1</div>
+                                    </div>
+                                </div>
+
+                                <div style="height: auto;" class="panel-collapse collapse in" id="Div5">
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <div class="col-sm-4 col-xs-5">
+
+                                                            Contact Name:
+                                                        </div>
+                                                        <div class="col-sm-4 col-xs-4">
+                                                            @*<asp:Label ID="lblContName" runat="server" CssClass="smallblack"></asp:Label>*@
+                                                            @Html.DisplayFor(m => m.Contact1.Fname, new { @id = "lblContName", @class = "form-control input-sm" })
+                                                        </div>
+                                                        <div class="col-sm-4 col-xs-3">
+                                                            @*<asp:RadioButton runat="server" ID="rdContName1" GroupName="MergeContName" />*@
+
+                                                            @Html.RadioButton("Contact1.Fname", Model.Contact1.Fname)
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <div class=" col-sm-4 col-xs-2">
+
+                                                            Company Name:
+                                                        </div>
+                                                        <div class=" col-sm-4 col-xs-2">
+                                                            @Html.DisplayFor(m => m.Contact1.Account_Name, new { @id = "lblContAcc", @class = "form-control input-sm" })
+                                                        </div>
+                                                        <div class="col-sm-4 col-xs-2">
+                                                            @*<asp:RadioButton runat="server" ID="%" GroupName="MergeContAC" />*@
+                                                            @Html.RadioButton("Contact1.Account_Name", Model.Contact1.Account_Name)
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <div class="col-sm-4 col-xs-2">
+
+                                                            Phone:
+                                                        </div>
+                                                        <div class=" col-sm-4 col-xs-2">
+                                                            @*<asp:Label ID="lblContPhone" runat="server" CssClass="smallblack"></asp:Label>*@
+                                                            @Html.DisplayFor(m => m.Contact1.Phone, new { @id = "lblContPhone", @class = "form-control input-sm" })
+                                                        </div>
+                                                        <div class="col-sm-4 col-xs-2">
+                                                            @*<asp:RadioButton runat="server" ID="rdContPhone1" GroupName="MergeContPhone" />*@
+                                                            @Html.RadioButton("Contact1.Phone", Model.Contact1.Phone)
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <div class="col-sm-4 col-xs-2">
+
+                                                            Email:
+                                                        </div><div class="col-sm-4 col-xs-2 wrapword">
+
+                                                            @*<asp:Label ID="lblContEmail" runat="server" CssClass="smallblack"></asp:Label>*@
+                                                            @Html.DisplayFor(m => m.Contact1.Email, new { @id = "lblContEmail", @class = "form-control input-sm" })
+                                                        </div>
+                                                        <div class="col-sm-4 col-xs-2">
+                                                            @*<asp:RadioButton runat="server" ID="rdContEmail1" GroupName="MergeContEmail" />*@
+                                                            @Html.RadioButton("Contact1.Email", Model.Contact1.Email)
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <div class="col-xs-2 col-sm-4">
+                                                            Address1:
+                                                        </div><div class="col-sm-4 col-xs-2">
+                                                            @*<asp:Label ID="lblContAdd1" runat="server" CssClass="smallblack"></asp:Label>*@
+                                                            @Html.DisplayFor(m => m.Contact1.MailingAddress, new { @id = "lblContAdd1", @class = "form-control input-sm" })
+                                                        </div>
+                                                        <div class="col-xs-2 col-sm-4">
+                                                            @*<asp:RadioButton runat="server" ID="rdContAdd1" GroupName="MergeContAdd1" />*@
+                                                            @Html.RadioButton("Contact1.MailingAddress", Model.Contact1.MailingAddress)
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-sm-12 ">
+                                                        <div class=" col-sm-4 col-xs-2">
+                                                            Address2:
+                                                        </div><div class="col-xs-2 col-sm-4">
+                                                            @*<asp:Label ID="lblContAdd2" runat="server" CssClass="smallblack"></asp:Label>*@
+                                                            @Html.DisplayFor(m => m.Contact1.Mailingstreet, new { @id = "lblContAdd2", @class = "form-control input-sm" })
+                                                        </div>
+                                                        <div class="col-xs-2 col-sm-4">
+                                                            @*<asp:RadioButton runat="server" ID="rdContAdd2" GroupName="MergeContAdd2" />*@
+                                                            @Html.RadioButton("Contact1.Mailingstreet", Model.Contact1.Mailingstreet)
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <div class="col-sm-4 col-xs-2">
+                                                            City:
+                                                        </div><div class="col-xs-2 col-sm-4">
+                                                            @*<asp:Label ID="lblContCity" runat="server" CssClass="smallblack"></asp:Label>*@
+                                                            @Html.DisplayFor(m => m.Contact1.Mailingcity, new { @id = "lblContCity", @class = "form-control input-sm" })
+                                                        </div>
+                                                        <div class="col-xs-2 col-sm-4">
+                                                            @*<asp:RadioButton runat="server" ID="rdContCity1" GroupName="MergeContCity" />*@
+                                                            @Html.RadioButton("Contact1.Mailingcity", Model.Contact1.Mailingcity)
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <div class="col-sm-4 col-xs-2">
+
+                                                            @*<%=AssociateTracking.BusinessLogicLayer.CountryManager.StateProvince %>*@State:
+                                                        </div>
+                                                        <div class="col-xs-2 col-sm-4">
+                                                            @*<asp:Label ID="lblContState" runat="server" CssClass="smallblack"></asp:Label>*@
+                                                            @Html.DisplayFor(m => m.Contact1.Mailingstate, new { @id = "lblContState", @class = "form-control input-sm" })
+                                                        </div>
+                                                        <div class="col-xs-2 col-sm-4">
+                                                            @*<asp:RadioButton runat="server" ID="rdContState1" GroupName="MergeContState" />*@
+                                                            @Html.RadioButton("Contact1.Mailingstate", Model.Contact1.Mailingstate)
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <div class="col-sm-4 col-xs-2">
+                                                            PostalCode:
+                                                        </div>
+                                                        <div class="col-xs-2 col-sm-4">
+                                                            @*<asp:Label ID="lblContZip" runat="server" CssClass="smallblack"></asp:Label>*@
+                                                            @Html.DisplayFor(m => m.Contact1.Mailingzip, new { @id = "lblContZip", @class = "form-control input-sm" })
+                                                        </div>
+                                                        <div class="col-xs-2 col-sm-4">
+                                                            @*<asp:RadioButton runat="server" ID="rdContZip1" GroupName="MergeContZip" />*@
+                                                            @Html.RadioButton("Contact1.Mailingzip", Model.Contact1.Mailingzip)
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+                        </div>
+
+                        <div class="col-sm-6">
+                            <div class="panel">
+                                <div class="panel-heading">
+                                    <div class="row">
+                                        <div class="col-sm-6" id="Panel3" runat="server">Record2</div>
+                                    </div>
+                                </div>
+                                <div style="height: auto;" class="panel-collapse collapse in" id="Div6">
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <div class="col-sm-4 col-xs-2">
+                                                            Contact Name:
+                                                        </div>
+                                                        <div class="col-sm-4 col-xs-2">
+                                                            @*<asp:Label ID="lblContNameOld" runat="server" CssClass="smallblack"></asp:Label>*@
+                                                            @Html.DisplayFor(m => m.Contact2.Fname, new { @id = "lblContNameOld", @class = "form-control input-sm" })
+                                                        </div>
+                                                        <div class="col-sm-4 col-xs-2">
+                                                            @*<asp:RadioButton runat="server" ID="rdContName2" GroupName="MergeContName" />*@
+                                                            @Html.RadioButton("Contact2.Fname", Model.Contact2.Fname)
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <div class="col-sm-4 col-xs-2">
+                                                            Company Name:
+                                                        </div><div class="col-sm-4 col-xs-2">
+                                                            @*<asp:Label ID="lblContAccOld" runat="server" CssClass="smallblack"></asp:Label>*@
+                                                            @Html.DisplayFor(m => m.Contact2.Account_Name, new { @id = "lblContAccOld", @class = "form-control input-sm" })
+                                                        </div>
+                                                        <div class="col-xs-2 col-sm-4">
+                                                            @*<asp:RadioButton runat="server" ID="rdContAC2" GroupName="MergeContAC" />*@
+                                                            @Html.RadioButton("Contact2.Account_Name", Model.Contact2.Account_Name)
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <div class="col-sm-4 col-xs-4">
+                                                            Phone:
+                                                        </div><div class="col-xs-4 col-sm-4">
+                                                            @*<asp:Label ID="lblContPhoneOld" runat="server" CssClass="smallblack"></asp:Label>*@
+                                                            @Html.DisplayFor(m => m.Contact2.Phone, new { @id = "lblContPhoneOld", @class = "form-control input-sm" })
+                                                        </div>
+                                                        <div class="col-xs-4 col-sm-4">
+                                                            @*<asp:RadioButton runat="server" ID="rdContPhone2" GroupName="MergeContPhone" />*@
+                                                            @Html.RadioButton("Contact2.Phone", Model.Contact2.Phone)
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <div class="col-sm-4 col-xs-2">
+                                                            Email:
+                                                        </div><div class="col-xs-2 col-sm-4 wrapword">
+                                                            @*<asp:Label ID="lblContEmailOld" runat="server" CssClass="smallblack"></asp:Label>*@
+                                                            @Html.DisplayFor(m => m.Contact2.Email, new { @id = "lblContEmailOld", @class = "form-control input-sm" })
+                                                        </div>
+                                                        <div class="col-xs-2 col-sm-4">
+                                                            @*<asp:RadioButton runat="server" ID="rdContEmail2" GroupName="MergeContEmail" />*@
+                                                            @Html.RadioButton("Contact2.Email", Model.Contact2.Email)
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <div class="col-sm-4 col-xs-2">
+                                                            Address1:
+                                                        </div><div class="col-xs-2 col-sm-4">
+                                                            @*<asp:Label ID="lblContAdd1Old" runat="server" CssClass="smallblack"></asp:Label>*@
+                                                            @Html.DisplayFor(m => m.Contact2.MailingAddress, new { @id = "lblContAdd1Old", @class = "form-control input-sm" })
+                                                        </div>
+                                                        <div class="col-xs-2 col-sm-4">
+                                                            @*<asp:RadioButton runat="server" ID="rdContAdd3" GroupName="MergeContAdd1" />*@
+                                                            @Html.RadioButton("Contact2.MailingAddress", Model.Contact2.MailingAddress)
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <div class="col-sm-4 col-xs-2">
+                                                            Address2:
+                                                        </div><div class="col-xs-2 col-sm-4">
+                                                            @*<asp:Label ID="lblContAdd2Old" runat="server" CssClass="smallblack"></asp:Label>*@
+                                                            @Html.DisplayFor(m => m.Contact2.Mailingstreet, new { @id = "lblContAdd2Old", @class = "form-control input-sm" })
+                                                        </div>
+                                                        <div class="col-xs-2 col-sm-4">
+                                                            @*<asp:RadioButton runat="server" ID="rdContAdd4" GroupName="MergeContAdd2" />*@
+                                                            @Html.RadioButton("Contact2.Mailingstreet", Model.Contact2.Mailingstreet)
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <div class="col-sm-4 col-xs-2">
+                                                            City:
+                                                        </div><div class="col-xs-2 col-sm-4">
+                                                            @*<asp:Label ID="lblContCityOld" runat="server" CssClass="smallblack"></asp:Label>*@
+                                                            @Html.DisplayFor(m => m.Contact2.Mailingcity, new { @id = "lblContCity", @class = "form-control input-sm" })
+                                                        </div>
+                                                        <div class="col-xs-2 col-sm-4">
+                                                            @*<asp:RadioButton runat="server" ID="rdContCity2" GroupName="MergeContCity" />*@
+                                                            @Html.RadioButton("Contact2.Mailingcity", Model.Contact2.Mailingcity)
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <div class="col-sm-4 col-xs-2">
+                                                            @*<%=AssociateTracking.BusinessLogicLayer.CountryManager.StateProvince %>*@State:
+                                                        </div>
+                                                        <div class="col-xs-2 col-sm-4">
+                                                            @*<asp:Label ID="lblContStateOld" runat="server" CssClass="smallblack"></asp:Label>*@
+                                                            @Html.DisplayFor(m => m.Contact2.Mailingstate, new { @id = "lblContStateOld", @class = "form-control input-sm" })
+                                                        </div>
+                                                        <div class="col-xs-2 col-sm-4">
+                                                            @*<asp:RadioButton runat="server" ID="rdContState2" GroupName="MergeContState" />*@
+                                                            @Html.RadioButton("Contact2.Mailingstate", Model.Contact2.Mailingstate)
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <div class="col-sm-4 col-xs-2">
+                                                            @*<%=AssociateTracking.BusinessLogicLayer.CountryManager.PostalCode %>*@ZipCode:
+                                                        </div>
+                                                        <div class="col-xs-2 col-sm-4">
+                                                            @*<asp:Label ID="lblContZipOld" runat="server" CssClass="smallblack"></asp:Label>*@
+                                                            @Html.DisplayFor(m => m.Contact2.Mailingzip, new { @id = "lblContZipOld", @class = "form-control input-sm" })
+                                                        </div>
+                                                        <div class="col-xs-2 col-sm-4">
+                                                            @*<asp:RadioButton runat="server" ID="rdContZip2" GroupName="MergeContZip" />*@
+                                                            @Html.RadioButton("Contact2.Mailingzip", Model.Contact2.Mailingzip)
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+
+
+                    </div>
+
+            </div>
+
+
+
+            <div class="modal-footer">
+
+                @*<input type="button" id="Button2" value="Cancel"  class="btn btn-default" />*@
+                @*<asp:Button runat="server" ID="btnContSubmit" Text="Submit" CssClass="btn btn-primary" OnClick="btnContSubmit_OnClick" />*@
+                <input type="submit" id="btnSubmitConacts" value="Submit" />
+
+            </div>
+        </div>
+    }
+</body>
+
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

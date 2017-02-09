@@ -1,0 +1,102 @@
+document.addEventListener("deviceready", onDeviceReady, false);
+function signatureFun()
+        {
+            $("#linear").dialog();  
+             
+    }
+ 
+function signatureFunClose()
+        {
+             VehicleCanvas = document.getElementById('DriverCanvas');
+            var VehicleCanvasdataURL = VehicleCanvas.toDataURL("image/png");
+            //var VehicleCanvasdataURL=VehicleCanvasdataURL.replace(/^data:image\/(png|jpg);base64,/, "");
+             $("#imgsignaturePad").attr("src",VehicleCanvasdataURL);
+            $("#linear").dialog('close'); 
+    }
+    // device APIs are available
+    //
+
+var geocoder;
+    function onDeviceReady() {
+      ;
+          var mapOptions = {
+            // center: new google.maps.LatLng(40, -80.5),
+            center: new google.maps.LatLng( 17.385044, 78.486671),           
+            mapTypeId: google.maps.MapTypeId.ROADMAP,
+            zoom: 6
+        };
+
+ 
+            map_element = document.getElementById("geolocation");
+            map = new google.maps.Map(map_element, mapOptions);
+            geocoder = new google.maps.Geocoder();
+              var mapwidth = $(window).width();
+            var mapheight = $(window).height();
+            $("#geolocation").height(mapheight);
+            $("#geolocation").width(mapwidth);
+            google.maps.event.trigger(map, 'resize');
+         google.maps.event.addListener(map, 'click', function(event) {
+                placeMarker(event.latLng);
+            });
+
+    }
+
+
+ var marker;
+  function placeMarker(location) {
+      ;
+     if(marker){ //on vérifie si le marqueur existe
+                marker.setPosition(location); //on change sa position
+      }else{
+               marker = new google.maps.Marker({ //on créé le marqueur
+                        position: location, 
+                        map: map
+                });
+                }
+            var latitude=location.lat();
+             var longitude=location.lng();
+                getAddress(location);
+  }
+
+
+
+    // onSuccess Geolocation
+    //
+
+function getAddress(latLng) {
+    ;
+   geocoder.geocode( {'latLng': latLng},
+          function(results, status) {
+      if(status == google.maps.GeocoderStatus.OK) {
+             if(results[0]) {
+               document.getElementById("txtClaimLocOfIncident").value = results[0].formatted_address;
+                 /*alert(results[0].formatted_address)*/
+                 navigator.notification.confirm('Do you Want to Continue ?', selectedbutton,'Confirmation');
+              }
+              else {
+                /*document.getElementById("address").value = "No results";*/
+                  alert('no address');
+              }
+            }
+            else {
+              /*document.getElementById("address").value = status;*/
+                alert(status);
+       }
+   });
+ }
+     
+function selectedbutton(button){
+    ;
+    if(button==1)
+    {
+        /*alert("ok");*/
+      app1.navigate("#vwAccidentReport");  
+        
+    }
+     if(button==2)
+    {
+        /* alert("Cancel");*/
+      document.getElementById("txtClaimLocOfIncident").value="";
+        
+    }
+  }

@@ -1,0 +1,193 @@
+﻿@model CRMHub.EntityFramework.tbl_Items
+@{
+    ViewBag.Title = "CreateItems";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm("CreateItems", "Inventory", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken();
+    @Html.ValidationSummary(true)
+
+    <div id="content-wrapper">
+        <div id="CustomBootstrapAlertBox">
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="panel">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <!-- Page header, center on small screens -->
+                            <h1 class="col-xs-6 col-sm-4 text-left text-left-sm panel-title">
+                                <i class="fa fa-user page-header-icon"></i>&nbsp; Create New Item
+                            </h1>
+                            <div class="col-xs-6 col-sm-8">
+                                <div class="row">
+                                    <div class="pull-right">
+                                        @*<a href="#" class="btn btn-flat btn-labeled btn-primary" tabindex="-1"
+                                            data-toggle="modal" data-target="#uidemo-modals-alerts-info"><span class="btn-label icon fa fa-question-circle"></span>Help</a>*@
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row" style="text-align:right;">
+                            <div class="table-nav-item" style="float: right; margin-bottom:15px;">
+                                <ul class="table-nav-item" style="float: right; margin-bottom:5px;">
+                                    <li>
+                                        <button class="btn btn-flat btn-labeled btn-primary" id="btnSave">
+                                            <span class="btn-label icon fa fa-save"></span>Save
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <a style="color: #fff; text-decoration: none; padding: 0px; font-weight: normal" class="btn btn-flat btn-labeled btn-primary" href="@Url.Action("Index", "Inventory")">
+                                            <span class="btn-label icon fa fa-backward" style="margin-right:6px;"> </span>
+                                            Back
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">
+                                <asp:Label ID="lblMessage" runat="server" ForeColor="Red"></asp:Label>
+                            </label>
+                            <span id="errorsymbol" style="color:red;display:none;margin-left:6px;" class="fa fa-exclamation-circle">
+                            </span>
+                            <div id="ErrorMessages" style="margin-left:30px;color:red;font-size:15px;margin-top:-19px">
+                            </div>
+                        </div>
+                        @*<label class="control-label">
+                                <asp:Label ID="lblMessage" runat="server" ForeColor="Red"></asp:Label>
+                            </label>
+                            <span id="errorsymbol" style="color:red;display:none;margin-left:5px;" class="fa fa-exclamation-circle"></span>
+                            <div id="ErrorMessages" style="margin-left:20px;color:red;font-size:15px;margin-top:-19px">
+                            </div>*@
+                        <div class="row">
+                            <div class="panel-group">
+                                <div class="panel">
+                                    <div id="collapse2" class="panel-collapse collapse in" style="height: auto;">
+                                        <div class="panel-body">
+                                            <div class="col-sm-12 no-padding-hr">
+
+                                                <div class="row">
+                                                    <div class="row">
+                                                        <div class="col-sm-4">
+                                                            <div class="form-group no-margin-hr">
+                                                                <label class="control-label col-sm-4">Item Code:<span style="color: red">*</span></label>
+
+                                                                @Html.TextBoxFor(m => m.ItemCode, new { @class = "form-control input-sm", @id = "txtitemcode", @validate = "Required", @data_val_required = "Item ID" })
+
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-4">
+                                                            <div class="form-group no-margin-hr">
+                                                                <label class="control-label col-sm-4">Item Type :<span style="color: red">*</span></label>
+                                                                @Html.DropDownListFor(m => m.ItemTypeID, new List<SelectListItem>
+                                                                                   {
+                                                                                         new SelectListItem { Text = "Select", Value = "Select", Selected=true},
+                                                                                       new SelectListItem { Text = "Inventory", Value = "1"},
+                                                                                      new SelectListItem { Text = "Non Inventory", Value = "2"},
+                                                                                       new SelectListItem { Text = "Service", Value = "3"},
+                                                                                }, new { id = "ddl_itemtypes", @class = "form-control input-sm", @TabIndex = "13", @validate = "dropdown", @data_val_required = "Item Type" })
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-4">
+                                                            <div class="form-group no-margin-hr">
+                                                                <label class="control-label col-sm-4">Item&nbsp;Name:<span style="color: red">*</span></label>
+
+                                                                @Html.TextBoxFor(m => m.ItemName, new { @class = "form-control input-sm", @id = "txtitemname", @validate = "Required", @data_val_required = "Item Name" })
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-4">
+                                                            <div class="form-group no-margin-hr">
+                                                                <label class="control-label col-sm-4">Rate/Unit:<span style="color: red">*</span></label>
+
+                                                                @Html.TextBoxFor(m => m.RateperUnit, new { @class = "form-control input-sm", @id = "txtrateperunit", @validate = "Required", @data_val_required = "Rate/Unit" })
+                                                            </div>
+
+                                                        </div>
+
+                                                        <div class="col-sm-4">
+                                                            <div class="form-group no-margin-hr">
+                                                                <label class="control-label col-sm-4">Sales Price:<span style="color: red">*</span></label>
+
+                                                                @Html.TextBoxFor(m => m.Saleprice, new { @class = "form-control input-sm", @id = "txtsalesprice", @validate = "Required", @data_val_required = "SalesPrice" })
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-4">
+                                                            <div class="form-group no-margin-hr">
+                                                                <label class="control-label col-sm-4">Description:</label>
+
+                                                                @Html.TextBoxFor(m => m.Description, new { @class = "form-control input-sm", @id = "txtdesc" })
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-sm-2">
+                                                            <div class="form-group no-margin-hr">
+                                                                @Html.RadioButtonFor(m => m.Active, "true", new { @style = "margin-left: 15px;", @checked = "checked" })
+                                                                <label class="control-label col-sm-4">Active:</label>
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="col-sm-2" style="margin-left: -49px;">
+                                                            <div class="form-group no-margin-hr">
+                                                                <label class="control-label col-sm-4">InActive:</label>
+
+                                                                @Html.RadioButtonFor(m => m.Active, "false", new { @style = "margin-left: 26px;" })
+                                                            </div>
+                                                        </div>
+
+
+
+
+
+
+
+
+                                                        @*<div class="col-sm-4">
+                                                                <div class="form-group no-margin-hr">
+                                                                    <label class="control-label col-sm-4">Active:</label>
+
+                                                                    @Html.DropDownListFor(m => m.Active, new List<SelectListItem>
+                                                                              {
+                                                                                  new SelectListItem{Text="Select",Value="select"},
+                                                                                  new SelectListItem{Text="Active",Value="true"},
+                                                                                  new SelectListItem{Text="InActive",Value="false"},
+
+                                                                              }, new { @class = "form-control input-sm", @id = "ddlStatus" })
+                                                                </div>
+                                                            </div>*@
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- / Info -->
+                </div>
+            </div>
+        </div>
+    </div>
+}
+<script>
+
+    $("#btnSave").click(function (e) {
+        Isvalid = true;
+        return Validate(this.form);
+        var rate = $("#txtrateperunit").val();
+        var sale = $("#txtsalesprice").val();
+        if (parseInt(rate) > parseInt(sale))
+        {
+            $.growl.error({ title: "Error", message: "Rate Per Unit must be less than Sales price.", size: 'large' });
+            //alert("Rate Per Unit must be less than Sales price");
+            e.preventDefault();
+        }
+
+    });
+
+</script>

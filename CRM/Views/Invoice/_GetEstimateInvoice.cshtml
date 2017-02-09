@@ -1,0 +1,302 @@
+﻿@model IEnumerable<CRMHub.EntityFramework.tbl_EstimateInvoice>
+
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+            $('#loading').css('display', 'block');
+            bindEstimateInvGrid();
+
+
+            $('#jq-datatables-ContactPopup').on('length.dt', function (e, settings, len) {
+
+                $('#loading').css('display', 'block');
+            });
+
+            $('#jq-datatables-ContactPopup').on('page.dt', function () {
+
+                $('#loading').css('display', 'block');
+            });
+
+
+            // $('#loading').css('display', 'none');
+        });
+        function bindEstimateInvGrid() {
+
+
+
+            $('#loading').css('display', 'block');
+            var responsiveHelper = undefined;
+            var breakpointDefinition = {
+                desktop: Infinity,
+                tablet: 1024,
+                tabletlandscape: 768,
+                phone: 480
+            };
+            var tableElement = $('#jq-datatables-EstimatePopup');
+            tableElement.dataTable({
+                autoWidth: false,
+                preDrawCallback: function () {
+                    if (!responsiveHelper) {
+                        responsiveHelper = new ResponsiveDatatablesHelper(tableElement, breakpointDefinition);
+                    }
+                },
+                rowCallback: function (nRow) {
+                    responsiveHelper.createExpandIcon(nRow);
+                },
+                drawCallback: function (oSettings) {
+                    responsiveHelper.respond();
+                },
+                //"order": [[$("#HD_SortValue").val(), "" + $("#HD_SortDirection").val() + ""]],
+                "aLengthMenu": [[10, 25, 50, 100], [10, 25, 50, 100]],
+                //"iDisplayStart": parseInt($("#HD_PageIndex").val()),
+                //"iDisplayLength": parseInt($("#HD_PageSize").val()),
+                "pagingType": "full_numbers",
+                //"processing": true,
+                "serverSide": true,
+                "bFilter": false,
+                "sAjaxSource": "getEstimateinvoicelistforInvoice",
+                //"sAjaxSource": "Contact/getContacts",
+                "fnServerParams": function (aoData) {
+                    aoData.push(
+                         { "name": "Contactkeyword", "value": "" + "" + "" },
+                        //{ "name": "Contactkeyword", "value": "" + $("#txtKeyWord").val() + "" },
+                        { "name": "ContactBranch", "value": "" + "-1" + "" },
+                        { "name": "ContactSalesRepresentative", "value": "" + "0" + "" },
+                        { "name": "CompanyFilterString", "value": "" },
+                        { "name": "CompanyList_IsFromBack", "value": "" },
+                        { "name": "CompanyFilterString_ActualQueryCondition", "value": "" }
+                        );
+                },
+                "fnServerData": function (sSource, aoData, fnCallback) {
+                    $.ajax({
+                        "dataType": 'json',
+                        "contentType": "application/json; charset=utf-8",
+                        "type": "GET",
+                        "url": sSource,
+                        "data": aoData,
+                        "success":
+                                    function (msg) {
+
+                                        $('#loading').css('display', 'none');
+                                        //var json = jQuery.parseJSON(msg.d);
+                                        fnCallback(msg);
+                                        //$("#jq-datatables-example").show();
+                                    }
+                    });
+                },
+                "asStripeClasses": ['odd gradeX', 'even gradeC'],
+                "aoColumnDefs": [
+
+                 //   {
+                 //       "targets": [0], "visible": true, "bSortable": false, "mDataProp": "InvoiceID",
+                 //       "render": function (data, type, row) {
+                 //           return "<input type=\"checkbox\" name=\"chkItem\" class=\"case\" id=\"chkRow_" + row["EstInvoiceID"] + "\"  data-invoiceid=\"" + row["EstInvoiceID"] + "\"    />";
+
+                 //       }
+                 //   },
+                 //{
+                 //    "targets": [1], "visible": true, "bSortable": false,
+                 //    "render": function (data, type, row) {
+
+
+                 //        return "<span class=\"fa fa-edit\" onclick=\"OpenEstinvoiceDetail('" + row["EstInvoiceID"] + "');\"></span><span class=\"fa fa-times\" onclick=\"deleteinvoice('" + row["EstInvoiceID"] + "');\"></span>";
+
+
+
+                 //    }
+                 //},
+                {
+                    "targets": [0], "visible": true, "bSortable": true, "mDataProp": "EstInvoiceNo",
+                    "render": function (data, type, row) {
+
+                        return "<a href=\"#\" id=\"aParentEstInvId\" onclick=\"OpenEstInvDetail('" + row["EstInvoiceID"] + "','" + row["EstInvoiceNo"] + "','" + row["CustomerID"] + "','" + row["Fname"] + "')\">" + row["EstInvoiceNo"] + "</a>";
+                    }
+                },
+                {
+
+                    "targets": [1], "visible": true, "bSortable": true, "mDataProp": "Fname",
+
+                },
+                { "targets": [2], "visible": true, "bSortable": true, "mDataProp": "GrandTotal" },
+
+                { "targets": [3], "visible": true, "bSortable": true, "mDataProp": "EstInvStatus" },
+
+
+                ],
+                "fnDrawCallback": function (oSettings) {
+
+                    $('#loading').css('display', 'none');
+                }
+            }).api();
+        }
+
+
+        function OpenEstInvDetail(EstInvId, EstimateNum, Contactid, Contactname) {
+          
+           // alert(Contactname);
+            $('#hdCustomerId').val(Contactid);
+            $('#txtEstInvNumber').val(EstimateNum);
+            $('#hdEnvoiceId').val(EstInvId);
+            ($('#txtCustomerName').val(Contactname));
+            //$('#txtCusName').val(Contactname);
+            //alert($('#txtCustomerName').val(Contactname));
+
+            $.ajax({
+                url: 'GetEstimateInvoiceData',
+                //dataType: "html",
+                type: "GET",
+                async: false,
+                data: { EstInvoiceId: EstInvId },
+                success: function (data) {
+
+
+                    //$('#txtTaxpercent').val(data.TaxPercent);
+                    //$('#txtTax').val(data.TaxAmount);
+                    $('#txtTaxpercent').val(data.TaxPercent);
+                    //$('#txtTax').val(data.TaxPercent);
+
+                    //$('#txtDiscount').val(data.DiscountPercent);
+                    $('#txtDiscamt').val(data.DiscountPercent);
+                    $('#txtmsiAmt').val(data.MiscellaneousAmount);
+                    $('#txtMisAmount').val(data.MiscellaneousAmount);
+
+                }
+            });
+
+
+
+            $.ajax({
+                url: 'GetCustomerDetails',
+                //dataType: "html",
+                type: "GET",
+                async: false,
+                data: { ContactId: Contactid },
+                success: function (data) {
+                 
+
+                    var BAddr = data.MailingAddress;
+                    var Bstreet = data.Mailingstreet;
+                    var Bcity = data.Mailingcity;
+                    var Bstate = data.Mailingstate;
+                    var Bcountry = data.Mailingcountry;
+                    var Bzip = data.Mailingzip;
+
+                    if (BAddr != "null")
+                        BAddr = BAddr;
+                    else BAddr = "";
+                    if (Bstreet != "null")
+                        Bstreet = Bstreet;
+                    else Bstreet = "";
+                    if (Bcity != "null")
+                        Bcity = Bcity;
+                    else Bcity = "";
+                    if (Bstate != "null")
+                        Bstate = Bstate;
+                    else Bstate = "";
+                    if (Bcountry != "null")
+                        Bcountry = Bcountry;
+                    else Bcountry = "";
+                    if (Bzip != "null")
+                        Bzip = Bzip
+                    else Bzip = "";
+
+
+                    var SAddr = data.BillingAddress;
+                    var Sstreet = data.Otherstreet;
+                    var Scity = data.Othercity;
+                    var Sstate = data.Otherstate;
+                    var Scountry = data.Othercountry;
+                    var Szip = data.Otherzip;
+                    var ShippingAddr = "";
+                    var BillingAddr = "";
+                    if (SAddr != "null")
+                        SAddr = SAddr;
+                    else SAddr = "";
+                    if (Sstreet != "null")
+                        Sstreet = Sstreet;
+                    else Sstreet = "";
+                    if (Scity != "null")
+                        Scity = Scity;
+                    else Scity = "";
+                    if (Sstate != "null")
+                        Sstate = Sstate;
+                    else Sstate = "";
+                    if (Scountry != "null")
+                        Scountry = Scountry;
+                    else Scountry = "";
+                    if (Szip != "null")
+                        Szip = Szip
+                    else Szip = "";
+
+                    ////var phone = data.phone;
+                    ////var mobile = data.Mobile;
+                    ////    if (phone != "null")
+                    ////        phone = phone;
+                    ////    else phone = "";
+
+                    ////    if (mobile != "null")
+                    ////        mobile = mobile;
+                    ////    else mobile = "";
+
+                    ShippingAddr = SAddr + "\n" + Sstreet + "\n" + Scity + "\n" + Sstate + "\n" + Scountry + "\n" + Szip;// + ". \n Phone: " + phone + "\n Mobile: " + mobile;
+                    BillingAddr = BAddr + "\n" + Bstreet + "\n" + Bcity + "\n" + Bstate + "\n" + Bcountry + "\n" + Bzip;// + ". \n Phone: " + phone + "\n Mobile: " + mobile;
+
+                    $('#txtAddressBilling').val(BillingAddr);
+                    $('#txtAddressShipping').val(ShippingAddr);
+                }
+            });
+
+           // EstInvId
+            $.ajax({
+                url: '_BindEditEstimateItemslist',
+                dataType: "html",
+                type: "GET",
+                async: false,
+                data: { InvoiceID: EstInvId },
+                success: function (data) {
+                    $("#binditemsData").html(data);
+                }
+            });
+           // _BindEditEstimateItemslist
+
+
+            //$("#binditemsData").html(data);
+
+
+            $('#myEstimateModal').modal("hide");
+
+        }
+
+
+    </script>
+    <html>
+    <body>
+        <div style="width:100px;">
+            <div id="loading" style="display:none">
+                <img id="loading-image" src="~/Content/assets/images/loader.gif" />
+            </div>
+        </div>
+        <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="jq-datatables-EstimatePopup" style="width:100%">
+            <thead>
+                <tr>
+                    <th data-hide="tablet,tabletlandscape,phone">Estimate Invoice number</th>
+                    <th data-class="expand">Customer</th>
+                    <th data-hide="tablet,tabletlandscape,phone">Amount</th>
+                    <th data-class="tablet,tabletlandscape,phone">Status</th>
+
+                    @*<th data-hide="tablet,tabletlandscape,phone">Customer ID</th>
+                        <th data-class="expand">Customer Name</th>
+                        <th data-hide="phone,smartphone">Mailing Address</th>
+                        <th data-hide="tabletlandscape,phone">Phone</th>
+                        <th data-hide="tabletlandscape,phone">Mobile</th>*@
+                </tr>
+            </thead>
+            <tbody></tbody>
+
+        </table>
+    </body>
+</html>
+
+

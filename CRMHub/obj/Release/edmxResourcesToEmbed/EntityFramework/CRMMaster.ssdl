@@ -1,0 +1,145 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="CRMClientsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Clients">
+    <Key>
+      <PropertyRef Name="ClientNumber" />
+    </Key>
+    <Property Name="ClientNumber" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ClientID" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="ConnectionString" Type="varbinary" MaxLength="500" />
+    <Property Name="ServerName" Type="varchar" MaxLength="100" />
+    <Property Name="CompanyName" Type="varchar" MaxLength="200" Nullable="false" />
+    <Property Name="Country" Type="varchar" MaxLength="3" />
+    <Property Name="Timesheet_Type" Type="varchar" MaxLength="100" />
+    <Property Name="Timesheet" Type="varchar" MaxLength="10" />
+    <Property Name="address1" Type="nvarchar" MaxLength="150" />
+    <Property Name="address2" Type="nvarchar" MaxLength="150" />
+    <Property Name="city" Type="char" MaxLength="50" />
+    <Property Name="companyphone" Type="nvarchar" MaxLength="12" />
+    <Property Name="fax" Type="nvarchar" MaxLength="15" />
+    <Property Name="companywebsite" Type="nvarchar" MaxLength="150" />
+    <Property Name="companylogo" Type="varchar" MaxLength="500" />
+    <Property Name="state" Type="char" MaxLength="50" />
+    <Property Name="zipcode" Type="nvarchar" MaxLength="50" />
+    <Property Name="createddate" Type="datetime" />
+    <Property Name="companytype" Type="nvarchar" MaxLength="50" />
+    <Property Name="expirydate" Type="datetime" />
+    <Property Name="active" Type="bit" />
+    <Property Name="site_type" Type="varchar" MaxLength="100" />
+    <Property Name="AttachmentUrl" Type="varchar" MaxLength="200" />
+  </EntityType>
+  <EntityType Name="Custom_DbError">
+    <Key>
+      <PropertyRef Name="ErrorId" />
+    </Key>
+    <Property Name="ErrorId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ErrorNo" Type="varchar" MaxLength="20" />
+    <Property Name="ErrorSeverity" Type="varchar" MaxLength="20" />
+    <Property Name="ErrorState" Type="varchar" MaxLength="20" />
+    <Property Name="ErrorLine" Type="varchar" MaxLength="20" />
+    <Property Name="ProcedureName" Type="varchar" MaxLength="100" />
+    <Property Name="ErrorMessage" Type="varchar(max)" />
+    <Property Name="CreatedOn" Type="datetime" />
+  </EntityType>
+  <EntityType Name="ExcelImportFiles">
+    <Key>
+      <PropertyRef Name="Fileid" />
+    </Key>
+    <Property Name="Fileid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Excelfile" Type="varchar" MaxLength="150" />
+    <Property Name="Status" Type="varchar" MaxLength="100" />
+    <Property Name="Module" Type="varchar" MaxLength="100" />
+    <Property Name="Importoption" Type="varchar" MaxLength="50" />
+    <Property Name="ClientId" Type="varchar" MaxLength="150" />
+    <Property Name="UId" Type="varchar" MaxLength="200" />
+    <Property Name="ActualFName" Type="varchar" MaxLength="200" />
+  </EntityType>
+  <EntityType Name="ImportHistory">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ExcelFile" Type="varchar" MaxLength="200" />
+    <Property Name="TotalRecords" Type="int" />
+    <Property Name="FailedRecords" Type="int" />
+    <Property Name="ClientId" Type="varchar" MaxLength="50" />
+    <Property Name="Filepath" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'Mentor_Clients.dbo.UserMaster' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="UserMaster">
+    <Key>
+      <PropertyRef Name="Userid" />
+    </Key>
+    <Property Name="Userid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Username" Type="varchar" MaxLength="100" />
+    <Property Name="password" Type="varchar" MaxLength="100" />
+    <Property Name="Name" Type="varchar" MaxLength="100" />
+    <Property Name="Email" Type="varchar" MaxLength="100" />
+  </EntityType>
+  <Function Name="CRM_CheckifUserExists" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Username" Type="varchar" Mode="In" />
+    <Parameter Name="password" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="CRM_Getclients" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="CRM_GetExcelfilesbasedonstatus" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Status" Type="varchar" Mode="In" />
+    <Parameter Name="Module" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="CRM_GetLogin" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Username" Type="varchar" Mode="In" />
+    <Parameter Name="Password" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="CRM_InsertClientDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="ClientID" Type="varchar" Mode="In" />
+    <Parameter Name="ClientName" Type="varchar" Mode="In" />
+    <Parameter Name="companytype" Type="nvarchar" Mode="In" />
+    <Parameter Name="Country" Type="varchar" Mode="In" />
+    <Parameter Name="address1" Type="nvarchar" Mode="In" />
+    <Parameter Name="address2" Type="nvarchar" Mode="In" />
+    <Parameter Name="city" Type="char" Mode="In" />
+    <Parameter Name="companywebsite" Type="nvarchar" Mode="In" />
+    <Parameter Name="ConnectionString" Type="varbinary" Mode="In" />
+    <Parameter Name="ServerName" Type="varchar" Mode="In" />
+    <Parameter Name="CompanyLogo" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="CRM_UpdateClientDetailsByClientId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="ClientID" Type="varchar" Mode="In" />
+    <Parameter Name="ClientName" Type="varchar" Mode="In" />
+    <Parameter Name="companytype" Type="nvarchar" Mode="In" />
+    <Parameter Name="Country" Type="varchar" Mode="In" />
+    <Parameter Name="address1" Type="nvarchar" Mode="In" />
+    <Parameter Name="address2" Type="nvarchar" Mode="In" />
+    <Parameter Name="city" Type="char" Mode="In" />
+    <Parameter Name="CompanyLogo" Type="varchar" Mode="In" />
+    <Parameter Name="companywebsite" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="CRM_UpdateImportExcel" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="FieldId" Type="nvarchar" Mode="In" />
+    <Parameter Name="Status" Type="varchar" Mode="In" />
+    <Parameter Name="Module" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="USP_VALIDATE_CLIENT_EXPIRY_BY_TYPE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="CLIENTID" Type="varchar" Mode="In" />
+    <Parameter Name="SITE_TYPE" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="VALIDATE_CLIENT_BY_TYPE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="CLIENTID" Type="varchar" Mode="In" />
+    <Parameter Name="SITE_TYPE" Type="varchar" Mode="In" />
+  </Function>
+  <EntityContainer Name="CRMClientsModelStoreContainer">
+    <EntitySet Name="Clients" EntityType="Self.Clients" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Custom_DbError" EntityType="Self.Custom_DbError" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ExcelImportFiles" EntityType="Self.ExcelImportFiles" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ImportHistory" EntityType="Self.ImportHistory" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UserMaster" EntityType="Self.UserMaster" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [UserMaster].[Userid] AS [Userid], 
+    [UserMaster].[Username] AS [Username], 
+    [UserMaster].[password] AS [password], 
+    [UserMaster].[Name] AS [Name], 
+    [UserMaster].[Email] AS [Email]
+    FROM [dbo].[UserMaster] AS [UserMaster]</DefiningQuery>
+    </EntitySet>
+  </EntityContainer>
+</Schema>

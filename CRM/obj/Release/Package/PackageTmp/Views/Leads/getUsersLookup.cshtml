@@ -1,0 +1,188 @@
+﻿@model CRMHub.ViewModel.UsersModel
+
+
+<script type="text/javascript">
+
+        $(document).ready(function () {
+
+            $('#loading').css('display', 'block');
+            BindUserSearchList();
+
+
+            $('#jq-datatables-UserPopup').on('length.dt', function (e, settings, len) {
+
+                $('#loading').css('display', 'block');
+            });
+
+            $('#jq-datatables-UserPopup').on('page.dt', function () {
+
+                $('#loading').css('display', 'block');
+            });
+
+
+            // $('#loading').css('display', 'none');
+        });
+        
+
+        function BindUserSearchList() {
+
+            $('#loading').css('display', 'block');
+            var responsiveHelper = undefined;
+            var breakpointDefinition = {
+                tablet: 1024,
+                tabletlandscape: 768,
+                phone: 480
+            };
+            var tableElement = $('#jq-datatables-UserPopup');
+
+            tableElement.dataTable({
+                autoWidth: false,
+                preDrawCallback: function () {
+                    if (!responsiveHelper) {
+                        responsiveHelper = new ResponsiveDatatablesHelper(tableElement, breakpointDefinition);
+                    }
+                },
+                rowCallback: function (nRow) {
+                    responsiveHelper.createExpandIcon(nRow);
+                },
+                drawCallback: function (oSettings) {
+                    responsiveHelper.respond();
+                },
+             
+                "aLengthMenu": [[10, 25, 50], [10, 25, 50]],
+                
+                "pagingType": "full_numbers",
+                //"processing": true,
+                "bFilter": false,
+                "serverSide": true,
+
+                "sAjaxSource": '@Url.Action("getUsersLookup", "Leads")',
+                "fnServerParams": function (aoData) {
+                    aoData.push(
+                        { "name": "Adkeyword", "value": " "},
+                       
+                        { "name": "Ademail", "value": " "}
+                        //{ "name": "ContactSkillId", "value": "" }
+                        );
+
+                },
+                "fnServerData": function (sSource, aoData, fnCallback) {
+                    $.ajax({
+                        "dataType": 'json',
+                        "contentType": "application/json; charset=utf-8",
+                        "type": "GET",
+                        "url": sSource,
+                        "data": aoData,
+                        "success":
+                                    function (msg) {
+                                        //var json = jQuery.parseJSON(msg.d);
+                                        $('#loading').css('display', 'none');
+                                        fnCallback(msg);
+                                        //$("#jq-datatables-example").show();
+                                    }
+                    });
+                },
+                "asStripeClasses": ['odd gradeX', 'even gradeC'],
+                "aoColumnDefs": [
+                    {
+                        "targets": [0], "visible": true, "bSortable": false, "mDataProp": "UserId",
+                        "render": function (data, type, row) {
+                            if (row["UserId"] != 1) {
+                                return "<input type=\"checkbox\" name=\"chkitems\" class=\"case\" id=\"chkRow_" + row["UserId"] + "\"  data-UserId=\"" + row["UserId"] + "\" data-RoleName=\"" + row["roleName"] + "\"/>";
+                            }
+                            else {
+                                return "";
+                            }
+
+
+
+                        }
+                    },
+                    {
+
+                        "targets": [1], "visible": true, "bSortable": true, "mDataProp": "FirstName",
+                        "render": function (data, type, row) {
+
+                            return "<a href=\"#\" onclick=\"OpenUsersDetail('" + row["UserId"] + "');\">" + row["FirstName"] + "</a>";
+                        }
+                    },
+                    {
+
+                        "targets": [2], "visible": true, "bSortable": true, "mDataProp": "Email",
+
+                    },
+                    { "targets": [3], "visible": true, "bSortable": true, "mDataProp": "Phone" },
+                    { "targets": [4], "visible": true, "bSortable": true, "mDataProp": "City" },
+                    { "targets": [5], "visible": true, "bSortable": true, "mDataProp": "stateName" },
+                    { "targets": [6], "visible": true, "bSortable": true, "mDataProp": "roleName" },
+                     { "targets": [7], "visible": true, "bSortable": true, "mDataProp": "branchName" },
+                ],
+                "fnDrawCallback": function (oSettings) {
+                    // $('#loading').css('display', 'none');
+                    //$("#HD_PageIndex").val(oSettings._iDisplayStart);
+                    //$("#HD_PageSize").val(oSettings._iDisplayLength);
+
+
+                    //if ($("#HD_IsFromBack").val() == 'YES') {
+                    //    $("#HD_IsFromBack").val('NO');
+                    //}
+                    $('#loading').css('display', 'none');
+                }
+            }).api();
+
+
+            $('#jq-datatables-UserPopup_wrapper .table-caption').text('');
+
+            $('#jq-datatables-UserPopup_wrapper .dataTables_filter input').attr('placeholder', 'Search...');
+
+
+
+        }
+        function OpenCompanyDetail(AccountId, Account_Name, Phone, MailingAddress) {
+
+
+           
+
+            var compid = AccountId;
+            var parentComp = Account_Name;
+
+            var compPhone = Phone;
+            var compaddr = MailingAddress;
+            //alert(compaddr);
+
+            if (compaddr != "null")
+                compaddr = compaddr;
+            else compaddr = "";
+            $('#txtParentAccountid').val(compid);
+            $('#txtAccountName').val(parentComp);
+            $('#txtContactPhone').val(compPhone);
+            $('#txtAddressMailing').val(compaddr);
+           // $('#ddlStatus').val(compstatus);
+
+            $('#myModal').modal("hide");
+
+
+        }
+
+</script>
+
+<table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="jq-datatables-UserPopup" width="100%">
+    <thead>
+        <tr>
+
+            <th>
+                <input type="checkbox" id="chkHeader" class="sorting_disabled" style="width:25px" />
+            </th>
+            <th data-class="expand">Full Name</th>
+            <th data-hide="phone">E-mail</th>
+            <th data-hide="tabletlandscape,phone">Phone</th>
+            <th data-class="tabletlandscape,phone">City</th>
+            <th data-hide="tablet,tabletlandscape,phone">State</th>
+            <th data-hide="tablet,tabletlandscape,phone">Level</th>
+            <th data-hide="tablet,tabletlandscape,phone">Office</th>
+
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+

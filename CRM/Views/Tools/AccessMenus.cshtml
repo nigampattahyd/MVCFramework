@@ -1,0 +1,215 @@
+﻿@model CRMHub.ViewModel.RoleMenuModel
+@{
+    ViewBag.Title = "AccessMenus";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+}
+
+
+<div class="widget">
+    <div class="widget-header bordered-bottom bordered-themesecondary">
+        <i class="widget-icon fa fa-user themesecondary"></i>
+        <span class="widget-caption themesecondary">Access Menus</span>
+    </div><!--Widget Header-->
+    <div class="widget-body">
+        <div class="row">
+            <div class="col-sm-12" style="padding-bottom:15px;">
+                <div class="col-sm-6">
+                    <div class="form-group no-margin-hr">
+                        <label class="control-label">Role :</label>
+
+                        @Html.DropDownListFor(m => m.users.RoleId, new SelectList(Model.lstRoles, "roleId", "roleName"), new { @class = "form-control input-sm", @id = "drpRole" })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="col-sm-12">
+                    <div id="divAccessControl">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12" style="text-align:right; padding-top:15px; border-top:1px solid #cacaca;">
+                <a id="aMenuSave" class="btn btn-flat btn-labeled btn-primary" href="#">
+                    <i class="btn-label icon fa fa fa-save"> </i>Save
+                </a>
+                <a class="btn btn-flat btn-labeled btn-primary" href="#">
+                    <i class="btn-label icon fa fa-times"> </i>
+                    Cancel
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var checked_ids = [];
+    var checkedList = "";
+
+    var MenuList = [];
+
+    var globalx = 1;
+
+    //var RoleMenuList = new Array();
+    $(document).ready(function () {
+
+        //
+        // alert(globalx);
+        checkedList = '@ViewBag.listSelectedRoleMenu';
+
+
+        //getMenu();
+        FillJSTree();
+    });
+
+    function getMenu() {
+        //
+
+        $.ajax({
+            url: "GetMenus",
+            type: "GET",
+            async: false,
+            dataType: "JSON",
+            success: function (data) {
+
+                MenuList = JSON.stringify(data);
+                FillJSTree(MenuList, checkedList);
+            },
+            error: function () {
+
+            }
+        })
+    }
+
+    function FillJSTree() {
+        //
+
+        $("#divAccessControl").jstree({
+            "core": {
+
+                "data": {
+                    "url": "GetMenus",
+                    "type": "GET",
+                    "async": false,
+                    "dataType": "json",
+                    "success": function (node) {
+                        return JSON.stringify(node);
+                    }
+                }
+            },
+            "checkbox": {
+                "real_checkboxes": true,
+                "checked_parent_open": true,
+                //"jstree-undetermined": true
+
+            },
+            "plugins": ["checkbox", "json_data"]
+        }).bind("loaded.jstree", function (e, data) {
+            if (checkedList != "") {
+                $(checkedList.split(',')).each(function () {
+
+                    $("#divAccessControl").jstree("check_node", this.valueOf());
+                });
+
+            }
+        });
+
+    }
+
+
+    $('#aMenuSave').click(function () {
+        
+        if ($('#drpRole option:selected').val() == "-1") {
+            $.growl.error({ title: "Error", message: "Please Select Role.", size: 'large' });
+            return false;
+        }
+        globalx = 2;
+        var RoleMenuList = new Array();
+        checked_ids = $("#divAccessControl").jstree("get_selected");
+        var roleid = $('#drpRole').val();
+        if (checked_ids.length > 0) {
+            for (var i = 0; i < checked_ids.length; i++) {
+
+                var RoleMenuIDs =
+                    { menuId: 0, roleId: 0, Ischecked: "" };
+                RoleMenuIDs.menuId = checked_ids[i];
+                RoleMenuIDs.roleId = roleid;
+                RoleMenuIDs.Ischecked = false;
+
+                RoleMenuList.push(RoleMenuIDs);
+            }
+        }
+        else {
+            var RoleMenuIDs =
+                   { menuId: 0, roleId: 0, Ischecked: "" };
+            RoleMenuIDs.menuId = 0;
+            RoleMenuIDs.roleId = roleid;
+            RoleMenuIDs.Ischecked = false;
+            RoleMenuList.push(RoleMenuIDs);
+        }
+
+        $("#divAccessControl").find(".jstree-undetermined").each(function (i, element) {
+            //alert($(element).closest('.jstree-node').attr("id"));
+            var RoleMenuIDs =
+                  { menuId: 0, roleId: 0, Ischecked: "" };
+
+            RoleMenuIDs.menuId = $(element).closest('.jstree-node').attr("id");
+            RoleMenuIDs.roleId = roleid;
+            RoleMenuIDs.Ischecked = true;
+            RoleMenuList.push(RoleMenuIDs);
+
+        });
+
+        RoleMenuList.sort(function (a, b) {
+            return parseFloat(a.menuId) - parseFloat(b.menuId);
+        });
+
+        $.ajax({
+            url: "InsertMenus",
+            type: "POST",
+            data: { 'RoleMenuDT': JSON.stringify(RoleMenuList) },
+            success: function () {
+                //alert('Menu Updated for Role');
+                $.growl.notice({ title: "Success", message: "Menu changes saved successfully.", size: 'large' });
+            },
+            error: function () {
+
+            }
+        })
+
+
+
+    });
+
+    $('#drpRole').change(function () {
+        $("#divAccessControl").jstree('destroy');
+        $.ajax({
+            url: "changeRole",
+            type: 'GET',
+            async: false,
+            data: { 'roleId': $(this).val() },
+            success: function (data) {
+
+                //if (data != null) {
+                checkedList = data;
+                FillJSTree();
+                //}
+            },
+            error: function (error) {
+
+            }
+        })
+    })
+
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#activemenu").addClass("open active");
+        $('.mm-text').closest('li').each(function () {
+            $(this).removeClass('active');
+        });
+        $('.mm-text').eq(1).closest('li').addClass('active');
+    });
+    </script>

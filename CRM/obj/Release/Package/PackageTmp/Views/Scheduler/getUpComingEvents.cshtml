@@ -1,0 +1,329 @@
+﻿@model CRMHub.EntityFramework.CalendarEventRequest
+
+@{
+    ViewBag.Title = "Scheduler Requests";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+}
+
+
+<div class="widget">
+    <div class="widget-header bordered-bottom bordered-themesecondary">
+        <i class="widget-icon fa fa-tags themesecondary"></i>
+        <span class="widget-caption themesecondary">Request Events</span>
+    </div><!--Widget Header-->
+    <div class="widget-body  no-padding">
+        <div class="tickets-container">
+            <div class="row">
+                <!-- col-sm-6 -->
+                <div id="pnlSrchCriteria">
+                    <div class="col-sm-3">
+                        <div class="input-group">
+                            @*<input type="text" class="form-control" placeholder="Search these ventures">*@
+                            @Html.TextBoxFor(m => m.Keyword, new { @id = "txtevents", @class = "form-control", @placeholder = "Search Upcoming Events", @maxlength = "100" })
+                            <span class="input-group-btn">
+                                <span id="searchclear" class="glyphicon glyphicon-remove-circle" title="Clear Search"></span>
+                                <button class="btn btn-default" type="button" id="btnSearchUPEvents"><i class="glyphicon glyphicon-search"></i></button>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-sm-9" style="text-align:right;">
+                        <ul>
+                            @*<li class="btn btn-flat btn-labeled btn-primary" id="lnkaddnewreq" style="display:none;">
+
+                                <a style="color: #fff; text-decoration: none; padding: 0px; font-weight: normal" href="@Url.Action("Index", "Scheduler")" id="lnkAddnew">
+                                    <span class="btn-label icon  fa fa-plus-circle" style="margin-right:6px;"> </span>
+                                    Add New
+                                </a>
+                            </li>*@
+                            @*<li class="btn btn-flat btn-labeled btn-primary">
+                                    <a style="color: #fff; text-decoration: none; padding: 0px; font-weight: normal" id="DeleteCompanies" onclick="deleteSelectedMentor()">
+                                        <span class="btn-label icon  fa  fa-trash-o" style="margin-right:6px;"> </span>
+                                        Delete
+                                    </a>
+                                </li>*@
+                        </ul>
+                    </div>
+
+
+                </div>
+                <div class="col-sm-12 col-xs-12">
+                    <div class="table-primary table-striped">
+                        <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="tblupcomingevents" style="width:100%;">
+                            <thead>
+                                <tr>
+                                    <th width="39" style="display:none;">
+                                        <input type="checkbox" id="chkHeader" />
+                                    </th>
+                                    <th data-class="expand"><i class="fa fa-area-chart"></i> Title</th>
+                                    <th data-class="Phone"><i class="fa fa-briefcase"></i> Created Date</th>
+                                    <th data-hide="phone"><i class="fa fa-user-secret"></i> Location</th>
+                                    <th data-hide="tablet,tabletlandscape,phone"><i class="fa fa-calendar"></i> Date 1</th>
+                                    <th data-hide="tablet,tabletlandscape,phone"><i class="fa fa-calendar"></i> Date 2</th>
+                                    <th data-hide="tablet,tabletlandscape,phone"><i class="fa  fa-calendar"></i> Date 3</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+    
+        var roleid = JSON.parse('@Html.Raw(Json.Encode(ViewData["RoleId"]))');
+        if (roleid != "4")
+        {
+            $("#lnkaddnewreq").show();
+        }
+        else {
+            $("#lnkaddnewreq").hide();
+        }
+        $("#chkHeader").click(function () {
+            $('.case').prop("checked", this.checked);
+        });
+
+        $('#tblupcomingevents tbody').click(function () {
+            if ($('#tblupcomingevents input[name="chkItem"]:checked').length == $('#tblupcomingevents input[name="chkItem"]').length) {
+                $("#chkHeader").prop("checked", true);
+            } else {
+                $("#chkHeader").prop("checked", false);
+            }
+        });
+
+        BindUpcomingEvents();
+
+    });
+
+    function BindUpcomingEvents() {
+        
+        var responsiveHelper = undefined;
+        var breakpointDefinition = {
+            desktop: Infinity,
+            tablet: 1024,
+            tabletlandscape: 768,
+            phone: 480
+        };
+        var tableElement = $('#tblupcomingevents');
+        tableElement.dataTable({
+            autoWidth: false,
+            preDrawCallback: function () {
+                if (!responsiveHelper) {
+                    responsiveHelper = new ResponsiveDatatablesHelper(tableElement, breakpointDefinition);
+                }
+            },
+            rowCallback: function (nRow) {
+                responsiveHelper.createExpandIcon(nRow);
+            },
+            drawCallback: function (oSettings) {
+                responsiveHelper.respond();
+            },
+            //"order": [[$("#HD_SortValue").val(), "" + $("#HD_SortDirection").val() + ""]],
+            "aLengthMenu": [[10, 25, 50, 100], [10, 25, 50, 100]],
+            //"iDisplayStart": parseInt($("#HD_PageIndex").val()),
+            //"iDisplayLength": parseInt($("#HD_PageSize").val()),   txtOwnership
+            "pagingType": "full_numbers",
+            //"processing": true,
+            "serverSide": true,
+            "bFilter": false,
+            "sAjaxSource": "../Scheduler/getUpComingEventsbyLoggedId",
+            'columnDefs': [{ 'orderable': false, 'targets': 0, 'orderable': false, 'targets': 7, }], // hide sort icon on header of first column
+            'aaSorting': [[1, 'asc']], // start to sort data in second column
+
+            "fnServerParams": function (aoData) {
+
+                aoData.push(
+
+                    { "name": "Keyword_Event", "value": "" + $("#txtevents").val() + "" }
+                    );
+            },
+            "fnServerData": function (sSource, aoData, fnCallback) {
+                $.ajax({
+                    "dataType": 'json',
+                    "contentType": "application/json; charset=utf-8",
+                    "type": "GET",
+                    "url": sSource,
+                    "data": aoData,
+                    "success":
+                                function (msg) {
+                                    fnCallback(msg);
+                                }
+                });
+            },
+            "asStripeClasses": ['odd gradeX', 'even gradeC'],
+            "aoColumnDefs": [
+              {
+                  "targets": [0], "visible": false, "bSortable": false, "mDataProp": "ID",
+                  "render": function (data, type, row) {
+                      return "<input name=\"chkItem\" class =\"case\" type=\"checkbox\"  id=\"chkRow_" + row["ID"] + "\"data-val-1=\"" + row["ID"] + "\" />";
+                  }
+              },
+
+                {
+                    "targets": [1], "visible": true, "bSortable": true, "mDataProp": "Title"
+                },
+                 { "targets": [2], "visible": true, "bSortable": true, "mDataProp": "strCreatedDate" },
+                { "targets": [3], "visible": true, "bSortable": true, "mDataProp": "Location" },
+
+                { "targets": [4], "visible": true, "bSortable": true, "mDataProp": "strDate1" },
+                { "targets": [5], "visible": true, "bSortable": true, "mDataProp": "strDate2" },
+
+                { "targets": [6], "visible": true, "bSortable": true, "mDataProp": "strDate3" },
+
+                 {
+                     "targets": [7], "visible": true, "bSortable": false, "mDataProp": "",
+                     "render": function (data, type, row) {
+                         return "<a href=\"#\" onclick=\"return OpenEventsDetail('" + row["ID"] + "')\">Details</a>";
+                     }
+                 },
+               
+
+            ],
+            "fnDrawCallback": function (oSettings) {
+            }
+        }).api();
+    }
+
+    
+    $('#btnSearchUPEvents').click(function () {
+        $('#searchclear').show();
+        $('#loading').css('display', 'block');
+        $("#tblupcomingevents").dataTable().fnDestroy();
+        BindUpcomingEvents();
+
+        $('#tblupcomingevents').on('length.dt', function (e, settings, len) {
+
+            $('#loading').css('display', 'block');
+        });
+
+        $('#tblupcomingevents').on('page.dt', function () {
+
+            $('#loading').css('display', 'block');
+        });
+
+        $("#searchclear").click(function () {
+            
+            $("#txtevents").val('');
+            $('#btnSearchUPEvents').click();
+            $('#searchclear').hide();
+        });
+    function deleteSelectedMentor() {
+        if ($('#tblupcomingevents input[name="chkItem"]:checked').length > 0) {
+            var flag = confirm('Are you sure you want to delete this Mentor?');
+            if (flag) {
+
+
+                var MentorDelete = [];
+
+                $("#tblupcomingevents input:checkbox:checked").each(function (i) {
+                    if (this.id != "chkHeader") {
+                        var MentorId = $(this).attr("data-val-1");
+
+                        MentorDelete.push(new MentorsList(MentorId));
+                    }
+                });
+                var postData = JSON.stringify(MentorDelete);
+                $.ajax({
+                    url: "DeleteMentors",
+                    type: "POST",
+                    contentType: 'application/json',
+                    dataType: 'json',
+                    async: false,
+                    data: postData,
+                    success: function (data) {
+
+                        if (data == true) {
+                            $.growl.notice({ title: "Success", message: "Mentors Deleted Successfully", size: 'large' });
+                            $("#tblActivities").dataTable().fnDestroy();
+                            document.location.href = document.location.href;
+                            // location.reload();
+                            BindUpcomingEvents();
+                        }
+                        else {
+                            $.growl.error({ title: "Fail", message: "Mentors Not Deleted .", size: 'large' });
+                        }
+                    },
+                    error: function () {
+
+                    }
+                });
+            }
+
+        }
+        else
+            $.growl.error({ title: "Fail", message: "No Mentor selected!.", size: 'large' });
+    }
+
+    function MentorsList(MentorId) {
+        this.MentorId = MentorId;
+    }
+
+
+    function deleteMentor(MentorId) {
+
+        var flag = confirm('Are you sure you want to delete this Mentor?');
+        if (flag) {
+            $.ajax({
+                url: "DeleteMentor",
+                type: "POST",
+                async: false,
+                data: { mentorIds: MentorId.toString() },
+                success: function (data) {
+                    // alert(data);
+                    if (data == "True") {
+                        $.growl.notice({ title: "Success", message: "Mentor Deleted Successfully", size: 'large' });
+                        $("#tblupcomingevents").dataTable().fnDestroy();
+                        document.location.href = document.location.href;
+                        //location.reload();
+                        BindMentors();
+                    }
+                    else {
+                        $.growl.error({ title: "Fail", message: "Mentor Not Deleted .", size: 'large' });
+                    }
+                },
+                error: function () {
+
+                }
+            });
+        }
+    }
+
+ 
+
+    });
+
+    function OpenEventsDetail(Appointmentid)
+    {
+        
+        var roleid = JSON.parse('@Html.Raw(Json.Encode(ViewData["RoleId"]))');
+        
+        if(roleid=="2" || roleid=="1" )
+        {
+            window.location = "EditVentureAppointment?Appointmentid=" + Appointmentid;
+        }
+        else if(roleid=="4")
+        {
+            window.location = "EditAppointment?Appointmentid=" + Appointmentid + "&Page=Scheduler";
+        }
+    }
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $(".activemenu").removeClass("open active")
+        $(".activemenu").eq(1).addClass("open active");
+        $('.mm-text').closest('li').each(function () {
+            $(this).removeClass('active');
+        })
+        $('.mm-text').eq(1).closest('li').addClass('active');
+
+    });
+</script>
+
+
+

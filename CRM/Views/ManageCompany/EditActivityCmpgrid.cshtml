@@ -1,0 +1,319 @@
+﻿@model CRMHub.ViewModel.ActivityModel
+@{
+    ViewBag.Title = "EditActivityCmpgrid";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+}
+
+<link href="~/Content/assets/css/pixel-admin.min.css" rel="stylesheet" />
+<script type="text/javascript">
+    $(document).ready(function () {
+        @*var UpdateCompanyActivity = '@ViewBag.UpdateCompanyActivity';
+
+        if (UpdateCompanyActivity != "") {
+            //$('#ErrorMessages').html('Company Activity Updated Successfully.');
+            $.growl.notice({ title: "Success", message: "Company Activity Updated Successfully.", size: 'large' });
+        }*@
+        
+    });
+
+
+</script>
+<style type="text/css">
+    .pfi-clear {
+        display: none !important;
+    }
+</style>
+
+
+
+@using (Html.BeginForm("EditActivityCmpgrid", "ManageCompany", FormMethod.Post, new { enctype = "multipart/form-data",@id="EditActivity" }))
+{
+
+    <div class="widget">
+        <div class="widget-header bordered-bottom bordered-themesecondary">
+            <i class="widget-icon fa fa-user themesecondary"></i>
+            <span class="widget-caption themesecondary">Edit Activity</span>
+        </div><!--Widget Header-->
+        <div class="widget-body">
+            <div class="row">
+                <div class="col-sm-6">
+                    <asp:Label ID="lblMessage" runat="server" ForeColor="Red"></asp:Label>
+                    <span id="errorsymbol" style="color:red;display:none;margin-left:5px;" class="fa fa-exclamation-circle"></span>
+                    <div id="ErrorMessages" style="margin-left:20px;color:red;font-size:15px;margin-top:-19px">
+
+                    </div>
+                </div>
+                <div class="col-sm-6" style="text-align:right;">
+                    <button class="btn btn-flat btn-labeled btn-primary" id="btnSave">
+                        <i class="btn-label icon fa fa-edit"></i>Update
+                    </button>
+                    <a class="btn btn-flat btn-labeled btn-primary" href="@Url.Action("ActivitygridBind", "ManageCompany")">
+                        <i class="btn-label icon fa fa-backward"> </i>
+                        Back
+                    </a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="form-group no-margin-hr">
+                        <label class="control-label">Module :<span style="color: red">*</span></label>
+                        @Html.DropDownListFor(m => m.activity.ModuleID, new SelectList(Model.ListModuletype, "ID", "AccountTypeName"), new { @id = "ddlModule", @class = "form-control input-sm", @validate = "dropdown", @data_val_required = "Module Type" })
+                        @Html.HiddenFor(m => m.activity.ID, new { @id = "txtActivityId" })
+                    </div>
+                </div>
+               
+            </div>
+            <div class="row">
+
+
+                <div class=" col-sm-4">
+                    <div class="form-group no-margin-hr">
+                        <label class="control-label">Type :<span style="color: red">*</span></label>
+                        @Html.DropDownListFor(m => m.activity.ActivityTypeID, new SelectList(Model.TypeList, "Aid", "name"), new { @id = "ddlHistoryType", @class = "form-control input-sm", @validate = "dropdown", @data_val_required = "Type" })
+                    </div>
+
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-group no-margin-hr">
+                        <label class="control-label">Priority :<span style="color: red">*</span></label>
+                        @Html.DropDownListFor(m => m.activity.PriorityID, new SelectList(Model.ListPriority, "ID", "PriorityName"), new { @id = "ddlPriority", @class = "form-control input-sm", @validate = "dropdown", @data_val_required = "Priority" })
+
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-group no-margin-hr">
+                        <label class="control-label">Status :<span style="color: red">*</span></label>
+                        @Html.DropDownListFor(m => m.activity.StatusID, new SelectList(Model.StatusList, "ID", "StatusName"), new { @id = "ddlStatus", @class = "form-control input-sm", @validate = "dropdown", @data_val_required = "Status", disabled = "disabled" })
+                    </div>
+
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-group no-margin-hr">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <label class="control-label">Due Date :<span style="color: red">*</span></label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="input-group datepicker1">
+                                    @Html.TextBoxFor(m => m.activity.DueDate, "{0:MM/dd/yyyy}", new { @class = "form-control input-sm", @maxlength = 12, @id = "txtDate", @validate = "Required", @data_val_required = "Due Date" })
+                                    <span class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-group no-margin-hr">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <label class="control-label">Reminder Date :<span style="color: red">*</span></label>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="input-group datepicker2">
+                                    @Html.TextBoxFor(m => m.activity.RemindDate, "{0:MM/dd/yyyy}", new { @class = "form-control input-sm", @id = "txtReminder", @validate = "Required", @data_val_required = "Reminder Date" })
+                                    <span class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-group no-margin-hr" id="Td12">
+                        <label class="control-label" id="lblAssignTo">Assigned to :</label>
+                        <div id="Table1" class="input-group">
+                            @Html.HiddenFor(m => m.activity.AssignedTo, new { @id = "hdassignedId" })
+                            @Html.TextBoxFor(m => m.activity.AssignedName, new { @id = "txtAssignedname", @class = "form-control input-sm", @maxlength = "50", @placeholder = "Type to search Users", @validate = "Required", @data_val_required = "Assigned To" })
+                            <span class="input-group-addon" type=" button" style="cursor:pointer;">
+                                <i class="fa fa-search"></i>
+                            </span>
+                        </div>
+                        @Html.ValidationMessageFor(m => m.activity.AssignedName, "", new { @class = "text-danger" })
+                        <span class="text-danger" id="spnInvalidVenture" style="display:none;">Invalid User</span>
+                    </div>
+                </div>
+
+                <div class="col-sm-12">
+                    <div class="form-group no-margin-hr">
+                        <label class="control-label">Comment :</label>
+                        @Html.TextAreaFor(m => m.activity.Notes, new { @id = "txtHistoryDetail", @class = "textEditor" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<script type="text/javascript">
+    $(".textEditor").jqte();
+
+    $(function () {
+        
+        var dateToday = new Date();
+
+        var currentDate = (dateToday.getMonth() + 1) + '/' + dateToday.getDate() + '/' + dateToday.getFullYear();
+        
+        var remainderdate = $("#txtReminder").val();
+        var duedate = $("#txtDate").val();
+        $(".datepicker1").datetimepicker({
+            format: 'L',
+        }).on('dp.change', function (e) {
+            
+            remainderdate = $("#txtReminder").val();
+            $('.datepicker1').data("DateTimePicker").minDate(currentDate);
+        });
+
+        $(".datepicker2").datetimepicker({
+            format: 'L',
+        }).on('dp.change', function (e) {
+            
+            remainderdate = $("#txtReminder").val();
+            duedate = $("#txtDate").val();
+            $('.datepicker2').data("DateTimePicker").maxDate(duedate);
+            $('.datepicker2').data("DateTimePicker").minDate(currentDate);
+
+        });
+    });
+
+
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+      
+        if ($("#ddlStatus").val() == "2") {
+            $("#EditActivity :input").prop("disabled", true);
+            $("#ddlStatus").prop("disabled", false);
+        }
+        else {
+            $("#EditActivity :input").prop("disabled", false);
+        }
+      
+            $("#Activities").addClass("active");
+    
+        $(function () {
+            $("#txtAssignedname").autocomplete({
+
+                source: function (request, response) {
+                    var moduleid = $("#ddlModule").val();
+                    var moduleobj = {};
+                    moduleobj.prefix = request.term;
+                    moduleobj.moduleid = moduleid;
+                    $.ajax({
+                        url: '../ManageCompany/AutoComplete/',
+                        data: JSON.stringify(moduleobj),
+                        dataType: "json",
+                        type: "POST",
+                        contentType: "application/json; charset=utf-8",
+                        success: function (data) {
+
+                            response($.map(data, function (item) {
+
+                                if (item.LastName != null) {
+                                    return { label: item.FirstName + ' ' + item.LastName, value: item.FirstName + ' ' + item.LastName, value1: item.UserId };
+                                }
+                                else {
+                                    return { label: item.FirstName, value: item.FirstName, value1: item.UserId };
+                                }
+                            }))
+                        },
+                        error: function (response) {
+                            //alert(response.responseText);
+                        },
+                        failure: function (response) {
+                            //alert(response.responseText);
+                        }
+                    });
+                },
+                select: function (e, i) {
+
+                    //$("#txtVentureName").val(i.item.label);
+                    $("#hdassignedId").val(i.item.value1);
+                    //alert($("#objMentor_VentureId").val());
+                },
+                minLength: 1,
+                change: function (event, ui) {
+
+                    if (!ui.item) {
+                        this.value = '';
+                        $('#spnInvalidVenture').show();
+                    } else {
+                        // Populate your hidden input.
+                        $('#spnInvalidVenture').hide();
+                    }
+                }
+            });
+        });
+    });
+    $("#ddlStatus").change(function () {
+        if($("#ddlStatus").val()=="1")
+        {
+            $("#EditActivity :input").prop("disabled", false);
+        }
+        
+    })
+</script>
+
+<div class="modal fade" id="myCompanyModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Company List</h4>
+            </div>
+            <div class="modal-body">
+
+                <div class="row">
+                    <div style="text-align:left;font-size:12px;padding:5px">Note : Click Company Name To Select Record.</div>
+                    <div class="col-sm-12">
+
+                        <div class="table-primary table-striped" id="tblCompanyList">
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="modal fade" id="myUserModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Users List</h4>
+            </div>
+            <div class="modal-body">
+
+                <div class="row">
+                    <div style="text-align:left;font-size:12px;padding:5px">Note : Click User Name To Select Record.</div>
+                    <div class="col-sm-12">
+
+                        <div class="table-primary table-striped" id="tblUserList">
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+

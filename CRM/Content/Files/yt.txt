@@ -1,0 +1,14 @@
+
+DataTable dtMisMatch = (from a in datatable1.AsEnumerable()
+                           join ab in exceptAB on a["ID"].ToString() equals ab.MobileNo
+                           select a).CopyToDataTable();
+
+
+  DataTable dtMerged = 
+        (from a in dt1.AsEnumerable()
+                join b in dt2.AsEnumerable()
+                                  on 
+        a["Query"].ToString() equals b["Query"].ToString()
+                                into g
+                      where g.Count() > 0
+               select a).CopyToDataTable();

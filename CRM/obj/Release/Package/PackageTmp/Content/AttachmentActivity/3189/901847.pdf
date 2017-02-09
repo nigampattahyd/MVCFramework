@@ -1,0 +1,1348 @@
+%PDF-1.1
+1 0 obj
+<<
+/Creator (Developer 2000)
+/CreatorDate (Thu Jun 28  2007)
+/Author (Oracle Reports)
+/Producer (Oracle PDF driver)
+/Title (10059324.pdf)
+>>
+endobj
+3 0 obj
+<<
+/Type /Pages
+/Kids 4 0 R
+/Count 5 0 R
+>>
+endobj
+7 0 obj
+<</Length 8 0 R>>
+stream
+BT
+22.52 772.48 TD
+/F0 10.00 Tf
+(U.S. Department of the Interior) Tj
+ET
+0.96 w
+BT
+22.52 760.48 TD
+(Minerals Management Service \(MMS\)) Tj
+ET
+BT
+408.00 772.48 TD
+(OMB Control Number 1010-0141) Tj
+ET
+BT
+390.00 760.48 TD
+(OMB Approval Expires 08/31/2008) Tj
+ET
+BT
+166.52 744.72 TD
+/F0 12.00 Tf
+(Form MMS-133 - Electronic Version) Tj
+ET
+1.20 w
+BT
+192.76 731.24 TD
+(Well Activity Report \(WAR\)) Tj
+ET
+0.00 w
+0 J
+0 j
+22.52 724.48 m 576.00 724.48 l S
+22.52 722.96 m 576.00 722.96 l S
+BT
+485.28 49.48 TD
+/F0 10.00 Tf
+(1) Tj
+ET
+0.96 w
+BT
+430.52 48.72 TD
+/F0 12.00 Tf
+(Page:) Tj
+ET
+1.20 w
+BT
+513.36 48.72 TD
+(of) Tj
+ET
+BT
+22.52 49.48 TD
+/F0 10.00 Tf
+(28-JUN-2007 14:05:34 PM) Tj
+ET
+0.96 w
+BT
+550.52 49.48 TD
+(2) Tj
+ET
+BT
+121.52 708.76 TD
+/F1 10.00 Tf
+(177104027800) Tj
+ET
+0.48 w
+BT
+22.52 708.76 TD
+/F0 10.00 Tf
+(Base API Number) Tj
+ET
+0.96 w
+BT
+303.00 708.76 TD
+/F1 10.00 Tf
+(15-JUN-2007) Tj
+ET
+0.48 w
+BT
+209.24 708.76 TD
+/F0 10.00 Tf
+(WAR Start Date) Tj
+ET
+0.96 w
+BT
+471.76 708.76 TD
+/F1 10.00 Tf
+(16-JUN-2007) Tj
+ET
+0.48 w
+BT
+390.76 708.76 TD
+/F0 10.00 Tf
+(WAR End Date) Tj
+ET
+0.96 w
+BT
+94.52 692.24 TD
+/F1 10.00 Tf
+(28-JUN-2007) Tj
+ET
+0.48 w
+BT
+22.52 692.24 TD
+/F0 10.00 Tf
+(Accept Date) Tj
+ET
+0.96 w
+BT
+300.04 692.24 TD
+/F1 10.00 Tf
+(15-JUN-2007) Tj
+ET
+0.48 w
+BT
+174.76 692.24 TD
+/F0 10.00 Tf
+(Operation Start Date) Tj
+ET
+0.96 w
+BT
+492.84 692.24 TD
+/F1 10.00 Tf
+() Tj
+ET
+0.48 w
+BT
+378.80 692.24 TD
+/F0 10.00 Tf
+(Operation End Date) Tj
+ET
+0.96 w
+BT
+78.80 675.76 TD
+/F1 10.00 Tf
+(00078 Chevron U.S.A. Inc.) Tj
+ET
+0.48 w
+BT
+22.52 675.76 TD
+/F0 10.00 Tf
+(Operator) Tj
+ET
+0.96 w
+0.00 w
+22.52 569.28 553.52 56.24 re S
+BT
+22.52 603.68 TD
+/F1 10.00 Tf
+(G02318) Tj
+ET
+0.48 w
+BT
+22.52 615.72 TD
+/F0 10.00 Tf
+(Lease) Tj
+ET
+0.96 w
+BT
+130.52 603.68 TD
+/F1 10.00 Tf
+(EI) Tj
+ET
+0.48 w
+BT
+130.52 615.72 TD
+/F0 10.00 Tf
+(Area) Tj
+ET
+0.96 w
+BT
+209.36 603.68 TD
+/F1 10.00 Tf
+(339) Tj
+ET
+0.48 w
+BT
+209.36 615.72 TD
+/F0 10.00 Tf
+(Block) Tj
+ET
+0.96 w
+BT
+328.52 603.68 TD
+/F1 10.00 Tf
+(260) Tj
+ET
+0.48 w
+BT
+328.52 615.72 TD
+/F0 10.00 Tf
+(Water Depth) Tj
+ET
+0.96 w
+BT
+450.00 603.68 TD
+/F1 10.00 Tf
+(90) Tj
+ET
+0.48 w
+BT
+445.52 615.72 TD
+/F0 10.00 Tf
+(RKB Elevation) Tj
+ET
+0.96 w
+BT
+22.52 575.91 TD
+/F1 10.00 Tf
+(NABORS S.D. III) Tj
+ET
+0.48 w
+BT
+22.52 588.68 TD
+/F0 10.00 Tf
+(Rig Name) Tj
+ET
+0.96 w
+BT
+234.00 575.91 TD
+/F1 10.00 Tf
+(Platform) Tj
+ET
+0.48 w
+BT
+234.00 588.68 TD
+/F0 10.00 Tf
+(Rig Type) Tj
+ET
+0.96 w
+BT
+328.52 575.91 TD
+/F1 10.00 Tf
+(0) Tj
+ET
+0.48 w
+BT
+328.52 588.68 TD
+/F0 10.00 Tf
+(Rig Water Depth) Tj
+ET
+0.96 w
+BT
+450.00 575.91 TD
+/F1 10.00 Tf
+(0) Tj
+ET
+0.48 w
+BT
+450.00 588.68 TD
+/F0 10.00 Tf
+(Rig Drilling Depth) Tj
+ET
+0.96 w
+BT
+24.76 645.76 TD
+/F1 10.00 Tf
+() Tj
+ET
+0.48 w
+BT
+22.52 660.00 TD
+/F0 10.00 Tf
+(Acceptance Comments) Tj
+ET
+0.96 w
+q
+153.00 627.00 275.24 12.00 re W n
+BT
+219.36 629.24 TD
+/F0 12.00 Tf
+(GENERAL INFORMATION) Tj
+ET
+1.20 w
+Q 0 g 0 G
+BT
+170.64 552.72 TD
+/F0 12.00 Tf
+(APPROVED WELLBORE\(S\) INFORMATION) Tj
+ET
+1.20 w
+0.00 w
+0 J
+0 j
+22.52 446.08 553.52 86.36 re S
+q
+153.00 533.84 275.24 12.00 re W n
+BT
+185.64 536.12 TD
+(CURRENT WELLBORE INFORMATION) Tj
+ET
+1.20 w
+Q 0 g 0 G
+BT
+22.52 507.56 TD
+/F0 10.00 Tf
+(Wellbore) Tj
+ET
+0.96 w
+BT
+114.08 507.56 TD
+(Name) Tj
+ET
+BT
+159.16 507.56 TD
+(ST) Tj
+ET
+BT
+196.68 507.56 TD
+(BP) Tj
+ET
+BT
+237.20 507.56 TD
+(Lease) Tj
+ET
+BT
+294.28 507.56 TD
+(Area) Tj
+ET
+BT
+345.28 507.56 TD
+(Block) Tj
+ET
+BT
+22.52 479.92 TD
+(Operation Status) Tj
+ET
+BT
+166.48 479.92 TD
+(Spud Date) Tj
+ET
+BT
+256.60 479.92 TD
+(TD Date) Tj
+ET
+BT
+347.36 479.92 TD
+(MD) Tj
+ET
+BT
+406.84 479.92 TD
+(TVD) Tj
+ET
+BT
+22.52 494.92 TD
+/F1 10.00 Tf
+(177104027801) Tj
+ET
+0.48 w
+BT
+114.08 494.92 TD
+( B003) Tj
+ET
+BT
+159.16 494.92 TD
+(01) Tj
+ET
+BT
+196.68 494.92 TD
+(00) Tj
+ET
+BT
+237.20 494.92 TD
+(G02318) Tj
+ET
+BT
+294.28 494.92 TD
+(EI) Tj
+ET
+BT
+345.28 495.64 TD
+(339) Tj
+ET
+BT
+22.52 467.84 TD
+(Change Zones) Tj
+ET
+BT
+166.48 467.84 TD
+(28-DEC-2001) Tj
+ET
+BT
+256.60 467.84 TD
+(18-JAN-2002) Tj
+ET
+BT
+347.36 467.84 TD
+(8633) Tj
+ET
+BT
+406.84 467.84 TD
+(7482) Tj
+ET
+q
+153.00 446.08 275.24 12.00 re W n
+BT
+166.88 448.36 TD
+/F0 12.00 Tf
+(OPERATION WELLBORE\(S\) INFORMATION) Tj
+ET
+1.20 w
+Q 0 g 0 G
+0.00 w
+0 J
+0 j
+22.52 242.00 553.52 117.08 re S
+22.52 360.56 553.52 68.16 re S
+q
+153.00 431.00 275.24 12.00 re W n
+BT
+170.64 433.24 TD
+/F0 12.00 Tf
+(PREVIOUS WELLBORE\(S\) INFORMATION) Tj
+ET
+1.20 w
+Q 0 g 0 G
+BT
+22.52 405.44 TD
+/F0 10.00 Tf
+(Wellbore) Tj
+ET
+0.96 w
+BT
+116.32 405.44 TD
+(Name) Tj
+ET
+BT
+183.80 405.44 TD
+(ST) Tj
+ET
+BT
+224.32 405.44 TD
+(BP) Tj
+ET
+BT
+292.52 405.44 TD
+(Lease) Tj
+ET
+BT
+345.08 405.44 TD
+(Area) Tj
+ET
+BT
+399.08 405.44 TD
+(Block) Tj
+ET
+BT
+22.52 378.56 TD
+(Well Status) Tj
+ET
+BT
+166.48 378.56 TD
+(Spud Date) Tj
+ET
+BT
+270.04 378.56 TD
+(TD Date) Tj
+ET
+BT
+373.52 378.56 TD
+(MD) Tj
+ET
+BT
+471.08 378.56 TD
+(TVD) Tj
+ET
+BT
+22.52 392.80 TD
+/F1 10.00 Tf
+(177104027800) Tj
+ET
+0.48 w
+BT
+116.32 392.80 TD
+( B003) Tj
+ET
+BT
+183.80 392.80 TD
+(00) Tj
+ET
+BT
+224.32 392.80 TD
+(00) Tj
+ET
+BT
+292.52 392.80 TD
+(G02318) Tj
+ET
+BT
+345.08 392.80 TD
+(EI) Tj
+ET
+BT
+399.08 392.80 TD
+(339) Tj
+ET
+BT
+22.52 366.52 TD
+(Plugged Back) Tj
+ET
+BT
+166.48 366.52 TD
+(08-NOV-1973) Tj
+ET
+BT
+270.04 366.52 TD
+(22-NOV-1973) Tj
+ET
+BT
+373.52 366.52 TD
+(7405) Tj
+ET
+BT
+471.08 366.52 TD
+(6813) Tj
+ET
+q
+153.00 343.96 275.24 12.00 re W n
+BT
+204.36 346.24 TD
+/F0 12.00 Tf
+(SIGNIFICANT WELL EVENTS) Tj
+ET
+1.20 w
+Q 0 g 0 G
+BT
+22.52 329.04 TD
+/F0 10.00 Tf
+(Significant Events Narrative) Tj
+ET
+0.96 w
+BT
+22.52 299.56 TD
+(Operation Narrative) Tj
+ET
+BT
+22.52 260.28 TD
+(Correction Narrative) Tj
+ET
+BT
+25.48 315.56 TD
+/F1 10.00 Tf
+() Tj
+ET
+0.48 w
+BT
+25.48 286.28 TD
+(06/15/07 - RU and skidded top section of rig over well.  All wells SI on PF.) Tj
+ET
+BT
+25.48 274.28 TD
+(06/16/07 - RU equipment.  Set BPV and close SCSSV.) Tj
+ET
+BT
+25.48 246.52 TD
+() Tj
+ET
+0.00 w
+0 J
+0 j
+22.52 308.92 m 575.24 308.92 l S
+22.52 269.28 m 575.24 269.28 l S
+22.52 341.72 m 576.00 341.72 l S
+22.52 597.16 m 576.00 597.16 l S
+108.00 624.76 m 108.00 597.80 l S
+183.48 624.72 m 183.48 597.76 l S
+308.00 625.36 m 308.00 569.24 l S
+429.00 625.44 m 429.00 570.00 l S
+206.00 596.96 m 206.00 570.00 l S
+22.52 488.92 m 576.00 488.92 l S
+BT
+135.04 521.88 TD
+/F0 10.00 Tf
+(-- WELL --) Tj
+ET
+0.96 w
+BT
+159.68 417.56 TD
+(-- WELL --) Tj
+ET
+BT
+242.72 521.88 TD
+(-- BOTTOM LOCATION --) Tj
+ET
+BT
+310.68 417.56 TD
+(-- BOTTOM LOCATION --) Tj
+ET
+0.00 w
+111.04 532.44 m 111.04 488.92 l S
+232.68 532.40 m 232.68 488.92 l S
+22.52 386.84 m 576.00 386.84 l S
+111.04 428.48 m 111.04 387.60 l S
+159.00 386.08 m 159.00 360.60 l S
+260.24 386.08 m 260.24 360.60 l S
+363.04 386.08 m 363.04 360.60 l S
+465.16 386.08 m 465.16 360.60 l S
+22.52 461.96 m 576.00 461.96 l S
+160.00 488.12 m 160.00 462.64 l S
+252.28 488.12 m 252.28 462.64 l S
+343.12 488.12 m 343.12 462.64 l S
+402.64 488.12 m 402.64 462.64 l S
+260.36 428.00 m 260.36 386.84 l S
+394.84 532.44 m 394.84 488.96 l S
+BT
+397.76 507.56 TD
+(Date) Tj
+ET
+0.96 w
+BT
+480.12 507.56 TD
+(Low) Tj
+ET
+BT
+525.76 507.56 TD
+(High) Tj
+ET
+BT
+421.72 521.84 TD
+(-- LAST BOP TEST --) Tj
+ET
+BT
+397.76 495.64 TD
+/F1 10.00 Tf
+() Tj
+ET
+0.48 w
+BT
+480.12 495.64 TD
+() Tj
+ET
+BT
+525.76 495.64 TD
+() Tj
+ET
+0.00 w
+460.44 488.08 m 460.44 462.60 l S
+518.91 488.08 m 518.91 462.56 l S
+BT
+464.40 479.88 TD
+/F0 10.00 Tf
+(MW) Tj
+ET
+0.96 w
+BT
+464.40 467.84 TD
+/F1 10.00 Tf
+(9.4) Tj
+ET
+0.48 w
+BT
+521.96 479.84 TD
+/F0 10.00 Tf
+(KOP) Tj
+ET
+0.96 w
+BT
+521.96 467.80 TD
+/F1 10.00 Tf
+() Tj
+ET
+0.48 w
+endstream
+endobj
+8 0 obj
+7971
+endobj
+9 0 obj
+<</Type /Font
+/Name /F0
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+/BaseFont /CourierNew,Bold
+/FirstChar 24
+/LastChar 255
+/Widths 10 0 R
+/FontDescriptor 11 0 R
+>>
+endobj
+10 0 obj
+[600 600 600 600 600 600 600 600 600 600 
+600 600 600 600 600 600 600 600 600 600 
+600 600 600 600 600 600 600 600 600 600 
+600 600 600 600 600 600 600 600 600 600 
+600 600 600 600 600 600 600 600 600 600 
+600 600 600 600 600 600 600 600 600 600 
+600 600 600 600 600 600 600 600 600 600 
+600 600 600 600 600 600 600 600 600 600 
+600 600 600 600 600 600 600 600 600 600 
+600 600 600 600 600 600 600 600 600 600 
+600 600 600 600 600 600 600 600 600 600 
+600 600 600 600 600 600 600 600 600 600 
+600 600 600 600 600 600 600 600 600 600 
+600 600 600 600 600 600 600 600 600 600 
+600 600 600 600 600 600 600 600 600 600 
+600 600 600 600 600 600 600 600 600 600 
+600 600 600 600 600 600 600 600 600 600 
+600 600 600 600 600 600 600 600 600 600 
+600 600 600 600 600 600 600 600 600 600 
+600 600 600 600 600 600 600 600 600 600 
+600 600 600 600 600 600 600 600 600 600 
+600 600 600 600 600 600 600 600 600 600 
+600 600 600 600 600 600 600 600 600 600 
+600 600 ]
+endobj
+11 0 obj
+<<
+/Type /FontDescriptor
+/FontName /CourierNew,Bold
+/Ascent 900
+/CapHeight 675
+/Descent -300
+/Flags 33
+/FontBBox [0 0 0 0]
+/ItalicAngle 0
+/StemV 0
+/AvgWidth 600
+/MaxWidth 600
+>>
+endobj
+12 0 obj
+<</Type /Font
+/Name /F1
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+/BaseFont /CourierNew
+/FirstChar 24
+/LastChar 255
+/Widths 13 0 R
+/FontDescriptor 14 0 R
+>>
+endobj
+13 0 obj
+[600 600 600 600 600 600 600 600 600 600 
+600 600 600 600 600 600 600 600 600 600 
+600 600 600 600 600 600 600 600 600 600 
+600 600 600 600 600 600 600 600 600 600 
+600 600 600 600 600 600 600 600 600 600 
+600 600 600 600 600 600 600 600 600 600 
+600 600 600 600 600 600 600 600 600 600 
+600 600 600 600 600 600 600 600 600 600 
+600 600 600 600 600 600 600 600 600 600 
+600 600 600 600 600 600 600 600 600 600 
+600 600 600 600 600 600 600 600 600 600 
+600 600 600 600 600 600 600 600 600 600 
+600 600 600 600 600 600 600 600 600 600 
+600 600 600 600 600 600 600 600 600 600 
+600 600 600 600 600 600 600 600 600 600 
+600 600 600 600 600 600 600 600 600 600 
+600 600 600 600 600 600 600 600 600 600 
+600 600 600 600 600 600 600 600 600 600 
+600 600 600 600 600 600 600 600 600 600 
+600 600 600 600 600 600 600 600 600 600 
+600 600 600 600 600 600 600 600 600 600 
+600 600 600 600 600 600 600 600 600 600 
+600 600 600 600 600 600 600 600 600 600 
+600 600 ]
+endobj
+14 0 obj
+<<
+/Type /FontDescriptor
+/FontName /CourierNew
+/Ascent 900
+/CapHeight 675
+/Descent -300
+/Flags 33
+/FontBBox [0 0 0 0]
+/ItalicAngle 0
+/StemV 0
+/AvgWidth 600
+/MaxWidth 600
+>>
+endobj
+6 0 obj
+<<
+/Type /Page
+/MediaBox [0 0 612 792]
+/Parent 3 0 R
+/Resources <</ProcSet [ /PDF /Text ] /Font << /F0 9 0 R /F1 12 0 R >> >>
+/Contents 7 0 R
+/CropBox [0 0 612 792]
+>>
+endobj
+16 0 obj
+<</Length 17 0 R>>
+stream
+BT
+22.52 772.48 TD
+/F0 10.00 Tf
+(U.S. Department of the Interior) Tj
+ET
+0.96 w
+BT
+22.52 760.48 TD
+(Minerals Management Service \(MMS\)) Tj
+ET
+BT
+408.00 772.48 TD
+(OMB Control Number 1010-0141) Tj
+ET
+BT
+390.00 760.48 TD
+(OMB Approval Expires 08/31/2008) Tj
+ET
+BT
+166.52 744.72 TD
+/F0 12.00 Tf
+(Form MMS-133 - Electronic Version) Tj
+ET
+1.20 w
+BT
+192.76 731.24 TD
+(Well Activity Report \(WAR\)) Tj
+ET
+0.00 w
+0 J
+0 j
+22.52 724.48 m 576.00 724.48 l S
+22.52 722.96 m 576.00 722.96 l S
+BT
+485.28 49.48 TD
+/F0 10.00 Tf
+(2) Tj
+ET
+0.96 w
+BT
+430.52 48.72 TD
+/F0 12.00 Tf
+(Page:) Tj
+ET
+1.20 w
+BT
+513.36 48.72 TD
+(of) Tj
+ET
+BT
+22.52 49.48 TD
+/F0 10.00 Tf
+(28-JUN-2007 14:05:34 PM) Tj
+ET
+0.96 w
+BT
+550.52 49.48 TD
+(2) Tj
+ET
+BT
+121.52 708.76 TD
+/F1 10.00 Tf
+(177104027800) Tj
+ET
+0.48 w
+BT
+22.52 708.76 TD
+/F0 10.00 Tf
+(Base API Number) Tj
+ET
+0.96 w
+BT
+303.00 708.76 TD
+/F1 10.00 Tf
+(15-JUN-2007) Tj
+ET
+0.48 w
+BT
+209.24 708.76 TD
+/F0 10.00 Tf
+(WAR Start Date) Tj
+ET
+0.96 w
+BT
+471.76 708.76 TD
+/F1 10.00 Tf
+(16-JUN-2007) Tj
+ET
+0.48 w
+BT
+390.76 708.76 TD
+/F0 10.00 Tf
+(WAR End Date) Tj
+ET
+0.96 w
+BT
+94.52 692.24 TD
+/F1 10.00 Tf
+(28-JUN-2007) Tj
+ET
+0.48 w
+BT
+22.52 692.24 TD
+/F0 10.00 Tf
+(Accept Date) Tj
+ET
+0.96 w
+BT
+300.04 692.24 TD
+/F1 10.00 Tf
+(15-JUN-2007) Tj
+ET
+0.48 w
+BT
+174.76 692.24 TD
+/F0 10.00 Tf
+(Operation Start Date) Tj
+ET
+0.96 w
+BT
+492.84 692.24 TD
+/F1 10.00 Tf
+() Tj
+ET
+0.48 w
+BT
+378.80 692.24 TD
+/F0 10.00 Tf
+(Operation End Date) Tj
+ET
+0.96 w
+BT
+78.80 675.76 TD
+/F1 10.00 Tf
+(00078 Chevron U.S.A. Inc.) Tj
+ET
+0.48 w
+BT
+22.52 675.76 TD
+/F0 10.00 Tf
+(Operator) Tj
+ET
+0.96 w
+0.00 w
+22.52 564.68 553.52 88.52 re S
+q
+153.00 655.84 275.24 12.00 re W n
+BT
+204.36 658.08 TD
+/F0 12.00 Tf
+(WELL DESIGN INFORMATION) Tj
+ET
+1.20 w
+Q 0 g 0 G
+BT
+22.52 644.20 TD
+/F0 10.00 Tf
+(Wellbore) Tj
+ET
+0.96 w
+BT
+130.12 644.20 TD
+(Interval Number) Tj
+ET
+BT
+279.68 644.20 TD
+(Type) Tj
+ET
+BT
+418.44 644.20 TD
+(Name) Tj
+ET
+0 0 0.5000 RG
+0.00 w
+0 J
+0 j
+22.56 607.48 47.96 28.88 re S
+BT
+22.56 627.36 TD
+(Section) Tj
+ET
+0 G
+0.96 w
+BT
+22.56 615.36 TD
+(Number) Tj
+ET
+0 0 0.5000 RG
+0.00 w
+70.23 607.48 55.76 28.88 re S
+BT
+70.23 627.36 TD
+(Casing) Tj
+ET
+0 G
+0.96 w
+BT
+70.23 615.36 TD
+(Size \(in\)) Tj
+ET
+0 0 0.5000 RG
+0.00 w
+126.32 607.48 80.80 28.88 re S
+BT
+126.32 627.36 TD
+(Casing Weight) Tj
+ET
+0 G
+0.96 w
+BT
+126.32 615.36 TD
+(\(lb/ft\)) Tj
+ET
+0 0 0.5000 RG
+0.00 w
+207.08 607.48 78.00 28.88 re S
+BT
+228.08 627.36 TD
+(Casing) Tj
+ET
+0 G
+0.96 w
+BT
+231.08 615.36 TD
+(Grade) Tj
+ET
+0 0 0.5000 RG
+0.00 w
+455.72 607.48 57.96 28.88 re S
+BT
+455.72 627.36 TD
+(Hole Size) Tj
+ET
+0 G
+0.96 w
+BT
+455.72 615.36 TD
+(\(in\)) Tj
+ET
+0 0 0.5000 RG
+0.00 w
+513.76 607.48 62.24 28.88 re S
+BT
+513.76 627.36 TD
+(Cement Vol) Tj
+ET
+0 G
+0.96 w
+BT
+513.76 615.36 TD
+(\(cu ft\)) Tj
+ET
+0 0 0.5000 RG
+0.00 w
+284.80 607.48 114.96 28.88 re S
+BT
+291.28 627.36 TD
+(Bottom Depth \(ft\)) Tj
+ET
+0 G
+0.96 w
+BT
+309.28 615.36 TD
+(MD      TVD) Tj
+ET
+BT
+22.52 581.44 TD
+(TEST INFORMATION) Tj
+ET
+BT
+22.52 569.20 TD
+(Casing Shoe Test \(ppg\)) Tj
+ET
+BT
+267.00 569.20 TD
+(Casing/Liner Test \(psi\)) Tj
+ET
+BT
+79.48 644.20 TD
+/F1 10.00 Tf
+(01) Tj
+ET
+0.48 w
+BT
+227.92 644.20 TD
+() Tj
+ET
+BT
+308.16 644.20 TD
+() Tj
+ET
+BT
+449.20 644.20 TD
+() Tj
+ET
+0.00 w
+22.52 592.52 553.52 14.92 re S
+BT
+46.52 598.44 TD
+() Tj
+ET
+0.48 w
+BT
+98.12 598.44 TD
+() Tj
+ET
+BT
+166.72 598.44 TD
+() Tj
+ET
+BT
+246.08 598.44 TD
+() Tj
+ET
+BT
+313.12 598.44 TD
+() Tj
+ET
+BT
+370.40 598.44 TD
+() Tj
+ET
+BT
+484.72 598.44 TD
+() Tj
+ET
+BT
+544.88 598.44 TD
+() Tj
+ET
+BT
+156.00 569.20 TD
+() Tj
+ET
+BT
+421.48 569.20 TD
+() Tj
+ET
+0.00 w
+22.52 437.68 553.52 123.28 re S
+q
+162.00 548.96 275.24 12.00 re W n
+BT
+258.36 551.20 TD
+/F0 12.00 Tf
+(ATTACHMENTS) Tj
+ET
+1.20 w
+Q 0 g 0 G
+BT
+22.52 536.20 TD
+/F0 10.00 Tf
+(File Type) Tj
+ET
+0.96 w
+BT
+163.00 536.20 TD
+(File Description) Tj
+ET
+q
+162.00 518.48 275.24 12.00 re W n
+BT
+269.64 520.72 TD
+/F0 12.00 Tf
+(CONTACTS) Tj
+ET
+1.20 w
+Q 0 g 0 G
+BT
+25.48 505.28 TD
+/F0 10.00 Tf
+(Name) Tj
+ET
+0.96 w
+BT
+25.48 489.52 TD
+(Company) Tj
+ET
+BT
+25.48 473.72 TD
+(Phone Number) Tj
+ET
+BT
+25.48 457.96 TD
+(E-mail Address) Tj
+ET
+BT
+25.48 442.16 TD
+(Contact Description) Tj
+ET
+BT
+161.24 505.28 TD
+/F1 10.00 Tf
+(shelia turnage) Tj
+ET
+0.48 w
+BT
+161.24 489.52 TD
+(Chevron U.S.A. Inc.) Tj
+ET
+BT
+161.24 473.72 TD
+(337-989-3484) Tj
+ET
+BT
+161.24 457.96 TD
+(sturnage@chevron.com) Tj
+ET
+BT
+161.24 442.16 TD
+(permit technician) Tj
+ET
+0.00 w
+0 J
+0 j
+22.52 533.12 m 576.00 533.12 l S
+0 0 0.5000 RG
+399.76 607.48 56.24 28.88 re S
+BT
+399.76 627.36 TD
+/F0 10.00 Tf
+(Liner Top) Tj
+ET
+0 G
+0.96 w
+BT
+399.76 615.36 TD
+(MD \(ft\)) Tj
+ET
+BT
+427.88 598.40 TD
+/F1 10.00 Tf
+() Tj
+ET
+0.48 w
+BT
+25.48 403.76 TD
+(PAPERWORK REDUCTION ACT OF 1995 \(PRA\) STATEMENT:  The PRA \(44 U.S.C. 3501 et seq. Requires) Tj
+ET
+BT
+25.48 391.76 TD
+(us to inform you that we collect this information to obtain knowledge of equipment and) Tj
+ET
+BT
+25.48 379.76 TD
+(procedures to be used in drilling operations.  MMS uses the information to evaluate and) Tj
+ET
+BT
+25.48 367.76 TD
+(approve or disapprove the adequacy of the equipment and/or procedures to safely perform the) Tj
+ET
+BT
+25.48 355.80 TD
+(proposed drilling operation.  Responses are mandatory \(43 U.S.C. 1334\). Proprietary data) Tj
+ET
+BT
+25.48 343.80 TD
+(are covered under 30 CFR 250.196.  An agency may not conduct or sponsor, and a person is) Tj
+ET
+BT
+25.48 331.80 TD
+(not required to respond to, a collection of information unless it displays a currently) Tj
+ET
+BT
+25.48 319.80 TD
+(valid OMB Control Number.  Public reporting burden for this form is estimated to average 2½) Tj
+ET
+BT
+25.48 307.80 TD
+(hours per response, including the time for reviewing instructions, gathering and) Tj
+ET
+BT
+25.48 295.80 TD
+(maintaining data, and completing and reviewing the form.  Direct comments regarding the) Tj
+ET
+BT
+25.48 283.80 TD
+(burden estimate or any other aspect of this form to the Information Collection Clearance) Tj
+ET
+BT
+25.48 271.80 TD
+(Officer, Mail Stop 4230, Minerals Management Service, 1849 C Street, N.W., Washington, DC) Tj
+ET
+BT
+25.48 259.80 TD
+(20240.) Tj
+ET
+endstream
+endobj
+17 0 obj
+6457
+endobj
+15 0 obj
+<<
+/Type /Page
+/MediaBox [0 0 612 792]
+/Parent 3 0 R
+/Resources <</ProcSet [ /PDF /Text ] /Font << /F0 9 0 R /F1 12 0 R >> >>
+/Contents 16 0 R
+/CropBox [0 0 612 792]
+>>
+endobj
+2 0 obj
+<<
+/Type /Catalog
+/Pages 3 0 R
+>>
+endobj
+4 0 obj
+[ 6 0 R 15 0 R ]
+endobj
+5 0 obj
+2
+endobj
+xref
+0 18
+0000000000 65535 f
+0000000010 00000 n
+0000017997 00000 n
+0000000175 00000 n
+0000018052 00000 n
+0000018087 00000 n
+0000011071 00000 n
+0000000241 00000 n
+0000008267 00000 n
+0000008290 00000 n
+0000008480 00000 n
+0000009476 00000 n
+0000009685 00000 n
+0000009871 00000 n
+0000010867 00000 n
+0000017802 00000 n
+0000011264 00000 n
+0000017778 00000 n
+trailer
+<<
+/Size 18
+/Root 2 0 R
+/Info 1 0 R
+>>
+startxref
+18107
+%%EOF

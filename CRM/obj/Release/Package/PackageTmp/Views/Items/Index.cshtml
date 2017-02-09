@@ -1,0 +1,352 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div id="content-wrapper">
+    <div id="CustomBootstrapAlertBox">
+    </div>
+    <div class="row">
+
+
+        <div class="panel">
+            <div class="panel-heading">
+                <div class="row">
+                    <!-- Page header, center on small screens -->
+                    <h1 class="col-xs-6 col-sm-4 text-left text-left-sm panel-title"><i class="fa fa-user page-header-icon"></i>&nbsp; Items</h1>
+                    <div class="col-xs-6 col-sm-8">
+                        <div class="row">
+                            <div class="pull-right">
+                                @*<a href="#" class="btn btn-flat btn-labeled btn-primary" tabindex="-1"
+                                    data-toggle="modal" data-target="#uidemo-modals-alerts-info"><span class="btn-label icon fa fa-question-circle"></span>Help</a>*@
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel-body">
+
+
+                <div class="row">
+
+                    @*<!-- Tabs -->
+                        <div class="tab-pane" id="bs-tabdrop-tab3">
+                            <div class="row">
+                                <!-- col-sm-6 -->
+                                <div id="pnlSrchCriteria">
+                                    <div class="col-sm-3">
+                                        <div class="form-group no-margin-hr">
+                                            <label class="control-label">Keyword :</label>
+                                            @Html.TextBoxFor(m => m.compnay.Keyword, new { @id = "txtKeyWord", @class = "form-control input-sm", @maxlength = "100" })
+
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group no-margin-hr">
+                                            <label class="control-label">Office :</label>
+
+                                            @Html.DropDownListFor(m => m.compnay.Account_office, new SelectList(Model.branchList, "branchId", "branchName"), new { @class = "form-control input-sm", @id = "drpOffice" })
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group no-margin-hr">
+                                            <label class="control-label">Sales Reprsentative :</label>
+
+                                            @Html.DropDownListFor(m => m.compnay.SalesMgr1, new SelectList(Model.salesList, "userId", "firstName"), new { @class = "form-control input-sm", @id = "drpSalesRep" })
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group no-margin-hr">
+                                            <label class="control-label">Status :</label>
+                                            @Html.DropDownListFor(m => m.compnay.Status, new List<SelectListItem>
+                                                                              {
+                                                                                  new SelectListItem{Text="Select",Value="All"},
+                                                                                  new SelectListItem{Text="Lead - (1) Prospect",Value="Lead - (1) Prospect"},
+                                                                                  new SelectListItem{Text="Lead - (2) Contact Attempted",Value="Lead - (2) Contact Attempted"},
+                                                                                  new SelectListItem{Text="Lead - (3) Contact Made",Value="Lead - (3) Contact Made"},
+                                                                                  new SelectListItem{Text="Lead - (4) Closed/Not Interested",Value="Lead - (4) Closed/Not Interested"},
+                                                                                  new SelectListItem{Text="Active",Value="ActiveMain"},
+                                                                                  new SelectListItem{Text="Inactive",Value="Inactive"},
+                                                                                  new SelectListItem{Text="Do not service",Value="Do not service"},
+                                                                              }, new { @class = "form-control input-sm", @id = "ddlstatus" })
+                                        </div>
+                                    </div>
+                                    @*<div class="col-xs-12 col-sm-3 text-right text-left-sm" id="search_btn">
+                                            <button class="btn btn-flat btn-labeled btn-primary" id="btnSearchCompanies">
+                                                <span class="btn-label icon fa fa-search"></span>Search
+                                            </button>
+                                        </div>*@
+                    @*<div class="col-xs-12 col-sm-12 text-right text-left-sm " id="search_btn" style="text-align:right;margin-bottom:15px; margin-top:0px;">
+                            <button class="btn btn-flat btn-labeled btn-primary" id="btnSearchCompanies">
+                                <span class="btn-label icon fa fa-search"></span>Search
+                            </button>
+                        </div>*@
+
+                    @*</div>
+                        <div class="clearfix"></div>
+                        <div class="col-sm-13" id="filter"></div>*@
+
+                    <!-- col-sm-6 -->
+                    <div class="col-sm-12">
+
+                        <div class="col-xs-12 col-sm-12 text-right text-right-sm" id="white_bg">
+                            <ul class="table-nav-item">
+                                <li class="btn btn-flat btn-labeled btn-primary" style=" float:left; margin-left:3px;">
+
+                                    <a style="color: #fff; text-decoration: none; padding: 0px; font-weight: normal" href="@Url.Action("InsertItems", "Items")">
+                                        <span class="btn-label icon  fa fa-plus-circle" style="margin-right:6px;"> </span>
+                                        Add New
+                                    </a>
+
+                                </li>
+                                <li class="btn btn-flat btn-labeled btn-primary" style="float:left; margin-left:3px;">
+
+                                    <a style="color: #fff; text-decoration: none; padding: 0px; font-weight: normal" id="deleteitems" onclick="deleteSelecteditem()">
+                                        <span class="btn-label icon  fa  fa-trash-o" style="margin-right:6px;"> </span>
+                                        Delete
+                                    </a>
+
+                                </li>
+                                @*<li class="dropdown">
+                                        <button class="btn btn-flat btn-labeled btn-primary" data-toggle="dropdown" id="btnmargin_top" style=" vertical-align: super; margin-top:0px;">
+                                            <span class="btn-label icon fa   fa-chevron-down"></span>Export
+                                        </button>
+                                        <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dropdownMenu1">
+                                            <li role="presentation"><a role="menuitem" style="cursor: pointer" tabindex="-1" onclick=" return ExportCsv(); return false;">Export Companies(CSV)</a></li>
+                                            <li role="presentation"><a role="menuitem" style="cursor: pointer" tabindex="-1" onclick="ExportExcel(); return false;">Export Companies(Excel)</a></li>
+                                        </ul>
+                                    </li>*@
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-xs-12">
+                        <div class="table-primary table-striped">
+                            <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="tblitems" width="100%">
+                                <thead>
+                                    <tr>
+                                        <th><input class="fa fa-square-o" type="checkbox" id="chkHeader" /></th>
+                                        <th></th>
+                                        <th data-hide="phone">Item Code </th>
+                                        <th data-class="expand">Item Type</th>
+                                        <th data-hide="tablet,tabletlandscape,phone">Item Name</th>
+                                        <th data-hide="phone">Cost/Unit</th>
+                                        <th data-hide="tablet,tabletlandscape,phone">Sales Price</th>
+                                        <th data-hide="tablet,tabletlandscape,phone,desktop">Description</th>
+                                        <th data-hide="tablet,tabletlandscape,phone,desktop">Active</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- /11. $BOOTSTRAP_TAB_DROP -->
+    <!-- / Info -->
+</div>
+<script>
+    $(document).ready(function () {
+       
+        var Createitem = '@ViewBag.createitem';
+
+        if (Createitem != "") {
+            $.growl.notice({ title: "Success", message: "Item Details Added Successfully.", size: 'large' });
+            //$('#ErrorMessages').html('User Details Updated Successfully.');
+        }
+
+        var Updateitem = '@ViewBag.Updateitem';
+
+        if (Updateitem != "") {
+            $.growl.notice({ title: "Success", message: "Item Details Updated Successfully.", size: 'large' });
+            //$('#ErrorMessages').html('User Details Updated Successfully.');
+        }
+
+
+
+        $('#loading').css('display', 'block');
+        bindItemDetails();
+    })
+
+
+    function bindItemDetails() {
+
+
+        $('#loading').css('display', 'block');
+        var responsiveHelper = undefined;
+        var breakpointDefinition = {
+            desktop: Infinity,
+            tablet: 1024,
+            tabletlandscape: 768,
+            phone: 480
+        };
+
+        var tableElement = $('#tblitems').dataTable({
+            // autoWidth: false,
+            "searching": true,
+            preDrawCallback: function () {
+                if (!responsiveHelper) {
+                    responsiveHelper = new ResponsiveDatatablesHelper($('#tblitems'), breakpointDefinition);
+                }
+            },
+            rowCallback: function (nRow) {
+                responsiveHelper.createExpandIcon(nRow);
+            },
+            drawCallback: function (oSettings) {
+                responsiveHelper.respond();
+            },
+            //"order": [[$("#HD_SortValue").val(), "" + $("#HD_SortDirection").val() + ""]],
+            //"aLengthMenu": [[10, 25, 50, 100], [10, 25, 50, 100]],
+            ////"iDisplayStart": parseInt($("#HD_PageIndex").val()),
+            ////"iDisplayLength": parseInt($("#HD_PageSize").val()),
+            ////  "pagingType": "full_numbers",
+            ////"processing": true,
+           // "serverSide": true,
+            //"bFilter": true,
+            "sAjaxSource": "Items/getItemsList",
+            //"fnServerParams": function (aoData) {
+            //    aoData.push(
+            //         { "name": "Projectname", "value": "" + $("#txtProjectName").val().trim() + "" },
+            //        { "name": "ProStatus", "value": "" + $("#ddl_Status").val() + "" }
+            //        );
+            //},
+            "fnServerData": function (sSource, aoData, fnCallback) {
+                $.ajax({
+                    "dataType": 'json',
+                    "contentType": "application/json; charset=utf-8",
+                    "type": "GET",
+                    "url": sSource,
+                    "data": aoData,
+                    "success":
+                                function (msg) {
+
+                                    $('#loading').css('display', 'none');
+
+                                    fnCallback(msg);
+
+                                }
+                });
+            },
+            "asStripeClasses": ['odd gradeX', 'even gradeC'],
+            "aoColumnDefs": [
+              {
+                  "targets": [0], "visible": true, "bSortable": false, "mDataProp": "ItemID",
+                  "render": function (data, type, row) {
+                      return "<input name=\"chkItem\" class =\"itemcase\" type=\"checkbox\"  id=\"chkRow_" + row["ItemID"] + "\"data-itemId=\"" + row["ItemID"] + "\"  />";
+                  }
+              },
+                {
+                    "targets": [1], "visible": true, "bSortable": true,
+                    "render": function (data, type, row) {
+                        return "<span class=\"fa fa-times\" onclick=\"DeleteItemConfirmation('" + row["ItemID"] + "');\"></span>";
+                    }
+                },
+                {
+                    "targets": [2], "visible": true, "bSortable": true, "mDataProp": "ItemCode",
+                    "render": function (data, type, row) {
+                        return "<a href=\"#\" onclick=\"EditItemsDetail('" + row["ItemID"] + "')\">" + row["ItemCode"] + "</a>";
+
+                    }
+                },
+                {
+                    "targets": [3], "visible": true, "bSortable": true, "mDataProp": "ItemDesc",
+                    //"targets": [3], "visible": true, "bSortable": true, "mDataProp": "ItemTypeID",
+
+                },
+                { "targets": [4], "visible": true, "bSortable": true, "mDataProp": "ItemName" },
+                { "targets": [5], "visible": true, "bSortable": true, "mDataProp": "RateperUnit" },
+               {
+                   "targets": [6], "visible": true, "bSortable": true, "mDataProp": "Saleprice"
+               },
+               {
+                   "targets": [7], "visible": true, "bSortable": true, "mDataProp": "Description"
+               },
+               { "targets": [8], "visible": true, "bSortable": true, "mDataProp": "Active" }
+
+
+
+            ],
+            "fnDrawCallback": function (oSettings) {
+
+                $('#loading').css('display', 'none');
+            }
+        }).api();
+    }
+
+
+    function EditItemsDetail( itemid)
+    {
+        var itemid = itemid;
+        window.location = "Items/EditItemsDetail?ItemID=" + itemid;
+    }
+    function deleteSelecteditem() {
+
+        if ($('#tblitems input[name="chkItem"]:checked').length > 0) {
+            var flag = confirm('You are about to delete permanently.Are you sure you want to delete these records?');
+            if (flag) {
+
+                var searchIDs = $("#tblitems input:checkbox:checked").map(function () {
+                    return $(this).attr("data-itemId");
+                }).get();
+
+                deleteEachItem(searchIDs)
+            }
+        }
+        else {
+            alert("Please select item(s) to delete.");
+        }
+    }
+
+    function DeleteItemConfirmation(ItemID) {
+
+
+        var flag = confirm('You are about to delete permanently.Are you sure you want to delete this record?');
+        if (flag) {
+            deleteEachItem(ItemID);
+        }
+    }
+
+    function deleteEachItem(ItemID) {
+
+        $.ajax({
+            url: '@Url.Action("Deleteitems")',
+            type: "POST",
+            async: false,
+            data: { Itemids: ItemID.toString() },
+            success: function (data) {
+                if (data == "True") {
+                    $.growl.notice({ title: "Success", message: "Items Deleted Successfully.", size: 'large' });
+                    $("#tblitems").dataTable().fnDestroy();
+                    bindItemDetails();
+                }
+                else {
+                    $.growl.notice({ title: "Fail", message: "Items Not Deleted .", size: 'large' });
+                }
+            },
+            error: function (request, status, error) {
+            }
+        });
+    }
+    $("#chkHeader").click(function () {
+        $('#tblitems input[name="chkItem"]').prop('checked', this.checked);
+    });
+
+    $('#tblitems input[name="chkItem"]').click(function () {
+
+        if ($('#tblitems input[name="chkItem"]').length == $('#tblitems input[name="chkItem"]:checked').length) {
+            $("#chkHeader").prop("checked", "checked");
+        }
+        else if ($('#tblitems input[name="chkItem"]').length != $('#tblitems input[name="chkItem"]:checked').length) {
+            $('#chkHeader').prop('checked', false);
+        }
+    });
+
+
+</script>
+
+
+

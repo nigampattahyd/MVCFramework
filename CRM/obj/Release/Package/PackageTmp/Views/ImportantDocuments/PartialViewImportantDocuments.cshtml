@@ -1,0 +1,60 @@
+﻿@model IEnumerable<CRMHub.EntityFramework.ImportantDocument>
+ @{
+
+    }
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#tblImportantDocs').dataTable();
+        }
+        );
+    </script>
+                      <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="tblImportantDocs" width="100%">
+                          <thead>
+                              <tr>
+                                  <th><input type="checkbox" name="chkAll" id="selectall" /></th>
+                                  <th>DocId</th>
+                                  <th>Document Name</th>
+                                  <th>Document Description</th>
+                                  <th>File</th>
+                                  <th>status</th>
+                                  <th>Created By</th>
+
+                              </tr>
+                          </thead>
+                          <tbody>
+                              @foreach (var item in Model)
+                              {
+                                  <tr>
+                                      <td><input type="checkbox" value="" data-val-1="@item.DocId" class="case" /></td>
+                                     <td>@item.DocId</td>
+                                   
+                                      <td>@Html.ActionLink(@item.DocName, "RetrieveImportantDoc", new { DocidfrmView = item.DocId })</td>
+                                      <td>@item.DocDescription</td>
+                                   
+                                      <td>@Html.ActionLink(@item.DocFileNameOriginal, "Download", new { filename = item.DocFileNameOriginal })</td>
+                                      <td>@item.IsActive</td>
+                                      <td>@item.CreatedBy</td>
+
+                                  </tr>
+                              }
+                          </tbody>
+
+                      </table>
+                      <script type="text/javascript">
+
+                          $(function () {
+                              $("#selectall").click(function () {
+                                  $(".case").prop("checked", this.checked);
+                              });
+                              // if all checkbox are selected, check the selectall checkbox
+                              // and viceversa
+                              $(".case").click(function () {
+                                  if ($(".case").length == $(".case:checked").length) {
+                                      $("#selectall").prop("checked", true);
+                                  } else {
+                                      $("#selectall").prop("checked", false);
+                                  }
+                              });
+                          });
+                      </script>

@@ -1,0 +1,362 @@
+﻿@model CRMHub.ViewModel.InvoiceModel
+@{
+    ViewBag.Title = "Payments";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm("MakePayment", "Invoice", FormMethod.Post))
+{
+    <input type="hidden" id="hdSaveValue" value="" />
+
+    <div id="content-wrapper">
+
+
+        <div id="CustomBootstrapAlertBox">
+        </div>
+
+        <div class="row">
+
+
+            <div class="panel">
+                <div class="panel-heading">
+                    <div class="row">
+                        <!-- Page header, center on small screens -->
+                        <h1 class="col-xs-6 col-sm-4 text-left text-left-sm panel-title"><i class="fa fa-user page-header-icon"></i>&nbsp;&nbsp;Payments</h1>
+                        <div class="col-xs-6 col-sm-8">
+                            <div class="row">
+                                <div class="pull-right">
+                                    @*<a href="#" class="btn btn-flat btn-labeled btn-primary" tabindex="-1"
+                                        data-toggle="modal" data-target="#uidemo-modals-alerts-info"><span class="btn-label icon fa fa-question-circle"></span>Help</a>*@
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel-body">
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <!-- Tabs -->
+
+
+                            <div class="tab-pane" id="bs-tabdrop-tab3">
+
+                                <div class="row">
+                                    <div class="col-sm-12 col-xs-12">
+                                        <div class="page-header-breadcrumb">
+                                            <label class="control-label" id="lblMessage"></label>
+                                            <ul class="table-nav-item" style="float: right; margin-bottom:5px;">
+
+                                          
+                                                <li>
+
+
+                                                    <button class="btn btn-flat btn-labeled btn-primary" type="submit" id="btnSavePay" name="SaveInV">
+                                                        <span class="btn-label icon fa fa-save"></span>Pay&nbsp;Now
+                                                    </button>
+                                                </li>
+                                                <li>
+                                                    <a style="color: #fff; text-decoration: none; padding: 0px; font-weight: normal" class="btn btn-flat btn-labeled btn-primary" href="@Url.Action("PaymentsIndex", "Invoice")">
+                                                        <span class="btn-label icon fa fa-backward" style="margin-right:6px;"> </span>
+                                                        Back
+                                                    </a>
+                                                </li>
+
+
+                                               
+                                            </ul>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <span id="errorsymbol" style="color:red;display:none;margin-left:5px;" class="fa fa-exclamation-circle"></span><div id="ErrorMessages" style="margin-left:20px;color:red;font-size:15px;margin-top:-19px">
+
+                                </div>
+                                <div class="row">
+                                    <div class="panel-group" id="accordion-example">
+
+                                        <!-- / .panel -->
+                                        <div class="panel">
+                                            @*<div class="panel-heading">
+                                                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion-example"
+                                                       href="#collapse2">Invoice Detail</a>
+                                                </div>*@
+                                            <!-- / .panel-heading -->
+                                            <div id="collapse2" class="panel-collapse collapse in" style="height: auto;">
+                                                <div class="panel-body">
+                                                    <div class="col-sm-12 no-padding-hr">
+                                                        @*<div class="row" style="margin-bottom:0px;">
+
+                                                                <div class="col-sm-8">
+
+                                                                    <div class="row">
+                                                                        <div class="col-sm-6">
+                                                                            <div class="form-group no-margin-hr">
+                                                                                <div class="row" style="margin-bottom:0px; margin-left:6px">
+                                                                                    <label>@Html.RadioButton("InvoiceSelect", "RBCustomer",true)&nbsp;&nbsp;Customer&nbsp;&nbsp;</label>
+                                                                                    <label>@Html.RadioButton("InvoiceSelect", "RBEstimate")&nbsp;&nbsp;EstimateInvoice&nbsp;&nbsp;</label>
+                                                                                </div>
+                                                                            </div>
+
+
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>*@
+
+                                                        <div class="row" style="margin-bottom:23px;">
+
+                                                            <div class="col-sm-8">
+
+                                                                <div class="row">
+                                                                    <div class="col-sm-6" id="Cuswituoutestinv">
+                                                                        <div class="form-group no-margin-hr">
+                                                                            <label class="control-label">Company Name :<span style="color: red">*</span></label>
+
+                                                                            <div class="input-group" id="tblContact" runat="server">
+
+                                                                                @Html.TextBoxFor(m => m.invoice.Fname, new { @class = "form-control input-sm", @id = "txtCustomerName", @maxlength = "100", @Placeholder = "Select Company", @readonly = false, @validate = "Required", @data_val_required = "Contact Name" })
+                                                                                <span class="input-group-btn" id="spanid">
+                                                                                    <a class="btn" href="#" id="ImageButton4" title="Select Contact"
+                                                                                       onclick="return show_NewContactPopUp(580, 420);" style="cursor: pointer"><i class="fa fa-search"></i></a>
+                                                                                    @Html.HiddenFor(m => m.invoice.CustomerID, new { @id = "hdCustomerId" })
+                                                                                  
+                                                                                </span>
+
+                                                                            </div>
+
+
+
+                                                                        </div>
+
+                                                                    </div>
+
+                                                              
+
+                                                                  
+                                                                    @*<div class="col-sm-6" id="estInvDiv">
+                                                                        <div class="form-group no-margin-hr">
+                                                                            <label class="control-label">Estimate Invoice :</label>
+
+                                                                            <div class="input-group" id="tblContact" runat="server">
+
+                                                                                @Html.TextBoxFor(m => m.invoice.EstInvoiceNo, new { @class = "form-control input-sm", @id = "txtEstInvNumber", @maxlength = "100", @Placeholder = "Select Estimate Invoice", @readonly = false, @validate = "Required", @data_val_required = "Contact Name" })
+                                                                                <span class="input-group-btn">
+                                                                                    <a class="btn" href="#" id="ImageButton4" title="Select Contact"
+                                                                                       onclick="return show_EstimateInvoicePopUp(580, 420);" style="cursor: pointer"><i class="fa fa-search"></i></a>
+                                                                                    @Html.HiddenFor(m => m.invoice.EstInvoiceID, new { @id = "hdEnvoiceId" })
+
+                                                                                </span>
+
+                                                                            </div>
+
+
+
+                                                                        </div>
+
+                                                                    </div>*@
+
+
+
+
+
+
+                                                                </div>
+
+                                                                <div class="row" id="CusAddress" style="display:none">
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
+                                                                            <div class="form-group no-margin-hr">
+                                                                                <span class="label label-primary label-tag">Billing&nbsp;Address:</span>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="row">
+                                                                            <div class="col-sm-11">
+                                                                                @Html.TextArea("txtAddressBilling", null, new { @class = "form-control input-sm", @cols = 80, @rows = 8 })
+                                                                            </div>
+                                                                        </div>
+
+
+                                                                    </div>
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row">
+                                                                            <div class="form-group no-margin-hr">
+                                                                                <span class="label label-primary label-tag">Shiping&nbsp;Address:</span>
+
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="row">
+                                                                            <div class="col-sm-11">
+                                                                                @Html.TextArea("txtAddressShipping", null, new { @class = "form-control input-sm", @cols = 80, @rows = 8 })
+
+                                                                            </div>
+                                                                        </div>
+
+                                                                    </div>
+
+                                                                </div>
+
+
+                                                            </div>
+
+
+                                                         
+                                                        </div>
+
+
+
+
+                                                        @*Here We use partial view to add items list*@
+                                                        <div class="row">
+                                                            <div class="col-sm-12">
+
+                                                                <div id="bindInvoiceData">
+                                                                    @*Partial view to bind items Lists*@
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+
+                                                        @*End of partial view to add items list*@
+                                                    
+
+                                                   
+
+                                                   
+
+
+                                                    
+                                                  
+
+
+
+
+
+                                                    </div>
+                                                </div>
+                                                <!-- / .panel-body -->
+                                            </div>
+                                            <!-- / .collapse -->
+                                        </div>
+                                        <!-- / .panel -->
+                                        <!-- / .panel -->
+                                        <!-- / .panel -->
+
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+}
+
+<div class="modal fade" id="myModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+
+                <h4 class="modal-title">Company List</h4>
+            </div>
+            <div class="modal-body">
+
+                <div class="row">
+                    <div style="text-align:left;font-size:12px;padding:5px">Note : Click Company Name To Select Record.</div>
+                    <div class="col-sm-12">
+
+                        <div class="table-primary table-striped" id="tblCustomerList">
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+
+    function show_NewContactPopUp() {
+
+        $('#loading').css('display', 'block');
+
+        $.ajax({
+            url: '@Url.Action("_GetCustomersListForPayments", "Invoice")',
+
+            type: "GET",
+            async: false,
+            // data: { companyid: companyid },
+            success: function (data) {
+                if (data != null) {
+                    $('#tblCustomerList').empty();
+                    $('#tblCustomerList').empty().append(data);
+                }
+            },
+            error: function (n, y, p) {
+                alert("error");
+            }
+        });
+        $('#myModal').modal("show");
+    }
+
+
+
+    $("#btnSavePay").click(function (e) {
+        var resultreturn = true;
+        var CheckAmount = [];
+        $("#CustomerPaymentList > tbody > tr").each(function (index, b) {
+            var row = b;
+            //var bal = parseFloat($(row).find('td:eq(2)').find('input').val());
+            var pay1 = parseFloat($(row).find('td:eq(5)').find('input').val());
+
+            if (!isNaN(pay1)) {
+                CheckAmount.push(pay1);
+            }
+
+        });
+        var arrylength = CheckAmount.length;       
+        if (arrylength > 0)
+        {
+            $("#CustomerPaymentList > tbody > tr").each(function (index, b) {
+                var row = b;
+                var Invoice = $(row).find('td:eq(0)').find('input').val();              
+                var bal = parseFloat($(row).find('td:eq(2)').find('input').val());
+                var pay = parseFloat($(row).find('td:eq(5)').find('input').val());
+                if (!isNaN(pay)) {
+                    if (pay > bal) {
+                        $.growl.error({ title: "Error", message: "Pay Amount is greater than Balance Amount in " + Invoice , size: 'large' });
+                        var obj = $(row).find('td:eq(5)').find('input');
+                        var actid = $(obj).attr("id");                     
+                        document.getElementById(actid).value = '';
+                       // alert("Pay Amount is greater than Balance Amount in" + (index + 1) + "row")
+                        resultreturn = false;
+                        e.preventDefault();
+                    }
+                }
+
+            });
+        }
+        else {
+            $.growl.error({ title: "Error", message: "Please Enter alteast one Invoice Amount to pay", size: 'large' });
+            resultreturn = false;
+            e.preventDefault();
+        }
+        
+
+   
+        return resultreturn;
+    });
+
+    //btnSavePay
+</script>

@@ -1,0 +1,481 @@
+﻿@model CRMHub.ViewModel.CompanyModel
+@{
+    ViewBag.Title = "NewCompanyActivity";
+    // Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/Content/assets/css/pixel-admin.min.css" rel="stylesheet" />
+<script src="~/Scripts/UserValidations/Validation.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#txtDate").datepicker({
+            changeMonth: true,
+            changeYear: true,
+            yearRange: '1900:+15'
+        });
+        $("#txtReminder").datepicker({
+            changeMonth: true,
+            changeYear: true,
+            yearRange: '1900:+15'
+        });
+
+
+
+
+    });
+
+    $("#btnSave").click(function () {
+
+        return Validate(this.form);
+    });
+</script>
+
+@using (Html.BeginForm("NewCompanyActivityPopUp", "ManageCompany", FormMethod.Post, FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+
+    <div id="content-wrapper">
+        <div id="CustomBootstrapAlertBox">
+        </div>
+        <div class="row">
+
+
+            <div class="row" style="text-align:right;">
+                <div class="col-sm-12 col-xs-12">
+
+                    
+                    <button class="btn btn-flat btn-labeled btn-primary" id="btnSave">
+                        <span class="btn-label icon fa fa-save"></span>Save
+                    </button>
+
+                    <button class="btn btn-flat btn-labeled btn-primary" id="searbtn_margin" style="float:none;">
+                        @Html.ActionLink("Back", "Index", "ManageCompany", new { @style = "color:#fff; text-decoration:none; " })
+                        <span class="btn-label icon fa fa-backward" style="margin-right:6px; "> </span>
+                    </button>
+
+
+
+                    <label class="control-label">
+                        <asp:Label ID="lblMessage" runat="server" ForeColor="Red"></asp:Label>
+                    </label>
+
+                </div>
+
+
+            </div>
+
+
+            <span id="errorsymbol" style="color:red;display:none;margin-left:5px;" class="fa fa-exclamation-circle"></span>
+            <div id="ErrorMessages" style="margin-left:20px;color:red;font-size:15px;margin-top:-19px"></div>
+
+
+
+            <div class="row">
+
+
+                <div class="panel-group">
+
+
+
+                    <div class="panel">
+                        <div id="collapse2" class="panel-collapse collapse in" style="height: auto;">
+                            <div class="panel-body">
+                                <div class="col-sm-12 no-padding-hr">
+
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <div class="form-group no-margin-hr">
+                                                <label class="control-label">Type :<span style="color: red">*</span></label>
+
+                                                <div class="col-sm-13 no-padding-hr">
+                                                    <div class="col-sm-11 no-padding-hr">
+                                                        @Html.DropDownListFor(m => m.history.HistoryType, ViewBag.HistoryList as List<SelectListItem>, new { @id = "ddlHistoryType", @class = "form-control input-sm", @validate = "dropdown", @data_val_required = "Type" })
+
+                                                    </div>
+
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="form-group no-margin-hr">
+                                                <label class="control-label">Priority :</label>
+                                                @Html.DropDownListFor(m => m.history.Priority, new List<SelectListItem>
+                                                                          {
+
+                                                                              new SelectListItem{Text="High",Value="High"},
+                                                                              new SelectListItem{Text="Low",Value="Low"},
+                                                                              new SelectListItem{Text="Medium",Value="Medium"},
+                                                                          }, new { @class = "form-control input-sm", @id = "ddlPriority" })
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-4">
+                                            <div class="form-group no-margin-hr">
+                                                <label class="control-label">Status :</label>
+                                                @Html.DropDownListFor(m => m.history.Status, new List<SelectListItem>
+                                                                          {
+
+                                                                              new SelectListItem{Text="Open",Value="Open"},
+                                                                              new SelectListItem{Text="Completed",Value="Completed"},
+
+                                                                          }, new { @class = "form-control input-sm", @id = "ddlStatus" })
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <div class="form-group no-margin-hr">
+                                                <label class="control-label">Due Date :</label>
+                                                <div class="col-sm-13">
+                                                    <div class="col-sm-8" style="padding-left: 0px; z-index: 99999;">
+                                                        @Html.TextBoxFor(m => m.history.StartDate, new { @class = "form-control input-sm", @id = "txtDate" })
+
+                                                        @*<asp:TextBox ID="txtDate" runat="server" MaxLength="12" CssClass="form-control input-sm"></asp:TextBox>*@
+                                                    </div>
+
+                                                    <div class="col-sm-4" style="padding-left: 0px">
+                                                        @Html.DropDownListFor(m => m.history.StartTime, new List<SelectListItem>
+                                                                          {
+                                                                              new SelectListItem{Text="12:00 AM",Value="12:00 AM"},
+                                                                              new SelectListItem{Text="12:30 AM",Value="12:30 AM"},
+                                                                              new SelectListItem{Text="1:00 AM",Value="1:00 AM"},
+                                                                              new SelectListItem{Text="1:30 AM",Value="1:30 AM"},
+                                                                              new SelectListItem{Text="2:00 AM",Value="2:00 AM"},
+                                                                              new SelectListItem{Text="2:30 AM",Value="2:30 AM"},
+                                                                              new SelectListItem{Text="3:00 AM",Value="3:00 AM"},
+                                                                              new SelectListItem{Text="3:30 AM",Value="3:30 AM"},
+                                                                              new SelectListItem{Text="4:00 AM",Value="4:00 AM"},
+                                                                              new SelectListItem{Text="4:30 AM",Value="4:30 AM"},
+                                                                              new SelectListItem{Text="5:00 AM",Value="5:00 AM"},
+                                                                              new SelectListItem{Text="5:30 AM",Value="5:30 AM"},
+                                                                              new SelectListItem{Text="6:00 AM",Value="6:00 AM"},
+                                                                              new SelectListItem{Text="6:30 AM",Value="6:30 AM"},
+                                                                              new SelectListItem{Text="7:00 AM",Value="7:00 AM"},
+                                                                              new SelectListItem{Text="7:30 AM",Value="7:30 AM"},
+                                                                              new SelectListItem{Text="8:00 AM",Value="8:00 AM"},
+                                                                              new SelectListItem{Text="8:30 AM",Value="8:30 AM"},
+                                                                              new SelectListItem{Text="9:00 AM",Value="9:00 AM"},
+                                                                              new SelectListItem{Text="9:30 AM",Value="9:30 AM"},
+                                                                              new SelectListItem{Text="10:00 AM",Value="10:00 AM"},
+                                                                              new SelectListItem{Text="10:30 AM",Value="10:30 AM"},
+                                                                              new SelectListItem{Text="11:00 AM",Value="11:00 AM"},
+                                                                              new SelectListItem{Text="11:30 AM",Value="11:30 AM"},
+                                                                              new SelectListItem{Text="12:00 PM",Value="12:00 PM"},
+                                                                              new SelectListItem{Text="12:30 PM",Value="12:30 PM"},
+                                                                              new SelectListItem{Text="1:00 PM",Value="1:00 PM"},
+                                                                              new SelectListItem{Text="1:30 PM",Value="1:30 PM"},
+                                                                              new SelectListItem{Text="2:00 PM",Value="2:00 PM"},
+                                                                              new SelectListItem{Text="2:30 PM",Value="2:30 PM"},
+                                                                              new SelectListItem{Text="3:00 PM",Value="3:00 PM"},
+                                                                              new SelectListItem{Text="3:30 PM",Value="3:30 PM"},
+                                                                              new SelectListItem{Text="4:00 PM",Value="4:00 PM"},
+                                                                              new SelectListItem{Text="4:30 PM",Value="4:30 PM"},
+                                                                              new SelectListItem{Text="5:00 PM",Value="5:00 PM"},
+                                                                              new SelectListItem{Text="5:30 PM",Value="5:30 PM"},
+                                                                              new SelectListItem{Text="6:00 PM",Value="6:00 PM"},
+                                                                              new SelectListItem{Text="6:30 PM",Value="6:30 PM"},
+                                                                              new SelectListItem{Text="7:00 PM",Value="7:00 PM"},
+                                                                              new SelectListItem{Text="7:30 PM",Value="7:30 PM"},
+                                                                              new SelectListItem{Text="8:00 PM",Value="8:00 PM"},
+                                                                              new SelectListItem{Text="8:30 PM",Value="8:30 PM"},
+                                                                              new SelectListItem{Text="9:00 PM",Value="9:00 PM"},
+                                                                              new SelectListItem{Text="9:30 PM",Value="9:30 PM"},
+                                                                              new SelectListItem{Text="10:00 PM",Value="10:00 PM"},
+                                                                              new SelectListItem{Text="10:30 PM",Value="10:30 PM"},
+                                                                              new SelectListItem{Text="11:00 PM",Value="11:00 PM"},
+                                                                              new SelectListItem{Text="11:30 PM",Value="11:30 PM"},
+                                                                          }, new { @class = "form-control input-sm", @id = "ddlStartTime" })
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-4">
+                                            <div class="form-group no-margin-hr">
+                                                <label class="control-label">Reminder :</label>
+
+                                                <div class="col-sm-13">
+                                                    <div class="col-sm-8" style="padding-left: 0px;z-index: 99999;">
+                                                        @Html.TextBoxFor(m => m.history.RemindDate, new { @class = "form-control input-sm", @id = "txtReminder", @onblur = "return remaindertimeCheck(this);" })
+                                                        @*<asp:TextBox ID="txtReminder" runat="server" CssClass="form-control input-sm"></asp:TextBox>*@
+                                                    </div>
+
+                                                    <div class="col-sm-4" style="padding-left: 0px">
+                                                        @Html.DropDownListFor(m => m.history.RemindTime, new List<SelectListItem>
+                                                                          {
+                                                                              new SelectListItem{Text="12:00 AM",Value="12:00 AM"},
+                                                                              new SelectListItem{Text="12:30 AM",Value="12:30 AM"},
+                                                                              new SelectListItem{Text="1:00 AM",Value="1:00 AM"},
+                                                                              new SelectListItem{Text="1:30 AM",Value="1:30 AM"},
+                                                                              new SelectListItem{Text="2:00 AM",Value="2:00 AM"},
+                                                                              new SelectListItem{Text="2:30 AM",Value="2:30 AM"},
+                                                                              new SelectListItem{Text="3:00 AM",Value="3:00 AM"},
+                                                                              new SelectListItem{Text="3:30 AM",Value="3:30 AM"},
+                                                                              new SelectListItem{Text="4:00 AM",Value="4:00 AM"},
+                                                                              new SelectListItem{Text="4:30 AM",Value="4:30 AM"},
+                                                                              new SelectListItem{Text="5:00 AM",Value="5:00 AM"},
+                                                                              new SelectListItem{Text="5:30 AM",Value="5:30 AM"},
+                                                                              new SelectListItem{Text="6:00 AM",Value="6:00 AM"},
+                                                                              new SelectListItem{Text="6:30 AM",Value="6:30 AM"},
+                                                                              new SelectListItem{Text="7:00 AM",Value="7:00 AM"},
+                                                                              new SelectListItem{Text="7:30 AM",Value="7:30 AM"},
+                                                                              new SelectListItem{Text="8:00 AM",Value="8:00 AM"},
+                                                                              new SelectListItem{Text="8:30 AM",Value="8:30 AM"},
+                                                                              new SelectListItem{Text="9:00 AM",Value="9:00 AM"},
+                                                                              new SelectListItem{Text="9:30 AM",Value="9:30 AM"},
+                                                                              new SelectListItem{Text="10:00 AM",Value="10:00 AM"},
+                                                                              new SelectListItem{Text="10:30 AM",Value="10:30 AM"},
+                                                                              new SelectListItem{Text="11:00 AM",Value="11:00 AM"},
+                                                                              new SelectListItem{Text="11:30 AM",Value="11:30 AM"},
+                                                                              new SelectListItem{Text="12:00 PM",Value="12:00 PM"},
+                                                                              new SelectListItem{Text="12:30 PM",Value="12:30 PM"},
+                                                                              new SelectListItem{Text="1:00 PM",Value="1:00 PM"},
+                                                                              new SelectListItem{Text="1:30 PM",Value="1:30 PM"},
+                                                                              new SelectListItem{Text="2:00 PM",Value="2:00 PM"},
+                                                                              new SelectListItem{Text="2:30 PM",Value="2:30 PM"},
+                                                                              new SelectListItem{Text="3:00 PM",Value="3:00 PM"},
+                                                                              new SelectListItem{Text="3:30 PM",Value="3:30 PM"},
+                                                                              new SelectListItem{Text="4:00 PM",Value="4:00 PM"},
+                                                                              new SelectListItem{Text="4:30 PM",Value="4:30 PM"},
+                                                                              new SelectListItem{Text="5:00 PM",Value="5:00 PM"},
+                                                                              new SelectListItem{Text="5:30 PM",Value="5:30 PM"},
+                                                                              new SelectListItem{Text="6:00 PM",Value="6:00 PM"},
+                                                                              new SelectListItem{Text="6:30 PM",Value="6:30 PM"},
+                                                                              new SelectListItem{Text="7:00 PM",Value="7:00 PM"},
+                                                                              new SelectListItem{Text="7:30 PM",Value="7:30 PM"},
+                                                                              new SelectListItem{Text="8:00 PM",Value="8:00 PM"},
+                                                                              new SelectListItem{Text="8:30 PM",Value="8:30 PM"},
+                                                                              new SelectListItem{Text="9:00 PM",Value="9:00 PM"},
+                                                                              new SelectListItem{Text="9:30 PM",Value="9:30 PM"},
+                                                                              new SelectListItem{Text="10:00 PM",Value="10:00 PM"},
+                                                                              new SelectListItem{Text="10:30 PM",Value="10:30 PM"},
+                                                                              new SelectListItem{Text="11:00 PM",Value="11:00 PM"},
+                                                                              new SelectListItem{Text="11:30 PM",Value="11:30 PM"},
+                                                                          }, new { @class = "form-control input-sm", @onblur = "return Timecheck(this);", @id = "ddlReminderTime" })
+                                                    </div>
+                                                </div>
+
+
+
+                                            </div>
+
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="form-group no-margin-hr" id="Td12">
+                                                <label class="control-label" id="lblAssignTo">Assigned to :<span style="color: red">*</span></label>
+                                                @Html.DropDownListFor(m => m.history.AssignedTo, new SelectList(Model.salesList, "userId", "first_Name"), new { @class = "form-control input-sm", @id = "ddlAssignedTo" })
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <div class="form-group no-margin-hr">
+                                                <label class="control-label">Company&nbsp;Name:</label>
+
+                                                <div class="input-group" id="Table1">
+                                                    @Html.TextBoxFor(m => m.compnay.Account_Name, new { @id = "HyperAccountList", @class = "form-control", @maxlength = "50", @readonly = false })  
+
+                                                    <span class="input-group-btn">
+                                                        <a class="btn" href="#" id="ImageButton1" title="Select Contact" style="visibility: hidden"
+                                                           onclick="return show_NewAccountPopUp(750, 450);"><i class="fa fa-search"></i></a>
+
+                                                    </span>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-4">
+                                            <div class="form-group no-margin-hr">
+                                                <label class="control-label">Contact Name :</label>
+
+                                                <div class="input-group" id="tblContact">
+                                                    @Html.TextBoxFor(m => m.history.Contactid, new { @id = "HyperContact", @class = "form-control", @readonly = false })
+
+
+                                                    <span class="input-group-addon" type=" button" style="cursor:pointer;" id="ImageButton4" title="Select Contact"
+                                                          onclick="return show_NewContactPopUp(580, 420);">
+                                                        <i class="fa fa-search"></i>
+
+                                                        <input name="hdParentAccountId" type="hidden" id="hdParentAccountId" value="0">
+                                                    </span>
+
+                                                </div>
+
+
+
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-4">
+                                            <div class="form-group no-margin-hr">
+                                                <label class="control-label">Contact Phone :</label>
+                                                @Html.TextBoxFor(m => m.history.contactPhone, new { @id = "txtContactPhone", @class = "form-control input-sm", @readonly = false })
+
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+
+                                    <div class="row">
+
+
+
+
+                                        <div class="col-sm-4">
+                                            <div class="form-group no-margin-hr">
+                                                <label class="control-label">Contact Mobile :</label>
+                                                @Html.TextBoxFor(m => m.history.contactMobile, new { @id = "txtContactMobile", @class = "form-control input-sm", @readonly = false })
+
+                                            </div>
+                                        </div>
+
+                                        @*<div class="col-sm-4">
+                                            <div class="form-group no-margin-hr">
+                                                <label class="control-label">Attachment :</label>
+
+                                                <div class="pixel-file-input">
+                                                    <span class="pfi-filename pfi-placeholder">No file selected...</span>
+                                                    <div class="pfi-actions">
+                                                        <a href="#" class="btn btn-xs pfi-clear" style="display: none;"><i class="fa fa-times"></i> Clear</a>
+                                                        <a href="#" class="btn btn-xs btn-primary pfi-choose">Choose</a>
+                                                    </div>
+                                                    <input type="file" id="resumeUpload" name="file" class="styled-finputs-example" />
+                                                </div>
+                                                <script>
+                                                    init.push(function () {
+                                                        $('.styled-finputs-example').pixelFileInput({ placeholder: 'No file selected...' });
+                                                    })
+                                                </script>
+
+                                            </div>
+                                        </div>*@
+                                        <div class="col-sm-4">
+                                            <div class="form-group no-margin-hr">
+                                                <label class="control-label">Attachments :</label>
+
+                                                <input type="file" id="uploadFile" name="file" class="styled-finputs-example" />
+                                                <script>
+                                                    init.push(function () {
+                                                        $('.styled-finputs-example').pixelFileInput({ placeholder: 'No file selected...' });
+                                                    })
+                                                </script>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="row">
+
+                                        <div class="col-sm-12">
+                                            <div class="form-group no-margin-hr">
+                                                <label class="control-label">Comment :</label>
+                                                @Html.TextAreaFor(m => m.history.Details, new { @id = "txtHistoryDetail", @class = "form-control", @maxlength = "5000" })
+
+                                            </div>
+                                        </div>
+                                        @*@Html.HiddenFor(m => m.Contact.ContactId)*@
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-12 ">
+                                            <div class="pull-right">Date:&nbsp;@Html.LabelFor(m => m.history.CreatedDate, new { @id = "lblCreatedDate" }) </div>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+
+
+            <a id="aCopyEmail" class="form-control input-sm" style="color: Blue; display: none; cursor: pointer">Click here to copy sent email content into Comment. </a>
+            <!-- / Info -->
+
+        </div>
+    </div>
+
+}
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        var param1 = new Date();
+        var param2 = param1.getDate() + '/' + (param1.getMonth() + 1) + '/' + param1.getFullYear() + ' ' + param1.getHours() + ':' + param1.getMinutes() + ':' + param1.getSeconds();
+        $('#lblCreatedDate').text(param2);
+    });
+
+
+
+    function remaindertimeCheck(control) {
+
+        var remainderdate = $("#txtReminder").val();
+        var duedate = $("#txtDate").val();
+        var Isvalid = true;
+        if (duedate != "") {
+            if (remainderdate > duedate) {
+                alert("Remainder Date Must be less than Due date");
+                $("#txtReminder").focus();
+                $("#txtReminder").val('');
+                return Isvalid = false;
+            }
+            else {
+                return Isvalid = true;
+            }
+        }
+        return Isvalid;
+    }
+
+
+    function Timecheck(control) {
+
+        var remainderdate = $("#txtReminder").val();
+        var duedate = $("#txtDate").val();
+
+        var Isvalid = true;
+        //getHour24(control);
+        var starttime = ($("#ddlStartTime").val());
+        var remaindertime = ($("#ddlReminderTime").val());
+
+        //var time = document.getElementById('txttime').value;
+        var hrs = Number(remaindertime.match(/^(\d+)/)[1]);
+        var mnts = Number(remaindertime.match(/:(\d+)/)[1]);
+        var format = remaindertime.match(/\s(.*)$/)[1];
+        if (format == "PM" && hrs < 12) hrs = hrs + 12;
+        if (format == "AM" && hrs == 12) hrs = hrs - 12;
+        var hours = hrs.toString();
+        var minutes = mnts.toString();
+        if (hrs < 10) hours = "0" + hours;
+        if (mnts < 10) minutes = "0" + minutes;
+        if (duedate != "" && remainderdate != "") {
+            if (duedate == remainderdate) {
+
+                if (starttime < hours) {
+                    alert("Remainder time must be less than start time");
+                    $("#ddlReminderTime").focus();
+                    return Isvalid = false;
+                }
+            }
+        }
+        else {
+            return Isvalid = true;
+        }
+        return Isvalid;
+    }
+</script>
+

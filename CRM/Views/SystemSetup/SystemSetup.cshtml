@@ -1,0 +1,243 @@
+﻿@model  CRMHub.EntityFramework.companySetup
+    @{
+        ViewBag.Title = "SystemSetup";
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+
+@using(Html.BeginForm("SystemSetup", "Systemsetup", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+               <div id="content-wrapper">
+                           <div id="CustomBootstrapAlertBox">
+                           </div>
+                           <div class="row">
+                             
+
+                                   <div class="panel">
+
+                                       <div class="panel-heading">
+                                           <div class="row">
+                                               <!-- Page header, center on small screens -->
+                                               <h1 class="col-xs-6 col-sm-4 text-left text-left-sm panel-title"><i class="fa fa-users page-header-icon"></i>&nbsp; System Setup </h1>
+                                               <div class="col-xs-6 col-sm-8">
+                                                   <div class="row">
+                                                       <div class="pull-right">
+                                                           @*<a href="#" class="btn btn-flat btn-labeled btn-primary" tabindex="-1"
+                                                              data-toggle="modal" data-target="#uidemo-modals-alerts-info"><span class="btn-label icon fa fa-question-circle"></span>Help</a>*@
+                                                       </div>
+                                                   </div>
+                                               </div>
+                                           </div>
+                                       </div>
+
+
+                                       <div class="panel-body">
+
+                                          
+
+                                           <div class="row">
+                                               <div class="col-xs-12 col-sm-12">
+                                                   <div class="page-header-breadcrumb">
+
+                                                       <label class="control-label">
+                                                         
+                                                           <h4>@ViewBag.Message</h4>
+                                                       </label>
+
+                                                       <ul class="table-nav-item" style="float: right">
+                                                           <li>
+                                                              
+                                                               <button class="btn btn-flat btn-labeled btn-primary" id="btnSave">
+                                                                   <span class="btn-label icon fa fa-save"></span>Save
+                                                               </button>
+                                                           </li>
+
+                                                       </ul>
+
+                                                   </div>
+                                               </div>
+    </div>
+                                           <span id="errorsymbol" style="color:red;display:none;margin-left:5px;" class="fa fa-exclamation-circle"></span><div id="ErrorMessages" style="margin-left:20px;color:red;font-size:15px;margin-top:-19px">
+
+                                           </div>
+
+    <div class="row">
+
+        <div class="col-sm-12">
+            <div class="panel-group">
+
+
+
+                <div class="panel">
+                    <div id="collapse2" class="panel-collapse collapse in" style="height: auto;">
+                        <div class="panel-body">
+                            <div class="col-sm-12 no-padding-hr">
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <div class="form-group no-margin-hr">
+                                            <label class="control-label">Company Name :<span style="color: red">*</span></label>
+                                          
+                                                                                   @Html.TextBoxFor(m => m.CompanyName, null, new { @id = "txtCompanyName", @class = "form-control input-sm", @maxlength = "200",@validate="Required",@data_val_required="Company Name" })
+                                                                                   @Html.ValidationMessageFor(m => m.CompanyName,"Required")
+                                                                                 
+                                                                                  
+                                                                               </div>
+                                                                           </div>
+                                                                           <div class="col-sm-3">
+                                                                               <div class="form-group no-margin-hr">
+                                                                                   <label class="control-label">Admin Email :<span style="color: red">*</span></label>
+                                                                                
+                                                                                   @Html.TextBoxFor(m => m.AdminEmail, new { @id = "txtAdminEmail", @type = "email", @class = "form-control input-sm", @maxlength = "50", @validate = "Required,Email", @data_val_required = "Admin Email" })
+
+
+                                                                                   @Html.ValidationMessageFor(m => m.AdminEmail, "Required")
+                                                                                   
+                                                                               </div>
+                                                                           </div>
+                                                                           <div class="col-sm-3">
+                                                                               <div class="form-group no-margin-hr">
+                                                                                   <label class="control-label">Company URL :</label>
+                                                                                 
+                                                                                   @Html.TextBoxFor(m => m.CompanyURL, null, new { @id = "txtCompanyURL", @class = "form-control input-sm", @maxlength = "50" })
+                                                                               </div>
+                                                                           </div>
+                                                                           <div class="col-sm-3">
+                                                                               <div class="form-group no-margin-hr">
+                                                                                   <label class="control-label">TimeZone :</label>
+
+                                                                                   
+                                                                                   @Html.DropDownListFor(m => m.TimeZone, ViewBag.TimeZones as List<SelectListItem>, new { @class = "form-control input-sm" })
+                                                                               </div>
+
+                                                                           </div>
+                                                                       </div>
+                                                                      
+                                                                       <div class="row">
+                                                                           <div class="col-sm-8">
+                                                                               <div class="form-group no-margin-hr">
+                                                                                   <label class="control-label">Company Logo :</label>
+                                                                                  
+                                                                                   <div class="col-sm-13" style="padding-left: 0;">
+                                                                                       <div class="col-sm-9" style="padding: 0;">
+                                                                                          
+                                                                                           
+                                                                                           <input type="file" name="file" id="file" class="styled-finputs-example">
+                                                                                        
+
+                                                                                           <script>
+                                                                                               init.push(function () {
+                                                                                                   $('.styled-finputs-example').pixelFileInput({ placeholder: 'No file selected...' });
+                                                                                               })
+                                                                                           </script>
+                                                                                       
+                                                                                       </div>
+                                                                                       <div class="col-sm-3">
+                                                                                       <h5>@ViewBag.FileValidationMessage</h5>  
+                                                                                       </div>
+                                                                                   </div>
+                                                                               </div>
+                                                                           </div>
+                                                                       </div>
+                                                                       <div class="row">
+                                                                           <div class="col-sm-12">
+                                                                               <div class="form-group no-margin-hr">
+                                                                                   <label class="control-label">Home Content :</label>
+                                                                                 
+                                                                                   @Html.TextAreaFor(m => m.HomeContent, new { @id = "txtHomeContent", @class = "textEditor" })
+
+                                                                               </div>
+                                                                           </div>
+                                                                       </div>
+
+
+
+
+
+
+                                                                       <!-- / .panel-body -->
+                                                                   </div>
+                                                                   <!-- / .collapse -->
+                                                               </div>
+
+
+                                                           </div>
+                                                       </div>
+                                                   </div>
+                                               </div>
+                                           </div>
+
+                                         
+                                       </div>
+                                   </div>
+                                   <!-- /11. $BOOTSTRAP_TAB_DROP -->
+                                   <!-- / Info -->
+                               
+                           </div>
+                       </div>
+}
+@section scripts
+{
+    
+<script src="~/Scripts/jqte/jquery-te-1.4.0.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".textEditor").jqte();
+        });
+
+
+        $("#btnSave").click(function () {
+            
+            Isvalid = true;
+
+            return Validate(this.form);
+
+        });
+
+            
+       
+
+
+        $("#file").change(function (e) {
+            
+            if (this.disabled) return alert('File upload not supported!');
+            var F = this.files;
+            if (F && F[0]) for (var i = 0; i < F.length; i++) readImage(F[i]);
+            var file = document.getElementById("file");
+        });
+
+        function readImage(file) {
+            
+            var reader = new FileReader();
+            var image = new Image();
+
+            reader.readAsDataURL(file);
+            reader.onload = function (_file) {
+                
+                image.src = _file.target.result;
+                image.onload = function () {
+                    
+                    var w = image.width;
+                    var h = image.height;
+
+                    if (w > 250 && h > 90) {
+                        alert("Size of logo should be 250 x 90 pixels");
+                    }
+                    else
+                    {
+                        alert("Logo Uploaded successfully");
+                    }
+                };
+
+              
+                // url.createObjectURL(file);
+                
+               // alert(w);
+                //alert(h);
+                image.onerror = function () {
+                   alert('Invalid file type: ' + file.type);
+                };
+            };
+
+        }
+       
+    </script>
+}

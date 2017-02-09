@@ -1,0 +1,399 @@
+﻿@model CRMHub.EntityFramework.user
+@{
+    ViewBag.Title = "GetAllUsers";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+}
+<div class="widget">
+    <div class="widget-header bordered-bottom bordered-themesecondary">
+        <i class="widget-icon fa fa-tags themesecondary"></i>
+        <span class="widget-caption themesecondary">Users</span>
+    </div><!--Widget Header-->
+    <div class="widget-body  no-padding">
+        <div class="tickets-container">
+            <div class="row">
+                <!-- col-sm-6 -->
+                <div id="pnlSrchCriteria">
+                    <div class="col-sm-3">
+                        <div class="input-group">
+                            @*<input type="text" class="form-control" placeholder="Search these ventures">*@
+                            @Html.TextBoxFor(m => m.Keyword, new { @id = "txtUsers", @class = "form-control", @placeholder = "Search these Users", @maxlength = "100" })
+                            <span class="input-group-btn">
+                                <span id="searchclear" class="glyphicon glyphicon-remove-circle" title="Clear Search"></span>
+                                <button class="btn btn-default" type="button" id="btnSearchUser"><i class="glyphicon glyphicon-search"></i></button>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-sm-9" style="text-align:right;">
+                        <ul>
+                            <li class="btn btn-flat btn-labeled btn-primary">
+
+                                <a style="color: #fff; text-decoration: none; padding: 0px; font-weight: normal" href="@Url.Action("CreateNewUser", "Profile")" id="lnkAddnew">
+                                    <span class="btn-label icon  fa fa-plus-circle" style="margin-right:6px;"> </span>
+                                    Add New
+                                </a>
+                            </li>
+                            <li class="btn btn-flat btn-labeled btn-primary">
+                                <a style="color: #fff; text-decoration: none; padding: 0px; font-weight: normal" id="DeleteCompanies" onclick="deleteSelectedUser()">
+                                    <span class="btn-label icon  fa  fa-trash-o" style="margin-right:6px;"> </span>
+                                    Delete
+                                </a>
+                            </li>
+
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-primary">Export</button>
+
+                                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                                    <span class="caret"></span>
+                                    <span class="sr-only">Toggle Dropdown</span>
+                                </button>
+
+                                <ul class="dropdown-menu" style="min-width: 93px;" role="menu">
+                                    <li><a id="btnexcel" href="~/Profile/DownloadExcel">Excel</a></li>
+                                    <li><a href="#">CSV</a></li>
+
+                                    @*<li class="divider"></li>
+                                    <li><a href="#">Separated link</a></li>*@
+                                </ul>
+                            </div>
+
+                        </ul>
+                    </div>
+
+
+                </div>
+                <div class="col-sm-12 col-xs-12">
+                    <div class="table-primary table-striped">
+                        <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="tblUsers" style="width:100%;">
+                            <thead>
+                                <tr>
+                                    <th width="39">
+                                        <input type="checkbox" id="chkHeader" onclick="SelectAll()" />
+                                    </th>
+                                    <th data-class="expand"><i class="fa fa-area-chart"></i> First Name</th>
+                                    <th data-class="Phone"><i class="fa fa-tags"></i> E-mail</th>
+                                    <th data-hide="phone"><i class="fa fa-user-secret"></i>Phone </th>
+                                    <th data-hide="phone"><i class="fa fa-user-secret"></i>City </th>
+                                    <th data-hide="tablet,tabletlandscape,phone"><i class="fa fa-user-secret">State</th>
+                                    <th data-hide="tablet,tabletlandscape,phone"><i class="fa fa-user-secret">Role</th>
+                                    @*<th data-hide="tablet,tabletlandscape,phone"><i class="fa fa-hand-o-right"></i> Branch Name</th>*@
+                                    <th><i class="fa fa fa-cog"></i>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        var x = '@ViewBag.Created';
+        var y = '@ViewBag.Updated';
+        var z = '@ViewBag.DownloadExcel';
+        if (x == 'Created') {
+            $.growl.notice({ title: "Success", message: "Profile Created Successfully", size: 'large' });
+        }
+        if (y == 'Updated') {
+            $.growl.notice({ title: "Success", message: "Profile Updated Successfully", size: 'large' });
+        }
+        if (y == 'Excel') {
+            $.growl.notice({ title: "Success", message: "Users downloaded Successfully", size: 'large' });
+        }
+        BindUsers();
+        $('html').keyup(function (e) {
+
+            if (e.keyCode == 8) {
+                $('#btnSearchUser').click();
+                if ($("#txtUsers").val() == "") {
+                    $('#searchclear').hide();
+                }
+            }
+        });
+
+      
+    });
+   
+
+    function BindUsers() {
+        
+        var responsiveHelper = undefined;
+        var breakpointDefinition = {
+            desktop: Infinity,
+            tablet: 1024,
+            tabletlandscape: 768,
+            phone: 480
+        };
+        var tableElement = $('#tblUsers');
+        tableElement.dataTable({
+            autoWidth: false,
+            preDrawCallback: function () {
+                if (!responsiveHelper) {
+                    responsiveHelper = new ResponsiveDatatablesHelper(tableElement, breakpointDefinition);
+                }
+            },
+            rowCallback: function (nRow) {
+                responsiveHelper.createExpandIcon(nRow);
+            },
+            drawCallback: function (oSettings) {
+                responsiveHelper.respond();
+            },
+            //"order": [[$("#HD_SortValue").val(), "" + $("#HD_SortDirection").val() + ""]],
+            "aLengthMenu": [[10, 25, 50, 100], [10, 25, 50, 100]],
+            //"iDisplayStart": parseInt($("#HD_PageIndex").val()),
+            //"iDisplayLength": parseInt($("#HD_PageSize").val()),   txtOwnership
+            "pagingType": "full_numbers",
+            //"processing": true,
+            "serverSide": true,
+            "bFilter": false,
+            "sAjaxSource": "../Profile/getUser",
+            'columnDefs': [{ 'orderable': false, 'targets': 0 }], // hide sort icon on header of first column
+            'aaSorting': [[1, 'asc']], // start to sort data in second column
+
+            "fnServerParams": function (aoData) {
+
+                aoData.push(
+
+                    { "name": "Keyword_UserName", "value": "" + $("#txtUsers").val() + "" }
+                    );
+            },
+            "fnServerData": function (sSource, aoData, fnCallback) {
+                $.ajax({
+                    "dataType": 'json',
+                    "contentType": "application/json; charset=utf-8",
+                    "type": "GET",
+                    "url": sSource,
+                    "data": aoData,
+                    "success":
+                                function (msg) {
+                                    fnCallback(msg);
+                                }
+                });
+            },
+            "asStripeClasses": ['odd gradeX', 'even gradeC'],
+            "aoColumnDefs": [
+              {
+                  "targets": [0], "visible": true, "bSortable": false, "mDataProp": "UserId",
+                  "render": function (data, type, row) {
+                      return "<input name=\"chkItem\" class =\"case\" type=\"checkbox\"  onclick=\"SelectIndividual()\" id=\"chkRow_" + row["UserId"] + "\"data-val-1=\"" + row["UserId"] + "\" />";
+                  }
+              },
+
+                {
+                    "targets": [1], "visible": true, "bSortable": true, "mDataProp": "FirstName",
+                    "render": function (data, type, row) {
+                        return "<a href=\"#\" onclick=\"return OpenUserDetail('" + row["UserId"] + "')\">" + row["FirstName"] + "</a>";
+                    }
+                },
+              
+                  { "targets": [2], "visible": true, "bSortable": true, "mDataProp": "Email" },
+                { "targets": [3], "visible": true, "bSortable": true, "mDataProp": "Phone" },
+                { "targets": [4], "visible": true, "bSortable": true, "mDataProp": "City" },
+                { "targets": [5], "visible": true, "bSortable": true, "mDataProp": "stateName" },
+                { "targets": [6], "visible": true, "bSortable": true, "mDataProp": "roleName" },
+                    //{ "targets": [7], "visible": true, "bSortable": true, "mDataProp": "BranchName" },
+                {
+                    "targets": [7], "visible": true, "bSortable": false,
+                    "render": function (data, type, row) {
+                        return "<span class=\"fa fa-trash\" style='font-size: 15px;cursor:pointer;' onclick=\"deleteUser('" + row["UserId"] + "');\"></span>";
+                    }
+                },
+
+            ],
+            "fnDrawCallback": function (oSettings) {
+            }
+        }).api();
+    }
+
+    //$("#chkHeader").click(function () {
+    //    $('.case').prop("checked", this.checked);
+    //});
+
+    //$('#tblUsers tbody').click(function () {
+    //    if ($('#tblUsers input[name="chkItem"]:checked').length == $('#tblUsers input[name="chkItem"]').length) {
+    //        $("#chkHeader").prop("checked", true);
+    //    } else {
+    //        $("#chkHeader").prop("checked", false);
+    //    }
+    //});
+
+    function SelectIndividual() {
+        
+        if ($('#tblUsers input[name="chkItem"]:checked').length == $('#tblUsers input[name="chkItem"]').length) {
+            $("#chkHeader").prop("checked", true);
+        } else {
+            $("#chkHeader").prop("checked", false);
+        }
+    }
+
+    function SelectAll() {
+        
+        if ($("#chkHeader").prop("checked") == true) {
+            $('.case').prop("checked", true);
+        }
+        else if ($("#chkHeader").prop("checked") == false) {
+            $('.case').prop("checked", false);
+        }
+
+    }
+    function deleteSelectedUser() {
+        if ($('#tblUsers input[name="chkItem"]:checked').length > 0) {
+            var isvalid = false;
+            var Alertmsg = 'Are you sure you want to delete selected User(s)?';
+            bootbox.confirm(Alertmsg, function (flag) {
+                
+                if (flag == true) {
+                    var UserDelete = [];
+
+                    $("#tblUsers input:checkbox:checked").each(function (i) {
+                        if (this.id != "chkHeader") {
+                            var UserId = $(this).attr("data-val-1");
+
+                            UserDelete.push(new UsersList(UserId));
+                        }
+                    });
+                    var postData = JSON.stringify(UserDelete);
+                    $.ajax({
+                        url: "../Profile/DeleteUsers",
+                        type: "POST",
+                        contentType: 'application/json',
+                        dataType: 'json',
+                        async: false,
+                        data: postData,
+                        success: function (data) {
+
+                            if (data == true) {
+                                $.growl.notice({ title: "Success", message: "Users Deleted Successfully", size: 'large' });
+                                $("#tblUsers").dataTable().fnDestroy();
+                                document.location.href = document.location.href;
+                                // location.reload();
+                                BindUsers();
+                            }
+                            else {
+                                $.growl.error({ title: "Fail", message: "Users Not Deleted .", size: 'large' });
+                            }
+                        },
+                        error: function () {
+
+                        }
+                    });
+                    return isvalid;
+                }
+
+
+
+                else if (flag == false) {
+
+                    return isvalid = true;
+                }
+                return isvalid;
+            });
+            return isvalid;
+
+
+
+       
+        }
+        else
+            $.growl.error({ title: "Fail", message: "No User selected!.", size: 'large' });
+    }
+
+    $('#btnSearchUser').click(function () {
+        
+        $('#searchclear').show();
+        $('#loading').css('display', 'block');
+        $("#tblUsers").dataTable().fnDestroy();
+        BindUsers();
+
+        $('#tblUsers').on('length.dt', function (e, settings, len) {
+
+            $('#loading').css('display', 'block');
+        });
+
+        $('#tblUsers').on('page.dt', function () {
+
+            $('#loading').css('display', 'block');
+        });
+
+        $("#searchclear").click(function () {
+            $("#txtUsers").val('');
+            $('#btnSearchUser').click();
+            $('#searchclear').hide();
+        });
+
+    });
+
+    function UsersList(UserId) {
+        this.UserId = UserId;
+    }
+    
+
+    function deleteUser(UserId) {
+
+        var isvalid = false;
+        var Alertmsg = 'Are you sure you want to delete this User?';
+        bootbox.confirm(Alertmsg, function (flag) {
+            
+            if (flag == true) {
+                
+                isvalid = true;
+                $.ajax({
+                    url: "../Profile/DeleteUser",
+                    type: "POST",
+                    async: false,
+                    data: { UserId :UserId },
+                    success: function (data) {
+                        // alert(data);
+                        if (data == true) {
+                            $.growl.notice({ title: "Success", message: "User Deleted Successfully", size: 'large' });
+                            $("#tblUsers").dataTable().fnDestroy();
+                            document.location.href = document.location.href;
+                            //location.reload();
+                            BindUsers();
+                        }
+                        else {
+                            $.growl.error({ title: "Fail", message: "User Not Deleted .", size: 'large' });
+                        }
+                    },
+                    error: function () {
+
+                    }
+                });
+                return isvalid;
+            }
+
+            else if (flag == false) {
+                return isvalid = true;
+            }
+            return isvalid;
+        });
+        return isvalid;
+        
+    }
+
+
+</script>
+<script type="text/javascript">
+  
+    function OpenUserDetail(UserId) {
+        //Showloading();
+        window.location = "EditUser?UserId=" + UserId;
+    }
+
+</script>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        
+        $("#Manage").addClass("open active");
+        $('.mm-text').closest('li').each(function () {
+            
+            $(this).removeClass('active');
+        });
+        $('.mm-text').eq(0).closest('li').addClass('active');
+    });
+    </script>

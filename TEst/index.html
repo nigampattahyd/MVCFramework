@@ -1,0 +1,406 @@
+﻿<html>
+<head>
+    <meta charset="utf-8">
+    <title>Untitled Document</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <script src="Scripts/jquery-1.10.2.js"></script>
+    <script src="Scripts/Custom.js"></script>
+
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.8.23/themes/base/jquery-ui.css">
+    <script src="http://code.jquery.com/jquery-1.8.2.js"></script>
+    <script src="http://code.jquery.com/ui/1.8.23/jquery-ui.js"></script>
+    <link rel="stylesheet" href="http://jqueryui.com/resources/demos/style.css">
+
+</head>
+
+<body>
+
+    <div class="container-fluid">
+        <div class="row">
+            <h3 style=" background-color:#50ba4c; color:#fff; text-align:center;  padding:10px; margin:0px; font-size:20px;">
+                NextTech Venture Mentoring Service Venture Information Form
+            </h3>
+            <form class="form-horizontal" id="form1" style="   padding:15px; border:1px solid #a8c0c9;">
+
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="col-sm-5">Date<span style="color: red">*</span></label>
+                            <div class="col-sm-7">
+                                <input type="text" id="CreatedDate" title="CreatedDate" placeholder="MM/dd/yyyy" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="col-sm-5">Venture Name<span style="color: red">*</span></label>
+                            <div class="col-sm-7">
+                                <input type="text" id="VentureName" name="VentureName" class="form-control" maxlength="50">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <p> If you do not have a name, please insert TBD. </p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h5 style="font-weight:bold;">  Venture Mailing Address (Your venture must be located in Northwest Ohio)  </h5>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="col-sm-5">Street</label>
+                            <div class="col-sm-7">
+                                <input type="text" id="Street" class="form-control" maxlength="50">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="col-sm-5">City</label>
+                            <div class="col-sm-7">
+                                <input type="text" id="City" class="form-control" maxlength="50">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="col-sm-5">State</label>
+                            <div class="col-sm-7">
+                                <input type="text" id="State" class="form-control" maxlength="50">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="col-sm-5">ZIP</label>
+                            <div class="col-sm-7">
+                                <input type="text" id="ZIP" class="form-control" maxlength="9">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="col-sm-5">Industry Categorization</label>
+                            <div class="col-sm-7">
+                                <select id="IndustryCategoryName" class="form-control">
+                                    <option value="" disabled="disabled" selected="selected"> --select-- </option>
+                                    <option value="1">One</option>
+                                    <option value="2">Two</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="col-sm-5">If other, please specify  </label>
+                            <div class="col-sm-7">
+                                <input type="text" id="CategoryOthers" class="form-control" maxlength="50">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h5 style="font-weight:bold;">
+                            Who is the team? Please just list the founders and key members of the team. <br /></br>
+                            List primary contact first: 
+                        </h5>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="col-sm-5">Name<span style="color: red">*</span></label>
+                            <div class="col-sm-7">
+                                <input type="text" id="PrimaryContact" class="form-control" maxlength="50">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="col-sm-5">Role in the Venture </label>
+                            <div class="col-sm-7">
+                                <input type="text" id="PrimaryRoleInVenture" class="form-control" maxlength="20">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="col-sm-5">E-mail address<span style="color: red">*</span></label>
+                            <div class="col-sm-7">
+                                <input type="text" id="PrimaryEmail" class="form-control" maxlength="50">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <p> (Please list the best email address for us to reach you)</p>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="col-sm-5">Phone Number<span style="color: red">*</span></label>
+                            <div class="col-sm-7">
+                                <input type="text" id="PrimaryPhoneNo" class="form-control" maxlength="14">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <label class="col-sm-12">Collaborator Affiliation </label>
+                    <div class="col-sm-12 ">
+                        <label class="checkbox-inline">
+                            <input type="checkbox" id="PrimaryColaborationAffiliation1" name="PrimaryColaborationAffiliation" value="ProMedica">ProMedica
+                        </label>
+                        <label class="checkbox-inline">
+                            <input type="checkbox" id="PrimaryColaborationAffiliation2" name="PrimaryColaborationAffiliation" value="Mercy">Mercy
+                        </label>
+                        <label class="checkbox-inline">
+                            <input type="checkbox" id="PrimaryColaborationAffiliation3" name="PrimaryColaborationAffiliation" value="UT">UT
+                        </label>
+                        <label class="checkbox-inline">
+                            <input type="checkbox" id="PrimaryColaborationAffiliation4" name="PrimaryColaborationAffiliation" value="BGSU">BGSU
+                        </label>
+                        <label class="checkbox-inline">
+                            <input type="checkbox" id="PrimaryColaborationAffiliation5" name="PrimaryColaborationAffiliation" value="NextTech">NextTech
+                        </label>
+                        <label class="checkbox-inline">
+                            <input type="checkbox" id="PrimaryColaborationAffiliation6" name="PrimaryColaborationAffiliation" value="Other">Other
+                        </label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h5 style="font-weight:bold;">Secondary contact</h5>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="col-sm-5">Name</label>
+                            <div class="col-sm-7">
+                                <input type="text" id="SecondaryContact" class="form-control" maxlength="50" >
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="col-sm-5">Role in the Venture </label>
+                            <div class="col-sm-7">
+                                <input type="text" id="SecondaryRoleInVenture" class="form-control"  maxlength="20" >
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="col-sm-5">E-mail address</label>
+                            <div class="col-sm-7">
+                                <input type="text" id="SecondaryEmail" class="form-control" maxlength="50" >
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="col-sm-5">Phone Number</label>
+                            <div class="col-sm-7">
+                                <input type="text" id="SecondaryPhoneNo" class="form-control" maxlength="14">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <label class="col-sm-12">Collaborator Affiliation </label>
+                    <div class="col-sm-12 ">
+                        <label class="checkbox-inline">
+                            <input type="checkbox" id="ScondaryColaborationAffiliation1" name="ScondaryColaborationAffiliation" value="ProMedica">ProMedica
+                        </label>
+                        <label class="checkbox-inline">
+                            <input type="checkbox" id="ScondaryColaborationAffiliation2" name="ScondaryColaborationAffiliation" value="Mercy">Mercy
+                        </label>
+                        <label class="checkbox-inline">
+                            <input type="checkbox" id="ScondaryColaborationAffiliation3" name="ScondaryColaborationAffiliation" value="UT">UT
+                        </label>
+                        <label class="checkbox-inline">
+                            <input type="checkbox" id="ScondaryColaborationAffiliation4" name="ScondaryColaborationAffiliation" value="BGSU">BGSU
+                        </label>
+                        <label class="checkbox-inline">
+                            <input type="checkbox" id="ScondaryColaborationAffiliation5" name="ScondaryColaborationAffiliation" value="NextTech">NextTech
+                        </label>
+                        <label class="checkbox-inline">
+                            <input type="checkbox" id="ScondaryColaborationAffiliation6" name="ScondaryColaborationAffiliation" value="Other">Other
+                        </label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h5 style="font-weight:bold;">How did you hear about NextTech VMS?</h5>
+                    </div>
+                    <label class="col-sm-12">Check all that apply </label>
+                    <div class="col-sm-12 ">
+                        <label class="checkbox-inline">
+                            <input type="checkbox" id="Advertisement1" name="Advertisement" value="Google or other search">Google or other search
+                        </label>
+                        <label class="checkbox-inline">
+                            <input type="checkbox" id="Advertisement2" name="Advertisement" value="Word of mouth">Word of mouth
+                        </label>
+                        <label class="checkbox-inline">
+                            <input type="checkbox" id="Advertisement3" name="Advertisement" value="Press">Press
+                        </label>
+                        <label class="checkbox-inline">
+                            <input type="checkbox" id="Advertisement4" name="Advertisement" value="Advertisement">Advertisement
+                        </label>
+                        <label class="checkbox-inline">
+                            <input type="checkbox" id="Advertisement5" name="Advertisement" value="Social media">Social media
+                        </label>
+                        <label class="checkbox-inline">
+                            <input type="checkbox" id="Advertisement6" name="Advertisement" value="Other">Other
+                        </label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="col-sm-12">If you would like to elaborate with specifics, please do so below</label>
+                            <div class="col-sm-12">
+                                <input type="text" id="WouldLikeToElaborateSpecifics" class="form-control" maxlength="150" >
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <div class="col-sm-12"></div>
+                            <div class="col-sm-12">
+                                <label class="checkbox-inline">
+                                    <input type="checkbox" id="LegalEntityAtEnrollment" name="LegalEntityAtEnrollment" value="true"><b>Have you formed as a legal business entity?</b>
+                                </label>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <h5 style="font-weight:bold;">Business Idea/Description</h5>
+                        <p> To help us best serve you, please answer a few questions about your venture. Don’t worry about developing your responses formally like you would in a business plan. No deep details or financials are needed – just tell us what you think and envision at this point. Use everyday language as if you were explaining these things to your friends or family </p>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label class="col-sm-12">1. What do you do?Please provide a succinct 1-sentence description of what you do: </label>
+                            <div class="col-sm-6">
+                                <textarea id="WhatDoYouDo" class="form-control" maxlength="150"  style="resize:none;" ></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label class="col-sm-12">2. What is the problem? In a few sentences, please describe what problem you are solving:  </label>
+                            <div class="col-sm-6">
+                                <textarea id="WhatIsTheProblem" class="form-control" maxlength="150" style="resize:none;" ></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label class="col-sm-12">3. Who has it?In one or two sentences, describe who has this problem </label>
+                            <div class="col-sm-6">
+                                <textarea id="WhoHasIt" class="form-control" maxlength="150" style="resize:none;" ></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label class="col-sm-12">4. How will you solve the problem? - In a few sentences and in completely NON-TECHNICAL terms, please describe how you expect to solve it:  </label>
+                            <div class="col-sm-6">
+                                <textarea id="HowWillUSolveTheProblem" class="form-control" maxlength="150" style="resize:none;" ></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label class="col-sm-12"> 5. How will you make money?  In a few sentences, describe who will use it, who will pay you and how you envision selling to them. Again, you do not need to provide in-depth financial details. </label>
+                            <div class="col-sm-6">
+                                <textarea id="HowWillUMakeMoney" class="form-control" maxlength="150" style="resize:none;" ></textarea>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label class="col-sm-12">   6. What is the secret sauce?  In a few sentences, describe what is special about your solution and product.  What is its competitive advantage over existing products or solutions?   </label>
+                            <div class="col-sm-6">
+                                <textarea id="WhtIsTheSecretSauce" class="form-control" maxlength="150" style="resize:none;" ></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label class="col-sm-12"> 7. Is there IP?  In a few sentences describe the IP status. Also, if you are employed by, or affiliated with, a collaborator (PI, Mercy, BGSU or UT), does the collaborator have any legal rights to your IP?  </label>
+                            <div class="col-sm-6">
+                                <textarea id="IsThereIP" class="form-control" maxlength="150" style="resize:none;" ></textarea>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label class="col-sm-12"> 8. What is your current status?  It’s just fine to be very early in the process, even at the idea stage. Please check one: </label>
+                            <div class="col-sm-6 ">
+                                <label class="checkbox-inline">
+                                    <input type="checkbox" id="chkstatus1" name="WhatIsYourCurrentStatus" value="Idea exploration">Idea exploration
+                                </label>
+                                <label class="checkbox-inline">
+                                    <input type="checkbox" id="chkstatus2" name="WhatIsYourCurrentStatus" value="Ready to launch">Ready to launch
+                                </label>
+                                <label class="checkbox-inline">
+                                    <input type="checkbox" id="chkstatus3" name="WhatIsYourCurrentStatus" value="Revenue  generating">Revenue  generating
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label class="col-sm-12"> 9. What type(s) of VMS help do you think your startup needs?  (please check all that apply)</label>
+                            <div class="col-sm-12 ">
+                                <label class="checkbox-inline">
+                                    <input type="checkbox" id="chkneeds1" name="WhatTypeOfVMSHelpStartUpNeeds" value="Business Development">Business Development
+                                </label>
+                                <label class="checkbox-inline">
+                                    <input type="checkbox" id="chkneeds2" name="WhatTypeOfVMSHelpStartUpNeeds" value="IP Strategy">IP Strategy
+                                </label>
+                                <label class="checkbox-inline">
+                                    <input type="checkbox" id="chkneeds3" name="WhatTypeOfVMSHelpStartUpNeeds" value="Commercial potential of technology">Commercial potential of technology
+                                </label>
+                                <label class="checkbox-inline">
+                                    <input type="checkbox" id="chkneeds4" name="WhatTypeOfVMSHelpStartUpNeeds" value="Early Team formation">Early Team formation
+                                </label>
+                                <label class="checkbox-inline">
+                                    <input type="checkbox" id="chkneeds5" name="WhatTypeOfVMSHelpStartUpNeeds" value="Occasional Informal feedback">Occasional Informal feedback
+
+                                </label>
+                                <label class="checkbox-inline">
+                                    <input type="checkbox" id="chkneeds6" name="WhatTypeOfVMSHelpStartUpNeeds" value="Other">Other
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label class="col-sm-12"> Additional Comments:  If there is anything else we should know about your venture, please let us know here. </label>
+                            <div class="col-sm-6">
+                                <textarea id="Comments" class="form-control" maxlength="300"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12" style="text-align:center;">
+                        <button type="button" id="btnsubmit" class="btn btn-primary" style="background-color:#50ba4c;border:#50ba4c;margin: 5px;">Submit</button>
+                        <button type="button" id="btnclear" class="btn btn-default" style="background-color:#50ba4c;border:#50ba4c; color:#fff;">Clear</button>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,9 @@
+Hello uday 
+
+Below listed are the three procedure
+
+1. CRM_GetMenuByRoleId (Update the procedure)
+2. CRM_GETALL_Activities_Notification (New procedure)( Execute it in CRM DB)
+3. CRM_UpdateClientDetailsByClientId (New procedure) Execute it in CRMclientsDB)
+
+and there are also some more DB changes will guide on screen sharing.

@@ -1,0 +1,160 @@
+﻿@model CRMHub.ViewModel.DashboardStatusCount
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">&nbsp;</div>
+<div class="panel-body">
+    <div class="row">
+
+        <!-- Tabs -->
+
+        <ul class="nav nav-tabs bs-tabdrop-example" id="TabMenu">
+
+            <li id="TabDashBoardDetail"><a href="#pvDBoard" data-toggle="tab" onclick="LoadDashBoardData()">DashBoard</a></li>
+            <li id="TabSchedular"><a href="#pvSchedular" data-toggle="tab" onclick="LoadSchedular()">Scheduler</a></li>
+            <li id="TabGraphs"><a href="#pvGraphs" data-toggle="tab" onclick="LoadGraphs()">Graphs</a></li>
+        </ul>
+        <div class="tab-content tab-content-bordered">
+            <div class="tab-pane" id="pvDBoard">
+                <div id="divDashBoardPartialView">
+                    @*Here we Load the DashBoardData from Partial View*@
+                </div>
+            </div>
+            <div class="tab-pane" id="pvSchedular">
+                <div id="divSchedularPartialView">
+                    @*Here we Load the Schedular from Partial View*@
+                </div>
+            </div>
+
+            <div class="tab-pane" id="pvGraphs">
+                <div id="divGraphsPartialView">
+                    @*Here we Load the Schedular from Partial View*@
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="//www.google.com/jsapi"></script>
+
+<script type="text/javascript">
+    google.load('visualization', '1', { packages: ['corechart'] });
+</script>
+
+
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        bindDashBoardData();
+        var schetab = '@ViewBag.showSchedulartab';
+        if (schetab != "Schedu") {
+            $('#TabMenu a:first').tab('show');
+        }
+
+    });
+    
+    function bindDashBoardData() {
+        $.ajax({
+            url: '@Url.Action("_DashBoardData", "DashBoard")',
+            // url: "DashBoard/_DashBoardData", ViewBag.showSchedulartab
+            dataType: "html",
+            type: "GET",
+            async: false,
+            //data: { gFromDate: FromDate, gToDate: ToDate, officeLoc: officeLoc, Usrid: Usrid },
+            success: function (response) {
+                $('#divDashBoardPartialView').empty();
+                $("#divDashBoardPartialView").html(response);
+
+            },
+            error: function (x, e) {
+
+                alert("Failed");
+                alert(x.responseText);
+
+            }
+        });
+    }
+    function LoadDashBoardData() {
+        $('#pvDBoard').css("display", "block");
+        $('#pvSchedular').css("display", "none");
+        $('#pvGraphs').css("display", "none");
+        $('#TabGraphs').removeClass('active');
+        $('#TabSchedular').removeClass('active');
+        $('#TabDashBoardDetail').addClass("active");
+        bindDashBoardData();
+    }
+    function LoadSchedular() {
+        $('#pvDBoard').css("display", "none");
+        $('#TabSchedular').addClass('active');
+        $('#pvGraphs').css("display", "none");
+        $('#TabGraphs').removeClass('active');
+        $('#pvSchedular').css("display", "block");
+        $('#TabDashBoardDetail').removeClass("active");
+        BindShcedular();
+    }
+
+    function LoadGraphs() {
+        $('#TabGraphs').addClass('active');
+        $('#pvGraphs').css("display", "block");
+        $('#pvDBoard').css("display", "none");
+        $('#pvSchedular').css("display", "none");
+        $('#TabDashBoardDetail').removeClass("active");
+        $('#TabSchedular').removeClass('active');       
+        BindGraphs();
+    }
+    function BindGraphs()
+    {
+        $.ajax({
+            url: '@Url.Action("_GraphsData", "DashBoard")',
+        
+            dataType: "html",
+            type: "GET",
+            async: false,
+            //data: { gFromDate: FromDate, gToDate: ToDate, officeLoc: officeLoc, Usrid: Usrid },
+            success: function (response) {
+
+                $('#divGraphsPartialView').empty();
+                $("#divGraphsPartialView").html(response);
+
+            },
+            error: function (x, e) {
+
+                alert("Failed");
+                alert(x.responseText);
+
+            }
+        });
+
+    }
+    function BindShcedular() {
+        $.ajax({
+            url: '@Url.Action("_SchedularData", "Calender")',
+            // url: "DashBoard/_DashBoardData", Data
+            @*url: '@Url.Action("Data", "Calender")',*@
+            dataType: "html",
+            type: "GET",
+            async: false,
+            //data: { gFromDate: FromDate, gToDate: ToDate, officeLoc: officeLoc, Usrid: Usrid },
+            success: function (response) {
+
+                $('#divSchedularPartialView').empty();
+                $("#divSchedularPartialView").html(response);
+
+            },
+            error: function (x, e) {
+
+                alert("Failed");
+                alert(x.responseText);
+
+            }
+        });
+    }
+    $('#modal-warning').on('show.bs.modal', function () {
+        $('.modal-body').css('height', $(window).height() * 0.87);
+    });
+
+</script>

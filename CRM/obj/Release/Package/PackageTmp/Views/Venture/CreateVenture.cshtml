@@ -1,0 +1,681 @@
+﻿@model CRMHub.ViewModel.VentureViewModel
+@{
+    ViewBag.Title = "Create Venture";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+}
+
+
+@using (Html.BeginForm("CreateVenture", "Venture", FormMethod.Post, new { @Id = "CreateVent" }))
+{
+    <div class="widget">
+        <div class="widget-header bordered-bottom bordered-themesecondary">
+            <i class="widget-icon fa fa-user themesecondary"></i>
+            <span class="widget-caption themesecondary">Create Venture</span>
+        </div><!--Widget Header-->
+        <div class="widget-body">
+            <div class="row">
+
+                @*<script>
+                    init.push(function () {
+                        $('ul.bs-tabdrop-example').tabdrop();
+                    });
+                </script>*@
+
+                <span id="errorsymbol" style="color:red;display:none;margin-left:5px;" class="fa fa-exclamation-circle"></span>
+                <div id="ErrorMessages" style="margin-left:20px;color:red;font-size:15px; ">
+
+                </div>
+
+
+                <div class="tab-pane active" id="pvLeadDetail">
+                    <div id="Getleads">
+                        <div class="col-sm-12">
+                            <div class="col-xs-12 col-sm-12 text-right text-right-sm" id="white_bg">
+                                <button class="btn btn-flat btn-labeled btn-primary" id="btnSave" style=" margin:0px 3px 0px 10px;">
+                                    <span class="btn-label icon fa fa-save"></span>Save
+                                </button>
+                                <a class="btn btn-flat btn-labeled btn-primary" href="@Url.Action("Index", "Venture/")">
+                                    <span class="btn-label icon fa fa-backward" style="margin-right:6px;"> </span>
+                                    Back
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12" style="padding-top:10px;">
+                            <div class="panel-group" id="accordion-example">
+                                <!-- / .panel -->
+                                <div class="panel">
+                                    <div class="panel-heading">
+                                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion-example"
+                                           href="#collapse2">Venture&nbsp;Details</a>
+                                    </div>
+                                    <!-- / .panel-heading -->
+                                    <div id="collapse2" class="panel-collapse collapse in" style="height: auto;">
+                                        <div class="panel-body">
+                                            <div class="col-sm-12 no-padding-hr">
+                                                <div class="row">
+                                                    <div class="row">
+                                                        <div class="col-sm-12">
+                                                            <div class="col-sm-3">
+                                                                <div class="form-group no-margin-hr">
+                                                                    <label class="control-label">Venture Name :<span style="color: red">*</span></label>
+                                                                    @Html.TextBoxFor(m => m.objVenture.VentureName, new { @class = "form-control input-sm", @id = "txtVentureName", @validate = "Required", @data_val_required = "Please enter Venture Name", @maxlength = "50" })
+                                                                    @Html.ValidationMessageFor(m => m.objVenture.VentureName, "", new { @class = "text-danger" })
+
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-3">
+                                                                <div class="form-group no-margin-hr">
+                                                                    <label class="control-label">Lead Mentor:<span style="color: red">*</span></label>
+
+                                                                    @*@Html.TextBoxFor(m => m.objVenture.LeadMentor, new { @id = "txtLeadMentor", @class = "form-control input-sm", @MaxLength = "20" })*@
+                                                                @Html.DropDownListFor(m => m.objVenture.LeadMentor, new SelectList(Model.objlstmentor, "MentorId", "Name"), "Select Lead Mentor", new { @placeholder = "Select Lead Mentor", @id = "ddlmentor", @data_val_required = "Select Lead Mentor", @class = "form-control input-sm" })
+                                                               @Html.ValidationMessageFor(m => m.objVenture.LeadMentor, "", new { @class = "text-danger" })
+                                                                 </div>
+
+                                                            </div>
+                                                            <div class="col-sm-3">
+                                                                <div class="form-group no-margin-hr">
+                                                                    <label class="control-label">Primary Contact Name:<span style="color: red">*</span></label>
+                                                                    <div class="input-group">
+                                                                        @Html.TextBoxFor(m => m.objVenture.PrimaryContact, new { @id = "txtPrimaryContact", @class = "form-control input-sm", @MaxLength = "50", @data_val_required = "Please  Enter Primary Contact Name" })
+                                                                        <span class="input-group-addon">
+                                                                            <i class="fa fa-user"></i>
+                                                                        </span>
+                                                                    </div>
+                                                                    @Html.ValidationMessageFor(m => m.objVenture.PrimaryContact, "", new { @class = "text-danger" })
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-sm-3">
+                                                                <div class="form-group no-margin-hr">
+                                                                    <label class="control-label">Primary Email :<span style="color: red">*</span></label>
+                                                                    <div class="input-group">
+                                                                        @Html.TextBoxFor(m => m.objVenture.PrimaryEmail, new { @id = "txtPrimaryEmail", @class = "form-control input-sm", @data_val_required = "Please  Enter Primary Email", @MaxLength = "60" })
+
+                                                                        <span class="input-group-addon">
+                                                                            <i class="fa fa-envelope"></i>
+                                                                        </span>
+                                                                    </div>
+                                                                    @Html.ValidationMessageFor(m => m.objVenture.PrimaryEmail, "", new { @class = "text-danger" })
+                                                                </div>
+                                                                
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-sm-12">
+                                                            <div class="col-sm-3">
+                                                                <div class="form-group no-margin-hr">
+                                                                    <label class="control-label">Secondary Contact Name:</label>
+                                                                    <div class="input-group">
+                                                                        @Html.TextBoxFor(m => m.objVenture.SecondaryContact, new { @id = "txtSecondaryContact", @class = "form-control input-sm", @MaxLength = "60" })
+                                                                        <span class="input-group-addon">
+                                                                            <i class="fa fa-user"></i>
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-sm-3">
+                                                                <div class="form-group no-margin-hr">
+                                                                    <label class="control-label">Secondary Email&nbsp;:</label>
+                                                                    <div class="input-group">
+                                                                        @Html.TextBoxFor(m => m.objVenture.SecondaryEmail, new { @id = "txtSecondaryEmail", @class = "form-control input-sm", @MaxLength = "60" })
+                                                                        
+                                                                        <span class="input-group-addon">
+                                                                            <i class="fa fa-envelope"></i>
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                                @Html.ValidationMessageFor(m => m.objVenture.SecondaryEmail, "", new { @class = "text-danger" })
+                                                            </div>
+
+                                                            <div class="col-sm-3">
+                                                                <div class="form-group no-margin-hr">
+                                                                    <label class="control-label">DropBox&nbsp;:</label>
+
+                                                                    @Html.TextBoxFor(m => m.objVenture.DropBox, new { @id = "txtDropBox", @class = "form-control input-sm", @MaxLength = "200" })
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-sm-3">
+                                                                <div class="form-group no-margin-hr">
+                                                                    <label class="control-label">DropBox Folder&nbsp;:</label>
+
+                                                                    @Html.TextBoxFor(m => m.objVenture.DropBoxFolder, new { @id = "txtDropBoxFolder", @class = "form-control input-sm", @MaxLength = "200" })
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-sm-12">
+                                                            <div class="col-sm-3">
+                                                                <div class="form-group no-margin-hr">
+
+                                                                    <label class="control-label">Website&nbsp;:</label>
+                                                                    <div class="input-group">
+                                                                        @Html.TextBoxFor(m => m.objVenture.WebSite, new { @id = "txtWebSite", @class = "form-control input-sm", @MaxLength = "299", @type = "url" })
+                                                                        <span class="input-group-addon">
+                                                                            <i class="fa fa-globe"></i>
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-3">
+                                                                <div class="form-group no-margin-hr">
+                                                                    <label class="control-label">Vms MailList&nbsp;:</label>
+                                                                    @Html.TextBoxFor(m => m.objVenture.VmsMailList, new { @id = "txtVmsMailList", @class = "form-control input-sm", @MaxLength = "299" })
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-3">
+                                                                <div class="form-group no-margin-hr">
+                                                                    <label class="control-label">SignUp Returned&nbsp;:</label>
+                                                                    <div class="input-group datepicker1">
+                                                                        @Html.TextBoxFor(m => m.objVenture.SignUpReturned, new { @id = "txtSignUpReturned", @class = "form-control input-sm", @MaxLength = "20", @onkeypress = "return isNumberKey(event)" })
+                                                                        <span class="input-group-addon">
+                                                                            <i class="fa fa-calendar"></i>
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-3">
+                                                                <div class="form-group no-margin-hr">
+                                                                    <label class="control-label">First Mentor Meeting&nbsp;:</label>
+                                                                    <div class="input-group datepicker1">
+                                                                        @Html.TextBoxFor(m => m.objVenture.FirstMentorMeeting, new { @id = "txtFirstMentorMeeting", @class = "form-control input-sm", @MaxLength = "20", @onkeypress = "return isNumberKey(event)" })
+                                                                        <span class="input-group-addon">
+                                                                            <i class="fa fa-calendar"></i>
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-sm-12">
+                                                            <div class="col-sm-3">
+                                                                <div class="form-group no-margin-hr">
+                                                                    <label class="control-label">MIT Link&nbsp;:</label>
+                                                                    <div class="input-group">
+                                                                        @Html.TextBoxFor(m => m.objVenture.MITLink, new { @id = "txtMITLink", @class = "form-control input-sm", @MaxLength = "20", @type = "url" })
+                                                                        <span class="input-group-addon">
+                                                                            <i class="fa fa-globe"></i>
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-3">
+                                                                <div class="form-group no-margin-hr">
+                                                                    <label class="control-label">Reffered By&nbsp;:</label>
+                                                                    @Html.TextBoxFor(m => m.objVenture.RefferedBy, new { @id = "txtRefferedBy", @class = "form-control input-sm", @MaxLength = "20" })
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-3">
+                                                                <div class="form-group no-margin-hr">
+                                                                    <label class="control-label">VMS Status&nbsp;:<span style="color: red">*</span></label>
+                                                                    @Html.DropDownListFor(m => m.objVenture.Status, new SelectList(Model.lstMVSStatus, "StatusId", "Status"), "--Select--", new { @class = "form-control", @id = "drpSMSprovider", @style = "height:30px;", @Validate = "Required", @data_val_required = "Please select VMS Status" })
+                                                                    @Html.ValidationMessageFor(m => m.objVenture.Status, "", new { @class = "text-danger" })
+                                                                </div>
+                                                            </div>
+                                                           
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-sm-12">
+                                                            <div class="col-sm-3">
+                                                                <div class="form-group no-margin-hr">
+                                                                    <div class="form-group">
+                                                                        <div class="checkbox">
+                                                                            <label>
+                                                                                @Html.CheckBoxFor(model => model.objVenture.StudentIdea, new { id = "chkStudentIdeaBasedOnResearch" })
+                                                                                <span class="text">Student Idea Based On Research</span>
+                                                                            </label>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-3">
+                                                                <div class="form-group no-margin-hr">
+                                                                    <div class="form-group">
+                                                                        <div class="checkbox">
+                                                                            <label>
+                                                                                @Html.CheckBoxFor(model => model.objVenture.ResearchIdea, new { id = "chkResearchIdeaDisclosedToTLO" })
+                                                                                <span class="text">Research Idea Disclosed To TLO</span>
+                                                                            </label>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-3">
+                                                                <div class="form-group no-margin-hr">
+                                                                    <div class="form-group">
+                                                                        <div class="checkbox">
+                                                                            <label>
+                                                                                @Html.CheckBoxFor(model => model.objVenture.LegalEntity, new { id = "chkLegalEntityAtEnrollment" })
+                                                                                <span class="text">Legal Entity At Enrollment</span>
+                                                                            </label>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                         
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-sm-3">
+                                                        <div class="form-group no-margin-hr">
+                                                            <div class="form-group">
+                                                                <div class="checkbox">
+                                                                    <label>
+                                                                        @Html.CheckBoxFor(model => model.objVenture.IsIntroduced, new { id = "chkIntroduced" })
+                                                                        <span class="text">Introduced</span>
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="panel">
+                                    <div class="panel-heading">
+                                        <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion-example"
+                                           href="#Panel2">Address Details</a>
+                                    </div>
+                                    <!-- / .panel-heading -->
+                                    <div id="Panel2" class="panel-collapse collapse" style="height: auto;">
+                                        <div class="panel-body">
+                                            <div class="col-sm-12 no-padding-hr">
+
+                                                <div class="row">
+                                                    <div class="col-sm-3">
+                                                        <div class="form-group no-margin-hr">
+                                                            <label class="control-label">Phone&nbsp;:</label>
+
+                                                            @Html.TextBoxFor(m => m.objVenture.Phone, new { @id = "txtPhone", @class = "form-control input-sm", @MaxLength = "20", @onkeypress = "return isNumberKey(event)" })
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-3">
+                                                        <div class="form-group no-margin-hr">
+                                                            <label class="control-label">Contact Info :</label>
+                                                            @Html.TextBoxFor(m => m.objVenture.ContactInfo, new { @id = "txtContactInfo", @class = "form-control", @onkeypress = "return isNumberKey(event)" })
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-3">
+                                                        <div class="form-group no-margin-hr">
+                                                            <label class="control-label">
+                                                                Fax :
+                                                            </label>
+
+                                                            @Html.TextBoxFor(m => m.objVenture.Fax, new { @id = "txtFax", @class = "form-control input-sm", @maxlength = "10", @onkeypress = "return isNumberKey(event)" })
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-3">
+                                                        <div class="form-group no-margin-hr">
+                                                            <label class="control-label" id="lblStateProvince">
+                                                                Cellular :
+                                                            </label>
+
+                                                            @*Dropdown list for State*@
+
+                                                            @Html.TextBoxFor(m => m.objVenture.Cellular, new { @id = "txtCellular", @class = "form-control input-sm", @maxlength = "50", @onkeypress = "return isNumberKey(event)" })
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-sm-3">
+                                                        <div class="form-group no-margin-hr">
+                                                            <label class="control-label">Address&nbsp;1 :</label>
+                                                            @Html.TextAreaFor(m => m.objVenture.Address, new { @id = "txtAddress", @class = "textEditor", @cols = 30, @rows = 5 })
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-3">
+                                                        <div class="form-group no-margin-hr">
+                                                            <label class="control-label">Address&nbsp;2 :</label>
+                                                            @Html.TextAreaFor(m => m.objVenture.Address1, new { @id = "txtAddress1", @class = "textEditor", @cols = 30, @rows = 5 })
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="panel">
+                                    <div class="panel-heading">
+                                        <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion-example"
+                                           href="#collapse10">Description</a>
+                                    </div>
+                                    <!-- / .panel-heading -->
+                                    <div id="collapse10" class="panel-collapse collapse">
+                                        <div class="panel-body">
+                                            <div class="col-sm-3">
+                                                <div class="form-group no-margin-hr">
+                                                    <label class="control-label">Description&nbsp;:</label>
+                                                    @Html.TextAreaFor(m => m.objVenture.Description, new { @id = "txtDescription", @class = "textEditor", @cols = 30, @rows = 5 })
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <div class="form-group no-margin-hr">
+                                                    <label class="control-label">Public Description&nbsp;:</label>
+                                                    @Html.TextAreaFor(m => m.objVenture.PublicDesc, new { @id = "txtPublicDesc", @class = "textEditor", @cols = 30, @rows = 5 })
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <div class="form-group no-margin-hr">
+                                                    <label class="control-label">Comments&nbsp;:</label>
+                                                    @Html.TextAreaFor(m => m.objVenture.Comments, new { @id = "txtComments", @class = "textEditor", @cols = 30, @rows = 5 })
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <div class="form-group no-margin-hr">
+                                                    <label class="control-label">Intake Notes&nbsp;:</label>
+                                                    @Html.TextAreaFor(m => m.objVenture.IntakeNotes, new { @id = "txtIntakeNotes", @class = "textEditor", @cols = 30, @rows = 5 })
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <div class="form-group no-margin-hr">
+                                                    <label class="control-label">Intake Note Summary&nbsp;:</label>
+                                                    @Html.TextAreaFor(m => m.objVenture.IntakeNoteSummary, new { @id = "txtIntakeNoteSummary", @class = "textEditor", @cols = 30, @rows = 5 })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- / .panel-body -->
+                                    </div>
+                                    <!-- / .collapse -->
+                                </div>
+
+                                @*Binding Custom Fields*@
+                                <div class="panel">
+                                    <div class="panel-heading">
+                                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion-example"
+                                           href="#collapse1c">Custom Fields</a>
+                                    </div>
+                                    <!-- / .panel-heading -->
+                                    <div id="collapse1c" class="panel-collapse collapse" style="height: auto;">
+                                        <div class="panel-body">
+                                            <div class="col-sm-12 no-padding-hr">
+                                                <div class="row">
+                                                    @for (int i = 0; i < Model.listCustomfields.Count; i++)
+                                                    {
+                                                        <div class="col-sm-4">
+                                                            <div class="form-group no-margin-hr">
+                                                                @Html.HiddenFor(m => m.listCustomfields[i].FieldId)
+                                                                @Html.HiddenFor(m => m.listCustomfields[i].Column_Type)
+
+                                                                @if (Model.listCustomfields[i].Column_Type == "textbox")
+                                                                {
+                                                                    @Html.DisplayFor(m => m.listCustomfields[i].Column_Label)
+                                                                    if (@Model.listCustomfields[i].RequiredField == true)
+                                                                    {
+                                                                        <span style="color: red">*</span>
+                                                                        @Html.TextBoxFor(m => m.listCustomfields[i].DefaultValue, new { @id = "TxtCusttext" + i, @class = "form-control input-sm", @title = @Model.listCustomfields[i].HoverText, @MaxLength = @Model.listCustomfields[i].MaxLength, @TabIndex = "37", rows = "1", cols = "1", @validate = "Required", @data_val_required = @Model.listCustomfields[i].Column_Label })
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        @Html.TextBoxFor(m => m.listCustomfields[i].DefaultValue, new { @id = "TxtCusttext" + i, @class = "form-control input-sm", @title = @Model.listCustomfields[i].HoverText, @MaxLength = @Model.listCustomfields[i].MaxLength, @TabIndex = "37", rows = "1", cols = "1" })
+                                                                    }
+                                                                }
+
+                                                                @if (Model.listCustomfields[i].Column_Type == "textarea")
+                                                                {
+                                                                    @Html.DisplayFor(m => m.listCustomfields[i].Column_Label)
+                                                                    if (@Model.listCustomfields[i].RequiredField == true)
+                                                                    {
+                                                                        <span style="color: red">*</span>
+                                                                        @Html.TextAreaFor(m => m.listCustomfields[i].DefaultValue, new { @id = "TxtCusttextarea" + i, @class = "form-control input-sm", @title = @Model.listCustomfields[i].HoverText, @MaxLength = @Model.listCustomfields[i].MaxLength, @TabIndex = "37", rows = "1", cols = "1", @validate = "Required", @data_val_required = @Model.listCustomfields[i].Column_Label })
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        @Html.TextAreaFor(m => m.listCustomfields[i].DefaultValue, new { @id = "TxtCusttextarea" + i, @class = "form-control input-sm", @title = @Model.listCustomfields[i].HoverText, @MaxLength = @Model.listCustomfields[i].MaxLength, @TabIndex = "37", rows = "1", cols = "1" })
+                                                                    }
+                                                                }
+
+                                                                @if (Model.listCustomfields[i].Column_Type == "textfield")
+                                                                {
+                                                                    @Html.DisplayFor(m => m.listCustomfields[i].Column_Label)
+                                                                    if (@Model.listCustomfields[i].RequiredField == true)
+                                                                    {
+                                                                        <span style="color: red">*</span>
+                                                                        @Html.TextBoxFor(m => m.listCustomfields[i].DefaultValue, new { @id = "TAActualColumnName" + i, @class = "form-control input-sm ", @title = @Model.listCustomfields[i].HoverText, @MaxLength = @Model.listCustomfields[i].MaxLength, @TabIndex = "37", rows = "1", cols = "1", @validate = "Required", @data_val_required = @Model.listCustomfields[i].Column_Label })
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        @Html.TextBoxFor(m => m.listCustomfields[i].DefaultValue, new { @id = "TAActualColumnName" + i, @class = "form-control input-sm ", @title = @Model.listCustomfields[i].HoverText, @MaxLength = @Model.listCustomfields[i].MaxLength, @TabIndex = "37", rows = "1", cols = "1" })
+                                                                    }
+                                                                }
+                                                                @if (Model.listCustomfields[i].Column_Type == "date")
+                                                                {
+                                                                    @Html.DisplayFor(m => m.listCustomfields[i].Column_Label)
+                                                                    if (@Model.listCustomfields[i].RequiredField == true)
+                                                                    {
+                                                                        <span style="color: red">*</span>
+                                                                        @Html.TextBoxFor(m => m.listCustomfields[i].DefaultValue, new { @id = "TAActualDate" + i, @class = "form-control input-sm DateP ", @placeholder = "Select Date", @title = @Model.listCustomfields[i].HoverText, @MaxLength = @Model.listCustomfields[i].MaxLength, @TabIndex = "37", rows = "1", cols = "1", @validate = "Required", @data_val_required = @Model.listCustomfields[i].Column_Label })
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        @Html.TextBoxFor(m => m.listCustomfields[i].DefaultValue, new { @id = "TAActualDate" + i, @class = "form-control input-sm DateP ", @placeholder = "Select Date", @title = @Model.listCustomfields[i].HoverText, @MaxLength = @Model.listCustomfields[i].MaxLength, @TabIndex = "37", rows = "1", cols = "1", })
+                                                                    }
+
+                                                                }
+                                                                @if (Model.listCustomfields[i].Column_Type == "numeric")
+                                                                {
+                                                                    @Html.DisplayFor(m => m.listCustomfields[i].Column_Label)
+
+                                                                    if (@Model.listCustomfields[i].RequiredField == true)
+                                                                    {
+                                                                        <span style="color: red">*</span>
+                                                                        @Html.TextBoxFor(m => m.listCustomfields[i].DefaultValue, new { @id = "TAActualColumnName" + i, @class = "form-control input-sm numericCls", @title = @Model.listCustomfields[i].HoverText, @MaxLength = @Model.listCustomfields[i].MaxLength, @TabIndex = "37", rows = "1", cols = "1", @validate = "Required", @data_val_required = @Model.listCustomfields[i].Column_Label })
+                                                                        <span id="errormsg"></span>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        @Html.TextBoxFor(m => m.listCustomfields[i].DefaultValue, new { @id = "TAActualColumnName" + i, @class = "form-control input-sm numericCls ", @title = @Model.listCustomfields[i].HoverText, @MaxLength = @Model.listCustomfields[i].MaxLength, @TabIndex = "37", rows = "1", cols = "1" })
+                                                                    }
+
+                                                                }
+
+                                                                @if (Model.listCustomfields[i].Column_Type == "dropdown")
+                                                                {
+                                                                    @Html.DisplayFor(m => m.listCustomfields[i].Column_Label)
+                                                                    if (@Model.listCustomfields[i].RequiredField == true)
+                                                                    {
+                                                                        <span style="color: red">*</span>
+                                                                        @Html.DropDownListFor(m => m.listCustomfields[i].DefaultValue, new SelectList(Model.listCustomfields[i].lstCustomOptions, "DrpValueId", "DrpValue", Model.listCustomfields[i].DefaultValue), "Select", new { @class = "form-control input-sm", @id = "dpOptions" + i, @validate = "Required", @data_val_required = @Model.listCustomfields[i].Column_Label, @title = @Model.listCustomfields[i].HoverText, })
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        @Html.DropDownListFor(m => m.listCustomfields[i].DefaultValue, new SelectList(Model.listCustomfields[i].lstCustomOptions, "DrpValueId", "DrpValue", Model.listCustomfields[i].DefaultValue), "Select", new { @class = "form-control input-sm", @id = "dpOptions" + i, @title = @Model.listCustomfields[i].HoverText, })
+                                                                    }
+
+                                                                }
+                                                                @if (Model.listCustomfields[i].Column_Type == "radiobutton")
+                                                                {
+                                                                    @Html.DisplayFor(m => m.listCustomfields[i].Column_Label)
+
+                                                                    if (@Model.listCustomfields[i].RequiredField == true)
+                                                                    {
+                                                                        <span style="color: red">*</span>
+                                                                        <div>
+                                                                            @for (int a = 0; a < Model.listCustomfields[i].lstCustomOptions.Count; a++)
+                                                                            {
+                                                                                @Html.HiddenFor(m => m.listCustomfields[i].lstCustomOptions[a].DrpValueId)
+                                                                                @Html.HiddenFor(m => m.listCustomfields[i].lstCustomOptions[a].FieldId)
+                                                                                if (Model.listCustomfields[i].lstCustomOptions[a].IsDefault == true)
+                                                                                {
+                                                                                    @Html.RadioButtonFor(m => m.listCustomfields[i].DefaultValue, Model.listCustomfields[i].lstCustomOptions[a].DrpValueId, new { @id = "rdOptions" + i, @checked = "checked", @title = @Model.listCustomfields[i].HoverText, @validate = "Required", @data_val_required = @Model.listCustomfields[i].Column_Label })
+                                                                                }
+                                                                                else
+                                                                                {
+                                                                                    @Html.RadioButtonFor(m => m.listCustomfields[i].DefaultValue, Model.listCustomfields[i].lstCustomOptions[a].DrpValueId, new { @id = "rdOptions" + i, @title = @Model.listCustomfields[i].HoverText, @validate = "Required", @data_val_required = @Model.listCustomfields[i].Column_Label })
+                                                                                }
+                                                                                @Html.DisplayFor(m => m.listCustomfields[i].lstCustomOptions[a].DrpValue, new { @class = "checkbox-inline" })
+                                                                            }
+                                                                        </div>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <div>
+                                                                            @for (int a = 0; a < Model.listCustomfields[i].lstCustomOptions.Count; a++)
+                                                                            {
+                                                                                @Html.HiddenFor(m => m.listCustomfields[i].lstCustomOptions[a].DrpValueId)
+                                                                                @Html.HiddenFor(m => m.listCustomfields[i].lstCustomOptions[a].FieldId)
+                                                                                if (Model.listCustomfields[i].lstCustomOptions[a].IsDefault == true)
+                                                                                {
+                                                                                    @Html.RadioButtonFor(m => m.listCustomfields[i].DefaultValue, Model.listCustomfields[i].lstCustomOptions[a].DrpValueId, new { @id = "rdOptions" + i, @checked = "checked", @title = @Model.listCustomfields[i].HoverText, })
+                                                                                }
+                                                                                else
+                                                                                {
+                                                                                    @Html.RadioButtonFor(m => m.listCustomfields[i].DefaultValue, Model.listCustomfields[i].lstCustomOptions[a].DrpValueId, new { @id = "rdOptions" + i, @title = @Model.listCustomfields[i].HoverText, })
+                                                                                }
+                                                                                @Html.DisplayFor(m => m.listCustomfields[i].lstCustomOptions[a].DrpValue, new { @class = "checkbox-inline" })
+                                                                            }
+                                                                        </div>
+                                                                    }
+                                                                }
+
+                                                            </div>
+                                                        </div>
+                                                    }
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                @*End Of Binding Custom Fields*@
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<script type="text/javascript">
+
+   
+
+
+
+    function isNumberKey(evt) {
+        var charCode = (evt.which) ? evt.which : event.keyCode;
+        if ((charCode < 48 || charCode > 57))
+            return false;
+
+        return true;
+    }
+
+    $("#txtPrimaryEmail").blur(function () {
+        
+        var isvalid;
+        isvalid = ValidateEmail($(this)[0]);
+        ValidateEmails($("#txtPrimaryEmail").val(), isvalid);
+    });
+   
+    $("#txtSecondaryEmail").blur(function () {
+        
+        var isvalid;
+        if ($("#txtSecondaryEmail").val() != "") {
+            if ($("#txtSecondaryEmail").val() == $("#txtPrimaryEmail").val()) {
+                bootbox.alert("Primary Email and Secondary Email Should not be same");
+                $("#txtSecondaryEmail").val('');
+            }
+            else {
+                isvalid = ValidateEmail($(this)[0]);
+                ValidateEmails($("#txtSecondaryEmail").val(), isvalid);
+            }
+        }
+    });
+
+    $("#txtWebSite").blur(function () {
+        var isvalid;
+        isvalid = ValidateWebsite($(this)[0]);
+        ValidateUrls($("#txtWebSite").val(),isvalid);
+    });
+    $("#txtMITLink").blur(function () {
+        var isvalid;
+        isvalid = ValidateWebsite($(this)[0]);
+        ValidateUrls($("#txtMITLink").val(), isvalid);
+    });
+    function ValidateEmails(objemailvalue, isvalid) {
+        if (isvalid == true) {
+           
+               
+        }
+           
+        else {
+            if (objemailvalue != "") {
+                    bootbox.alert("Email is not valid");
+            }
+            
+        }
+    }
+    
+    function ValidateUrls(objurlvalue, isvalid) {
+        
+            if (isvalid == true) {
+
+            }
+            else {
+                if (objurlvalue != "") {
+                    bootbox.alert("url is not valid");
+                }
+               
+            }
+        }
+
+    $(document).ready(function () {
+      
+      
+        $(function () {
+            var dateToday = new Date();
+            var currentDate = (dateToday.getMonth() + 1) + '/' + dateToday.getDate() + '/' + dateToday.getFullYear();
+            $('.datepicker1').datetimepicker({
+                minDate: dateToday,
+                format: 'L'
+            }).on('dp.change', function (e) {
+                
+              
+                $('.datepicker1').data("DateTimePicker").minDate(currentDate);
+            });
+
+        });
+
+
+    });
+    $('#btnSave').click(function () {
+        debugger;
+        var active = true;
+        if (active) {
+            active = false;
+            $('.panel-collapse').collapse('show');
+            $('.panel-title').attr('data-toggle', '');
+            //$(this).text('Enable accordion behavior');
+        } else {
+            active = true;
+            $('.panel-collapse').collapse('hide');
+            $('.panel-title').attr('data-toggle', 'collapse');
+            //$(this).text('Disable accordion behavior');
+        }
+    });
+   
+    //$("#btnSave").click(function () {
+    //    debugger;
+    //    $(function () {
+    //        debugger;
+    //        $.validator.unobtrusive.parse($('#CreateVent'));
+    //    });
+    //});
+  
+
+</script>

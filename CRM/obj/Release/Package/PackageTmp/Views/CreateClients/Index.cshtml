@@ -1,0 +1,704 @@
+﻿@model CRMHub.EntityFramework.Client
+
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Clientmaster/_LayoutClientsmaster.cshtml";
+}
+@using (Html.BeginForm("AddClientsdata", "CreateClients", FormMethod.Post, new
+    {
+        enctype = "multipart/form-data"
+    }))
+{
+    <html>
+    <head>
+
+
+        <script type="text/javascript">
+            init.push(function () {
+                $("#clientmanage").addClass("open active");
+                $("#client-1").addClass("active");
+            });
+
+        </script>
+
+        <style>
+            .Overlay {
+                display: block;
+                position: fixed;
+                top: 0px;
+                bottom: 0px;
+                left: 0px;
+                right: 0px;
+                overflow: hidden;
+                padding: 0;
+                margin: 0;
+                background-color: #000;
+                filter: alpha(opacity=50);
+                opacity: 0.5;
+                z-index: 1049;
+            }
+        </style>
+        <style>
+            .pfi-clear {
+                display: none !important;
+            }
+        </style>
+        <title>
+
+        </title>
+    </head>
+    <body>
+
+
+        <div class="row">
+
+
+            <div class="panel">
+                <div class="panel-heading">
+                    <div class="row">
+                        <!-- Page header, center on small screens -->
+                        <h1 class="col-xs-6 col-sm-4 text-left text-left-sm panel-title"><i class="fa fa-user page-header-icon"></i>&nbsp; Create Client</h1>
+                        <div class="col-xs-6 col-sm-8">
+                            <div class="row">
+                                <div class="pull-right">
+                                    @*<a href="#" class="btn btn-flat btn-labeled btn-primary" tabindex="-1"
+                                        data-toggle="modal" data-target="#uidemo-modals-alerts-info"><span class="btn-label icon fa fa-question-circle"></span>Help</a>*@
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel-body">
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <!-- Tabs -->
+
+
+                            <div class="tab-pane" id="bs-tabdrop-tab3">
+
+                                <div class="row">
+                                    <div class="col-sm-12 col-xs-12">
+                                        <div class="page-header-breadcrumb">
+                                            <label class="control-label" id="lblMessage"></label>
+                                            <ul class="table-nav-item" style="float: right; margin-bottom:5px;">
+                                                <li id="btnmargin_top">
+                                                    <button class="btn btn-flat btn-labeled btn-primary" id="btnSave" style="margin:0px 3px 0px 10px;">
+                                                        <span class="btn-label icon fa fa-save"></span>Save
+                                                    </button>
+
+                                                </li>
+
+                                                @*<li class="btn btn-flat btn-labeled btn-primary" id="btnmargin_top">
+                                                        <span class="btn-label icon fa fa-save"> </span>
+                                                        <a style="color: #fff; text-decoration: none; padding: 0px; font-weight: normal" id="btnAdd" >
+                                                            Save
+                                                        </a>
+                                                    </li>*@
+                                                <li class="btn btn-flat btn-labeled btn-primary" id="btnmargin_top">
+                                                    <span class="btn-label icon fa fa-backward" style="margin-right:6px;"> </span>
+                                                    <a style="color: #fff; text-decoration: none; padding: 0px; font-weight: normal" id="btnbck" href="@Url.Action("ClientManagerIndex", "ClientManager")">
+                                                        Back
+                                                    </a>
+                                                </li>
+
+                                                @*<li>
+                                                        <button class="btn btn-flat btn-labeled btn-primary" id="btnSave">
+                                                            <span class="btn-label icon fa fa-save"></span>Save
+                                                        </button>
+                                                    </li>
+
+                                                    <li>
+                                                        <div class="btn btn-flat btn-labeled btn-primary" style="padding:3.5px 8px !important;">
+                                                            @Html.ActionLink("Back", "ClientManagerIndex", "ClientManager", new { @style = "color:#fff; font-weight:normal; padding:0px 0px; float:right; text-decoration:none;" })
+                                                            <span class="btn-label icon  fa fa-backward"> </span>
+                                                        </div>
+                                                    </li>*@
+                                            </ul>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <span id="errorsymbol" style="color:red;display:none;margin-left:5px;" class="fa fa-exclamation-circle"></span><div id="ErrorMessages" style="margin-left:20px;color:red;font-size:15px;margin-top:-19px">
+
+                                </div>
+                                <div class="row">
+                                    <div class="panel-group" id="accordion-example">
+
+                                        <!-- / .panel -->
+                                        <div class="panel">
+                                            <div class="panel-heading">
+                                                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion-example"
+                                                   href="#collapse2">New Client Detail</a>
+                                            </div>
+                                            <!-- / .panel-heading -->
+                                            <div id="collapse2" class="panel-collapse collapse in" style="height: auto;">
+                                                <div class="panel-body">
+                                                    <div class="col-sm-12 no-padding-hr">
+                                                        <div class="row">
+
+                                                            <div class="col-sm-3">
+                                                                <div class="form-group no-margin-hr">
+                                                                    <label class="control-label">Client Id :<span style="color: red">*</span></label>
+                                                                    @Html.TextBoxFor(m => m.ClientID, new { @id = "txtClientId", @class = "form-control input-sm", @maxlength = "50", @tabindex = "1", @validate = "Required", @data_val_required = "Client ID" })
+                                                                    @Html.ValidationMessageFor(m => m.ClientID, "", new { @class = "text-danger" })
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-sm-3">
+                                                                <div class="form-group no-margin-hr">
+                                                                    <label class="control-label">Company Name :<span style="color: red">*</span></label>
+                                                                    @Html.TextBoxFor(m => m.CompanyName, new { @id = "txtCompanyName", @class = "form-control input-sm", @maxlength = "50", @tabindex = "1", @validate = "Required", @data_val_required = "Company Name" })
+                                                                </div>
+                                                            </div>
+
+
+                                                            <div class="col-sm-3">
+                                                                <div class="form-group no-margin-hr">
+                                                                    <label class="control-label">Company Type :</label>
+                                                                    @Html.TextBoxFor(m => m.companytype, new { @id = "txtcompanytype", @class = "form-control input-sm", @maxlength = "50", @tabindex = "1" })
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-3">
+                                                                <div class="form-group no-margin-hr">
+                                                                    <label class="control-label">Country :</label>
+                                                                    @Html.TextBoxFor(m => m.Country, new { @id = "txtCountry", @class = "form-control input-sm", @maxlength = "50", @tabindex = "1" })
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+
+                                                        <div class="row">
+
+                                                            <div class="col-sm-3" style="display:none">
+                                                                <div class="form-group no-margin-hr">
+                                                                    <label class="control-label">Address 1 :</label>
+                                                                    @Html.TextBoxFor(m => m.address1, new { @id = "txtaddress1", @class = "form-control input-sm", @maxlength = "50", @tabindex = "1" })
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-sm-3" style="display:none">
+                                                                <div class="form-group no-margin-hr">
+                                                                    <label class="control-label">Address 2 :</label>
+                                                                    @Html.TextBoxFor(m => m.address2, new { @id = "txtaddress2", @class = "form-control input-sm", @maxlength = "50", @tabindex = "1" })
+                                                                </div>
+                                                            </div>
+
+
+                                                            <div class="col-sm-3" style="display:none">
+                                                                <div class="form-group no-margin-hr">
+                                                                    <label class="control-label">City :</label>
+                                                                    @Html.TextBoxFor(m => m.city, new { @id = "txtcity", @class = "form-control input-sm", @maxlength = "50", @tabindex = "1" })
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-3">
+                                                                <div class="form-group no-margin-hr">
+                                                                    <label class="control-label">Company WebSite :</label>
+                                                                    @Html.TextBoxFor(m => m.companywebsite, new { @id = "txtcomwebsite", @class = "form-control input-sm", @maxlength = "50", @tabindex = "1" })
+                                                                </div>
+                                                            </div>
+
+
+                                                            <div class="row">
+                                                                @*<div class="col-sm-3">
+                                                                        <div class="form-group no-margin-hr">
+                                                                            <label class="control-label">Email :<span style="color: red">*</span></label>
+                                                                            @Html.TextBoxFor(m => m.Email, new { @id = "txtemail", @class = "form-control input-sm", @maxlength = "50", @tabindex = "1", @validate = "Required", @data_val_required = "Email" })
+                                                                        </div>
+                                                                    </div>*@
+
+                                                                <div class="col-sm-4">
+                                                                    <div class="form-group no-margin-hr">
+                                                                        <label class="control-label">Company Logo :</label>
+                                                                        <script>
+                                                                            init.push(function () {
+                                                                                $('.styled-finputs-example').pixelFileInput({ placeholder: 'No file selected...' });
+                                                                            })
+                                                                        </script>
+
+                                                                        <input type="file" name="file" id="uploadlogo" class="styled-finputs-example">
+
+                                                                    </div>
+                                                                </div>
+
+
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="panel-group">
+                                                                <div class="col-sm-12">
+                                                                    <span id="lblNote" style="color:red;font-size:11px;">
+                                                                        Note:
+                                                                        <ul>
+                                                                            <li>Client Id should start with Alphabets only.</li>
+                                                                            <li>Client Id should not start with Numeric.</li>
+                                                                            <li>Client Id should not start with Special characters.</li>
+                                                                            <li>Client Id should not Contain Spaces.</li>
+
+                                                                        </ul>
+
+
+                                                                    </span>
+
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                                <!-- / .panel-body -->
+                                            </div>
+                                            <!-- / .collapse -->
+                                        </div>
+                                        <!-- / .panel -->
+                                        <!-- / .panel -->
+                                        <!-- / .panel -->
+                                    </div>
+                                </div>
+
+
+
+
+                                @*<div class="row">
+                                    <div class="panel-group" id="accordion-example">
+
+                                        <!-- / .panel -->
+                                        <div class="panel">
+                                            <div class="panel-heading">
+                                                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion-example"
+                                                   href="#collapse3">Branch Detail</a>
+                                            </div>
+                                            <!-- / .panel-heading -->
+                                            <div id="collapse3" class="panel-collapse collapse in" style="height: auto;">
+                                                <div class="panel-body">
+                                                    <div class="col-sm-12 no-padding-hr">
+                                                        <div class="row">
+
+                                                            <div class="col-sm-3">
+                                                                <div class="form-group no-margin-hr">
+                                                                    <label class="control-label">Office / Location Name&nbsp;:<span style="color: red">*</span></label>
+                                                                    @Html.TextBoxFor(m => m.BranchName, new { @id = "txtBranchName", @class = "form-control input-sm", @maxlength = "50", @validate = "Required", @data_val_required = "Office / Location Name" })
+                                                                    @Html.ValidationMessageFor(m => m.BranchName, "")
+                                                                  
+
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-sm-3">
+                                                                <div class="form-group no-margin-hr">
+                                                                    <label class="control-label">Address&nbsp;:<span style="color: red">*</span></label>
+                                                                    @Html.TextBoxFor(m => m.BranchAddress1, new { @id = "txtBranchAddress1", @class = "form-control input-sm", @maxlength = "100", @tabindex = "8", @validate = "Required", @data_val_required = "Address1" })
+                                                                    @Html.ValidationMessageFor(m => m.BranchAddress1, "")
+                                                                    
+                                                                </div>
+                                                            </div>
+
+
+                                                            <div class="col-sm-3">
+                                                                <div class="form-group no-margin-hr">
+                                                                    <label class="control-label">City&nbsp;:<span style="color: red">*</span></label>
+                                                                    @Html.TextBoxFor(m => m.BranchCity, new { @id = "txtBranchCity", @class = "form-control input-sm", @maxlength = "50", @tabindex = "10", @validate = "Required", @data_val_required = "City" })
+                                                                    @Html.ValidationMessageFor(m => m.BranchCity, "")
+                                                                  
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-3">
+                                                                <div class="form-group no-margin-hr">
+                                                                    <label class="control-label">State&nbsp;:<span style="color: red">*</span></label>
+                                                                    @Html.DropDownListFor(m => m.BranchStateCode, new List<SelectListItem>
+                                                                          {
+                                                                              new SelectListItem{Text="None",Value="AA"},
+                                                                              new SelectListItem{Text="Alaska",Value="AK"},
+                                                                              new SelectListItem{Text="Alabama",Value="AL"},
+                                                                              new SelectListItem{Text="Arkansas",Value="AR"},
+                                                                               new SelectListItem{Text="Arizona",Value="AZ"},
+                                                                              new SelectListItem{Text="California",Value="CA"},
+                                                                              new SelectListItem{Text="Colorado",Value="CO"},
+                                                                              new SelectListItem{Text="Connecticut",Value="CT"},
+                                                                              new SelectListItem{Text="District of Columbia",Value="DC"},
+                                                                              new SelectListItem{Text="Delaware",Value="DE"},
+                                                                              new SelectListItem{Text="Florida",Value="FL"},
+                                                                              new SelectListItem{Text="Georgia",Value="GA"},
+                                                                               new SelectListItem{Text="Hawaii",Value="HI"},
+                                                                              new SelectListItem{Text="Iowa",Value="IA"},
+                                                                              new SelectListItem{Text="Idaho",Value="ID"},
+                                                                              new SelectListItem{Text="Illinois",Value="IL"},
+
+                                                                               new SelectListItem{Text="Indiana",Value="IN"},
+                                                                              new SelectListItem{Text="Kansas",Value="KS"},
+                                                                              new SelectListItem{Text="Kentucky",Value="KY"},
+                                                                              new SelectListItem{Text="Louisiana",Value="LA"},
+                                                                               new SelectListItem{Text="Massachusetts",Value="MA"},
+                                                                              new SelectListItem{Text="Maryland",Value="MD"},
+                                                                              new SelectListItem{Text="Maine",Value="ME"},
+                                                                              new SelectListItem{Text="Michigan",Value="MI"},
+                                                                              new SelectListItem{Text="Minnesota",Value="MN"},
+                                                                              new SelectListItem{Text="Missouri",Value="MO"},
+                                                                              new SelectListItem{Text="Mississippi",Value="MS"},
+                                                                              new SelectListItem{Text="Montana",Value="MT"},
+                                                                               new SelectListItem{Text="North Carolina",Value="NC"},
+                                                                              new SelectListItem{Text="North Dakota",Value="ND"},
+                                                                              new SelectListItem{Text="Nebraska",Value="NE"},
+                                                                              new SelectListItem{Text="New Hampshire",Value="NH"},
+                                                                               new SelectListItem{Text="New Jersey",Value="NJ"},
+                                                                              new SelectListItem{Text="New Mexico",Value="NM"},
+                                                                              new SelectListItem{Text="Nevada",Value="NV"},
+                                                                               new SelectListItem{Text="New York",Value="NY"},
+                                                                              new SelectListItem{Text="Ohio",Value="OH"},
+                                                                              new SelectListItem{Text="Oklahoma",Value="OK"},
+                                                                              new SelectListItem{Text="Oregon",Value="OR"},
+
+                                                                                     new SelectListItem{Text="Pennsylvania",Value="PA"},
+                                                                              new SelectListItem{Text="Rhode Island",Value="RI"},
+                                                                              new SelectListItem{Text="South Carolina",Value="SC"},
+                                                                               new SelectListItem{Text="South Dakota",Value="SD"},
+                                                                              new SelectListItem{Text="Tennessee",Value="TN"},
+                                                                              new SelectListItem{Text="Texas",Value="TX"},
+                                                                              new SelectListItem{Text="Utah",Value="UT"},
+                                                                                    new SelectListItem{Text="Virginia",Value="VA"},
+                                                                              new SelectListItem{Text="Washington",Value="WA"},
+                                                                              new SelectListItem{Text="Wisconsin",Value="WI"},
+                                                                               new SelectListItem{Text="West Virginia",Value="WV"},
+                                                                              new SelectListItem{Text="Wyoming",Value="WY"},
+                                                                              new SelectListItem{Text="Other",Value="ZZ"},
+
+                                                                          }, new { @class = "form-control input-sm", @id = "ddlstate", @validate = "Required,dropdown", @data_val_required = "State" })
+
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+
+                                                        <div class="row">
+
+                                                            <div class="col-sm-3">
+                                                                <div class="form-group no-margin-hr">
+                                                                    <label class="control-label">Zipcode&nbsp;:<span style="color: red">*</span></label>
+                                                                    @Html.TextBoxFor(m => m.BranchZip, new { @id = "txtBranchZip", @class = "form-control zipmask", @tabindex = "12", @validate = "Required", @data_val_required = "Zip Code" })
+                                                                   
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-sm-3">
+                                                                <div class="form-group no-margin-hr">
+                                                                    <label class="control-label">Phone&nbsp;:<span style="color: red">*</span></label>
+                                                                    @Html.TextBoxFor(m => m.BranchPhone, new { @id = "txtBranchMobile", @class = "form-control nput-sm", @maxlength = "20", @data_val_required = "Phone Number", @validate = "Required", @onkeypress = "return onlynumbers(event,this);" })
+                                                                    @Html.ValidationMessageFor(m => m.BranchPhone, "")
+
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+
+
+                                                    </div>
+                                                </div>
+                                                <!-- / .panel-body -->
+                                            </div>
+                                            <!-- / .collapse -->
+                                        </div>
+                                        <!-- / .panel -->
+                                        <!-- / .panel -->
+                                        <!-- / .panel -->
+                                    </div>
+                                </div>*@
+
+                                <div class="row">
+                                    <div class="panel-group" id="accordion-example">
+
+                                        <!-- / .panel -->
+                                        <div class="panel">
+                                            <div class="panel-heading">
+                                                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion-example"
+                                                   href="#collapse4">User Detail</a>
+                                            </div>
+                                            <!-- / .panel-heading -->
+                                            <div id="collapse4" class="panel-collapse collapse in" style="height: auto;">
+                                                <div class="panel-body">
+                                                    <div class="col-sm-12 no-padding-hr">
+                                                        <div class="row">
+
+                                                            <div class="col-sm-3">
+                                                                <div class="form-group no-margin-hr">
+                                                                    <label class="control-label">First&nbsp;Name&nbsp;:<span style="color: red">*</span></label>
+                                                                    @Html.TextBoxFor(m => m.FirstName, new { @id = "txtFirstName", @class = "form-control input-sm", @maxlength = "50", @validate = "Required", @data_val_required = "First Name" })
+                                                                    @Html.ValidationMessageFor(m => m.FirstName, "")
+                                                                    @*@Html.TextBoxFor(m => m.ClientID, new { @id = "txtClientId", @class = "form-control input-sm", @maxlength = "50", @tabindex = "1", @validate = "Required", @data_val_required = "Client ID" })*@
+
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-sm-3">
+                                                                <div class="form-group no-margin-hr">
+                                                                    <label class="control-label">Middle&nbsp;Name&nbsp;:</label>
+                                                                    @Html.TextBoxFor(m => m.MiddleInitial, new { @id = "txtMiddleInitial", @class = "form-control input-sm", @maxlength = "100", @tabindex = "8" })
+                                                                    @*@Html.ValidationMessageFor(m => m.MiddleInitial, "")*@
+                                                                    @*@Html.TextBoxFor(m => m.CompanyName, new { @id = "txtCompanyName", @class = "form-control input-sm", @maxlength = "50", @tabindex = "1", @validate = "Required", @data_val_required = "Company Name" })*@
+                                                                </div>
+                                                            </div>
+
+
+                                                            <div class="col-sm-3">
+                                                                <div class="form-group no-margin-hr">
+                                                                    <label class="control-label">Last&nbsp;Name&nbsp;:<span style="color: red">*</span></label>
+                                                                    @Html.TextBoxFor(m => m.LastName, new { @id = "txtLastName", @class = "form-control input-sm", @maxlength = "50", @tabindex = "10", @validate = "Required", @data_val_required = "Last Name" })
+                                                                    @*@Html.ValidationMessageFor(m => m.LastName, "")*@
+                                                                    @*@Html.TextBoxFor(m => m.companytype, new { @id = "txtcompanytype", @class = "form-control input-sm", @maxlength = "50", @tabindex = "1" })*@
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-3">
+                                                                <div class="form-group no-margin-hr">
+                                                                    <label class="control-label">Cell&nbsp;No&nbsp;:</label>
+                                                                    @Html.TextBoxFor(m => m.Cellno, new { @id = "txtCellno", @class = "form-control zipmask", @tabindex = "12" })
+
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-sm-3">
+                                                                <div class="form-group no-margin-hr">
+                                                                    <label class="control-label">Email :<span style="color: red">*</span></label>
+                                                                    @*@Html.TextBoxFor(m => m.users.Email, new { @id = "txtEmail", @type = "email", @class = "form-control input-sm", @maxlength = "50", @validate = "Required", @data_val_required = "Email" })*@
+                                                                    @Html.TextBoxFor(m => m.Email, new { @id = "txtEmail", @type = "email", @class = "form-control input-sm", @maxlength = "50", @tabindex = "12", @validate = "Required", @data_val_required = "Email" })
+                                                                    @*@Html.Label("Email Exists", new { @id = "lblErrormessage", @style = "color:red" })*@
+                                                                    @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                                                                </div>
+                                                            </div>
+
+
+                                                            <div class="col-sm-3">
+                                                                <div class="form-group no-margin-hr">
+                                                                    <label class="control-label">Level :</label>
+
+                                                                    @Html.TextBoxFor(m => m.Level, new { @id = "txtlevel", @class = "form-control input-sm", @readonly = "true" })
+                                                                    @*@Html.Label("Email Exists", new { @id = "lblErrormessage", @style = "color:red" })*@
+
+                                                                </div>
+                                                            </div>
+
+
+                                                            <div class="row">
+                                                                <div class="col-sm-3" runat="server" id="tblblLogin">
+                                                                    <div class="form-group">
+                                                                        <label class="control-label">Login Id :<span style="color: red">*</span></label>
+
+                                                                        @Html.TextBoxFor(m => m.LoginId, new { @id = "txtLoginId", @class = "form-control input-sm", @maxlength = "50", @tabindex = "17", @validate = "Required", @data_val_required = "Login Id" })
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-3" runat="server" id="tblblPasswd">
+                                                                    <div class="form-group">
+                                                                        <label class="control-label">Password :<span style="color: red">*</span></label>
+
+                                                                        @Html.TextBoxFor(m => m.Password, new { @id = "txtPassword", @class = "form-control input-sm", @maxlength = "50", @tabindex = "18", @validate = "Required", @data_val_required = "Password" })
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+
+
+                                                            @*<div class="col-sm-3">
+                                                                    <div class="form-group no-margin-hr">
+                                                                        <label class="control-label">LoginId :</label>
+
+                                                                        @Html.TextBoxFor(m => m.Level, new { @id = "txtlevel", @class = "form-control input-sm", @readonly = "true" })
+
+
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-sm-3">
+                                                                    <div class="form-group no-margin-hr">
+                                                                        <label class="control-label">Password :</label>
+
+                                                                        @Html.TextBoxFor(m => m.Level, new { @id = "txtlevel", @class = "form-control input-sm", @readonly = "true" })
+
+
+                                                                    </div>
+                                                                </div>*@
+
+
+
+
+                                                            @*<div class="row">
+                                                                    <div class="panel-group">
+                                                                        <div class="col-sm-12">
+                                                                            <span id="lblNote" style="color:red;font-size:11px;">
+                                                                                Note:
+                                                                                <ul>
+                                                                                    <li>Username and Password is First Name.</li>
+
+                                                                                </ul>
+
+
+                                                                            </span>
+
+                                                                        </div>
+
+                                                                    </div>
+                                                                </div>*@
+                                                        </div>
+
+
+
+
+                                                    </div>
+                                                </div>
+                                                <!-- / .panel-body -->
+                                            </div>
+                                            <!-- / .collapse -->
+                                        </div>
+                                        <!-- / .panel -->
+                                        <!-- / .panel -->
+                                        <!-- / .panel -->
+                                    </div>
+
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </body>
+
+</html>
+}
+<script>
+
+
+    $("#btnSave").click(function (e) {
+        // 
+        var clientId = $('#txtClientId').val();
+
+        var res1 = hasWhiteSpace(clientId);      
+        if (res1 == false) {
+            var pattern2 = /^[a-zA-Z].*/;
+            var result2 = pattern2.test(clientId);
+            if (result2 == true) {
+                var ext = $('#uploadlogo').val().split('.').pop().toLowerCase();
+                if (ext != '') {
+                    if ($.inArray(ext, ['gif', 'png', 'jpg', 'jpeg']) == -1) {
+                        // alert('invalid extension!');
+
+                        $.growl.warning({ title: "Warning", message: "invalid extension!", size: 'large' });
+                        return false;
+
+                    }
+                    else {
+                        Isvalid = true;
+                        return Validate(this.form);
+                    }
+                }
+                else {
+                    Isvalid = true;
+                    return Validate(this.form);
+                }
+            }
+            else {
+                $.growl.warning({ title: "Warning", message: "invalid Database Name!", size: 'large' });
+                return false;
+
+            }
+        }
+        else {
+            $.growl.warning({ title: "Warning", message: "Database Name should not contain Space(s)!!", size: 'large' });
+            return false;
+        }
+
+    });
+
+    function hasWhiteSpace(Clientname) {
+        return /\s/g.test(Clientname);
+    }
+
+
+    //$('#btnAdd').click(function () {
+
+    //    var ClientId = $("#txtClientId").val();
+    //    var CompanyName = $("#txtCompanyName").val();
+
+    //    if (ClientId == '' && CompanyName == '') {
+    //        $('#txtClientId').css('border-color', 'red');
+    //        $('#txtCompanyName').css('border-color', 'red');
+    //        alert("please Enter feild  values");
+
+    //    }
+
+    //    else if (ClientId == '' && CompanyName != '') {
+    //        $('#txtClientId').css('border-color', 'red');
+    //        $('#txtCompanyName').css('border-color', '');
+    //        alert("please Enter Client Id");
+    //        //e.preventDefault();
+    //    }
+    //    else if (ClientId != '' && CompanyName == '') {
+    //        $('#txtCompanyName').css('border-color', 'red');
+    //        $('#txtClientId').css('border-color', '');
+    //        alert("please Enter Company Name");
+    //        //e.preventDefault();
+    //    }
+    //    else {
+    //        $('#txtClientId').css('border-color', '');
+    //        $('#txtCompanyName').css('border-color', '');
+    //        Addclients();
+
+    //        $("#loading").css('display', 'block');
+    //    }
+    //})
+
+    //function Addclients() {
+    //    
+    //    var returnval = true;
+    //    var ext = $('#uploadlogo').val().split('.').pop().toLowerCase();
+    //    if (ext != '')
+    //    {
+    //        if ($.inArray(ext, ['gif', 'png', 'jpg', 'jpeg']) == -1) {
+    //            // alert('invalid extension!');
+    //            returnval = false;
+    //            $.growl.warning({ title: "Warning", message: "invalid extension!", size: 'large' });
+
+
+    //        }
+    //    }
+    //    return returnval;
+    //}
+    //function createnewClient()
+    //{
+    //    var clientsdts = {};
+    //    clientsdts.ClientID = $("#txtClientId").val();
+    //    clientsdts.CompanyName = $("#txtCompanyName").val();
+    //    clientsdts.companytype = $("#txtcompanytype").val();
+    //    clientsdts.Country = $("#txtCountry").val();
+
+    //    clientsdts.address1 = $("#txtaddress1").val();
+    //    clientsdts.address2 = $("#txtaddress2").val();
+    //    clientsdts.city = $("#txtcity").val();
+    //    clientsdts.companywebsite = $("#txtcomwebsite").val();
+    //    $.ajax({
+    //        url: "CreateClients/AddClientsdata",
+    //        type: "POST",
+    //        contentType: "application/json;charset=utf-8",
+    //        data: JSON.stringify(clientsdts),
+    //        dataType: "json",
+    //        success: function (response) {
+    //            alert(response);
+    //            $("#loading").css('display', 'none');
+    //        },
+    //        error: function (x, e) {
+    //            // alert('Failed');
+    //            alert(x.responseText);
+    //            $("#loading").css('display', 'none');
+    //            // alert(x.status);
+    //        }
+    //    });
+
+    //}
+
+    
+
+</script>

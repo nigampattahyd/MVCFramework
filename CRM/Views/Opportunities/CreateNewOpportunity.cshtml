@@ -1,0 +1,626 @@
+﻿@*@model CRMHub.EntityFramework.Opportunity*@
+@model CRMHub.EntityFramework.Account
+@{
+    ViewBag.Title = "Create New Opportunity";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<html>
+
+<head>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#tblImportantDocs').dataTable();
+        }
+        );
+    </script>
+
+    <style>
+        button {
+            background: none !important;
+            border: none;
+            padding: 0 !important;
+            /*optional*/
+            font: bold;
+            color: #069;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    @using (Html.BeginForm("CreateNewOpportunity", "Opportunities", FormMethod.Post))
+    {
+        @*@Html.AntiForgeryToken();*@
+        @Html.ValidationSummary(true)
+
+        <div id="content-wrapper">
+            <div id="CustomBootstrapAlertBox">
+            </div>
+            <div class="row">
+
+
+
+                <div class="panel">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <!-- Page header, center on small screens -->
+                            <h1 class="col-xs-6 col-sm-4 text-left text-left-sm panel-title"><i class="fa fa-tasks page-header-icon"></i>&nbsp;Create&nbsp;Opportunity </h1>
+                            <div class="col-xs-6 col-sm-8">
+                                <div class="row">
+                                    <div class="pull-right">
+                                        @*<a href="#" class="btn btn-flat btn-labeled btn-primary" tabindex="-1"
+                                            data-toggle="modal" data-target="#uidemo-modals-alerts-info"><span class="btn-label icon fa fa-question-circle"></span>Help</a>*@
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @*<span id="errorsymbol" style="color:red;display:none;margin-left:5px;" class="fa fa-exclamation-circle"></span>
+                        <div id="ErrorMessages" style="margin-left:20px;color:red;font-size:15px; ">
+                        </div>*@
+                    <div class="panel-body">
+
+                        <div class="row">
+
+                            <div class="page-header-breadcrumb">
+                                <div class="col-sm-8">
+                                    <label class="control-label">
+                                    </label>
+                                </div>
+
+                                <div class="col-xs-12 col-sm-4 text-right text-right-sm">
+
+
+
+
+                                    @* <button class="btn btn-flat btn-labeled btn-primary" id="btnaddopportunity" style="background:#1b80c2 !important; text-decoration:none; "> <span class="btn-label icon fa fa-save"></span> Save</button>*@
+                                    <button class="btn btn-flat btn-labeled btn-primary " id="btnaddopportunity" style=" margin:0px 3px 0px 10px;background: #1b80c2 !important;">
+                                        <span class="btn-label icon fa fa-save"></span>Save
+                                    </button>
+                                    @*<span class="btn btn-flat btn-labeled btn-primary">
+                                        @Html.ActionLink("Back", "ViewOpportunities", "", new { @style = "color:#fff; text-decoration:none;" })<span class="btn-label icon fa fa-backward" style="margin-right:6px; "> </span>
+                                    </span>*@
+                                    <a style="color: #fff; text-decoration: none; padding: 0px; font-weight: normal" class="btn btn-flat btn-labeled btn-primary" href="@Url.Action("ViewOpportunities", "Opportunities")">
+                                        <span class="btn-label icon fa fa-backward" style="margin-right:6px;"> </span>
+                                        Back
+                                    </a>
+                                </div>
+
+                                <div>
+                                    <span id="errorsymbol" style="color:red;display:none;margin-left:5px;" class="fa fa-exclamation-circle"></span>
+                                    <div id="ErrorMessages" style="margin-left:20px;color:red;font-size:15px; ">
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+
+                            <!-- Tabs -->
+                            <div>
+                                <div class="tab-pane" id="Opportunitiesdiv">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="panel-group" id="accordion-example">
+                                                <div class="panel">
+                                                    <div class="panel-heading">
+                                                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion-example"
+                                                           href="#collapse2">Opportunity Detail</a>
+                                                    </div>
+                                                    <!-- / .panel-heading -->
+                                                    <div id="collapse2" class="panel-collapse collapse in" style="height: auto;">
+                                                        <div class="panel-body">
+                                                            <div class="col-sm-12 no-padding-hr">
+                                                                <div class="row">
+                                                                    <div class="col-sm-12" style="text-align: right">
+                                                                        <a id="a1" class="buttonclass" style="text-decoration: none; color: white; cursor: pointer" href="#" title="Get Map" onclick="openMap();return false;">Get Map</a>
+
+                                                                        <a id="aMail" class="buttonclass" style="text-decoration: none; color: white; cursor: pointer" href="#" title="Email">Email</a>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row">
+
+                                                                    @*<div class="col-sm-3">
+                                                                        <div class="form-group no-margin-hr">
+                                                                            <label class="control-label">Opportunity Owner :</label>
+                                                                            <div class="input-group">
+                                                                                @Html.TextBoxFor(m => m.Owner, new { @id = "txtOwnerShip", @class = "form-control input-sm", @readonly = false })
+                                                                                @Html.HiddenFor(m => m.Owner, new { @id = "txtOwnerShip" })
+                                                                                <span class="input-group-addon  type=" button" style="cursor:pointer;" onclick="return show_UsersPopUp(750, 450);">
+                                                                                    <i class="fa fa-search"></i>
+                                                                                </span>
+                                                                                @Html.HiddenFor(m => m.OwnerID, new { @id = "txtOwnerid" })
+
+                                                                            </div>
+                                                                           
+                                                                        </div>
+                                                                    </div>*@
+
+
+
+                                                                    @if (Model.RoleID == 1)
+                                                                    {
+                                                                        <div class="col-sm-3">
+                                                                            <div class="form-group no-margin-hr">
+                                                                                <label class="control-label">Contact&nbsp;Owner&nbsp;:</label>
+                                                                                <div class="input-group">
+                                                                                    @Html.TextBoxFor(m => m.Owner, new { @id = "txtOwnerShip", @class = "form-control input-sm", @readonly = false })
+                                                                                    @Html.HiddenFor(m => m.Owner, new { @id = "txtOwnerShip" })
+                                                                                    @Html.HiddenFor(m => m.OwnerID, new { @id = "txtOwnerid" })
+                                                                                    <span class="input-group-addon" type=" button" style="cursor:pointer;" onclick="return show_UsersPopUp(750, 450);">
+                                                                                        <i class="fa fa-search"></i>
+                                                                                    </span>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <div class="col-sm-3">
+                                                                            <div class="form-group no-margin-hr">
+                                                                                <label class="control-label">Contact&nbsp;Owner&nbsp;:</label>
+                                                                                @Html.TextBoxFor(m => m.Owner, new { @id = "txtOwnerShip", @class = "form-control input-sm", @readonly = false })
+                                                                                @Html.HiddenFor(m => m.Owner, new { @id = "txtOwnerShip" })
+                                                                                @Html.HiddenFor(m => m.OwnerID, new { @id = "txtOwnerid" })
+                                                                            </div>
+                                                                        </div>
+                                                                    }
+
+
+
+
+                                                                    <div class="col-sm-3">
+                                                                        <div class="form-group no-margin-hr">
+                                                                            <label class="control-label">Estimated Budget :($)</label>
+                                                                            @Html.TextBoxFor(m => m.EstimateBudget, new { @id = "txtAnnualRevenue", @class = "form-control input-sm decimalmask" })
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="col-sm-3">
+                                                                        <div class="form-group no-margin-hr">
+                                                                            <label class="control-label">Opportunity Name :<span style="color: red">*</span></label>
+                                                                            @Html.TextBoxFor(m => m.Name, new { @id = "txtOpportunity", @class = "form-control input-sm", @validate = "Required", @data_val_required = "Opportunity Name" })
+                                                                            @*@Html.TextBoxFor(m => m.CompanyObj.Name, new { @class = "form-control input-sm", @id = "txtCompanyName", @validate = "Required", @data_val_required = "Company Name" })*@
+                                                                        </div>
+                                                                    </div>
+
+                                                                 
+
+
+
+
+                                                                    <div class="col-sm-3">
+                                                                        <div class="form-group no-margin-hr">
+                                                                            <label class="control-label">Estimated Close Date:<span style="color: red">*</span></label>
+                                                                            @Html.TextBoxFor(m => m.CloseDate, new { @id = "DatePickerControl", @class = "form-control input-sm", @validate = "Required", @data_val_required = "Estimate Close Date" })
+                                                                        </div>
+                                                                    </div>
+
+
+                                                                    <div class="col-sm-3">
+                                                                        <div class="form-group no-margin-hr">
+                                                                            <label class="control-label">Company Name:<span style="color: red">*</span></label>
+                                                                            <div class="input-group">
+                                                                                @Html.TextBoxFor(m => m.CompanyName, new { @class = "form-control input-sm", @id = "txtAccountName", @validate = "Required", @data_val_required = "Company Name", @readonly = false })
+                                                                                @Html.HiddenFor(m => m.CompanyName, new { @id = "txtAccountName" })
+                                                                                <span class="input-group-addon  type=" button" style="cursor:pointer;" onclick="return show_NewAccountPopUp(750, 450);">
+                                                                                    <i class="fa fa-search"></i>
+                                                                                </span>
+                                                                                @Html.HiddenFor(m => m.CompanyID, new { @id = "txtParentAccountid" })
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="col-sm-3">
+                                                                        <div class="form-group no-margin-hr">
+                                                                            <label class="control-label">Stage&nbsp;:<span style="color: red">*</span></label>
+
+                                                                            @Html.DropDownListFor(m => m.StageID, new List<SelectListItem>
+                                                                        {
+                                                                        new SelectListItem{Text="Select",Value= ""},
+                                                                        new SelectListItem{Text="Qualification",Value="1"},
+                                                                        new SelectListItem{Text="Needs Analysis",Value="2"},
+                                                                        new SelectListItem{Text="Value Proposition",Value="3"},
+                                                                        new SelectListItem{Text="Id. Decision Makers",Value="4"},
+                                                                        new SelectListItem{Text="Proposal/Price Quote",Value="5"},
+                                                                         new SelectListItem{Text="Negotiation/Review",Value="6"},
+                                                                        new SelectListItem{Text="Closed Won",Value="7"},
+                                                                        
+                                                                         new SelectListItem{Text="Closed Lost",Value="8"},
+                                                                        new SelectListItem{Text="Closed Lost to Competition",Value="9"}
+                                                                        }, new { @id = "ddlLeadStatus", @class = "form-control input-sm", @validate = "Required", @data_val_required = "Stage" })
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="col-sm-3">
+                                                                        <div class="form-group no-margin-hr">
+                                                                            <label class="control-label">Type&nbsp;:</label>
+
+                                                                            @Html.DropDownListFor(m => m.BusinessTypeID, new List<SelectListItem>
+                                                                        {
+                                                                        new SelectListItem{Text="Select",Value="0"},
+                                                                        new SelectListItem{Text="Existing Business",Value="1"},
+                                                                        new SelectListItem{Text="New Business",Value="2"}
+                                                                        
+                                                                        }, new { @id = "ddlLeadStatus", @class = "form-control" })
+                                                                        </div>
+                                                                    </div>
+
+
+                                                                    <div class="col-sm-3">
+                                                                        <div class="form-group no-margin-hr">
+                                                                            <label class="control-label">Probabilty:</label>
+                                                                            @Html.TextBoxFor(m => m.Probability, new { @id = "txtProbabilty", @class = "form-control input-sm" })
+                                                                           
+                                                                        </div>
+                                                                    </div>
+
+
+
+                                                                    <div class="col-sm-3">
+                                                                        <div class="form-group no-margin-hr">
+                                                                            <label class="control-label">Next Step:</label>
+                                                                            @Html.TextBoxFor(m => m.NextStep, new { @id = "txtNStep", @class = "form-control input-sm" })
+
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="col-sm-3">
+                                                                        <div class="form-group no-margin-hr">
+                                                                            <label class="control-label">Expected Budget :($)</label>
+                                                                            @Html.TextBoxFor(m => m.ExpectedRevenue, new { @id = "txtExpectedRevenue", @class = "form-control input-sm decimalmask" })
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="col-sm-3">
+                                                                        <div class="form-group no-margin-hr">
+                                                                            <label class="control-label">Opportunity&nbsp;Source:</label>
+
+                                                                            @Html.DropDownListFor(m => m.OppurtunitySourceID, new List<SelectListItem>
+                                                                        {
+                                                                        new SelectListItem{Text="Select",Value="0"},
+                                                                        new SelectListItem{Text="Advertisement",Value="1"},
+                                                                        new SelectListItem{Text="Cold Call",Value="2"},
+                                                                        new SelectListItem{Text="Employee Referral",Value="3"},
+                                                                        new SelectListItem{Text="External Referral",Value="15"},
+                                                                        new SelectListItem{Text="OnlineStore",Value="4"},
+                                                                         new SelectListItem{Text="NotContacted",Value="5"},
+                                                                        new SelectListItem{Text="Partner",Value="6"},
+                                                                        
+                                                                         new SelectListItem{Text="Public Relations",Value="7"},
+                                                                        new SelectListItem{Text="Sales Mail Alias",Value="8"},
+                                                                        new SelectListItem{Text="Seminar Partner",Value="9"},
+                                                                        new SelectListItem{Text="Seminar Partner",Value="10"},
+                                                                         new SelectListItem{Text="Trade Show",Value="11"},
+                                                                        new SelectListItem{Text="Web Download",Value="12"},
+                                                                        
+                                                                         new SelectListItem{Text="Web Research",Value="13"},
+                                                                        new SelectListItem{Text="Chat",Value="14"}
+                                                                       
+                                                                        
+                                                                        }, new { @id = "ddlLeadStatus", @class = "form-control" })
+                                                                        </div>
+                                                                    </div>
+
+
+
+
+                                                                    <div class="col-sm-3">
+                                                                        <div class="form-group no-margin-hr">
+                                                                            <label class="control-label">Contact :</label>
+                                                                            <div class="input-group">
+                                                                                @Html.TextBoxFor(m => m.ContactName, new { @id = "HyperContact", @class = "form-control input-sm", @readonly = false })
+                                                                                @*@Html.HiddenFor(m => m.ContactName, new { @id = "txtContactShip" })*@
+                                                                                @Html.HiddenFor(m => m.ContactName, new { @id = "HyperContact" })
+                                                                                <span class="input-group-addon  type=" button" style="cursor:pointer;" onclick="return show_ContactPopUp(750, 450);">
+                                                                                    <i class="fa fa-search"></i>
+                                                                                </span>
+                                                                                @*@Html.HiddenFor(m => m.ContactID, new { @id = "hdContactId" })*@
+                                                                                @Html.HiddenFor(m => m.ContactID, new { @id = "hdParentContactId" })
+                                                                                
+                                                                            </div>
+
+                                                                        </div>
+                                                                    </div>
+
+                                                                   
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="panel">
+                                                    <div class="panel-heading">
+                                                        <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion-example"
+                                                           href="#collapse10">Description</a>
+                                                    </div>
+                                                    <!-- / .panel-heading -->
+                                                    <div id="collapse10" class="panel-collapse collapse">
+                                                        <div class="panel-body">
+                                                            @Html.TextAreaFor(m => m.Description, new { @id = "txtDescription", @class = "textEditor" })
+                                                        </div>
+                                                        <!-- / .panel-body -->
+                                                    </div>
+                                                    <!-- / .collapse -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</body>
+  
+</html>
+
+
+<div class="modal fade" id="myCompanyModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Company List</h4>
+            </div>
+            <div class="modal-body">
+
+                <div class="row">
+                    <div style="text-align:left;font-size:12px;padding:5px">Note : Click Company Name To Select Record.</div>
+                    <div class="col-sm-12">
+
+                        <div class="table-primary table-striped" id="tblCompanyList">
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="~/Scripts/jqte/jquery-te-1.4.0.min.js"></script>
+<script src="~/Scripts/DateTimePicker/bootstrap-timepicker.min.js"></script>
+<script src="~/Scripts/DateTimePicker/bootstrap-datetimepicker.min.js"></script>
+
+
+@*<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/Scripts/bootstrap/jquery.validate.unobtrusive.bootstrap.tooltip.js"></script>*@
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#txtPhone').bind("cut copy paste", function (e) {
+            e.preventDefault();
+        });
+
+        $('#txtMobile').bind("cut copy paste", function (e) {
+            e.preventDefault();
+        });
+        $('#txtFax').bind("cut copy paste", function (e) {
+            e.preventDefault();
+        });
+
+
+
+        $(".textEditor").jqte();
+    });
+
+
+</script>
+
+<script type="text/javascript">
+
+    $("#btnaddopportunity").click(function (e) {
+
+
+        Isvalid = true;
+
+        return Validate(this.form);
+
+
+    });
+
+
+    $(function () {
+        $('#timepickercontrol').timepicker({
+            format: 'h:mm:ss'
+        });
+    });
+    $(function () {
+        $('#DatePickerControl').datepicker({
+            format: 'mm/dd/yyyy'
+        })
+    });
+</script>
+<script type="text/javascript">
+    function show_NewAccountPopUp() {
+
+        //$('#loading').css('display', 'block');
+        $.ajax({
+            //url: "../Leads/ListParentComp",
+            url: "../Leads/GetallCompanies",
+            type: "GET",
+            async: false,
+            success: function (data) {
+
+                if (data != null) {
+
+                    $('#tblCompanyList').empty();
+                    $('#tblCompanyList').empty().append(data);
+
+                }
+            },
+            error: function () {
+
+            }
+        });
+        $('#loading').css('display', 'none');
+        $('#myCompanyModal').modal("show");
+    }
+
+
+    function onlynumbers(evt) {
+        var charCode = (evt.which) ? evt.which : event.keyCode
+        if (charCode == 43 || charCode == 32 || charCode == 40 || charCode == 41)
+            return true;
+        else if (charCode > 31 && (charCode < 45 || charCode > 57 || charCode == 47 || charCode == 46))
+            return false;
+
+        return true;
+    }
+
+   
+
+    function show_ContactPopUp() {
+
+        var companyId = $('#txtParentAccountid').val();       
+        if (companyId != "")
+        {
+            $.ajax({
+
+                url: "../ManageCompany/ListContactforactivity",
+                type: "GET",
+                async: false,
+                data: { companyid: companyId },
+                success: function (data) {
+
+                    if (data != null) {
+
+                        $('#tblContactList').empty();
+                        $('#tblContactList').empty().append(data);
+
+                    }
+                },
+                error: function () {
+
+                }
+            });
+            $('#loading').css('display', 'none');
+            $('#myModal').modal("show");
+        }
+        else {
+            $.growl.error({ title: "Fail", message: "Please Select the Company first .", size: 'large' });
+        }
+       
+    }
+
+
+    function show_UsersPopUp() {
+        $.ajax({
+
+            url: "../Leads/GetallUsers",
+            type: "GET",
+            async: false,
+            success: function (data) {
+
+                if (data != null) {
+
+                    $('#tblUserList').empty();
+                    $('#tblUserList').empty().append(data);
+
+                }
+            },
+            error: function () {
+
+            }
+        });
+        $('#loading').css('display', 'none');
+        $('#myUserModal').modal("show");
+    }
+
+
+</script>
+@*<script type="text/javascript">
+        $(function () {
+
+            $(document).tooltip({
+                items: ".input-validation-error",
+                content: function () {
+                    return $(this).attr('data-val-required');
+                }
+            });
+        });
+    </script>*@
+
+
+
+<div class="modal fade" id="myUserModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Users List</h4>
+            </div>
+            <div class="modal-body">
+
+                <div class="row">
+                    <div style="text-align:left;font-size:12px;padding:5px">Note : Click User Name To Select Record.</div>
+                    <div class="col-sm-12">
+
+                        <div class="table-primary table-striped" id="tblUserList">
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="myModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Contacts List</h4>
+            </div>
+            <div class="modal-body">
+
+                <div class="row">
+                    <div style="text-align:left;font-size:12px;padding:5px">Note : Click Contact Name To Select Record.</div>
+                    <div class="col-sm-12">
+
+                        <div class="table-primary table-striped" id="tblContactList">
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

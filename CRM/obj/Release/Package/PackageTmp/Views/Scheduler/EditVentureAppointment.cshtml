@@ -1,0 +1,262 @@
+﻿@model CRMHub.EntityFramework.CalendarEventRequest
+
+@{
+    ViewBag.Title = "EditVentureAppointment";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+}
+<style type="text/css">
+    .DT-per-page {
+        display: none;
+    }
+</style>
+
+@using (Html.BeginForm("EditVentureAppointment", "Scheduler", FormMethod.Post, new { @id = "EditVentApp" }))
+{
+    <div class="widget">
+        <div class="widget-header bordered-bottom bordered-themesecondary">
+            <i class="widget-icon fa fa-user themesecondary"></i>
+            <span class="widget-caption themesecondary">@Html.DisplayFor(m => m.Title)</span>
+        </div><!--Widget Header-->
+        <div class="widget-body  no-padding">
+            <div class="tickets-container">
+                <div id="CustomBootstrapAlertBox">
+                </div>
+                <div class="row">
+                    <div class="tab-pane active" id="pvMentorDetail">
+                        <div id="GetMentors">
+                            <div class="col-sm-12">
+                                <div class="col-xs-12 col-sm-12 text-right text-right-sm" id="white_bg">
+                                    @*<button class="btn btn-flat btn-labeled btn-primary" id="btnSave" type="button" style=" margin:0px 3px 0px 10px;">
+                                            <span class="btn-label icon fa fa-edit"></span>Update
+                                        </button>*@
+                                    <a class="btn btn-flat btn-labeled btn-primary" href="@Url.Action("getUpComingEvents", "Scheduler")">
+                                        <span class="btn-label icon fa fa-backward" style="margin-right:6px;"> </span>
+                                        Back
+                                    </a>
+                                </div>
+                            </div>
+
+
+                            <div class="col-sm-12" style="padding-top:10px;">
+                                <div class="panel-group" id="accordion-example">
+                                    <!-- / .panel -->
+                                    <div class="panel">
+                                        <div class="panel-heading">
+                                            Appointment Details
+                                        </div>
+                                        <!-- / .panel-heading -->
+                                        <div id="collapse2" class="panel-collapse collapse in" style="height: auto;">
+                                            <div class="panel-body">
+                                                <div class="col-sm-12 no-padding-hr">
+                                                    <div class="row">
+                                                        <div class="col-sm-8" style="border-right:1px solid #ccc;">
+                                                            <div class="row">
+                                                                @Html.Partial("~/Views/Shared/_AppointmentDetails.cshtml", Model)
+                                                                @Html.HiddenFor(m => m.ID)
+                                                                @Html.HiddenFor(m => m.ScheduledEventDatetime)
+                                                                @Html.HiddenFor(m => m.ScheduledMentors)
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-4">
+                                                            <div class="panel">
+                                                                <div class="panel-heading" style="display:inline-block; width:100%; padding-top:3px; padding-bottom:5px;">
+                                                                    <div class="col-sm-4 pull-left no-padding" style="margin-top: 7px;">
+                                                                        Mentors List
+                                                                    </div>
+                                                                    <div class="col-sm-8 pull-right no-padding">
+                                                                        <button class="btn btn-flat btn-labeled btn-primary" id="btnschedulemeet" type="button" style=" float:right;margin: 1px -12px;">
+                                                                            <span class="btn-label icon fa fa-plus"></span>Schedule Meeting
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="panel-body">
+                                                                    <div class="row">
+                                                                        <div class="col-sm-12">
+
+                                                                            <div class="table-primary table-striped">
+                                                                                <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="tblEventDetails" style="width:100%;">
+                                                                                    <thead>
+                                                                                        <tr>
+                                                                                            <th></th>
+                                                                                            <th>Accepted  Date/Time</th>
+                                                                                            <th>Mentor</th>
+
+
+                                                                                        </tr>
+                                                                                    </thead>
+                                                                                    <tbody></tbody>
+                                                                                </table>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $("input[type=radio]").attr('disabled', true);
+            BindEventAcceptedDetails();
+            
+           
+              
+        });
+        function BindEventAcceptedDetails() {
+
+            var responsiveHelper = undefined;
+            var breakpointDefinition = {
+                desktop: Infinity,
+                tablet: 1024,
+                tabletlandscape: 768,
+                phone: 480
+            };
+            var tableElement = $('#tblEventDetails');
+            tableElement.dataTable({
+                autoWidth: false,
+                preDrawCallback: function () {
+                    if (!responsiveHelper) {
+                        responsiveHelper = new ResponsiveDatatablesHelper(tableElement, breakpointDefinition);
+                    }
+                },
+                rowCallback: function (nRow) {
+                    responsiveHelper.createExpandIcon(nRow);
+                },
+                drawCallback: function (oSettings) {
+                    responsiveHelper.respond();
+
+                },
+
+
+                "pagingType": "full_numbers",
+                //"processing": true,
+                "bPaginate": false,
+                "serverSide": true,
+                "bFilter": false,
+                "sAjaxSource": "GetAllAppointmentRelatedMentors",
+                "bLengthChange": false,
+                "ordering": false,
+                "info": false,
+                'columnDefs': [{ 'orderable': false, 'targets': 0 }], // hide sort icon on header of first column
+                //'aaSorting': [[0, 'desc']], // start to sort data in second column
+
+                "fnInitComplete": function () {
+                    this.css("visibility", "visible");
+                },
+
+                "fnServerParams": function (aoData) {
+
+                    aoData.push(
+
+                        { "name": "Keyword_RecentEvents", "value": "" },
+                        { "name": "MeetingId", "value": "" + $("#ID").val() + "" }
+                        );
+                },
+                "fnServerData": function (sSource, aoData, fnCallback) {
+                    $.ajax({
+                        "dataType": 'json',
+                        "contentType": "application/json; charset=utf-8",
+                        "type": "GET",
+                        "url": sSource,
+                        "data": aoData,
+                        "success":
+                                    function (msg) {
+                                        fnCallback(msg);
+                                    }
+                    });
+                },
+                "asStripeClasses": ['odd gradeX', 'even gradeC'],
+                "aoColumnDefs": [
+
+                     {
+                         "targets": [0], "visible": true, "bSortable": false, "mDataProp": "stracceptdatetime",
+                         "render": function (data, type, row) {
+                             return "<input name=\"rdItem\" class =\"case\"  type=\"radio\"  id=\"idRow_" + row["accepttime"] + "\"data-val-1=\"" + row["stracceptdatetime"] + "|" + row["MentorId"] + "\"   />";
+                         }
+                     },
+                     { "targets": [1], "visible": true, "bSortable": false, "mDataProp": "stracceptdatetime" },
+                   {
+                       "targets": [2], "visible": true, "bSortable": false, "mDataProp": "MentorName"
+                   },
+
+                ],
+
+                "fnDrawCallback": function (oSettings) {
+                    var acceptedmeetdetails = '@Html.Raw(Json.Encode(Model.Scheduledeventdetails))';
+                    if (acceptedmeetdetails != "") {
+                        acceptedmeetdetails = acceptedmeetdetails.replace(/\"/g, "");
+                        acceptedmeetdetails = acceptedmeetdetails.replace(/\s/g, '');
+                        var accpettime = acceptedmeetdetails.split(':');
+                        var acceptedmeetdetails1 = accpettime[0] + ':' + accpettime[1];
+                        var datadet = "idRow_" + acceptedmeetdetails1;
+                        var acceptedradiobtn = document.getElementById(datadet);
+                        acceptedradiobtn.checked = true;
+                        $("input[type=radio]").attr('disabled', true);
+                        $("#btnschedulemeet").prop('disabled', true);
+                    }
+                }
+            }).api();
+
+
+        }
+
+        $("#btnschedulemeet").click(function () {
+            if ($('input[name=rdItem]:checked').length > 0) {
+                if ($('input[name=rdItem]:checked').length > 1) {
+                    bootbox.alert("Please selectonly  one date and time to schedule a meeting");
+                }
+                else {
+                    var ScheduledEvent = [];
+                    $("#tblEventDetails input:radio:checked").each(function (i) {
+
+                        var EventAcceptDateime = $(this).attr("data-val-1");
+
+                        ScheduledEvent.push(new EventsList(EventAcceptDateime));
+
+                    });
+
+
+                    var scheduleddatetime = ScheduledEvent[0].EventAcceptDateime.split('|');
+                    $("#ScheduledMentors").val(scheduleddatetime[1]);
+                    $("#ScheduledEventDatetime").val(scheduleddatetime[0]);
+                    $('[disabled="disabled"]').removeAttr('disabled');
+                    $("#EditVentApp").submit();
+                    return true;
+                }
+
+            }
+            else {
+                bootbox.alert("Please select one date and time to schedule a meeting");
+            }
+        });
+        function EventsList(EventAcceptDateime) {
+            this.EventAcceptDateime = EventAcceptDateime;
+        }
+
+    </script>
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $("#activemenu").addClass("open active");
+            $('.mm-text').closest('li').each(function () {
+                $(this).removeClass('active');
+            });
+            $('.mm-text').eq(0).closest('li').addClass('active');
+        });
+    </script>
+}

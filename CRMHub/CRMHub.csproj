@@ -1,0 +1,1044 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{33E781E4-C007-44CE-B3A1-12CF6B5B4CCE}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CRMHub</RootNamespace>
+    <AssemblyName>CRMHub</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="CRM">
+      <HintPath>..\CRM\bin\CRM.dll</HintPath>
+    </Reference>
+    <Reference Include="DHTMLX, Version=3.3.5968.28932, Culture=neutral, PublicKeyToken=53f24791214eb8ac, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\DHTMLX.Scheduler.NET.3.3.17.0\lib\DHTMLX.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\CRM\bin\Microsoft.Practices.ServiceLocation.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity, Version=1.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\CRM\bin\Microsoft.Practices.Unity.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Configuration, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\CRM\bin\Microsoft.Practices.Unity.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Interception">
+      <HintPath>..\CRM\bin\Microsoft.Practices.Unity.Interception.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Interception.Configuration, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\CRM\bin\Microsoft.Practices.Unity.Interception.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Mvc, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\CRM\bin\Microsoft.Practices.Unity.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.RegistrationByConvention, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\CRM\bin\Microsoft.Practices.Unity.RegistrationByConvention.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\CRM\bin\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Aspects\ExceptionLoggerAttribute.cs" />
+    <Compile Include="Aspects\ExceptionLoggerCallHandler.cs" />
+    <Compile Include="Aspects\LoggerAttribute.cs" />
+    <Compile Include="Aspects\LoggerCallHandler.cs" />
+    <Compile Include="EntityFramework\Account.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\Activity.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\activityLog.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\activity_types.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\AdvertisementSource.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\Appointments_GetAllAppointmentsbyMentorId_Result.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\Branch.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\CalendarEventRequest.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\Client.cs">
+      <DependentUpon>CRMMaster.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\Company.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\Country.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\CRM.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CRM.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\CRM.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\CRM.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CRM.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\CRMMaster.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CRMMaster.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\CRMMaster.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CRMMaster.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\CRMMaster.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CRMMaster.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\CRM_AccountContactDetailsByID_Result.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\CRM_AccountOpportunityDetailsByID_Result.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\CRM_AcivityDashboard_StatusCount_Result.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\CRM_ActivityDetailsByID_Result.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\CRM_Dashboard_ChartStatusCount_Result.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\CRM_DashBoard_GetData_ActivityDashBoard_Result.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\CRM_Dashboard_ModulesCountdetails_Result.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\CRM_Dashboard_PaymentsDetails_Result.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\CRM_Dshbord_ActivitymoduleCount_Result.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\CRM_ExportCompaniesDate_Result.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\CRM_GetActivitiesListByCompanyID_Result.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\CRM_GetActivityByType_Result.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\CRM_GetAdminDetail_Result.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\CRM_getAdmin_Result.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\CRM_GetAllAccountContacts_Result.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\CRM_GetAllAccountLeads_Result.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\CRM_GetAllAccountOpportunities_Result.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\CRM_GetAllActivitiesList_Result.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\CRM_GetAllBranchList_Result.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\CRM_GetAllCompanies_Result.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\CRM_GetAllCompanyContacts_Result.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\CRM_GetAllEstimateInvoicesList_Result.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\CRM_GetAllInvoicesList_Result.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\CRM_GETALLMentoringNotifications_Result.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\CRM_GETALLNotification_Result.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\CRM_GetAllOpportunitiesList_Result.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\CRM_GetAllOpportunities_Result.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\CRM_GetAllPaymentsbyinvoiceId_Result.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\CRM_GETALL_Activities_Result.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\CRM_GETALL_Projectslist_Result.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\CRM_getBranchDetailByBranchId_Result.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\CRM_GetBranchListAll_Result.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\CRM_Getclients_Result.cs">
+      <DependentUpon>CRMMaster.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\CRM_GetCompanyInvoicesList_Result.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\CRM_GetContactActivityType_Result.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\CRM_GetContactDetail_Result.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\CRM_GETCONTACTMAILS_Result.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\CRM_GETCONTACTSFORCOMPANY_Result.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\CRM_GetCustomFieldsbyFieldId_Result.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\CRM_GetCustomFields_Result.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\CRM_GetDynamicMenuByRoleId_Result.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\CRM_GETEMPLOYEENotification_Result.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\CRM_GetExcelfilesbasedonstatus_Result.cs">
+      <DependentUpon>CRMMaster.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\CRM_GETINVOICEDETAILSBYINVID_Result.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\CRM_GETItemByItemID_Result.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\CRM_GetLeadActivityType_Result.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\CRM_GetLevels_Result.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\CRM_GetLogin_Result.cs">
+      <DependentUpon>CRMMaster.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\crm_GetMenubyMenuId_Result.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\CRM_GetMenuByRoleId_Result.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\CRM_GetMenusbyMenuId_Result.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\CRM_GetMenus_Result.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\CRM_GetNotificationsList_Result.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\CRM_getprojectById_Result.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\CRM_GETProjectDetailsByProjectID_Result.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\CRM_getSalesRepresentative_Result.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\CRM_GetSMSProviderbyID_Result.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\CRM_GetSMSProvider_Result.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\CRM_GetStatecode_Result.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\CRM_GetState_Result.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\CRM_GetUserBranchbyBranchId_Result.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\CRM_GetUserBranchList_Result.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\CRM_GetUserBranch_Result.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\CRM_GetUsersByRole_Result.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\CRM_GetUsersListByRoleId_Result.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\CRM_getUsers_Result.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\CRM_Get_Activity_Notifications_Result.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\CRM_GET_ACTIVTY_TYPE_Result.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\CRM_GET_AllContactTypes_Result.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\CRM_GET_ALL_Opportunity_Count_Result.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\CRM_GET_ESTIMATEINVOICEDETAILSBY_ID_Result.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\CRM_GET_INVOICELIST_BYCUSID_Result.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\CRM_GET_Projectslist_Result.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\CRM_GET_SystemSetup_Result.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\CRM_InvoicePayment_ChartStatusCount_Result.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\CRM_IscolumnlabelExistsForModule_Result.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\CRM_IscolumnlabelExists_Result.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\CRM_IsCompanyExists_Result.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\CRM_IsContactExists_Result.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\CRM_LeadsColumnChart_Result.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\CRM_LoadCustomFields_Result.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\CRM_LoadSMSProvidersList_Result.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\CRM_MenusBinding_Result.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\CRM_OpportunityChart_Result.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\CRM_OpportunityDetailsByID_Result.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\CRM_PieChart_Result.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\CRM_SearchAdminList_Result.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\CRM_SearchContactListForExport_Result.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\CRM_SecureLogin_Result.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\CRM_Usp_DashBoard_Manage_DashBoardModules_Result.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\CRM_USP_GET_ACTIVTY_TYPE_Result.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\CRM_WeeklyPayment_ChartDetails_Result.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\CurrentStatu.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\Custom_DbError.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\Custom_DrpChkValues.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\Custom_Manage_Master.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\Custom_Value_Master.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\Error_Log.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\Event.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\EventDetail.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\ExcelImportFile.cs">
+      <DependentUpon>CRMMaster.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\fn_Split_Result.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\Function_SplitValues_Result.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\func_ConvertCommaSeparatedValues_to_Integers_Result.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\GetAllMentorsAcceptedDateTime_Result.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\getCRMIndustry_Result.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\getParentMenu_Result.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\GET_Events_Result.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\ImportHistory.cs">
+      <DependentUpon>CRMMaster.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\Mentor.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\MentorAcceptedDateTime.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\MentorDetail.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\MentorQuestionary.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\MentorType.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\Mentor_GetAllMentors_Result.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\ModuleType.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\Priority.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\RadiusFunc_Result.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\RadiusZip_Result.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\role.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\Roles_GetAllRoles_Result.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\Scheduler_GetAllMeetings_Result.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\SMSProviderList.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\Split_Result.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\State.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\Status.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\tbl1.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\tbl2.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\tbl_AssociateList.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\tbl_ContactType.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\tbl_crm_industry.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\tbl_EstimateInvoice.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\tbl_EstimateInvoiceItem.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\tbl_Invoice.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\tbl_InvoiceItem.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\tbl_Items.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\tbl_Itemtype.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\tbl_Menus.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\tbl_Payments.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\tbl_ProjectDetails.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\tbl_RoleMenus.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\tbl_ShowAllZIPCodes.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\tbl_ZIPCodes.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\test_Result.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\user.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\UserAccessModule.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\UserAccessSetting.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\UserMaster.cs">
+      <DependentUpon>CRMMaster.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\User_GetAllUsers_Result.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\uSp_BindData_Result.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\Usp_GetZipCode_AroundSpecificZipCode_Result.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\USP_GET_ACTIVTY_TYPE_Result.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\usState.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\VALIDATE_CLIENT_BY_TYPE_Result.cs">
+      <DependentUpon>CRMMaster.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\Venture.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\VentureDetail.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\Venture_GetAllVentures_Result.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\Venture_GetPendingVentureDetails_Result.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\Venture_GetVentureDetails_Result.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\Venture_GetVMSStatus_Result.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\Venture_IsVentureExists_Result.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\Venture_IsVentureExists_Result1.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\VMSHelp.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\VMSStatu.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ExtendedProperties\Account.cs" />
+    <Compile Include="ExtendedProperties\AccountDocument.cs" />
+    <Compile Include="ExtendedProperties\Activity.cs" />
+    <Compile Include="ExtendedProperties\ActivityDetails.cs" />
+    <Compile Include="ExtendedProperties\activityLog.cs" />
+    <Compile Include="ExtendedProperties\ActivitySummary.cs" />
+    <Compile Include="ExtendedProperties\activity_types.cs" />
+    <Compile Include="ExtendedProperties\Branch.cs" />
+    <Compile Include="ExtendedProperties\CalendarEventRequest.cs" />
+    <Compile Include="ExtendedProperties\Client.cs" />
+    <Compile Include="ExtendedProperties\Company.cs" />
+    <Compile Include="ExtendedProperties\CompanyNew.cs" />
+    <Compile Include="ExtendedProperties\companySetup.cs" />
+    <Compile Include="ExtendedProperties\CountryManager.cs" />
+    <Compile Include="ExtendedProperties\Custom_DrpChkValues.cs" />
+    <Compile Include="ExtendedProperties\Custom_Manage_Master.cs" />
+    <Compile Include="ExtendedProperties\Custom_Value_Master.cs" />
+    <Compile Include="ExtendedProperties\DashBoardTitle.cs" />
+    <Compile Include="ExtendedProperties\DashBoard_Modules.cs" />
+    <Compile Include="ExtendedProperties\DashBoard_UserPreferencesOrder.cs" />
+    <Compile Include="ExtendedProperties\Event.cs" />
+    <Compile Include="ExtendedProperties\EventDetail.cs" />
+    <Compile Include="ExtendedProperties\ExportCompany.cs" />
+    <Compile Include="ExtendedProperties\ExportCompanyData.cs" />
+    <Compile Include="ExtendedProperties\ExportContact.cs" />
+    <Compile Include="ExtendedProperties\ExportLeads.cs" />
+    <Compile Include="ExtendedProperties\ExportOpportunities.cs" />
+    <Compile Include="ExtendedProperties\ExportSales.cs" />
+    <Compile Include="ExtendedProperties\GChart.cs" />
+    <Compile Include="ExtendedProperties\Import.cs" />
+    <Compile Include="ExtendedProperties\ImportantDocument.cs" />
+    <Compile Include="ExtendedProperties\ImportContact.cs" />
+    <Compile Include="ExtendedProperties\Mentor.cs" />
+    <Compile Include="ExtendedProperties\MentorAcceptedDateTime.cs" />
+    <Compile Include="ExtendedProperties\MentorDetail.cs" />
+    <Compile Include="ExtendedProperties\MentorQuestionary.cs" />
+    <Compile Include="ExtendedProperties\ModuleType.cs" />
+    <Compile Include="ExtendedProperties\Opportunity.cs" />
+    <Compile Include="ExtendedProperties\OutlookMail.cs" />
+    <Compile Include="ExtendedProperties\roles.cs" />
+    <Compile Include="ExtendedProperties\SchedulerModel.cs" />
+    <Compile Include="ExtendedProperties\SMSProviderList.cs" />
+    <Compile Include="ExtendedProperties\State.cs" />
+    <Compile Include="ExtendedProperties\tbl_account.cs" />
+    <Compile Include="ExtendedProperties\tbl_Contact.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ExtendedProperties\tbl_ContactType.cs" />
+    <Compile Include="ExtendedProperties\tbl_crm_industry.cs" />
+    <Compile Include="ExtendedProperties\tbl_EstimateInvoice.cs" />
+    <Compile Include="ExtendedProperties\tbl_EstimateInvoiceItem.cs" />
+    <Compile Include="ExtendedProperties\tbl_history.cs" />
+    <Compile Include="ExtendedProperties\tbl_Invoice.cs" />
+    <Compile Include="ExtendedProperties\tbl_InvoiceItem.cs" />
+    <Compile Include="ExtendedProperties\tbl_Items.cs" />
+    <Compile Include="ExtendedProperties\tbl_Lead.cs" />
+    <Compile Include="ExtendedProperties\tbl_Leadhistory.cs" />
+    <Compile Include="ExtendedProperties\tbl_Menus.cs" />
+    <Compile Include="ExtendedProperties\tbl_Payments.cs" />
+    <Compile Include="ExtendedProperties\tbl_ProjectDetails.cs" />
+    <Compile Include="ExtendedProperties\tbl_Sales.cs" />
+    <Compile Include="ExtendedProperties\user.cs" />
+    <Compile Include="ExtendedProperties\tbl_UserMaster.cs" />
+    <Compile Include="ExtendedProperties\Venture.cs" />
+    <Compile Include="ExtendedProperties\VentureDetail.cs" />
+    <Compile Include="Helper\Content.cs" />
+    <Compile Include="Interface\IContactsRepository.cs" />
+    <Compile Include="Interface\ICreateClientsRepository.cs" />
+    <Compile Include="Interface\IDashboardData.cs" />
+    <Compile Include="Interface\IClientRepository.cs" />
+    <Compile Include="Interface\ICompanyNewsRepository.cs" />
+    <Compile Include="Interface\ICustomFieldsRepository.cs" />
+    <Compile Include="Interface\IDashBoardSetUpRepository.cs" />
+    <Compile Include="Interface\IDBoard.cs" />
+    <Compile Include="Interface\IErrorLogRepository.cs" />
+    <Compile Include="Interface\IExportRepository.cs" />
+    <Compile Include="Interface\IImportantDocumentsRepository.cs" />
+    <Compile Include="Interface\IInvoiceRepository.cs" />
+    <Compile Include="Interface\IItemRepository.cs" />
+    <Compile Include="Interface\ILeadRepository.cs" />
+    <Compile Include="Interface\IMentor.cs" />
+    <Compile Include="Interface\IMenuRepository.cs" />
+    <Compile Include="Interface\INoticationRepository.cs" />
+    <Compile Include="Interface\IOfficeLevelAccessRepository.cs" />
+    <Compile Include="Interface\IOfficeRepository.cs" />
+    <Compile Include="Interface\ICompanyRepository.cs" />
+    <Compile Include="Interface\IOpportunitiesRepository.cs" />
+    <Compile Include="Interface\IProjectRepository.cs" />
+    <Compile Include="Interface\IRoleRepository.cs" />
+    <Compile Include="Interface\ICommonRepository.cs" />
+    <Compile Include="Interface\ISchedulerRepository.cs" />
+    <Compile Include="Interface\ISMSProviderRepository.cs" />
+    <Compile Include="Interface\ISystemSetupRepository.cs" />
+    <Compile Include="Interface\IUserMasterRepository.cs" />
+    <Compile Include="Interface\IUserRepo.cs" />
+    <Compile Include="Interface\IUserRepository.cs" />
+    <Compile Include="Interface\IVenture.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\ClientRepository.cs" />
+    <Compile Include="Repository\CompanyNewsRepository.cs" />
+    <Compile Include="Repository\ContactRepository.cs" />
+    <Compile Include="Repository\CreateClientsRepository.cs" />
+    <Compile Include="Repository\CustomFieldsRepository.cs" />
+    <Compile Include="Repository\DashboardDataRepository.cs" />
+    <Compile Include="Repository\DashBoardSetUpRepository.cs" />
+    <Compile Include="Repository\DBoardRepository.cs" />
+    <Compile Include="Repository\ErrorLogRepository.cs" />
+    <Compile Include="Repository\ExportRepository.cs" />
+    <Compile Include="Repository\ImportantDocumentsRepository.cs" />
+    <Compile Include="Repository\InvoiceRepository.cs" />
+    <Compile Include="Repository\ItemRepository.cs" />
+    <Compile Include="Repository\LeadRepository.cs" />
+    <Compile Include="Repository\MentorRepository.cs" />
+    <Compile Include="Repository\MenuRepository.cs" />
+    <Compile Include="Repository\NotificationsRepository.cs" />
+    <Compile Include="Repository\OfficeLevelAccessRepository.cs" />
+    <Compile Include="Repository\OfficeRepository.cs" />
+    <Compile Include="Repository\CompanyRepository.cs" />
+    <Compile Include="Repository\OpportunitiesRepository.cs" />
+    <Compile Include="Repository\ProjectRepository.cs" />
+    <Compile Include="Repository\RoleRepository.cs" />
+    <Compile Include="Repository\CommonRepository.cs" />
+    <Compile Include="Repository\SchedulerRepository.cs" />
+    <Compile Include="Repository\SMSProviderRepository.cs" />
+    <Compile Include="Repository\SystemSetupRepository.cs" />
+    <Compile Include="Repository\UserMasterRepository.cs" />
+    <Compile Include="Repository\UserRepo.cs" />
+    <Compile Include="Repository\UserRepository.cs" />
+    <Compile Include="Repository\VentureRepository.cs" />
+    <Compile Include="ViewModel\AccountModel.cs" />
+    <Compile Include="ViewModel\ActivityModel.cs" />
+    <Compile Include="ViewModel\BranchModel.cs" />
+    <Compile Include="ViewModel\CalenderEventsViewModel.cs" />
+    <Compile Include="ViewModel\CompanyModel.cs" />
+    <Compile Include="ViewModel\CompanyNewsModel.cs" />
+    <Compile Include="ViewModel\CompanyViewModel.cs" />
+    <Compile Include="ViewModel\ContactModel.cs" />
+    <Compile Include="ViewModel\DashBoardSetUpModel.cs" />
+    <Compile Include="ViewModel\DashboardStatusCount.cs" />
+    <Compile Include="ViewModel\DashboardViewModel.cs" />
+    <Compile Include="ViewModel\DBoardViewModel.cs" />
+    <Compile Include="ViewModel\EstimateInvoiceModel.cs" />
+    <Compile Include="ViewModel\ImportantDocumentsModel.cs" />
+    <Compile Include="ViewModel\InvoiceModel.cs" />
+    <Compile Include="ViewModel\jQueryDataTableParamModel.cs" />
+    <Compile Include="ViewModel\LeadModel.cs" />
+    <Compile Include="ViewModel\MentorViewmodel.cs" />
+    <Compile Include="ViewModel\MenuModel.cs" />
+    <Compile Include="ViewModel\MenuViewModel.cs" />
+    <Compile Include="ViewModel\OfficeLevelAccessModel.cs" />
+    <Compile Include="ViewModel\ProjectModel.cs" />
+    <Compile Include="ViewModel\RoleMenuModel.cs" />
+    <Compile Include="ViewModel\UsersModel.cs" />
+    <Compile Include="ViewModel\VentureViewModel.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.Config">
+      <SubType>Designer</SubType>
+    </None>
+    <EntityDeploy Include="EntityFramework\CRMMaster.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>CRMMaster.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <EntityDeploy Include="EntityFramework\CRM.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>CRM.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="EntityFramework\CRM.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>CRM.edmx</DependentUpon>
+      <LastGenOutput>CRM.Context.cs</LastGenOutput>
+    </None>
+    <None Include="EntityFramework\CRM.edmx.diagram">
+      <DependentUpon>CRM.edmx</DependentUpon>
+    </None>
+    <None Include="EntityFramework\CRM.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>CRM.edmx</DependentUpon>
+      <LastGenOutput>CRM.cs</LastGenOutput>
+    </None>
+    <None Include="EntityFramework\CRMMaster.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>CRMMaster.edmx</DependentUpon>
+      <LastGenOutput>CRMMaster.Context.cs</LastGenOutput>
+    </None>
+    <None Include="EntityFramework\CRMMaster.edmx.diagram">
+      <DependentUpon>CRMMaster.edmx</DependentUpon>
+    </None>
+    <None Include="EntityFramework\CRMMaster.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>CRMMaster.edmx</DependentUpon>
+      <LastGenOutput>CRMMaster.cs</LastGenOutput>
+    </None>
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="bin\Debug\CRMHub.dll" />
+    <Content Include="bin\Debug\CRMHub.pdb" />
+    <Content Include="Scripts\dhtmlxScheduler\dhtmlxscheduler.css" />
+    <Content Include="Scripts\dhtmlxScheduler\dhtmlxscheduler.js" />
+    <Content Include="Scripts\dhtmlxScheduler\dhtmlxscheduler_classic.css" />
+    <Content Include="Scripts\dhtmlxScheduler\dhtmlxscheduler_custom_lightbox.js" />
+    <Content Include="Scripts\dhtmlxScheduler\dhtmlxscheduler_flat.css" />
+    <Content Include="Scripts\dhtmlxScheduler\dhtmlxscheduler_glossy.css" />
+    <Content Include="Scripts\dhtmlxScheduler\ext\dhtmlxscheduler_active_links.js" />
+    <Content Include="Scripts\dhtmlxScheduler\ext\dhtmlxscheduler_agenda_view.js" />
+    <Content Include="Scripts\dhtmlxScheduler\ext\dhtmlxscheduler_all_timed.js" />
+    <Content Include="Scripts\dhtmlxScheduler\ext\dhtmlxscheduler_collision.js" />
+    <Content Include="Scripts\dhtmlxScheduler\ext\dhtmlxscheduler_container_autoresize.js" />
+    <Content Include="Scripts\dhtmlxScheduler\ext\dhtmlxscheduler_cookie.js" />
+    <Content Include="Scripts\dhtmlxScheduler\ext\dhtmlxscheduler_daytimeline.js" />
+    <Content Include="Scripts\dhtmlxScheduler\ext\dhtmlxscheduler_drag_between.js" />
+    <Content Include="Scripts\dhtmlxScheduler\ext\dhtmlxscheduler_editors.js" />
+    <Content Include="Scripts\dhtmlxScheduler\ext\dhtmlxscheduler_expand.js" />
+    <Content Include="Scripts\dhtmlxScheduler\ext\dhtmlxscheduler_grid_view.js" />
+    <Content Include="Scripts\dhtmlxScheduler\ext\dhtmlxscheduler_html_templates.js" />
+    <Content Include="Scripts\dhtmlxScheduler\ext\dhtmlxscheduler_key_nav.js" />
+    <Content Include="Scripts\dhtmlxScheduler\ext\dhtmlxscheduler_layer.js" />
+    <Content Include="Scripts\dhtmlxScheduler\ext\dhtmlxscheduler_limit.js" />
+    <Content Include="Scripts\dhtmlxScheduler\ext\dhtmlxscheduler_live_updates.js" />
+    <Content Include="Scripts\dhtmlxScheduler\ext\dhtmlxscheduler_map_view.js" />
+    <Content Include="Scripts\dhtmlxScheduler\ext\dhtmlxscheduler_minical.js" />
+    <Content Include="Scripts\dhtmlxScheduler\ext\dhtmlxscheduler_monthheight.js" />
+    <Content Include="Scripts\dhtmlxScheduler\ext\dhtmlxscheduler_multisection.js" />
+    <Content Include="Scripts\dhtmlxScheduler\ext\dhtmlxscheduler_multiselect.js" />
+    <Content Include="Scripts\dhtmlxScheduler\ext\dhtmlxscheduler_multisource.js" />
+    <Content Include="Scripts\dhtmlxScheduler\ext\dhtmlxscheduler_mvc.js" />
+    <Content Include="Scripts\dhtmlxScheduler\ext\dhtmlxscheduler_offline.js" />
+    <Content Include="Scripts\dhtmlxScheduler\ext\dhtmlxscheduler_outerdrag.js" />
+    <Content Include="Scripts\dhtmlxScheduler\ext\dhtmlxscheduler_pdf.js" />
+    <Content Include="Scripts\dhtmlxScheduler\ext\dhtmlxscheduler_quick_info.js" />
+    <Content Include="Scripts\dhtmlxScheduler\ext\dhtmlxscheduler_readonly.js" />
+    <Content Include="Scripts\dhtmlxScheduler\ext\dhtmlxscheduler_recurring.js" />
+    <Content Include="Scripts\dhtmlxScheduler\ext\dhtmlxscheduler_serialize.js" />
+    <Content Include="Scripts\dhtmlxScheduler\ext\dhtmlxscheduler_timeline.js" />
+    <Content Include="Scripts\dhtmlxScheduler\ext\dhtmlxscheduler_tooltip.js" />
+    <Content Include="Scripts\dhtmlxScheduler\ext\dhtmlxscheduler_treetimeline.js" />
+    <Content Include="Scripts\dhtmlxScheduler\ext\dhtmlxscheduler_units.js" />
+    <Content Include="Scripts\dhtmlxScheduler\ext\dhtmlxscheduler_url.js" />
+    <Content Include="Scripts\dhtmlxScheduler\ext\dhtmlxscheduler_week_agenda.js" />
+    <Content Include="Scripts\dhtmlxScheduler\ext\dhtmlxscheduler_wp.js" />
+    <Content Include="Scripts\dhtmlxScheduler\ext\dhtmlxscheduler_year_view.js" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs\buttons.png" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs\but_repeat.gif" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs\calendar.gif" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs\clock_big.gif" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs\clock_small.gif" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs\collapse_expand_icon.gif" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs\controls.gif" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs\databg.png" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs\databg_now.png" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs\export_ical.png" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs\export_pdf.png" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs\icon.png" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs\images.png" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs\loading.gif" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs\resize_dots.png" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs_dhx_terrace\arrow_left.png" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs_dhx_terrace\arrow_right.png" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs_dhx_terrace\but_repeat.gif" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs_dhx_terrace\calendar.gif" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs_dhx_terrace\clock_big.gif" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs_dhx_terrace\clock_small.gif" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs_dhx_terrace\close_icon.png" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs_dhx_terrace\collapse_expand_icon.gif" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs_dhx_terrace\controls.png" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs_dhx_terrace\databg.png" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs_dhx_terrace\databg_now.png" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs_dhx_terrace\export_ical.png" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs_dhx_terrace\export_pdf.png" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs_dhx_terrace\resize_dots.png" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs_dhx_terrace\resizing.png" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs_flat\agenda_bg.gif" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs_flat\arrow_left.png" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs_flat\arrow_right.png" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs_flat\but_repeat.gif" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs_flat\calendar.gif" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs_flat\clock.png" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs_flat\clock_big.gif" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs_flat\clock_small.gif" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs_flat\close_icon.png" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs_flat\collapse_expand_icon.gif" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs_flat\controls.png" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs_flat\databg.png" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs_flat\databg_now.png" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs_flat\export_ical.png" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs_flat\export_pdf.png" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs_flat\resize_dots.png" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs_flat\resizing.png" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs_glossy\blue_tab.png" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs_glossy\blue_tab_wide.png" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs_glossy\buttons.gif" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs_glossy\but_repeat.gif" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs_glossy\calendar.gif" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs_glossy\clock_big.png" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs_glossy\clock_small.png" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs_glossy\collapse_expand_icon.gif" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs_glossy\controlls5.png" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs_glossy\databg.png" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs_glossy\databg_now.png" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs_glossy\event-bg.png" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs_glossy\export_ical.png" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs_glossy\export_pdf.png" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs_glossy\icon.png" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs_glossy\left-separator.png" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs_glossy\left-time-bg.png" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs_glossy\lightbox.png" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs_glossy\loading.gif" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs_glossy\move.png" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs_glossy\multi-days-bg.png" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs_glossy\second-top-days-bg.png" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs_glossy\top-days-bg.png" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs_glossy\top-separator.gif" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs_glossy\white_tab.png" />
+    <Content Include="Scripts\dhtmlxScheduler\imgs_glossy\white_tab_wide.png" />
+    <Content Include="Scripts\dhtmlxScheduler\locale\locale_ar.js" />
+    <Content Include="Scripts\dhtmlxScheduler\locale\locale_be.js" />
+    <Content Include="Scripts\dhtmlxScheduler\locale\locale_ca.js" />
+    <Content Include="Scripts\dhtmlxScheduler\locale\locale_cn.js" />
+    <Content Include="Scripts\dhtmlxScheduler\locale\locale_cs.js" />
+    <Content Include="Scripts\dhtmlxScheduler\locale\locale_da.js" />
+    <Content Include="Scripts\dhtmlxScheduler\locale\locale_de.js" />
+    <Content Include="Scripts\dhtmlxScheduler\locale\locale_el.js" />
+    <Content Include="Scripts\dhtmlxScheduler\locale\locale_en.js" />
+    <Content Include="Scripts\dhtmlxScheduler\locale\locale_es.js" />
+    <Content Include="Scripts\dhtmlxScheduler\locale\locale_fi.js" />
+    <Content Include="Scripts\dhtmlxScheduler\locale\locale_fr.js" />
+    <Content Include="Scripts\dhtmlxScheduler\locale\locale_he.js" />
+    <Content Include="Scripts\dhtmlxScheduler\locale\locale_hu.js" />
+    <Content Include="Scripts\dhtmlxScheduler\locale\locale_id.js" />
+    <Content Include="Scripts\dhtmlxScheduler\locale\locale_it.js" />
+    <Content Include="Scripts\dhtmlxScheduler\locale\locale_jp.js" />
+    <Content Include="Scripts\dhtmlxScheduler\locale\locale_nb.js" />
+    <Content Include="Scripts\dhtmlxScheduler\locale\locale_nl.js" />
+    <Content Include="Scripts\dhtmlxScheduler\locale\locale_no.js" />
+    <Content Include="Scripts\dhtmlxScheduler\locale\locale_pl.js" />
+    <Content Include="Scripts\dhtmlxScheduler\locale\locale_pt.js" />
+    <Content Include="Scripts\dhtmlxScheduler\locale\locale_ro.js" />
+    <Content Include="Scripts\dhtmlxScheduler\locale\locale_ru.js" />
+    <Content Include="Scripts\dhtmlxScheduler\locale\locale_si.js" />
+    <Content Include="Scripts\dhtmlxScheduler\locale\locale_sk.js" />
+    <Content Include="Scripts\dhtmlxScheduler\locale\locale_sv.js" />
+    <Content Include="Scripts\dhtmlxScheduler\locale\locale_tr.js" />
+    <Content Include="Scripts\dhtmlxScheduler\locale\locale_ua.js" />
+    <Content Include="Scripts\dhtmlxScheduler\locale\recurring\locale_recurring_be.js" />
+    <Content Include="Scripts\dhtmlxScheduler\locale\recurring\locale_recurring_cn.js" />
+    <Content Include="Scripts\dhtmlxScheduler\locale\recurring\locale_recurring_cs.js" />
+    <Content Include="Scripts\dhtmlxScheduler\locale\recurring\locale_recurring_da.js" />
+    <Content Include="Scripts\dhtmlxScheduler\locale\recurring\locale_recurring_de.js" />
+    <Content Include="Scripts\dhtmlxScheduler\locale\recurring\locale_recurring_el.js" />
+    <Content Include="Scripts\dhtmlxScheduler\locale\recurring\locale_recurring_en.js" />
+    <Content Include="Scripts\dhtmlxScheduler\locale\recurring\locale_recurring_es.js" />
+    <Content Include="Scripts\dhtmlxScheduler\locale\recurring\locale_recurring_fi.js" />
+    <Content Include="Scripts\dhtmlxScheduler\locale\recurring\locale_recurring_fr.js" />
+    <Content Include="Scripts\dhtmlxScheduler\locale\recurring\locale_recurring_it.js" />
+    <Content Include="Scripts\dhtmlxScheduler\locale\recurring\locale_recurring_nb.js" />
+    <Content Include="Scripts\dhtmlxScheduler\locale\recurring\locale_recurring_nl.js" />
+    <Content Include="Scripts\dhtmlxScheduler\locale\recurring\locale_recurring_pl.js" />
+    <Content Include="Scripts\dhtmlxScheduler\locale\recurring\locale_recurring_pt.js" />
+    <Content Include="Scripts\dhtmlxScheduler\locale\recurring\locale_recurring_ro.js" />
+    <Content Include="Scripts\dhtmlxScheduler\locale\recurring\locale_recurring_ru.js" />
+    <Content Include="Scripts\dhtmlxScheduler\locale\recurring\locale_recurring_sk.js" />
+    <Content Include="Scripts\dhtmlxScheduler\locale\recurring\locale_recurring_sv.js" />
+    <Content Include="Scripts\dhtmlxScheduler\locale\recurring\locale_recurring_ua.js" />
+    <Content Include="Scripts\dhtmlxScheduler\locale\recurring\repeat_template_be.html" />
+    <Content Include="Scripts\dhtmlxScheduler\locale\recurring\repeat_template_cn.html" />
+    <Content Include="Scripts\dhtmlxScheduler\locale\recurring\repeat_template_de.html" />
+    <Content Include="Scripts\dhtmlxScheduler\locale\recurring\repeat_template_el.html" />
+    <Content Include="Scripts\dhtmlxScheduler\locale\recurring\repeat_template_en.html" />
+    <Content Include="Scripts\dhtmlxScheduler\locale\recurring\repeat_template_es.html" />
+    <Content Include="Scripts\dhtmlxScheduler\locale\recurring\repeat_template_fr.html" />
+    <Content Include="Scripts\dhtmlxScheduler\locale\recurring\repeat_template_it.html" />
+    <Content Include="Scripts\dhtmlxScheduler\locale\recurring\repeat_template_nl.html" />
+    <Content Include="Scripts\dhtmlxScheduler\locale\recurring\repeat_template_ro.html" />
+    <Content Include="Scripts\dhtmlxScheduler\locale\recurring\repeat_template_ru.html" />
+    <Content Include="Scripts\dhtmlxScheduler\locale\recurring\repeat_template_sk.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="bin\Release\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

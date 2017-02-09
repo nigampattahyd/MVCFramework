@@ -1,0 +1,250 @@
+﻿
+@model  IEnumerable<CRMHub.EntityFramework.tbl_Contact>
+
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+            $('#loading').css('display', 'block');
+            bindContactGrid();
+
+
+            $('#jq-datatables-ContactPopup').on('length.dt', function (e, settings, len) {
+
+                $('#loading').css('display', 'block');
+            });
+
+            $('#jq-datatables-ContactPopup').on('page.dt', function () {
+
+                $('#loading').css('display', 'block');
+            });
+
+
+            // $('#loading').css('display', 'none');
+        });
+        function bindContactGrid() {
+
+
+
+            $('#loading').css('display', 'block');
+            var responsiveHelper = undefined;
+            var breakpointDefinition = {
+                desktop: Infinity,
+                tablet: 1024,
+                tabletlandscape: 768,
+                phone: 480
+            };
+            var tableElement = $('#jq-datatables-ContactPopup');
+            tableElement.dataTable({
+                autoWidth: false,
+                preDrawCallback: function () {
+                    if (!responsiveHelper) {
+                        responsiveHelper = new ResponsiveDatatablesHelper(tableElement, breakpointDefinition);
+                    }
+                },
+                rowCallback: function (nRow) {
+                    responsiveHelper.createExpandIcon(nRow);
+                },
+                drawCallback: function (oSettings) {
+                    responsiveHelper.respond();
+                },
+                //"order": [[$("#HD_SortValue").val(), "" + $("#HD_SortDirection").val() + ""]],
+                "aLengthMenu": [[10, 25, 50, 100], [10, 25, 50, 100]],
+                //"iDisplayStart": parseInt($("#HD_PageIndex").val()),
+                //"iDisplayLength": parseInt($("#HD_PageSize").val()),
+                "pagingType": "full_numbers",
+                //"processing": true,
+                "serverSide": true,
+                "bFilter": false,
+                "sAjaxSource": "getCustomerListforinvoice",
+                //"sAjaxSource": "Contact/getContacts",
+                "fnServerParams": function (aoData) {
+                    aoData.push(
+                         { "name": "Contactkeyword", "value": "" + "" + "" },
+                        //{ "name": "Contactkeyword", "value": "" + $("#txtKeyWord").val() + "" },
+                        { "name": "ContactBranch", "value": "" + "-1" + "" },
+                        { "name": "ContactSalesRepresentative", "value": "" + "0" + "" },
+                        { "name": "CompanyFilterString", "value": "" },
+                        { "name": "CompanyList_IsFromBack", "value": "" },
+                        { "name": "CompanyFilterString_ActualQueryCondition", "value": "" }
+                        );
+                },
+                "fnServerData": function (sSource, aoData, fnCallback) {
+                    $.ajax({
+                        "dataType": 'json',
+                        "contentType": "application/json; charset=utf-8",
+                        "type": "GET",
+                        "url": sSource,
+                        "data": aoData,
+                        "success":
+                                    function (msg) {
+
+                                        $('#loading').css('display', 'none');
+                                        //var json = jQuery.parseJSON(msg.d);
+                                        fnCallback(msg);
+                                        //$("#jq-datatables-example").show();
+                                    }
+                    });
+                },
+                "asStripeClasses": ['odd gradeX', 'even gradeC'],
+                "aoColumnDefs": [
+
+                    { "targets": [0], "visible": true, "bSortable": false, "mDataProp": "ContactId" },
+                    {
+                        "targets": [1], "visible": true, "bSortable": false, "mDataProp": "Fname",
+                        "render": function (data, type, row) {
+
+                            return "<a href=\"#\" id=\"aParentContactId\" onclick=\"OpenContactDetail('" + row["ContactId"] + "','" + row["MailingAddress"] + "','" + row["Mailingstreet"] + "','" + row["Mailingcity"] + "','"
+                                    + row["Mailingstate"] + "','" + row["Mailingcountry"] + "','" + row["Mailingzip"] + "','" + row["BillingAddress"] + "','" + row["Otherstreet"] + "','" + row["Othercity"] + "','"
+                                    + row["Otherstate"] + "','" + row["Othercountry"] + "','" + row["Otherzip"] + "','"
+                                + row["Phone"] + "','" + row["Mobile"] + "','" + row["Fname"] + "')\">" + row["Fname"] + "</a>";
+
+                        }
+                    },
+
+                    { "targets": [2], "visible": true, "bSortable": false, "mDataProp": "MailingAddress" },
+                    { "targets": [3], "visible": true, "bSortable": false, "mDataProp": "Phone" },
+                    { "targets": [4], "visible": true, "bSortable": false, "mDataProp": "Mobile" },
+
+
+                ],
+                "fnDrawCallback": function (oSettings) {
+
+                    $('#loading').css('display', 'none');
+                }
+            }).api();
+        }
+        function OpenContactDetail(contactId, Saddr, Sstreet, Scity, Sstate,Scountry,Szip,Baddr,Bstreet,Bcity,Bstate,Bcountry,Bzip,phone,mobile, ContactName) {
+          
+           // alert(contactId);
+
+
+            var parentCont = ContactName;
+
+            var contid = contactId;
+
+            var ShippingAddr = "";
+            var BillingAddr = "";
+
+            if (Saddr != "null")
+                Saddr = Saddr;
+            else Saddr = "";
+            if (Sstreet != "null")
+                Sstreet = Sstreet;
+            else Sstreet = "";
+            if (Scity != "null")
+                Scity = Scity;
+            else Scity = "";
+            if (Sstate != "null")
+                Sstate = Sstate;
+            else Sstate = "";
+            if (Scountry != "null")
+                Scountry = Scountry;
+            else Scountry = "";
+            if (Szip != "null")
+                Szip = Szip
+            else Szip = "";
+
+            if (Baddr != "null")
+                Baddr = Baddr;
+            else Baddr = "";
+            if (Bstreet != "null")
+                Bstreet = Bstreet;
+            else Bstreet = "";
+            if (Bcity != "null")
+                Bcity = Bcity;
+            else Bcity = "";
+            if (Bstate != "null")
+                Bstate = Bstate;
+            else Bstate = "";
+            if (Bcountry != "null")
+                Bcountry = Bcountry;
+            else Bcountry = "";
+            if (Bzip != "null")
+                Bzip = Bzip
+            else Bzip = "";
+            if (phone != "null")
+                phone = phone;
+            else phone = "";
+
+            if (mobile != "null")
+                mobile = mobile;
+            else mobile = "";
+
+
+
+
+            ShippingAddr = Saddr + "\n" + Sstreet + "\n" + Scity + "\n" + Sstate + "\n" + Scountry + "\n" + Szip + ". \n Phone: " + phone + "\n Mobile: " + mobile;
+            BillingAddr = Baddr + "\n" + Bstreet + "\n" + Bcity + "\n" + Bstate + "\n" + Bcountry + "\n" + Bzip + ". \n Phone: " + phone + "\n Mobile: " + mobile;
+
+            $('#txtCustomerName').val(parentCont);
+            $('#txtAddressBilling').val(BillingAddr);
+            $('#txtAddressShipping').val(ShippingAddr);
+            $('#hdAddressShipping').val(ShippingAddr);
+            $('#hdCustomerId').val(contid);
+
+
+            $.ajax({
+                url: '_BindItemslist',
+                dataType: "html",
+                type: "GET",
+                async: false,
+                //data: { associateId: associateId },
+                success: function (data) {
+
+                    $("#binditemsData").html(data);
+                    // $('#ShowStatus').show();
+                }
+            });
+
+            $('#txtTaxpercent').val('');
+            $('#txtTax').val('');
+
+            $('#txtDiscount').val('');
+            $('#txtDiscamt').val('');
+            $('#txtmsiAmt').val('');
+            $('#txtMisAmount').val('');
+            $('#txtGrdTotal').val('');
+            $('#txttotal').val('');
+
+            $('#hdEnvoiceId').val('');
+            $('#txtEstInvNumber').val('');
+
+            //$('#hdParentContactId').val(contid);
+            $('#myModal').modal("hide");
+
+
+            // $('#loading').css('display', 'none');
+
+        }
+    </script>
+    <html>
+    <body>
+        <div style="width:100px;">
+            <div id="loading" style="display:none">
+                <img id="loading-image" src="~/Content/assets/images/loader.gif" />
+            </div>
+        </div>
+        <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="jq-datatables-ContactPopup" width="100%">
+            <thead>
+                <tr>
+                    @*<th data-hide="phone">Contact ID</th>
+                        <th data-class="expand">Contact Name</th>
+                        <th data-hide="phone">Company Name</th>
+                        <th data-hide="phone">Phone</th>
+                        <th data-hide="phone">Mobile</th>
+                        <th data-hide="phone">Email</th>*@
+                    <th data-hide="tablet,tabletlandscape,phone">Customer ID</th>
+                    <th data-class="expand">Customer Name</th>
+                    <th data-hide="phone,smartphone">Mailing Address</th>
+                    <th data-hide="tabletlandscape,phone">Phone</th>
+                    <th data-hide="tabletlandscape,phone">Mobile</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+
+        </table>
+    </body>
+</html>
+

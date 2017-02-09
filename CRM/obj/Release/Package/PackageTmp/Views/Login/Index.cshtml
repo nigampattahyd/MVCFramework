@@ -1,0 +1,482 @@
+﻿@model CRMHub.EntityFramework.user
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html class="gt-ie8 gt-ie9 not-ie">
+<!--<![endif]-->
+<head>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width" />
+    <title>Mentoring Portal</title>
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,400,600,700,300&subset=latin" rel="stylesheet" type="text/css">
+
+    <link rel="shortcut icon" href="~/Content/AssetsNew/img/favicon.png" type="image/x-icon">
+
+
+    <!--Basic Styles-->
+    <link href="~/Content/AssetsNew/css/bootstrap.min.css" rel="stylesheet" />
+    <link id="bootstrap-rtl-link" href="#" rel="stylesheet" />
+    <link href="~/Content/AssetsNew/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/Content/AssetsNew/css/weather-icons.min.css" rel="stylesheet" />
+
+    <!--Fonts-->
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,400,600,700,300" rel="stylesheet" type="text/css">
+    <link href='http://fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>
+    <!--Beyond styles-->
+    <link href="~/Content/AssetsNew/css/beyond.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/AssetsNew/css/demo.min.css" rel="stylesheet" />
+    <link href="~/Content/AssetsNew/css/typicons.min.css" rel="stylesheet" />
+    @*<link href="~/Content/AssetsNew/css/animate.min.css" rel="stylesheet" />*@
+    <link href="~/Content/AssetsNew/css/custom.css" rel="stylesheet" type="text/css" />
+
+
+    <script src="~/Scripts/jquery-2.1.1.min.js"></script>
+    <script src="~/Scripts/script.js"></script>
+    <script src="~/Scripts/UserValidations/Validation.js"></script>
+
+    @*<script src="../Content/assets/javascripts/bootstrap.min.js"></script>*@
+    @*<script src="../Content/assets/javascripts/pixel-admin.min.js"></script>*@
+
+    <script src="~/Scripts/bootstrap/bootstrap.min.js"></script>
+    <script src="~/Scripts/PixelAdmin/pixel-admin.min.js"></script>
+    @*<script src="~/Scripts/jquery-1.7.1.min.js"></script>*@
+
+    <!--Skin Script: Place this script in head to load scripts for skins and rtl support-->
+    <script src="~/Content/AssetsNew/js/skins.min.js"></script>
+    <script src="~/Scripts/Cookie/jquery.cookie.js"></script>
+
+
+    <style>
+        body {
+            background: url('Images/login-background1.png') #007898;
+            background-size: cover;
+        }
+
+        .fade in {
+            opacity: -0.25;
+        }
+        /*.modal{background-color:#0b7792;}*/
+
+
+        div#spinner {
+            display: none;
+            width: 100px;
+            height: 100px;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            background: url(spinner.gif) no-repeat center #fff;
+            text-align: center;
+            padding: 10px;
+            font: normal 16px Tahoma, Geneva, sans-serif;
+            border: 1px solid #666;
+            margin-left: -50px;
+            margin-top: -50px;
+            z-index: 2;
+            overflow: auto;
+        }
+
+        .modal-dialog {
+            width: 600px !important;
+            float: none !important;
+            margin: 150px 0px !important;
+        }
+
+        .modal-open .modal {
+            width: 68% !important;
+            left: auto !important;
+            right: 0 !important;
+            overflow-x: hidden;
+            overflow-y: hidden;
+            padding: 0 !important;
+        }
+    </style>
+    <script>
+
+        $(document).ready(function () {
+            $("#Client_id").text("Mentor");
+            $("#Client_id").val("Mentor");
+            //var userid = $('#username_id').val();
+            // $.cookie('username_id', userid);
+            var type = GetParameterValues('Type');
+            //var id = GetParameterValues('ID');
+            function GetParameterValues(param) {
+                var url = window.location.href.slice(window.location.href.indexOf('?') + 1).split("&");
+                for (var i = 0; i < url.length; i++) {
+                    var urlparam = url[i].split('=');
+                    if (urlparam[0] == param) {
+                        return urlparam[1];
+                    }
+                }
+            }
+            if (type != null)
+            {
+                if (type == "A")
+                {
+                    $("#ddlmentor").val("1");
+                }
+                else if(type=="V")
+                {
+                    $("#ddlmentor").val("2");
+                }
+                else if (type == "M")
+                {
+                    $("#ddlmentor").val("3");
+                }
+                else
+                {
+                    $("#ddlmentor").val("1");
+                }
+               
+            }
+            else {
+                $("#ddlmentor").val("1");
+            }
+            if ($('#myModal').hasClass('in')) {
+                $('#myModal').modal({
+                    backdrop: 'static',
+                    keyboard: false
+                });
+            }
+
+            $('#aforgot').click(function (r) {
+
+                if ($("#Client_id").val() != "") {
+                    var client = $("#Client_id").val();
+                    $('#lblclientId').text(client);
+                }
+                else {
+                    $.growl.error({ title: "Fail", message: "Please Enter Client ID", size: 'large' });
+                    return false;
+                }
+
+            });
+
+
+            $('#btnsubmit').click(function () {
+
+                if (!ValidateEmail($("#txtforgotemail").val())) {
+                    if ($("#txtforgotemail").val() == "") {
+                        //alert("Please Enter Email Address")
+                        $.growl.error({ title: "Fail", message: "Please Enter Email Address", size: 'large' });
+                    }
+                    else {
+                        //alert("Invalid email address.");
+                        $.growl.error({ title: "Fail", message: "Invalid email address.", size: 'large' });
+                    }
+                    return false;
+                }
+
+                var obj = {};
+                Email = $.trim($("[id*=txtforgotemail]").val());
+                clientid = $.trim($("[id*=Client_id]").val());
+
+                $.ajax({
+
+                    type: "GET",
+                    url: 'Login/GetPassword',
+                    data: { Email: '' + Email + '', ClientId: '' + clientid + '' },
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    async: false,
+                    success: function (r) {
+                        if (r == true) {
+                            $("#myModal").hide();
+                            // $(".modal-backdrop fade in").css({opacity: -1.25});
+                            //alert("Password sent sucessfully to your email.");
+                            $.growl.notice({ title: "Success", message: "Password sent sucessfully to your email.", size: 'large' });
+                            window.location = "Login/Index";
+
+                        }
+                        else {
+                            $("#myModal").show();
+                            //alert("Your email is not Registerd Please Enter Registered Email");
+                            $.growl.error({ title: "Error", message: "Please Enter Registered Email", size: 'large' });
+                            $("#myModal").show();
+                            $('#txtforgotemail').val('');
+                            $('#txtforgotemail').focus();
+                            // window.location = "http://localhost/CRM/";
+                        }
+                    },
+                    error: function (r) {
+                    }
+                });
+            });
+
+            /*remember me*/
+
+
+
+            var remember = $.cookie('remember');
+            if (remember == 'true') {
+                var clientid = $.cookie('Client_id');
+                var userid = $.cookie('username_id');
+                // autofill the fields
+                $('#Client_id').val(clientid);
+                $('#username_id').val(userid);
+            }
+            else {
+             //   $('#Client_id').val('');
+                $('#username_id').val('');
+                //$('#chkremember').attr('checked', 'false');
+                $('#chkremember').prop('checked', false);
+                var tempdata = '@TempData["LoginError"]';
+
+                if (tempdata == "User Not Exist") {
+
+                    $("#password_id").val('');
+                }
+
+            }
+
+            $('#btnSignIn').click(function (e) {
+              
+                $("#Client_id").prop("disabled", false);
+                if ($('#chkremember').is(':checked')) {
+
+                    var clientid = $('#Client_id').val();
+                    var userid = $('#username_id').val();
+                    // set cookies to expire in 14 days
+                    $.cookie('Client_id', clientid, { expires: 14 });
+                    $.cookie('username_id', userid, { expires: 14 });
+                    $.cookie("remember", $('#chkremember').is(":checked"), { expires: 14 });
+                }
+                else {
+                    // reset cookies
+                    $.cookie('Client_id', null);
+                    $.cookie('username_id', null);
+                    $.cookie('remember', null);
+                }
+
+                var element = $(this).parent().parent().parent().parent().parent();
+                var usernameEmail = $('#username_id').val();
+                var password = $('#password_id').val();
+                var clintId = $('#Client_id').val();
+                var Isvalid = true;
+
+
+
+                if (usernameEmail == '' || password == '' || clintId == '') {
+
+                    // wigle and show notification
+                    // Wigle
+                    var element = $(this).parent().parent().parent().parent().parent();
+                    $(element).addClass('animated rubberBand');
+                    $(element).one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function () {
+                        $(element).removeClass('animated rubberBand');
+                    });
+                    // Notification
+                    // reset
+                    $('.notification.login-alert').removeClass('bounceOutRight notification-show animated bounceInRight');
+                    // show notification
+                    $('.notification.login-alert').addClass('notification-show animated bounceInRight');
+                    //$('.notification.login-alert').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function () {
+                    //    setTimeout(function () {
+                    //        $('.notification.login-alert').addClass('animated bounceOutRight');
+                    //    }, 2000);
+                    //});
+                    Isvalid = Validate(this.form);
+                } else {
+
+
+                    Isvalid = true;
+                }//endif
+                return Isvalid;
+
+
+            });
+
+            //$('#Client_id').blur(function () {
+            //    var clintId = $('#Client_id').val();
+            //    if (clintId != "" && clintId != "CRMClients") {
+            //        $.ajax({
+            //            url: "Login/GetClientLogo",
+            //            type: "GET",
+            //            async: false,
+            //            data: { ClientId: clintId },
+            //            success: function (data) {
+            //                //
+            //                if (data != 1) {
+            //                    var imgsrc = "Content/CompanyLogos/";
+            //                    //$('#cmpLogo').attr('src', imgsrc + data);
+            //                    $('#cmpLogo').attr('src', "Images/Logo/Digital55-Logo.png");
+            //                    //$("#cmpLogo").css('height', '47');
+            //                    //$("#cmpLogo").css('width', '80');
+            //                }
+            //                else {
+            //                    //alert("Client Doesn't Exist");
+            //                    $.growl.error({ title: "Fail", message: "Invalid Client ID", size: 'large' });
+            //                    $('#Client_id').val("");
+            //                }
+            //            },
+            //            error: function () {
+
+            //            }
+            //        });
+
+            //    }
+
+
+            //});
+        });
+
+
+        function ValidateEmail(email) {
+            var expr = /^([\w-\.]+)@@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+            return expr.test(email);
+        };
+
+    </script>
+
+</head>
+
+<body class="theme-default page-signin">
+
+    <div class="login-container animated fadeInDown">
+        <!-- Form -->
+        @using (Html.BeginForm("LoginUser", "Login", FormMethod.Post))
+        {
+            <div class="loginbox bg-white">
+                <div class="loginbox-title"><img src="~/Images/Logo/Digital55-Logo.png" id="cmpLogo" align="middle"></div>
+
+                <div class="loginbox-textbox" style="padding-top:30px;display:none;">
+                    @*<input type="text" class="form-control" placeholder="Email" />*@
+                    <div class="form-group" style="margin:0;">
+                        <span class="input-icon">
+                            @*<input type="text" value="Mentor" />*@
+                            @Html.TextBoxFor(m => m.ClientId,new { @class = "form-control",@value="Mentor", @placeholder = "Client Id", @id = "Client_id", @validate = "Required"})
+                            @*<input type="text" class="form-control input-sm">*@
+                            <i class="fa fa-group circular"></i>
+                        </span>
+                    </div>
+
+                </div>
+                <div class="loginbox-textbox" style="padding-top:30px;" >
+                 
+                    <div class="form-group" style="margin:0;">
+                          @Html.DropDownListFor(m => m.Type, new SelectList(Model.lstRoles, "Value", "Text"), new { @id = "ddlmentor", @data_val_required = "Select Lead Mentor", @class = "form-control input-sm" })
+                    </div>
+
+                </div>
+                <div class="loginbox-textbox">
+                    <div class="form-group" style="margin:0;">
+                        <span class="input-icon">
+                            @*<input type="text" class="form-control" placeholder="Password" />*@
+                            @Html.TextBoxFor(m => m.LoginId, new { @class = "form-control ", @placeholder = "Username", @id = "username_id", @validate = "Required", @data_val_required = "User Name" })
+                            <i class="glyphicon glyphicon-user circular"></i>
+                        </span>
+                    </div>
+                </div>
+                <div class="loginbox-textbox">
+                    <div class="form-group" style="margin:0;">
+                        <span class="input-icon">
+                            @*<input type="text" class="form-control" placeholder="Password" />*@
+                            @Html.TextBoxFor(m => m.Password, new { @class = "form-control", @placeholder = "Password", @type = "password", @id = "password_id", @validate = "Required", @data_val_required = "Password" })
+                            <i class="fa fa-lock circular"></i>
+                        </span>
+                    </div>
+                </div>
+                <div class="loginbox-forgot">
+                    <table style="width:100%;">
+                        <tr>
+                            <td><a href="#" data-toggle="modal" id="aforgot" data-target="#myModal">Forgot Password?</a></td>
+                            <td style="text-align: center;">
+                                <div class="loginbox-forgot ">
+                                    <fieldset data-role="controlgroup">
+                                        <input type="checkbox" id="chkremember" name="remember" checked="true" />
+                                        <label for="remember" style="font-size: 11px; color: #666; margin-top: -4px;">Remember me</label>
+                                    </fieldset>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="modal modal-darkorange" id="myModal" role="dialog" data-backdrop="static" data-keyboard="false">
+                    <div class="modal-dialog">
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title"> Send Your Password </h4>
+                            </div>
+                            <div class="modal-body">
+                                <label for="lblclientId"> Client ID :</label>
+                                <label id="lblclientId" style="color:orangered;font-weight:bold;"></label>
+                                <div class="login-form-main-message"></div>
+                                <div class="main-login-form">
+                                    <div class="login-group">
+                                        <div class="form-group">
+                                            <label for="fp_email" class="sr-only">Email address</label>
+                                            <input type="text" class="form-control" id="txtforgotemail" name="fp_email" placeholder="email address">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <input type="button" id="btnsubmit" class="btn btn-primary" value="Send Password" />
+                                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                            </div>
+                            @*<div id="LoadingLay" style="color:red;text-align:center;background-color:green;display: none;">loader.....</div>*@
+                            <div id="LoadingLay" style="z-index: 9999999999; float: left; position: fixed; left: 0px; top: 0px; width: 107%; height: 100%; background-color: none; -moz-opacity: .40; opacity: 1; filter: alpha(opacity=70); text-align: center; vertical-align: top; display: none;">
+                                <h1 style="font-family: Tahoma; margin-top: 240px; color: #FFFFFF; font-size: 38px; font-weight: bold;">
+
+                                    <img src="~/Images/ajax-loader.gif" alt="" style="margin-top: 9999999999px;" /><br />
+                                </h1>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="loginbox-submit">
+                    @*<input type="button" class="btn btn-primary btn-block" value="Login">*@
+                    <input type="submit" value="SIGN IN" id="btnSignIn" class="btn btn-primary btn-block btn-lg" style="background:#2dc3e8 !important; border:0;">
+                </div>
+                <div class="loginbox-signup">
+                    <a href="register.html">Sign Up With Email</a>
+                </div>
+                @*<span id="errorsymbol" style="color:red;display:none;margin-left:5px;" class="fa fa-exclamation-circle"></span>*@
+                <div id="ErrorMessages" style="color:#ff3d00; font-size:13px; margin-top:19px; text-align:center;">
+
+                </div>
+                <div id="notification-alert" style="color:#ff3d00; font-size:13px; margin-top:19px; text-align:center;">
+                    @if (TempData["LoginError"] == "User Not Exist")
+                    {
+                        <span>Invalid Username or Password! </span>
+                    }
+                    @if (TempData["LoginError"] == "ClientId Not Exist")
+                    {
+                        <span>Client Id Not Exist</span>
+                    }
+                    @if (TempData["LoginError"] == "Access denied")
+                    {
+                        <span>Access denied  for this User</span>
+                    }
+                    @if (TempData["LoginError"] == "User Is InActive")
+                    {
+                        <span>User Is InActive</span>
+                    }
+                     @if (TempData["LoginError"] == "Role Check")
+                    {
+                        <span>Credentials and Type Doesn't Match</span>
+                    }
+                </div>
+
+            </div>
+
+
+        }
+    </div>
+
+
+
+
+</body>
+
+
+</html>

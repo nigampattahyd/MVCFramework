@@ -1,0 +1,502 @@
+﻿@model CRMHub.ViewModel.DashboardViewModel
+@{
+    ViewBag.Title = "ActivityDashBoard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+
+
+
+
+
+@*@using (Html.BeginForm("ActivityDashBoard", "DashBoard", FormMethod.Post))
+{*@
+
+    <div id="content-wrapper">
+        <div id="CustomBootstrapAlertBox"></div>
+        <div class="row">
+
+
+            <div class="panel">
+
+                <div class="panel-heading">
+                    <div class="row">
+
+                        <h1 class="col-xs-6 col-sm-2 text-left text-left-sm panel-title"><i class="fa fa-dashboard page-header-icon"></i></i>&nbsp;<label id="lblHeading"> Activity DashBoard</label></h1>
+                        <div class="col-xs-6 col-sm-10">
+                            <div class="row">
+                                <hr class="visible-xs no-grid-gutter-h">
+
+
+
+
+
+                                <div class="col-xs-12 col-sm-2">
+                                    <span class="input-group-addon">From Date</span>
+                                    @Html.TextBoxFor(m => m.Contact.FromDate, "{0:MM/dd/yyyy}", new { @id = "txtFromDate", @typeof = "date", @class = "form-control input-sm", @MaxLength = "12", @TabIndex = "8" })
+
+                                </div>
+                                <div class="col-xs-12 col-sm-2">
+                                    <span class="input-group-addon">To Date</span>
+                                    @Html.TextBoxFor(m => m.Contact.ToDate, "{0:MM/dd/yyyy}", new { @id = "txtToDate", @class = "form-control input-sm", @MaxLength = "12", @TabIndex = "8" })
+
+                                </div>
+
+                                <div class="visible-xs clearfix form-group-margin"></div>
+                                <div class="col-xs-12 col-sm-3">
+                                    <span class="input-group-addon">Office/Location</span>
+                                    @Html.DropDownListFor(m => m.Contact.Contact_office, new SelectList(Model.listBranch, "branchId", "branchName"), new { @class = "form-control input-sm", @id = "drpOffLoc" })
+
+                                </div>
+                                <div class="col-xs-12 col-sm-3">
+                                    <span class="input-group-addon">Employee</span>
+                                    @Html.DropDownListFor(m => m.Contact.UserID, new SelectList(Model.listUsers, "userId", "firstName"), new { @class = "form-control input-sm", @id = "drpSalesRep2" })
+
+                                </div>
+
+                                <div class="visible-xs clearfix form-group-margin"></div>
+
+
+                                <div class="pull-right col-xs-12 col-sm-2" id="search_btn">
+                                    <button class="btn btn-flat btn-labeled btn-primary" id="btnSearchContacts">
+                                        <span class="btn-label icon fa fa-search"></span>Search
+                                    </button>
+
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel-body">
+
+
+                    <div class="row">
+
+
+                        <div class="col-sm-6">
+
+
+                            <div class="stat-panel" style="height: 148px;">
+                                <div class="stat-row">
+                                    <!-- Success darker background -->
+                                    <div class="stat-cell bg-success darker">
+                                        <!-- Stat panel bg icon -->
+                                        <i class="fa fa-lightbulb-o bg-icon" style="font-size: 60px; line-height: 80px; height: 80px;"></i>
+                                        <!-- Big text -->
+                                        <span class="text-bg">CRM</span><br>
+                                        <!-- Small text -->
+                                        <span class="text-sm">Your CRM statistics</span>
+                                    </div>
+                                </div>
+
+                                <div class="stat-row">
+                                    <!-- Success background, without bottom border, without padding, horizontally centered text -->
+                                    <div class="stat-counters bg-success no-border-b no-padding text-center">
+                                        <!-- Small padding, without horizontal padding -->
+                                        <div class="stat-cell col-xs-4 padding-sm no-padding-hr">
+                                            <!-- Big text -->
+                                            <div>
+                                                <div class="inner">
+                                                    <h3>
+                                                        @Model.companies
+                                                    </h3>
+                                                    <p>
+                                                        Companies
+                                                    </p>
+                                                </div>
+                                                <div class="icon">
+
+
+                                                    <img src="~/Images/sales_icon.png" />
+                                                </div>
+                                                <div>
+                                                    @Html.ActionLink("More info", "index", "ManageCompany", null, new { @class = "small-box-footer" })
+                                                    <span class="fa fa-arrow-circle-right"></span>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <!-- Small padding, without horizontal padding -->
+                                        <div class="stat-cell col-xs-4 padding-sm no-padding-hr">
+                                            <!-- Big text -->
+                                            <div>
+                                                <div class="inner">
+                                                    <h3>
+                                                        @Model.contacts
+                                                    </h3>
+                                                    <p>
+                                                        Contacts
+                                                    </p>
+                                                </div>
+                                                <div class="icon">
+
+                                                    <img src="~/Images/user_icon.png" />
+                                                </div>
+                                                <div>
+                                                    @Html.ActionLink("More info", "index", "Contact", null, new { @class = "small-box-footer" })
+                                                    <span class="fa fa-arrow-circle-right"></span>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <!-- Small padding, without horizontal padding -->
+                                        <div class="stat-cell col-xs-4 padding-sm no-padding-hr">
+                                            <!-- <div class="small-box bg-green">-->
+                                            <div>
+                                                <div class="inner">
+                                                    <h3>
+                                                        @Model.leads
+                                                    </h3>
+                                                    <p>
+                                                        Leads
+                                                    </p>
+                                                </div>
+                                                <div class="icon">
+
+                                                    <img src="~/Images/lead_icon.png" />
+                                                </div>
+
+                                                <div>
+                                                    @Html.ActionLink("More info", "index", "Leads", null, new { @class = "small-box-footer" })
+                                                    <span class="fa fa-arrow-circle-right"></span>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <!-- Small padding, without horizontal padding -->
+                                        <div class="stat-cell col-xs-4 padding-sm no-padding-hr">
+                                            <div>
+                                                <div class="inner">
+                                                    <h3>
+                                                        @Model.opportunity
+                                                    </h3>
+                                                    <p>
+                                                        Opportunity
+                                                    </p>
+                                                </div>
+                                                <div class="icon">
+                                                    <img src="~/Images/opportunity_icon.png" />
+                                                </div>
+                                                <div>
+                                                    @Html.ActionLink("More info", "ViewOpportunities", "Opportunities", null, new { @class = "small-box-footer" })
+                                                    <span class="fa fa-arrow-circle-right"></span>
+                                                </div>
+
+
+                                            </div>
+                                        </div><!-- end inner row -->
+
+                                        <div class="stat-cell col-xs-4 padding-sm no-padding-hr">
+                                            <!-- Big text -->
+                                            <div>
+                                                <div class="inner">
+                                                    <h3>
+                                                        @Model.sales
+                                                    </h3>
+                                                    <p>
+                                                        Sales
+                                                    </p>
+                                                </div>
+                                                <div class="icon">
+                                                    <img src="~/Images/sales_icon.png" />
+                                                </div>
+                                                <div>
+                                                    @Html.ActionLink("More info", "ViewSales", "Sales", null, new { @class = "small-box-footer" })
+                                                    <span class="fa fa-arrow-circle-right"></span>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+                        </div>
+
+
+                        <div class="col-sm-6">
+                            <div class="stat-panel" style="height: 244px;">
+                                <!-- Success background. vertically centered text -->
+                                <div class="stat-cell bg-danger valign-middle">
+                                    <!-- Stat panel bg icon -->
+                                    <i class="fa fa-comments bg-icon"></i>
+                                    <!-- Extra large text -->
+                                    <span class="text-xlg">
+                                        <strong>
+                                            <label id="lblTotalActCount">@Model.TotalActivity</label>
+                                        </strong>
+                                    </span>
+                                    <br>
+                                    <!-- Big text -->
+                                    <span class="text-bg">Total Activities</span><br>
+                                    <!-- Small text -->
+
+                                </div>
+                                <!-- /.stat-cell -->
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="panel panel-success panel-dark">
+                                <div class="panel-heading">
+                                    <span class="panel-title">Activity Summary</span>
+                                    <div class="panel-heading-controls">
+                                        <div class="panel-heading-icon"><i class="fa fa-inbox"></i></div>
+                                    </div>
+                                </div>
+                                <div class="panel-body">
+
+
+                                    <div class="col-sm-6">
+                                        <div class="form-group no-margin-hr">
+                                            <label class="control-label">Open:</label>
+                                            @Model.OpenActivity
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group no-margin-hr">
+                                            <label class="control-label">Completed:</label>
+                                            @Model.CompleteActivity
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="panel panel-warning" id="dashboard-recent">
+                                <div class="panel-heading">
+                                    <span class="panel-title"><i class="panel-title-icon fa fa-fire text-danger"></i>Completed Activity Detail </span>
+                                    <ul class="nav nav-tabs nav-tabs-xs">
+                                        <li class="active">
+                                            <a href="#dashboard-recent-comments" data-toggle="tab">Sales</a>
+                                        </li>
+                                        <li>
+                                            <a href="#dashboard-recent-threads" data-toggle="tab">Operations</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <!-- / .panel-heading -->
+                                <div class="tab-content">
+
+                                    <!-- Comments widget -->
+                                    <!-- Without padding -->
+                                    <div class="widget-comments panel-body tab-pane no-padding fade active in" id="dashboard-recent-comments">
+
+                                        <div class="table-primary table-striped">
+
+
+                                            <table cellpadding="0" cellspacing="0" border="0" class="table table-bordered dataTable no-footer" id="datatables-Sales">
+                                                <thead>
+                                                    <tr role="row">
+                                                        <th>Acivity Name</th>
+                                                        <th>No.Of Activity</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @for (int i = 0; i < Model.listActivitylogsales.Count; i++)
+                                                {
+
+                                                <tr>
+                                                    <td>@Html.DisplayFor(model => model.listActivitylogsales[i].ActivityType)</td>
+                                                    <td>@Html.DisplayFor(model => model.listActivitylogsales[i].ActiveCount)</td>
+                                                </tr>
+                                                }
+                                                </tbody>
+                                            </table>
+
+
+                                        </div>
+                                    </div>
+                                    <!-- / .widget-comments -->
+                                    <!-- Threads widget -->
+                                    <!-- Without padding -->
+                                    <div class="widget-threads panel-body tab-pane no-padding fade" id="dashboard-recent-threads">
+                                        <div class="table-primary table-striped">
+
+
+                                            <table cellpadding="0" cellspacing="0" border="0" class="table table-bordered dataTable no-footer" id="datatables-Operations">
+                                                <thead>
+                                                    <tr role="row">
+                                                        <th>Acivity Name</th>
+                                                        <th>No.Of Activity</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @for (int i = 0; i < Model.listActivitylogoperations.Count; i++)
+                                                {
+
+                                                <tr>
+                                                    <td>@Html.DisplayFor(model => model.listActivitylogoperations[i].ActivityType)</td>
+                                                    <td>@Html.DisplayFor(model => model.listActivitylogoperations[i].ActiveCount)</td>
+                                                </tr>
+                                                }
+                                                </tbody>
+                                            </table>
+
+
+                                        </div>
+
+                                    </div>
+                                    <!-- / .panel-body -->
+                                </div>
+                            </div>
+                            <!-- / .widget-threads -->
+                        </div>
+                        <!-- /11. $RECENT_ACTIVITY -->
+                        <div class="col-md-6">
+                            <div class="panel panel-success widget-support-tickets" id="dashboard-support-tickets">
+                                <div class="panel-heading">
+                                    <span class="panel-title">Activities</span>
+
+                                </div>
+                                <!-- / .panel-heading -->
+                                <div class="panel-body tab-content-padding">
+                                    <!-- Panel padding, without vertical padding -->
+                                    <div class="slimScrollDiv">
+
+                                        <div class="table-primary table-striped">
+
+
+                                            <table cellpadding="0" cellspacing="0" border="0" class="table table-bordered dataTable no-footer" id="datatables-Activities">
+
+                                                <thead>
+                                                    <tr><th>&nbsp;</th></tr>
+                                                </thead>
+                                                <tbody>
+                                                    @for (int i = 0; i < Model.ListActivity.Count; i++)
+                                                {
+
+                                                <tr>
+                                                    <td> <img src="~/Content/assets/demo/avatars/1.jpg" style="width:40px;height:40px;padding:2px" class="rounded">&nbsp;&nbsp;<div style="padding-left:50px;position:relative;top:-40px;margin-bottom:-40px"><strong> @Html.DisplayFor(model => model.ListActivity[i].ActivityType)</strong> activity created by <strong>Admin, Admin</strong> in module <strong>@Html.DisplayFor(model => model.ListActivity[i].Type) </strong><br>Company Name : <b></b><br></div></td>
+
+                                                </tr>
+                                                }
+
+
+
+                                                </tbody>
+                                            </table>
+
+                                        </div>
+
+
+
+                                    </div>
+                                </div>
+                                <!-- / .panel-body -->
+                            </div>
+                            <!-- / .panel -->
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+@*}*@
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+
+        var responsiveHelper_example = undefined;
+        var breakpointDefinition = {
+            desktop: Infinity,
+            tablet: 1024,
+            phone: 480
+        };
+
+        $('#datatables-Sales').dataTable({
+            "autoWidth": false,
+            "searching": true,
+            "preDrawCallback": function () {
+                if (!responsiveHelper_example) {
+                    responsiveHelper_example = new ResponsiveDatatablesHelper($('#datatables-Sales'), breakpointDefinition);
+                }
+            },
+            "rowCallback": function (nRow) {
+                responsiveHelper_example.createExpandIcon(nRow);
+            },
+            "drawCallback": function (oSettings) {
+                responsiveHelper_example.respond();
+            },
+        });
+
+
+
+        $('#datatables-Operations').dataTable({
+            "autoWidth": false,
+            "searching": true,
+            "preDrawCallback": function () {
+                if (!responsiveHelper_example) {
+                    responsiveHelper_example = new ResponsiveDatatablesHelper($('#datatables-Operations'), breakpointDefinition);
+                }
+            },
+            "rowCallback": function (nRow) {
+                responsiveHelper_example.createExpandIcon(nRow);
+            },
+            "drawCallback": function (oSettings) {
+                responsiveHelper_example.respond();
+            },
+        });
+
+
+
+        $('#datatables-Activities').dataTable({
+            "autoWidth": false,
+            "searching": true,
+            "preDrawCallback": function () {
+                if (!responsiveHelper_example) {
+                    responsiveHelper_example = new ResponsiveDatatablesHelper($('#datatables-Activities'), breakpointDefinition);
+                }
+            },
+            "rowCallback": function (nRow) {
+                responsiveHelper_example.createExpandIcon(nRow);
+            },
+            "drawCallback": function (oSettings) {
+                responsiveHelper_example.respond();
+            },
+        });
+
+
+
+    });
+
+</script>
+<script type="text/javascript">
+
+    $(function () {
+
+        $('#txtFromDate').datepicker({
+            format: 'mm/dd/yyyy'
+            //setDate:'currentDate'
+        });
+        $('#txtToDate').datepicker({
+            format: 'mm/dd/yyyy'
+        });
+        $('.DateP').datepicker({
+            format: 'mm/dd/yyyy'
+        })
+    });
+</script>

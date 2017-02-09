@@ -1,0 +1,509 @@
+﻿@*@model CRMHub.ViewModel.CompanyModel*@
+@model CRMHub.ViewModel.ActivityModel
+
+@{
+    ViewBag.Title = "ActivitygridBind";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+}
+
+
+
+<div class="widget">
+    <div class="widget-header bordered-bottom bordered-themesecondary">
+        <i class="widget-icon fa fa-tags themesecondary"></i>
+        <span class="widget-caption themesecondary">Activities</span>
+    </div><!--Widget Header-->
+    <div class="widget-body">
+        <div class="row">
+            <div class="col-sm-3" style="text-align:left; padding-bottom:10px;">
+                <div class="input-group">
+                    @*<input type="text" class="form-control" placeholder="Search these ventures">*@
+                    @Html.TextBoxFor(m => m.activity.Keyword, new { @id = "txtActivity", @class = "form-control", @placeholder = "Search these Activities", @maxlength = "100" })
+                    <span class="input-group-btn">
+                        <span id="searchclear" class="glyphicon glyphicon-remove-circle" title="Clear Search"></span>
+                        <button class="btn btn-default" type="button" id="btnSearchActivity"><i class="glyphicon glyphicon-search"></i></button>
+                    </span>
+                </div>
+            </div>
+            <div class="col-sm-9" style="text-align:right; padding-bottom:10px;">
+                <a href="@Url.Action("CompanyActivity", "ManageCompany")" class="btn btn-flat btn-labeled btn-primary" id="addactivity">
+                    <span class="btn-label icon  fa  fa-plus-circle"> </span>
+                    Add
+                </a>
+                <a id="btnDeleteactivity" onclick="deleteSelectedContactActivity()" class="btn btn-flat btn-labeled btn-primary">
+                    <span class="btn-label icon  fa fa-trash-o"> </span>
+                    Delete
+                </a>
+                <a id="btnComplete" onclick="completeActivity();" class="btn btn-flat btn-labeled btn-primary">
+                    <span class="btn-label icon  fa fa-check-square-o"> </span>
+                    Complete
+                </a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12 col-xs-12">
+                <div class="table-primary table-striped">
+                    <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="tblActivities" width="100%">
+                        <thead>
+                            <tr>
+                                <th width="21">
+                                    <input type="checkbox" id="chkHeader" onclick="SelectAll()" />
+                                </th>
+                                <th data-hide="tablet,tabletlandscape,phone"><i class="fa fa fa-bars"></i> Module</th>
+                                <th data-hide="phone"><i class="fa fa-line-chart"></i> Type</th>
+                                <th data-class="expand"><i class="fa fa-calendar"></i> Created Date</th>
+                                <th data-hide="tablet,tabletlandscape,phone"><i class="fa fa-calendar"></i> Due Date</th>
+                                <th data-hide="phone"><i class="fa fa-key"></i> Priority</th>
+                                <th data-hide="tablet,tabletlandscape,phone"><i class="fa fa fa-check-square-o"></i> Status</th>
+                                <th><i class="fa fa fa-cog"></i> Action</th>
+                            </tr>
+                        </thead>
+                        <tbody> </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+@*-------------------------------------------------------------*@
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        var roleid = '@ViewBag.roleid';
+        if (roleid != 1)
+        {
+            $("#addactivity").hide();
+        }
+        else {
+            $("#addactivity").show();
+        }
+     
+       
+        var Activity = '@ViewBag.CreatedActivity';
+        var Update = '@ViewBag.UpdateActivity';
+        if (Activity != "") {
+            $.growl.notice({ title: "Success", message: "Activity Created Successfully.", size: 'large' });
+        }
+        if (Update != "")
+        {
+            $.growl.notice({ title: "Success", message: "Activity Updated Successfully.", size: 'large' });
+        }
+        $('html').keyup(function (e) {
+            
+            if (e.keyCode == 8) {
+               
+                $('#btnSearchActivity').click();
+                if ($("#txtActivity").val() == "") {
+                    $('#searchclear').hide();
+                }
+            }
+        });
+        
+        BindActivitieLists();
+
+        $('#tblActivities').on('length.dt', function (e, settings, len) {
+
+            $('#loading').css('display', 'block');
+        });
+
+        $('#tblActivities').on('page.dt', function () {
+
+            $('#loading').css('display', 'block');
+        });
+    });
+
+
+
+    $('#btnSearchActivity').click(function () {
+       
+        $('#searchclear').show();
+        $('#loading').css('display', 'block');
+        $("#tblActivities").dataTable().fnDestroy();
+        BindActivitieLists();
+
+        $('#tblActivities').on('length.dt', function (e, settings, len) {
+
+            $('#loading').css('display', 'block');
+        });
+
+        $('#tblActivities').on('page.dt', function () {
+
+            $('#loading').css('display', 'block');
+        });
+
+        $("#searchclear").click(function () {
+            $("#txtActivity").val('');
+            $('#btnSearchActivity').click();
+            $('#searchclear').hide();
+        });
+
+    });
+
+    function BindActivitieLists() {
+        // alert("BindActivities");
+        // $('#loading').css('display', 'block');
+        var responsiveHelper = undefined;
+        var breakpointDefinition = {
+            desktop: Infinity,
+            tablet: 1024,
+            tabletlandscape: 768,
+            phone: 480
+        };
+        var tableElement = $('#tblActivities');
+        tableElement.dataTable({
+            autoWidth: false,
+            preDrawCallback: function () {
+                if (!responsiveHelper) {
+                    responsiveHelper = new ResponsiveDatatablesHelper(tableElement, breakpointDefinition);
+                }
+            },
+            rowCallback: function (nRow) {
+                responsiveHelper.createExpandIcon(nRow);
+            },
+            drawCallback: function (oSettings) {
+                responsiveHelper.respond();
+            },
+
+            "aLengthMenu": [[10, 25, 50, 100], [10, 25, 50, 100]],
+            "pagingType": "full_numbers",
+            "serverSide": true,
+            "bFilter": false,
+            "sAjaxSource": "getActivities",
+            'columnDefs': [{ 'orderable': false, 'targets': 0 }], // hide sort icon on header of first column
+            'aaSorting': [[1, 'asc']], // start to sort data in second column
+            "fnInitComplete": function () {
+                this.css("visibility", "visible");
+            },
+
+
+            "fnServerParams": function (aoData) {
+
+                aoData.push(
+                 
+                    { "name": "Keyword", "value": "" + $("#txtActivity").val() + "" },
+                    { "name": "Type", "value": "-1" },
+                    { "name": "Priority", "value": "select" },
+                    { "name": "Status", "value": "select" }
+
+                    );
+            },
+            "fnServerData": function (sSource, aoData, fnCallback) {
+                $.ajax({
+                    "dataType": 'json',
+                    "contentType": "application/json; charset=utf-8",
+                    "type": "GET",
+                    "url": sSource,
+                    "data": aoData,
+                    "success":
+                                function (msg) {
+                                    $('#loading').css('display', 'none');
+                                    fnCallback(msg);
+                                }
+                });
+            },
+            "asStripeClasses": ['odd gradeX', 'even gradeC'],
+            "aoColumnDefs": [
+              {
+                  "targets": [0], "visible": true, "bSortable": false, "mDataProp": "ID", "orderable": false,
+                  "render": function (data, type, row) {
+                      return "<input name=\"chkItem\" class =\"case\" type=\"checkbox\" onclick=\"SelectIndividual()\"  id=\"chkRow_" + row["ID"] + "\"data-val-1=\"" + row["ID"] + "\" />";
+                  }
+              },
+              {
+                  "targets": [1], "visible": true, "bSortable": true, "mDataProp": "ModuleName",
+                  "render": function (data, type, row) {
+                      return "<a href=\"#\" onclick=\"return OpenActivityDetail('" + row["ID"] + "')\">" + row["ModuleName"] + "</a>";
+                  }
+              },
+               {
+                   "targets": [2], "visible": true, "bSortable": true, "mDataProp": "ActivityName",
+
+               },
+
+                //{ "targets": [2], "visible": true, "bSortable": true, "mDataProp": "HistoryType" },
+
+                 {
+                     "targets": [3], "visible": true, "bSortable": true, "mDataProp": "CreatedDate",
+                     "render": function (data, type, row) {
+                         var jsDate1 = data;
+                         if (jsDate1 == null) {
+                             return jsDate1 = "";
+                         }
+                         else if (jsDate1.value != "") {
+                             var jsDate = new Date(parseInt(row["CreatedDate"].substr(6)));
+                             return (jsDate.getMonth() + 1) + '/' + jsDate.getDate() + '/' + jsDate.getFullYear();
+                         }
+
+                     }
+                 },
+
+              {
+                  "targets": [4], "visible": true, "bSortable": true, "mDataProp": "DueDate",
+                  "render": function (data, type, row) {
+                      var jsDate1 = data;
+                      if (jsDate1 == null) {
+                          return jsDate1 = "";
+                      }
+                      else if (jsDate1.value != "") {
+                          var jsDate = new Date(parseInt(row["DueDate"].substr(6)));
+                          return (jsDate.getMonth() + 1) + '/' + jsDate.getDate() + '/' + jsDate.getFullYear();
+                      }
+
+                  }
+              },
+                 { "targets": [5], "visible": true, "bSortable": true, "mDataProp": "Priority" },
+                 { "targets": [6], "visible": true, "bSortable": true, "mDataProp": "Status" },
+                {
+                    "targets": [7], "visible": true, "bSortable": false,
+                    "render": function (data, type, row) {
+                        return "<span class=\"fa fa-trash\" style='font-size: 15px;cursor:pointer;' onclick=\"deleteEachActivity('" + row["ID"] + ", " + row["ModuleName"] + "');\"></span>";
+                    }
+                }
+            ],
+            "fnDrawCallback": function (oSettings) {
+
+
+                $('#loading').css('display', 'none');
+            }
+        }).api();
+    }
+
+
+    //$("#chkHeader").click(function () {
+
+    //    $('.case').prop("checked", this.checked);
+    //});
+    //// if all checkbox are selected, check the selectall checkbox
+    //// and viceversa
+    //$('#tblActivities tbody').click(function () {
+
+    //    if ($('#tblActivities input[name="chkItem"]:checked').length == $('#tblActivities input[name="chkItem"]').length) {
+    //        $("#chkHeader").prop("checked", true);
+    //    } else {
+    //        $("#chkHeader").prop("checked", false);
+    //    }
+    //});
+
+    function SelectIndividual() {
+        
+        if ($('#tblActivities input[name="chkItem"]:checked').length == $('#tblActivities input[name="chkItem"]').length) {
+            $("#chkHeader").prop("checked", true);
+        } else {
+            $("#chkHeader").prop("checked", false);
+        }
+    }
+
+    function SelectAll() {
+        
+        if ($("#chkHeader").prop("checked") == true) {
+            $('.case').prop("checked", true);
+        }
+        else if ($("#chkHeader").prop("checked") == false) {
+            $('.case').prop("checked", false);
+        }
+
+    }
+
+
+
+
+
+    // To Convert the Selected Open Activity to Be Complete
+
+
+    function completeActivity() {
+        //
+        if ($('#tblActivities input[name="chkItem"]:checked').length > 0) {
+            if ($('#tblActivities input[name="chkItem"]:checked').length > 1) {
+                bootbox.alert("Please Select One Activity Only.");
+                //alert("Please Select One Activity Only.");
+            }
+            else {
+                var table = $('#tblActivities').dataTable();
+                var checkIds = [];
+                $('input[type="checkbox"]:checked', table.fnGetNodes()).each(function (i) {
+                    
+                    var tr = $(this).closest('tr');
+                    checkIds.push($(tr).find('td:eq(6)').text());
+                });
+                if (checkIds == "Completed")
+                { 
+                    $.growl.error({ title: "Fail", message: "Activity already Completed !.", size: 'large' });
+                }
+                else {
+                    var flag = confirm('Are you sure you want to Complete the Activity?');
+                    if (flag) {
+                        var activityId = $('#tblActivities input[name="chkItem"]:checked').attr('data-val-1');
+                        completeEachActivity(activityId);
+                    }
+                }
+               
+
+            }
+
+        }
+        else
+            bootbox.alert("Please Select atleast One Activity.");
+           // alert("Please Select atleast One Activity.");
+    }
+
+    function completeEachActivity(activityId) {
+        
+
+        $.ajax({
+            url: "CompleteActivity",
+            type: "POST",
+            async: false,
+            data: { activityId: activityId.toString() },
+            success: function (data) {
+                if (data == "True") {
+                    $.growl.notice({ title: "Success", message: "Activity Updated Successfully", size: 'large' });
+                    $("#tblActivities").dataTable().fnDestroy();
+                    document.location.href = document.location.href;
+                    BindActivitieLists();
+                }
+                else {
+                    $.growl.error({ title: "Fail", message: "Activities Not Updated .", size: 'large' });
+                }
+            },
+            error: function () {
+
+            }
+        });
+    }
+
+    // To Delete the Activities
+
+    function deleteSelectedContactActivity() {
+        
+        if ($('#tblActivities input[name="chkItem"]:checked').length > 0) {
+
+
+            var isvalid = false;
+            var Alertmsg = 'Are you sure you want to delete selected Activity(s)?';
+            bootbox.confirm(Alertmsg, function (flag) {
+                
+                if (flag == true) {
+                    isvalid = true;
+                    var ActivityDelete = [];
+
+                    $("#tblActivities input:checkbox:checked").each(function (i) {
+                        if (this.id != "chkHeader") {
+                            var histid = $(this).attr("data-val-1");
+                            var HistMT = $(this).attr("data-val-mt");
+
+                            ActivityDelete.push(new ActiveHist(histid, HistMT));
+                        }
+                    });
+                    var postData = JSON.stringify(ActivityDelete);
+                    $.ajax({
+                        url: "DeleteActivities",
+                        type: "POST",
+                        contentType: 'application/json',
+                        dataType: 'json',
+                        data: postData,
+                        success: function (data) {
+
+                            if (data == "True") {
+                                $.growl.notice({ title: "Success", message: "Activities Deleted Successfully", size: 'large' });
+                                $("#tblActivities").dataTable().fnDestroy();
+                                document.location.href = document.location.href;
+                                // location.reload();
+                                BindActivitieLists();
+                            }
+                            else {
+                                $.growl.error({ title: "Fail", message: "Activities Not Deleted .", size: 'large' });
+                            }
+                        },
+                        error: function () {
+                            $.growl.error({ title: "Fail", message: "No Activity Selected!", size: 'large' });
+                        }
+                    });
+                    return isvalid;
+                }
+                
+
+
+                else if (flag == false) {
+                   
+                    return isvalid = true;
+                }
+                return isvalid;
+            });
+            return isvalid;
+        }
+        else {
+            $.growl.error({ title: "Fail", message: "No Activity Selected!", size: 'large' });
+        }
+    }
+
+    function ActiveHist(histid, HistMT) {
+        this.ID = histid;
+        this.AccountTypeName = HistMT;
+    }
+
+    function deleteEachActivity(DeleteId) {
+        
+        var DeleteData = DeleteId.split(",");
+        var HistoryId = DeleteData[0];
+        var Module = DeleteData[1];
+
+        var Alertmsg = 'Are you sure you want to delete this Activity?';
+        bootbox.confirm(Alertmsg, function (flag) {
+            
+            if (flag == true) {
+                
+                isvalid = true;
+                $.ajax({
+                    url: "DeleteEachActivities",
+                    type: "POST",
+                    data: { historyIds: HistoryId.toString(), Module: Module.toString() },
+                    success: function (data) {
+                        // alert(data);
+                        if (data == "True") {
+                            $.growl.notice({ title: "Success", message: "Activities Deleted Successfully", size: 'large' });
+                            $("#tblActivities").dataTable().fnDestroy();
+                            document.location.href = document.location.href;
+                            //location.reload();
+                            BindActivitieLists();
+                        }
+                        else {
+                            $.growl.error({ title: "Fail", message: "Activities Not Deleted .", size: 'large' });
+                        }
+                    },
+                    error: function () {
+
+                    }
+                });
+                return isvalid;
+            }
+
+            else  if (flag == false)
+            {
+                return isvalid = true;
+            }
+            return isvalid;
+        });
+        return isvalid;
+
+    }
+
+    function OpenActivityDetail(activityID) {
+        var Url = "../ManageCompany/EditActivityCmpgrid?activityID=" + activityID;
+        window.location.href = Url;
+    }
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#Activities").addClass("active");
+     
+    });
+</script>
+
+
+

@@ -1,0 +1,1037 @@
+﻿@model CRMHub.ViewModel.ContactModel
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .Overlay {
+        display: block;
+        position: fixed;
+        top: 0px;
+        bottom: 0px;
+        left: 0px;
+        right: 0px;
+        overflow: hidden;
+        padding: 0;
+        margin: 0;
+        background-color: #000;
+        filter: alpha(opacity=50);
+        opacity: 0.5;
+        z-index: 1049;
+    }
+</style>
+
+<div id="content-wrapper">
+    <div id="CustomBootstrapAlertBox">
+    </div>
+
+
+    <div class="row">
+        <div class="panel">
+
+            <div class="panel-heading">
+                <div class="row">
+                    <!-- Page header, center on small screens -->
+                    <h1 class="col-xs-6 col-sm-4 text-left text-left-sm panel-title">
+                        <i class="fa fa-user page-header-icon"></i>&nbsp; Contacts
+                    </h1>
+                    <div class="col-xs-6 col-sm-8">
+
+
+                        <div class="row">
+                            <div class="pull-right">
+                                @*<a href="#" class="btn btn-flat btn-labeled btn-primary" tabindex="-1"
+                                    data-toggle="modal" data-target="#uidemo-modals-alerts-info"><span class="btn-label icon fa fa-question-circle"></span>Help</a>*@
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel-body">
+
+                <div class="row">
+
+                    <!-- Tabs -->
+                    <div class="tab-pane" id="bs-tabdrop-tab3">
+                        <div class="row" id="pnlSrchCriteria">
+                            <div class="col-sm-3">
+                                <div class="form-group no-margin-hr">
+                                    <label class="control-label">Keyword :</label>
+                                    @Html.TextBoxFor(m => m.Contact.Keyword, new { @id = "txtKeyWord", @class = "form-control input-sm", @maxlength = "100" })
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group no-margin-hr">
+                                    <label class="control-label">Office :</label>
+                                    @Html.DropDownListFor(m => m.branch.BranchId, new SelectList(Model.BranchList, "BranchId", "BranchName"), new { @class = "form-control input-sm", @id = "drpOffice" })
+
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group no-margin-hr">
+                                    <label class="control-label">Sales Representative :</label>
+                                    @Html.DropDownListFor(m => m.user.UserId, new SelectList(Model.listUsers, "UserId", "FirstName"), new { @class = "form-control input-sm", @id = "drpSalesRep" })
+                                </div>
+                            </div>
+
+                            <div class="col-xs-12 col-sm-3 text-right text-left-sm" id="search_btn">
+                                <button class="btn btn-flat btn-labeled btn-primary" id="btnSearchContacts">
+                                    <span class="btn-label icon fa fa-search"></span>Search
+                                </button>
+                            </div>
+
+                            <div class="col-sm-3" style="visibility:hidden">
+                                <div class="form-group no-margin-hr">
+                                    <label class="control-label">Funnel Placement :</label>
+
+                                    @Html.DropDownListFor(m => m.user.UserId, new List<SelectListItem> {
+                                        new SelectListItem{ Text = "Select", Value = "Select",Selected=true },
+                                        new SelectListItem{Text="Suspect",Value="Suspect"},
+                                        new SelectListItem{Text="Prospect",Value="Prospect"},
+                                        new SelectListItem{ Text = "30%", Value = "30%"},
+                                        new SelectListItem{Text="60%",Value="60%"},
+                                        new SelectListItem{Text="90%",Value="90%"},
+                                        new SelectListItem{Text="Closed",Value="Closed"}
+                                    }, new { @id = "ddlSuspect", @class = "form-control input-sm" })
+
+                                </div>
+                            </div>
+                            <div class="col-sm-12" style="display: none" id="pnlSkillCriteria">
+                                <div class="col-sm-3">
+                                    <div class="form-group no-margin-hr">
+                                        <label class="control-label">Options :</label>
+
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="form-group no-margin-hr">
+                                        <label class="control-label">Skill Category : </label>
+
+                                        @* @Html.DropDownListFor(m => m.user.UserId, new List<SelectListItem> {
+                                                    new SelectListItem{ Text = "Select", Value = "Select",Selected=true }
+                                            }, new { @id = "ddlSkillCateg", @class = "form-control input-sm" })*@
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="col-sm-3">
+                                    <div class="form-group no-margin-hr">
+                                        <label class="control-label">Skill List : </label>
+
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="form-group no-margin-hr">
+                                        <label class="control-label">&nbsp;</label>
+                                        <div class="col-sm-12" style="padding: 0px;">
+                                            <div class="col-sm-1" style="padding: 0px;">
+                                                <button type="button" class="btn" style="line-height: 9px; padding: 7px 17px;" id="btnAddSelectedSkill"></button><br />
+                                                <button type="button" class="btn" style="line-height: 9px; padding: 7px 17px;" id="btnAddAllSkills"></button><br />
+                                                <button type="button" class="btn" style="line-height: 9px; padding: 7px 17px;" id="btnRemoveSelectedSkill"></button><br />
+                                                <button type="button" class="btn" style="line-height: 9px; padding: 7px 17px;" id="btnRemoveAllSkills"></button>
+
+
+
+                                            </div>
+                                            <div class="col-sm-11" style="padding-right: 0px;">
+
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                            <div class="clearfix"></div>
+                            <div class="col-sm-12" id="filter"></div>
+
+                            <!-- col-sm-6 -->
+                            <div class="col-sm-12">
+
+                                <div class="col-sm-12" style="background-color: #f5f5f5; padding-top: 6px; padding-bottom: 6px; text-align: right;">
+                                    <ul class="table-nav-item">
+
+                                        <li class="btn btn-flat btn-labeled btn-primary" id="btnmargin_top">
+
+                                            <a style="color: #fff; text-decoration: none; padding: 0px; font-weight: normal" href="@Url.Action("CreateContact","Contact")">
+                                                <span class="btn-label icon  fa  fa-plus-circle" style="margin-right:6px;"> </span>
+                                                Add New
+                                            </a>
+
+                                        </li>
+
+                                        <li class="btn btn-flat btn-labeled btn-primary" id="btnmargin_top">
+
+                                            <a style="color: #fff; text-decoration: none; padding: 0px; font-weight: normal" id="DeleteContacts" onclick="deleteSelectedContacts()">
+                                                <span class="btn-label icon  fa   fa-trash-o" style="margin-right:6px;"> </span>
+                                                Delete
+                                            </a>
+                                        </li>
+
+                                        <li class="btn btn-flat btn-labeled btn-primary" id="btnmargin_top">
+
+                                            <a style="color: #fff; text-decoration: none; padding: 0px; font-weight: normal" id="MergeContacts">
+                                                <span class="btn-label icon  fa fa-code-fork" style="margin-right:6px;"> </span>
+                                                Merge
+                                            </a>
+                                        </li>
+                                        <li class="dropdown">
+                                            <button class="btn btn-flat btn-labeled btn-primary" data-toggle="dropdown" id="btnmargin_top" style=" vertical-align: super;">
+                                                <span class="btn-label icon fa   fa-chevron-down"></span>Export
+                                            </button>
+
+                                            <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dropdownMenu1">
+                                                @*<li role="presentation"><a role="menuitem" style="cursor: pointer" tabindex="-1" onclick="ExportEmail();return false;">Export Email</a></li>*@
+                                                <li role="presentation"><a role="menuitem" style="cursor: pointer" tabindex="-1" onclick="ExportCsv(); return false;">Export Contacts(CSV)</a></li>
+                                                <li role="presentation"><a role="menuitem" style="cursor: pointer" tabindex="-1" onclick="ExportExcel(); return false;">Export Contacts(Excel)</a></li>
+                                                @*<li role="presentation"><a role="menuitem" style="cursor: pointer" tabindex="-1" onclick="sendoutlookmail();return false;">Send E-Mail Using Outlook</a></li>*@
+                                                @*<li role="presentation"><a role="menuitem" style="cursor: pointer" tabindex="-1" onclick="OpenSendResumePopUp();return false;">Send Resume</a></li>*@
+
+
+
+                                            </ul>
+                                        </li>
+
+                                    </ul>
+
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-xs-12">
+
+                                <div class="table-primary table-striped" id="divTable">
+
+                                    <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="tblContacts" width="100%">
+                                        <thead>
+                                            <tr>
+
+                                                <th width="25px">
+                                                    <input class="fa fa-square-o" type="checkbox" id="chkContactHeader" />
+                                                </th>
+                                                <th>&nbsp;</th>
+                                                <th data-hide="tablet,tabletlandscape,phone">Contact ID</th>
+                                                <th data-class="expand">Contact Name</th>
+                                                <th data-hide="tablet,tabletlandscape,phone">Contact Title</th>
+                                                <th data-hide="phone,smartphone">Company Name</th>
+                                                <th data-hide="tabletlandscape,phone">Phone</th>
+                                                <th data-hide="tabletlandscape,phone">Mobile</th>
+                                                <th data-hide="phone,smartphone,desktop">Email</th>
+                                                <th data-hide="tablet,tabletlandscape,phone,desktop">Zip Code</th>
+                                                <th data-hide="tablet,tabletlandscape,phone,desktop">Date Created</th>
+                                                @*<th data-hide="tabletlandscape,phone">Activity</th>*@
+
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<style>
+    .DT-search, .DT-search input {
+        width: 0px !important; /**/
+    }
+
+    .DT-per-page {
+        border-right: 0px solid #eee;
+        margin-right: 0px;
+        height: 23px;
+        padding-right: 0px;
+        white-space: nowrap;
+    }
+</style>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+       
+        $('#loading').css('display', 'block');
+           bindContactGrid();
+
+
+        $('#tblContacts').on('length.dt', function (e, settings, len) {
+
+            $('#loading').css('display', 'block');
+        });
+
+        $('#tblContacts').on('page.dt', function () {
+
+            $('#loading').css('display', 'block');
+        });
+       // $('#loading').css('display', 'none');
+    });
+    function bindContactGrid() {
+       
+       
+        $('#loading').css('display', 'block');
+        var responsiveHelper = undefined;
+        var breakpointDefinition = {
+            desktop: Infinity,
+            tablet: 1024,
+            tabletlandscape: 768,
+            phone: 480
+        };
+        var tableElement = $('#tblContacts');
+        tableElement.dataTable({
+            autoWidth: false,
+            preDrawCallback: function () {
+                if (!responsiveHelper) {
+                    responsiveHelper = new ResponsiveDatatablesHelper(tableElement, breakpointDefinition);
+                }
+            },
+            rowCallback: function (nRow) {
+                responsiveHelper.createExpandIcon(nRow);
+            },
+            drawCallback: function (oSettings) {
+                responsiveHelper.respond();
+            },
+            //"order": [[$("#HD_SortValue").val(), "" + $("#HD_SortDirection").val() + ""]],
+            "aLengthMenu": [[10, 25, 50, 100], [10, 25, 50, 100]],
+            //"iDisplayStart": parseInt($("#HD_PageIndex").val()),
+            //"iDisplayLength": parseInt($("#HD_PageSize").val()),
+            "pagingType": "full_numbers",
+            //"processing": true,
+            "serverSide": true,
+            "bFilter": false,
+            "sAjaxSource": "NewContact/getContactsList",
+            "fnServerParams": function (aoData) {
+                aoData.push(
+                    { "name": "Contactkeyword", "value": "" + $("#txtKeyWord").val() + "" },
+                    { "name": "ContactBranch", "value": "" + $("#drpOffice").val() + "" },
+                    { "name": "ContactSalesRepresentative", "value": "" + $("#drpSalesRep").val() + "" },
+                    { "name": "CompanyFilterString", "value": "" },
+                    { "name": "CompanyList_IsFromBack", "value": "" },
+                    { "name": "CompanyFilterString_ActualQueryCondition", "value": "" }
+                    );
+            },
+            "fnServerData": function (sSource, aoData, fnCallback) {
+                $.ajax({
+                    "dataType": 'json',
+                    "contentType": "application/json; charset=utf-8",
+                    "type": "GET",
+                    "url": sSource,
+                    "data": aoData,
+                    "success":
+                                function (msg) {
+
+                                    $('#loading').css('display', 'none');
+                                    //var json = jQuery.parseJSON(msg.d);
+                                    fnCallback(msg);
+                                    //$("#jq-datatables-example").show();
+                                }
+                });
+            },
+            "asStripeClasses": ['odd gradeX', 'even gradeC'],
+            "aoColumnDefs": [
+              {
+                  "targets": [0], "visible": true, "bSortable": false, "mDataProp": "ContactId",
+                  "render": function (data, type, row) {
+                      return "<input name=\"chkContactItem\" class =\"Contactcase\" type=\"checkbox\"  id=\"chkRow_" + row["ContactId"] + "\"data-ContactId=\"" + row["ContactId"] + "\"  />";
+                  }
+              },
+                {
+                    "targets": [1], "visible": true, "bSortable": false,
+                    "render": function (data, type, row) {
+                        return "<span class=\"fa fa-times\" onclick=\"DeleteContactsConfirmation('" + row["ContactId"] + "');\"></span>";
+                    }
+                },
+                { "targets": [2], "visible": true, "bSortable": true, "mDataProp": "ContactId" },
+                {
+                    "targets": [3], "visible": true, "bSortable": true, "mDataProp": "Fname",
+                    "render": function (data, type, row) {
+                        return "<a href=\"#\" onclick=\"OpenContactDetail('" + row["ContactId"] + "','" + row["email"] + "')\">" + row["Fname"] + "</a>";
+
+                    }
+                },
+                { "targets": [4], "visible": true, "bSortable": true, "mDataProp": "Title" },
+                { "targets": [5], "visible": true, "bSortable": true, "mDataProp": "Account_Name" },
+                { "targets": [6], "visible": true, "bSortable": true, "mDataProp": "Phone" },
+                { "targets": [7], "visible": true, "bSortable": true, "mDataProp": "Mobile" },
+                { "targets": [8], "visible": true, "bSortable": true, "mDataProp": "Email" },
+                { "targets": [9], "visible": true, "bSortable": true, "mDataProp": "Mailingzip" },
+                {
+                    "targets": [10], "visible": true, "bSortable": true, "mDataProp": "CreatedDate",
+                    "render": function (data, type, row) {
+                        var jsDate1 = data;
+                        if (jsDate1 == null) {
+                            return jsDate1 = "";
+                        }
+                        else if (jsDate1.value != "") {
+                            var jsDate = new Date(parseInt(row["CreatedDate"].substr(6)));
+                            return (jsDate.getMonth() + 1) + '/' + jsDate.getDate() + '/' + jsDate.getFullYear();
+                        }
+                    }
+                },
+                //{
+                //    "targets": [11], "visible": true, "bSortable": false, "mDataProp": "ContactId",
+                //    "render": function (data, type, row) {
+                //        return "<a href=\"#\" onclick=\"return OpenActivityPopUp('" + row["ContactId"] + "','" + row["Fname"] + "')\">Activity</a>";
+
+                //    }
+                //},
+            ],
+            "fnDrawCallback": function (oSettings) {
+
+                $('#loading').css('display', 'none');
+            }
+        }).api();
+    }
+   
+    $("#chkContactHeader").click(function () {
+
+        $('.Contactcase').prop("checked", this.checked);
+    });
+    // if all checkbox are selected, check the selectall checkbox
+    // and viceversa
+    $('#tblContacts tbody').click(function () {
+
+        if ($('#tblContacts input[name="chkContactItem"]:checked').length == $('#tblContacts input[name="chkContactItem"]').length) {
+            $("#chkContactHeader").prop("checked", true);
+        } else {
+            $("#chkContactHeader").prop("checked", false);
+        }
+    });
+
+    $('#btnSearchContacts').click(function () {
+
+        $('#loading').css('display', 'block');
+        $("#tblContacts").dataTable().fnDestroy();
+        bindContactGrid();
+
+        $('#tblContacts').on('length.dt', function (e, settings, len) {
+
+            $('#loading').css('display', 'block');
+        });
+
+        $('#tblContacts').on('page.dt', function () {
+
+            $('#loading').css('display', 'block');
+        });
+
+    });
+
+    function ClearSelection() {
+
+        $('#drpOffice option:first-child').attr("selected", "selected");
+        $('#drpSalesRep option:first-child').attr("selected", "selected");
+        // $('#jq-datatables-example_wrapper .dataTables_filter input').val('');
+        // $('#txtEmail').val('');
+        $('#txtKeyWord').val('');
+        //$("#filter").html('');
+        //Get_LeadFilterString();
+        $('#tblContacts').dataTable().fnDestroy();
+        bindContactGrid();
+    }
+
+    $("#MergeContacts").click(function (e) {
+
+        showMergePopUp();
+    });
+
+
+    function showMergePopUp() {
+
+        var Contactids = new Array();
+        var contactlength = $('#tblContacts input[name="chkContactItem"]:checked').length
+        if (contactlength > 0) {
+
+            if (contactlength == 2) {
+                $('#tblContacts input[name="chkContactItem"]:checked').each(function () {
+
+
+                    if ($("#tblContacts tr:has(:checked)")) {
+
+
+                        var ContactId = $(this).closest("tr").find('td:eq(2)').text();
+                        var ContactName = $(this).closest("tr").find('td:eq(3)').text();
+                        var ContacTitle = $(this).closest("tr").find('td:eq(4)').text();
+                        var CompanyName = $(this).closest("tr").find('td:eq(5)').text();
+                        var Phone = $(this).closest("tr").find('td:eq(6)').text();
+                        var Mobile = $(this).closest("tr").find('td:eq(7)').text();
+                        var Email = $(this).closest("tr").find('td:eq(8)').text();
+                        var ZipCode = $(this).closest("tr").find('td:eq(9)').text();
+                        var DateCreated = $(this).closest("tr").find('td:eq(10)').text();
+
+
+
+                        item = {}
+                        item["ContactId"] = ContactId;
+                        item["ContactName"] = ContactName;
+                        item["ContacTitle"] = ContacTitle;
+                        item["CompanyName"] = CompanyName;
+                        item["Phone"] = Phone;
+                        item["Mobile"] = Mobile;
+                        item["Email"] = Email;
+                        item["ZipCode"] = ZipCode;
+                        item["DateCreated"] = DateCreated;
+                    }
+                    Contactids.push(item);
+                });
+                if (Contactids[0].CompanyName == Contactids[1].CompanyName) {
+
+                    var Contactid1 = Contactids[0].ContactId;
+                    var Contactid2 = Contactids[1].ContactId;
+                    $.ajax({
+                        url: 'Contact/MergeContacts',
+                        type: 'GET',
+                        data: { Contactid1: Contactid1, Contactid2: Contactid2 },
+                        async: 'false',
+                        //cache:'false',
+                        //contentType: 'application/json;charset=utf-8',
+                        //dataType: 'json',
+                        success: function (data) {
+                            //alert("Iam here");
+
+                            if (data != null) {
+                                $('#tblMergeContactsLists').empty();
+                                $('#tblMergeContactsLists').empty().append(data);
+                            }
+                        },
+                        error: function () {
+                            alert("Error");
+                        }
+                    });
+
+                    $("#myMergeModal").modal("show");
+                }
+                else {
+                    alert("Please Select Contacts Of Same Company")
+                }
+
+
+            }
+
+            else {
+                alert("Please Select Only 2 Records To Merge ");
+            }
+        }
+        else {
+            alert("Please Select  Records To Merge");
+        }
+
+    }
+
+
+
+
+    function OpenContactDetail(contactId, email) {
+        window.location = "Contact/EditContact?contactId=" + contactId;
+    }
+
+    function DeleteContactsConfirmation(ContactId) {
+
+        var flag = confirm('You are about to delete permanently.Are you sure you want to delete this record?');
+        if (flag) {
+            deleteEachContact(ContactId);
+            //document.location.href = document.location.href;
+            //alert("Deleted Successfully!!!");
+        }
+    }
+    function deleteEachContact(ContactId) {
+      
+        $.ajax({
+            url: "Contact/DeleteContacts",
+            type: "POST",
+            async: false, 
+            data: { Contactids: ContactId.toString()},
+            success: function (data) {
+                if (data == "True") {
+                    $.growl.notice({ title: "Success", message: "Contact(s) Deleted Successfully.", size: 'large' });
+                    $("#tblContacts").dataTable().fnDestroy();
+                    bindContactGrid();
+                }
+                else {
+                    $.growl.notice({ title: "Fail", message: "Contact(s) Not Deleted .", size: 'large' });
+                }
+
+
+            },
+            error: function () {
+
+            }
+        });
+    }
+
+
+    function deleteSelectedContacts() {
+
+
+
+        if ($('#tblContacts input[name="chkContactItem"]:checked').length > 0) {
+           // alert("Hello");
+            var flag = confirm('You are about to delete permanently.Are you sure you want to delete these records?');
+            if (flag) {
+                
+
+                var searchIDs = $("#tblContacts input:checkbox:checked").map(function () {
+                    return $(this).attr("data-ContactId");
+               }).get();
+
+               // alert(searchIDs);
+                deleteEachContact(searchIDs)
+            }
+        }
+        else {
+            alert("Please select item(s) to delete.");
+        }
+        
+        //var valid = true;
+        //var searchIDsValues = new Array();
+
+
+        //var checkedids = $('#tblContacts').find("input[name='chkContactItem']:checked").length;
+       
+        //if (checkedids > 0) {
+
+        //    $('#tblContacts input[name="chkContactItem"]:checked').each(function () {
+
+        //        alert("If Condition");
+
+        //        searchIDsValues.push($(this).attr('data-ContactId'));
+
+        //        alert(searchIDsValues);
+        //        //id = $(this).attr('data-UserId');
+        //        $('#overlaydiv').show();
+        //        $("#MdlAlert").show();
+        //        return valid = true;
+        //    })
+        //}
+
+
+        //else {
+        //    alert("Please select item(s) to delete.");
+        //}
+
+    }
+
+    $("#btnok").click(function (e) {
+
+        e.preventDefault();
+        e.stopPropagation();
+        $('#overlaydiv').hide();
+        $("#MdlAlert").hide();
+
+        // var searchIDs = $('#jq-datatables-example').dataTable().api().rows('.selected').data()["userId"];
+        var searchIDsValues = new Array();
+
+        $('#tblContacts input[name="chkContactItem"]:checked').each(function () {
+
+
+            searchIDsValues.push($(this).attr('data-ContactId'));
+            //id = $(this).attr('data-UserId');
+
+        });
+
+        $.ajax({
+            url: "Contact/DeleteContacts",
+            type: "POST",
+            cache: "false",
+            data: { Contactids: searchIDsValues.toString() },
+            success: function (data) {
+
+                if (data == "True") {
+
+                    //window.location.href =window.location.href;
+                    //alert("Deleted Successfully")
+                    $.growl.notice({ title: "Success", message: "Contact Deleted Successfully.", size: 'large' });
+                    //window.location.href = window.location.href;
+                    $("#tblContacts").dataTable().fnDestroy();
+                    bindContactGrid();
+                }
+                else {
+                    $.growl.notice({ title: "Fail", message: "Contact Not Deleted .", size: 'large' });
+                }
+            },
+            error: function (request, status, error) {
+            }
+        });
+
+
+    });
+
+
+    $("#btnCancel").click(function (e) {
+
+        e.preventDefault();
+        e.stopPropagation();
+        $('#overlaydiv').hide();
+        $("#MdlAlert").hide();
+
+    });
+
+    var Contid;
+    var Contname;
+
+    function OpenActivityPopUp(ContactID, ContactName) {
+
+        Contid = ContactID;
+        Contname = ContactName;
+        var URL = "Contact/ContactActivityPopup";
+        $.ajax({
+            url: URL,
+            type: "GET",
+            async: false,
+            data: { ContactID: ContactID },
+            success: function (data) {
+
+                if (data != null) {
+                    $('#tblContactactivityList').empty();
+                    $('#tblContactactivityList').empty().append(data);
+                }
+            },
+            error: function (error) {
+
+
+            }
+        });
+
+        var URL1 = "Contact/ContactActivityHistoryPopUp";
+        $.ajax({
+            url: URL1,
+            type: "GET",
+            async: false,
+            data: { ContactID: ContactID },
+            success: function (data) {
+
+                if (data != null) {
+                    $('#tblContactActivityHistory').empty();
+                    $('#tblContactActivityHistory').empty().append(data);
+                }
+            },
+            error: function (error) {
+
+
+            }
+        });
+
+
+        $("#myActModal").modal("show");
+
+    }
+
+    function AddActivity() {
+
+        var URL = "Contact/NewContactActivityPopUp";
+        $.ajax({
+            url: URL,
+            type: "GET",
+            async: false,
+            success: function (data) {
+
+                if (data != null) {
+                    $('#tblNewContactActivity').empty();
+                    $('#tblNewContactActivity').empty().append(data);
+
+                }
+            },
+            error: function (error) {
+
+
+            }
+        });
+
+        $('#myModalAddAct').modal("show");
+
+    }
+
+
+
+    function EditActivity() {
+
+        if ($('#tblContactActivityPopUp input[name="chkItemPop"]:checked').length > 0) {
+            if ($('#tblContactActivityPopUp input[name="chkItemPop"]:checked').length > 1) {
+                alert("Please Select One Record Only.");
+            }
+            else {
+                var id = $('#tblContactActivityPopUp input[name="chkItemPop"]:checked').attr('data-activity');
+                var URL = "Contact/EditContactActivityPopUp";
+                $.ajax({
+                    url: URL,
+                    type: "GET",
+                    data: { HistoryId: id },
+                    async: false,
+                    success: function (data) {
+
+                        if (data != null) {
+                            $('#tblEditContactActivityList').empty();
+                            $('#tblEditContactActivityList').empty().append(data);
+                        }
+                    },
+                    error: function (error) {
+
+                    }
+                });
+                $('#myModalEditAct').modal("show");
+            }
+        }
+        else
+            alert("Please Select atleast One Record Only.");
+    }
+
+
+    $("#btnclose").click(function () {
+        $("#myActModal").modal("hide");
+    });
+
+    $("#btnClosePopup").click(function (e) {
+
+        $('#myModalEditAct').modal("hide");
+        e.stopPropagation();
+        e.preventDefault();
+
+    });
+
+    function DeleteActivity(e) {
+
+        if ($('#tblContactActivityPopUp input[name="chkItemPop"]:checked').length > 0) {
+
+            var flag = confirm('You are about to delete permanently.Are you sure you want to delete these records?');
+            if (flag) {
+
+                $('#tblContactActivityPopUp input[name="chkItemPop"]:checked').each(function () {
+
+                    var id = $(this).attr('data-activity');
+
+                    deleteEachActivity(id);
+                });
+
+
+                //document.location.href = document.location.href;
+                alert("Deleted Successfully");
+                ContactID = Contid;
+                ContactName = Contname;
+                OpenActivityPopUp(ContactID, ContactName);
+            }
+        }
+        else {
+            alert('Please select atleast one record to delete');
+        }
+
+
+    }
+
+    function deleteEachActivity(historyId) {
+
+        $.ajax({
+            url: "Contact/DeleteContactActivity",
+            type: "GET",
+            async: false,
+            data: { historyId: historyId },
+            success: function (data) {
+
+
+
+            },
+            error: function () {
+
+            }
+        });
+    }
+
+    function CompleteActivity() {
+
+        if ($('#tblContactActivityPopUp input[name="chkItemPop"]:checked').length > 0) {
+            var flag = confirm('Are you sure you want to Complete the Activity?');
+            if (flag) {
+                $('#tblContactActivityPopUp input[name="chkItemPop"]:checked').each(function () {
+
+                    var id = $(this).attr('data-activity');
+                    completeEachActivity(id);
+                });
+                alert("Activity Updated Successfully");
+                ContactID = Contid;
+                ContactName = Contname;
+                OpenActivityPopUp(ContactID, ContactName);
+                //document.location.href = document.location.href;
+
+            }
+        }
+        else
+            alert("Please Select atleast One Record Only.");
+    }
+
+    function completeEachActivity(historyId) {
+
+        $.ajax({
+            url: "Contact/CompleteContactActivity",
+            type: "GET",
+            async: false,
+            data: { historyId: historyId },
+            success: function (data) {
+            },
+            error: function () {
+
+            }
+        });
+    }
+
+
+    function EditActivityHistory() {
+
+        if ($('#tblContactActivityHistoryPopUp input[name="chkItemHistPop"]:checked').length > 0) {
+            if ($('#tblContactActivityHistoryPopUp input[name="chkItemHistPop"]:checked').length > 1) {
+                alert("Please Select One Record Only.");
+            }
+            else {
+                var id = $('#tblContactActivityHistoryPopUp input[name="chkItemHistPop"]:checked').attr('data-activity');
+                var URL = "Contact/EditContactActivityPopUp";
+                $.ajax({
+                    url: URL,
+                    type: "GET",
+                    data: { HistoryId: id },
+                    async: false,
+                    success: function (data) {
+
+                        if (data != null) {
+                            $('#tblEditContactActivityList').empty();
+                            $('#tblEditContactActivityList').empty().append(data);
+                        }
+                    },
+                    error: function (error) {
+
+                    }
+                });
+                $('#myModalEditAct').modal("show");
+            }
+        }
+        else
+            alert("Please Select atleast One Record Only.");
+
+
+    }
+
+    $("#btnCancelMergePop").click(function () {
+
+        $("#myMergeModal").modal("hide");
+    });
+    function ExportCsv() {
+
+        var array = new Array();
+        if ($('#tblContacts input[name="chkContactItem"]:checked').length > 0) {
+            $('#tblContacts input[name="chkContactItem"]:checked').each(function () {
+
+
+                if ($("#tblContacts tr:has(:checked)")) {
+
+                    var ContactId = $(this).closest("tr").find('td:eq(2)').text();
+                    var ContactName = $(this).closest("tr").find('td:eq(3)').text();
+                    var Title = $(this).closest("tr").find('td:eq(4)').text();
+                    var Account_Name = $(this).closest("tr").find('td:eq(5)').text();
+                    var Phone = $(this).closest("tr").find('td:eq(6)').text();
+                    var Mobile = $(this).closest("tr").find('td:eq(7)').text();
+                    var Email = $(this).closest("tr").find('td:eq(8)').text();
+                    var MailingZip = $(this).closest("tr").find('td:eq(9)').text();
+                    var CreatedDate = $(this).closest("tr").find('td:eq(10)').text();
+
+                    item = {}
+                    item["ContactId"] = ContactId;
+                    item["ContactName"] = ContactName;
+                    item["Title"] = Title;
+                    item["Account_Name"] = Account_Name;
+                    item["Phone"] = Phone;
+                    item["Mobile"] = Mobile;
+                    item["Email"] = Email;
+                    item["MailingZip"] = MailingZip;
+                    item["CreatedDate"] = CreatedDate;
+                }
+                array.push(item);
+            });
+
+            $.ajax({
+                url: 'Contact/ExportToCsv',
+                type: 'POST',
+                data: JSON.stringify(array),
+                cache: false,
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                success: function (data) {
+
+                    window.location.href = "Contact/DownloadContactsExportCSV";
+                },
+                error: function () {
+
+                }
+            });
+            alert("Contacts Exported Successfully");
+        }
+        else {
+            alert("Please select item(s) to Export.");
+        }
+    }
+
+    function ExportExcel() {
+
+        var array = new Array();
+        if ($('#tblContacts input[name="chkContactItem"]:checked').length > 0) {
+            $('#tblContacts input[name="chkContactItem"]:checked').each(function () {
+
+
+                if ($("#tblContacts tr:has(:checked)")) {
+
+                    var ContactId = $(this).closest("tr").find('td:eq(2)').text();
+                    var ContactName = $(this).closest("tr").find('td:eq(3)').text();
+                    var Title = $(this).closest("tr").find('td:eq(4)').text();
+                    var Account_Name = $(this).closest("tr").find('td:eq(5)').text();
+                    var Phone = $(this).closest("tr").find('td:eq(6)').text();
+                    var Mobile = $(this).closest("tr").find('td:eq(7)').text();
+                    var Email = $(this).closest("tr").find('td:eq(8)').text();
+                    var MailingZip = $(this).closest("tr").find('td:eq(9)').text();
+                    var CreatedDate = $(this).closest("tr").find('td:eq(10)').text();
+
+                    item = {}
+                    item["ContactId"] = ContactId;
+                    item["ContactName"] = ContactName;
+                    item["Title"] = Title;
+                    item["Account_Name"] = Account_Name;
+                    item["Phone"] = Phone;
+                    item["Mobile"] = Mobile;
+                    item["Email"] = Email;
+                    item["MailingZip"] = MailingZip;
+                    item["CreatedDate"] = CreatedDate;
+                }
+                array.push(item);
+            });
+
+
+            $.ajax({
+                url: 'Contact/ExportToExcel',
+                type: 'POST',
+                data: JSON.stringify(array),
+                cache: false,
+                contentType: 'application/json;charset=utf-8',
+                dataType: 'json',
+                success: function (data) {
+                    window.location.href = "Contact/DownloadContactsExportExcel";
+                },
+                error: function () {
+
+                }
+            });
+            alert("Contacts Exported Successfully");
+        }
+        else {
+            alert("Please select item(s) to Export.");
+        }
+
+    }
+
+
+
+</script>

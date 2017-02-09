@@ -1,0 +1,16 @@
+table name                          primarykey column name
+----------                          ------------------------
+
+1.AccountDocument                  documentid
+
+2.assignment                       assignmentId
+
+3.Candidate                        id
+
+4.companySetup                     companyId
+
+5.role                             roleId
+
+6.tbl_history                      historyid
+
+7.users                            userId

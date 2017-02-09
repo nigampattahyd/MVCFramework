@@ -1,0 +1,518 @@
+--- Index.cshtml
++++ Index.cshtml
+@@ -25,5 +25,5 @@
+     }
+ 
+     .form-group {
+-        margin-bottom: 6px!important;
++        margin-bottom: 6px !important;
+     }
+@@ -100,12 +102,12 @@
+ 
+-                <div class="modal-header">
+-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+-                                <h4 class="modal-title" id="mySmallModalLabel">Request Appointment</h4>
+-                </div>
+-                <div class="modal-body" style="height: 536.76px; overflow: auto;">
+-                    <div class="panel-body">
+-                        <div class="row">
+-                            <div class="panel-body">
+-                                <div class="col-sm-12 ">
+-                                    <div class="col-sm-8" style="border-right: 1px solid #ccc;">
++                    <div class="modal-header">
++                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
++                        <h4 class="modal-title" id="mySmallModalLabel">Request Appointment</h4>
++                    </div>
++                    <div class="modal-body" style="height: 536.76px; overflow: auto;">
++                        <div class="panel-body">
++                            <div class="row">
++                                <div class="panel-body">
++                                    <div class="col-sm-12 ">
++                                        <div class="col-sm-8" style="border-right: 1px solid #ccc;">
+ 
+@@ -111,11 +113,231 @@
+ 
+-                                        <div class="row">
+-                                            <div class="col-sm-12">
+-                                                <div class="form-group no-margin-hr">
+-                                                    <label class="control-label">Title :<span style="color: red">*</span></label>
+-                                                                @Html.TextBoxFor(m => m.objcalenderevent.Title, new { @class = "form-control input-sm", @id = "txtTile", @validate = "Required", @data_val_required = "Please Enter Title" })
+-                                                    @Html.ValidationMessageFor(m => m.objcalenderevent.Title, "", new { @class = "text-danger" })
++                                            <div class="row">
++                                                <div class="col-sm-12">
++                                                    <div class="form-group no-margin-hr">
++                                                        <label class="control-label">Title :<span style="color: red">*</span></label>
++                                                        @Html.TextBoxFor(m => m.objcalenderevent.Title, new { @class = "form-control input-sm", @id = "txtTile", @validate = "Required", @data_val_required = "Please Enter Title" })
++                                                        @Html.ValidationMessageFor(m => m.objcalenderevent.Title, "", new { @class = "text-danger" })
++                                                    </div>
++                                                </div>
++
++                                            </div>
++                                            <div class="row">
++                                                <div class="col-sm-12">
++                                                    <div class="form-group no-margin-hr">
++                                                        <label class="control-label">Date 1:<span style="color: red">*</span></label>
++                                                        <div class="input-group datepicker1">
++                                                            @Html.TextBoxFor(m => m.objcalenderevent.Date1, new { @id = "txtDate11", @class = "form-control input-sm", @MaxLength = "20", @validate = "Required", @data_val_required = "Please Select  Date 1" })
++
++                                                            <span class="input-group-addon">
++                                                                <i class="fa fa-calendar"></i>
++                                                            </span>
++                                                        </div>
++                                                    </div>
++                                                    @Html.ValidationMessageFor(m => m.objcalenderevent.Date1, "", new { @class = "text-danger" })
++                                                </div>
++
++                                            </div>
++                                            <div class="row">
++                                                <div class="col-sm-12">
++                                                    <div class="row">
++
++                                                        <div class="col-sm-4">
++                                                            <div class="form-group no-margin-hr">
++
++                                                                <label class="control-label">Time 1:<span style="color: red">*</span></label>
++                                                                <div class="input-group timepicker">
++                                                                    @Html.TextBoxFor(m => m.objcalenderevent.DT1Time1, new { @id = "txtDT1Time1", @class = "form-control inpiut-sm", @MaxLength = "20", @validate = "Required", @data_val_required = "Please Select  Time 1 of Date 1" })
++
++                                                                    <span class="input-group-addon">
++                                                                        <i class="fa fa-clock-o"></i>
++                                                                    </span>
++                                                                </div>
++                                                            </div>
++                                                            @Html.ValidationMessageFor(m => m.objcalenderevent.DT1Time1, "", new { @class = "text-danger" })
++                                                        </div>
++                                                        <div class="col-sm-4">
++                                                            <div class="form-group no-margin-hr">
++
++                                                                <label class="control-label">Time 2:<span style="color: red">*</span></label>
++                                                                <div class="input-group timepicker">
++                                                                    @Html.TextBoxFor(m => m.objcalenderevent.DT1Time2, new { @id = "txtDT1Time2", @class = "form-control inpu-sm", @MaxLength = "20", @validate = "Required", @data_val_required = "Please Select  Time 2 of Date 1" })
++
++                                                                    <span class="input-group-addon">
++                                                                        <i class="fa fa-clock-o"></i>
++                                                                    </span>
++                                                                </div>
++                                                            </div>
++                                                            @Html.ValidationMessageFor(m => m.objcalenderevent.DT1Time2, "", new { @class = "text-danger" })
++                                                        </div>
++                                                        <div class="col-sm-4">
++                                                            <div class="form-group no-margin-hr">
++
++                                                                <label class="control-label">Time 3:<span style="color: red">*</span></label>
++                                                                <div class="input-group timepicker">
++                                                                    @Html.TextBoxFor(m => m.objcalenderevent.DT1Time3, new { @id = "txtDT1time3", @class = "form-control input-sm", @MaxLength = "20", @validate = "Required", @data_val_required = "Please Select  Time 3 of Date 1" })
++
++                                                                    <span class="input-group-addon">
++                                                                        <i class="fa fa-clock-o"></i>
++                                                                    </span>
++                                                                </div>
++                                                            </div>
++                                                            @Html.ValidationMessageFor(m => m.objcalenderevent.DT1Time3, "", new { @class = "text-danger" })
++                                                        </div>
++                                                    </div>
++                                                </div>
++                                            </div>
++                                            <div class="row">
++
++                                                <div class="col-sm-12">
++                                                    <div class="form-group no-margin-hr">
++
++                                                        <label class="control-label">Date 2:<span style="color: red">*</span></label>
++                                                        <div class="input-group datepicker1">
++                                                            @Html.TextBoxFor(m => m.objcalenderevent.Date2, new { @id = "txtDate2", @class = "form-control input-sm", @MaxLength = "20", @validate = "Required", @data_val_required = "Please Select  Date 2" })
++
++                                                            <span class="input-group-addon">
++                                                                <i class="fa fa-calendar"></i>
++                                                            </span>
++                                                        </div>
++                                                    </div>
++                                                    @Html.ValidationMessageFor(m => m.objcalenderevent.Date2, "", new { @class = "text-danger" })
++                                                </div>
++
++                                            </div>
++                                            <div class="row">
++                                                <div class="col-sm-12">
++                                                    <div class="row">
++
++                                                        <div class="col-sm-4">
++                                                            <div class="form-group no-margin-hr">
++
++                                                                <label class="control-label">Time 1:<span style="color: red">*</span></label>
++                                                                <div class="input-group timepicker">
++                                                                    @Html.TextBoxFor(m => m.objcalenderevent.DT2Time1, new { @id = "txtDT2Time1", @class = "form-control input-sm", @MaxLength = "20", @validate = "Required", @data_val_required = "Please Select  Time 1 of Date 2" })
++
++                                                                    <span class="input-group-addon">
++                                                                        <i class="fa fa-clock-o"></i>
++                                                                    </span>
++                                                                </div>
++                                                            </div>
++                                                            @Html.ValidationMessageFor(m => m.objcalenderevent.DT2Time1, "", new { @class = "text-danger" })
++                                                        </div>
++                                                        <div class="col-sm-4">
++                                                            <div class="form-group no-margin-hr">
++
++                                                                <label class="control-label">Time 2:<span style="color: red">*</span></label>
++                                                                <div class="input-group timepicker">
++                                                                    @Html.TextBoxFor(m => m.objcalenderevent.DT2Time2, new { @id = "txtDT2Time2", @class = "form-control input-sm", @MaxLength = "20", @validate = "Required", @data_val_required = "Please Select  Time 2 of Date 2" })
++
++                                                                    <span class="input-group-addon">
++                                                                        <i class="fa fa-clock-o"></i>
++                                                                    </span>
++                                                                </div>
++                                                            </div>
++                                                            @Html.ValidationMessageFor(m => m.objcalenderevent.DT2Time2, "", new { @class = "text-danger" })
++                                                        </div>
++                                                        <div class="col-sm-4">
++                                                            <div class="form-group no-margin-hr">
++
++                                                                <label class="control-label">Time 3:<span style="color: red">*</span></label>
++                                                                <div class="input-group timepicker">
++                                                                    @Html.TextBoxFor(m => m.objcalenderevent.DT2Time3, new { @id = "txtDT2time3", @class = "form-control input-sm", @MaxLength = "20", @validate = "Required", @data_val_required = "Please Select  Time 3 of Date 2" })
++
++                                                                    <span class="input-group-addon">
++                                                                        <i class="fa fa-clock-o"></i>
++                                                                    </span>
++                                                                </div>
++                                                            </div>
++                                                            @Html.ValidationMessageFor(m => m.objcalenderevent.DT2Time3, "", new { @class = "text-danger" })
++                                                        </div>
++                                                    </div>
++                                                </div>
++                                            </div>
++                                            <div class="row">
++
++                                                <div class="col-sm-12">
++                                                    <div class="form-group no-margin-hr">
++
++                                                        <label class="control-label">Date 3:<span style="color: red">*</span></label>
++                                                        <div class="input-group datepicker1">
++                                                            @Html.TextBoxFor(m => m.objcalenderevent.Date3, new { @id = "txtDate3", @class = "form-control input-sm", @MaxLength = "20", @validate = "Required", @data_val_required = "Please Select  Date 3" })
++
++                                                            <span class="input-group-addon">
++                                                                <i class="fa fa-calendar"></i>
++                                                            </span>
++                                                        </div>
++
++                                                    </div>
++                                                    @Html.ValidationMessageFor(m => m.objcalenderevent.Date3, "", new { @class = "text-danger" })
++                                                </div>
++
++                                            </div>
++                                            <div class="row">
++                                                <div class="col-sm-12">
++                                                    <div class="row">
++
++                                                        <div class="col-sm-4">
++                                                            <div class="form-group no-margin-hr">
++
++                                                                <label class="control-label">Time 1:<span style="color: red">*</span></label>
++                                                                <div class="input-group timepicker">
++                                                                    @Html.TextBoxFor(m => m.objcalenderevent.DT3Time1, new { @id = "txtDT2Time1", @class = "form-control input-sm", @MaxLength = "20", @validate = "Required", @data_val_required = "Please Select  Time 1 of Date 3" })
++
++                                                                    <span class="input-group-addon">
++                                                                        <i class="fa fa-clock-o"></i>
++                                                                    </span>
++                                                                </div>
++                                                            </div>
++                                                            @Html.ValidationMessageFor(m => m.objcalenderevent.DT3Time1, "", new { @class = "text-danger" })
++                                                        </div>
++                                                        <div class="col-sm-4">
++                                                            <div class="form-group no-margin-hr">
++
++                                                                <label class="control-label">Time 2:<span style="color: red">*</span></label>
++                                                                <div class="input-group timepicker">
++                                                                    @Html.TextBoxFor(m => m.objcalenderevent.DT3Time2, new { @id = "txtDT2Time2", @class = "form-control input-sm", @MaxLength = "20", @validate = "Required", @data_val_required = "Please Select  Time 2 of Date 3" })
++
++                                                                    <span class="input-group-addon">
++                                                                        <i class="fa fa-clock-o"></i>
++                                                                    </span>
++                                                                </div>
++                                                            </div>
++                                                            @Html.ValidationMessageFor(m => m.objcalenderevent.DT3Time2, "", new { @class = "text-danger" })
++                                                        </div>
++                                                        <div class="col-sm-4">
++                                                            <div class="form-group no-margin-hr">
++
++                                                                <label class="control-label">Time 3:<span style="color: red">*</span></label>
++                                                                <div class="input-group timepicker">
++                                                                    @Html.TextBoxFor(m => m.objcalenderevent.DT3Time3, new { @id = "txtDT2time3", @class = "form-control input-sm", @MaxLength = "20", @validate = "Required", @data_val_required = "Please Select  Time 3 of Date 3" })
++                                                                    <span class="input-group-addon">
++                                                                        <i class="fa fa-clock-o"></i>
++                                                                    </span>
++                                                                </div>
++
++                                                            </div>
++                                                            @Html.ValidationMessageFor(m => m.objcalenderevent.DT3Time3, "", new { @class = "text-danger" })
++                                                        </div>
++                                                    </div>
++                                                </div>
++                                            </div>
++                                            <div class="row">
++                                                <div class="col-sm-12">
++                                                    <div class="form-group no-margin-hr">
++                                                        <label class="control-label">Location :<span style="color: red">*</span></label>
++                                                        @Html.TextBoxFor(m => m.objcalenderevent.Location, new { @id = "txtLocation", @class = "form-control input-sm", @cols = 38, @rows = 5, @MaxLength = "200", @style = "resize: none;" })
++                                                        @Html.ValidationMessageFor(m => m.objcalenderevent.Location, "", new { @class = "text-danger" })
++                                                    </div>
++                                                </div>
++                                            </div>
++
++                                            <div class="row">
++                                                <div class="col-sm-12">
++                                                    <div class="form-group no-margin-hr">
++                                                        <label class="control-label">Comment :</label>
++                                                        @Html.TextAreaFor(m => m.objcalenderevent.Description, new { @id = "txtComment", @class = "form-control input-sm", @cols = 38, @rows = 5, @MaxLength = "200", @style = "resize: none;" })
++                                                    </div>
+                                                 </div>
+                                             </div>
+ 
+                                         </div>
+@@ -118,24 +340,6 @@
+                                                 </div>
+                                             </div>
+ 
+                                         </div>
+-                                        <div class="row">
+-                                            <div class="col-sm-12">
+-                                                <div class="form-group no-margin-hr">
+-                                                    <label class="control-label">Date 1:<span style="color: red">*</span></label>
+-                                                                <div class="input-group datepicker1">
+-                                                                    @Html.TextBoxFor(m => m.objcalenderevent.Date1, new { @id = "txtDate11", @class = "form-control input-sm", @MaxLength = "20", @validate = "Required", @data_val_required = "Please Select  Date 1" })
+-                                                                   
+-                                                        <span class="input-group-addon">
+-                                                            <i class="fa fa-calendar"></i>
+-                                                        </span>
+-                                                    </div>
+-                                                </div>
+-                                                            @Html.ValidationMessageFor(m => m.objcalenderevent.Date1, "", new { @class = "text-danger" })
+-                                            </div>
+-                                                       
+-                                        </div>
+-                                        <div class="row">
+-                                            <div class="col-sm-12">
+-                                                <div class="row">
++                                        <div class="col-sm-4 ">
+ 
+@@ -141,45 +345,10 @@
+ 
+-                                                    <div class="col-sm-4">
+-                                                        <div class="form-group no-margin-hr">
+-
+-                                                            <label class="control-label">Time 1:<span style="color: red">*</span></label>
+-                                                                        <div class="input-group timepicker">
+-                                                                            @Html.TextBoxFor(m => m.objcalenderevent.DT1Time1, new { @id = "txtDT1Time1", @class = "form-control inpiut-sm", @MaxLength = "20", @validate = "Required", @data_val_required = "Please Select  Time 1 of Date 1" })
+-                                                                           
+-                                                                <span class="input-group-addon">
+-                                                                    <i class="fa fa-clock-o"></i>
+-                                                                </span>
+-                                                            </div>
+-                                                        </div>
+-                                                                    @Html.ValidationMessageFor(m => m.objcalenderevent.DT1Time1, "", new { @class = "text-danger" })
+-                                                    </div>
+-                                                    <div class="col-sm-4">
+-                                                        <div class="form-group no-margin-hr">
+-
+-                                                            <label class="control-label">Time 2:<span style="color: red">*</span></label>
+-                                                                        <div class="input-group timepicker">
+-                                                                            @Html.TextBoxFor(m => m.objcalenderevent.DT1Time2, new { @id = "txtDT1Time2", @class = "form-control inpu-sm", @MaxLength = "20", @validate = "Required", @data_val_required = "Please Select  Time 2 of Date 1" })
+-                                                                          
+-                                                                <span class="input-group-addon">
+-                                                                    <i class="fa fa-clock-o"></i>
+-                                                                </span>
+-                                                            </div>
+-                                                        </div>
+-                                                                    @Html.ValidationMessageFor(m => m.objcalenderevent.DT1Time2, "", new { @class = "text-danger" })
+-                                                    </div>
+-                                                    <div class="col-sm-4">
+-                                                        <div class="form-group no-margin-hr">
+-
+-                                                            <label class="control-label">Time 3:<span style="color: red">*</span></label>
+-                                                                        <div class="input-group timepicker">
+-                                                                            @Html.TextBoxFor(m => m.objcalenderevent.DT1Time3, new { @id = "txtDT1time3", @class = "form-control input-sm", @MaxLength = "20", @validate = "Required", @data_val_required = "Please Select  Time 3 of Date 1" })
+-                                                                         
+-                                                                <span class="input-group-addon">
+-                                                                    <i class="fa fa-clock-o"></i>
+-                                                                </span>
+-                                                            </div>
+-                                                        </div>
+-                                                                    @Html.ValidationMessageFor(m => m.objcalenderevent.DT1Time3, "", new { @class = "text-danger" })
++                                            <div class="row">
++                                                <div class="col-sm-12">
++                                                    <div class="form-group no-margin-hr">
++                                                        <label class="control-label">Attendees :<span style="color: red">*</span></label>
++                                                        @Html.DropDownListFor(m => m.objcalenderevent.MentorsList, new SelectList(Model.listMentors, "MentorId", "Name"), new { @multiple = "multiple", @placeholder = "Please Select Attendee", @class = "ddlMultiSlectBox", @data_val_required = "Please Select Attendees" })
++                                                        @Html.ValidationMessageFor(m => m.objcalenderevent.MentorsList, "", new { @class = "text-danger" })
+                                                     </div>
+                                                 </div>
+                                             </div>
+@@ -188,169 +355,6 @@
+ 
+-                                            <div class="col-sm-12">
+-                                                            <div class="form-group no-margin-hr" >
+-
+-                                                    <label class="control-label">Date 2:<span style="color: red">*</span></label>
+-                                                                <div class="input-group datepicker1">
+-                                                                    @Html.TextBoxFor(m => m.objcalenderevent.Date2, new { @id = "txtDate2", @class = "form-control input-sm", @MaxLength = "20", @validate = "Required", @data_val_required = "Please Select  Date 2" })
+-                                                                   
+-                                                        <span class="input-group-addon">
+-                                                            <i class="fa fa-calendar"></i>
+-                                                        </span>
+-                                                    </div>
+-                                                </div>
+-                                                            @Html.ValidationMessageFor(m => m.objcalenderevent.Date2, "", new { @class = "text-danger" })
+-                                            </div>
+-
+-                                        </div>
+-                                        <div class="row">
+-                                            <div class="col-sm-12">
+-                                                <div class="row">
+-
+-                                                    <div class="col-sm-4">
+-                                                        <div class="form-group no-margin-hr">
+-
+-                                                            <label class="control-label">Time 1:<span style="color: red">*</span></label>
+-                                                                        <div class="input-group timepicker">
+-                                                                            @Html.TextBoxFor(m => m.objcalenderevent.DT2Time1, new { @id = "txtDT2Time1", @class = "form-control input-sm", @MaxLength = "20", @validate = "Required", @data_val_required = "Please Select  Time 1 of Date 2" })
+-                                                                          
+-                                                                <span class="input-group-addon">
+-                                                                    <i class="fa fa-clock-o"></i>
+-                                                                </span>
+-                                                            </div>
+-                                                        </div>
+-                                                                    @Html.ValidationMessageFor(m => m.objcalenderevent.DT2Time1, "", new { @class = "text-danger" })
+-                                                    </div>
+-                                                    <div class="col-sm-4">
+-                                                        <div class="form-group no-margin-hr">
+-
+-                                                            <label class="control-label">Time 2:<span style="color: red">*</span></label>
+-                                                                        <div class="input-group timepicker">
+-                                                                            @Html.TextBoxFor(m => m.objcalenderevent.DT2Time2, new { @id = "txtDT2Time2", @class = "form-control input-sm", @MaxLength = "20", @validate = "Required", @data_val_required = "Please Select  Time 2 of Date 2" })
+-                                                                           
+-                                                                <span class="input-group-addon">
+-                                                                    <i class="fa fa-clock-o"></i>
+-                                                                </span>
+-                                                            </div>
+-                                                        </div>
+-                                                                    @Html.ValidationMessageFor(m => m.objcalenderevent.DT2Time2, "", new { @class = "text-danger" })
+-                                                    </div>
+-                                                    <div class="col-sm-4">
+-                                                        <div class="form-group no-margin-hr">
+-
+-                                                            <label class="control-label">Time 3:<span style="color: red">*</span></label>
+-                                                                        <div class="input-group timepicker">
+-                                                                            @Html.TextBoxFor(m => m.objcalenderevent.DT2Time3, new { @id = "txtDT2time3", @class = "form-control input-sm", @MaxLength = "20", @validate = "Required", @data_val_required = "Please Select  Time 3 of Date 2" })
+-                                                                         
+-                                                                <span class="input-group-addon">
+-                                                                    <i class="fa fa-clock-o"></i>
+-                                                                </span>
+-                                                            </div>
+-                                                        </div>
+-                                                                    @Html.ValidationMessageFor(m => m.objcalenderevent.DT2Time3, "", new { @class = "text-danger" })
+-                                                    </div>
+-                                                </div>
+-                                            </div>
+-                                        </div>
+-                                        <div class="row">
+-
+-                                            <div class="col-sm-12">
+-                                                <div class="form-group no-margin-hr">
+-
+-                                                    <label class="control-label">Date 3:<span style="color: red">*</span></label>
+-                                                                <div class="input-group datepicker1">
+-                                                                    @Html.TextBoxFor(m => m.objcalenderevent.Date3, new { @id = "txtDate3", @class = "form-control input-sm", @MaxLength = "20", @validate = "Required", @data_val_required = "Please Select  Date 3" })
+-                                                                   
+-                                                        <span class="input-group-addon">
+-                                                            <i class="fa fa-calendar"></i>
+-                                                        </span>
+-                                                    </div>
+-
+-                                                </div>
+-                                                            @Html.ValidationMessageFor(m => m.objcalenderevent.Date3, "", new { @class = "text-danger" })
+-                                            </div>
+-
+-                                        </div>
+-                                        <div class="row">
+-                                            <div class="col-sm-12">
+-                                                <div class="row">
+-
+-                                                    <div class="col-sm-4">
+-                                                        <div class="form-group no-margin-hr">
+-
+-                                                            <label class="control-label">Time 1:<span style="color: red">*</span></label>
+-                                                                        <div class="input-group timepicker">
+-                                                                            @Html.TextBoxFor(m => m.objcalenderevent.DT3Time1, new { @id = "txtDT2Time1", @class = "form-control input-sm", @MaxLength = "20", @validate = "Required", @data_val_required = "Please Select  Time 1 of Date 3" })
+-                                                                          
+-                                                                <span class="input-group-addon">
+-                                                                    <i class="fa fa-clock-o"></i>
+-                                                                </span>
+-                                                            </div>
+-                                                        </div>
+-                                                                    @Html.ValidationMessageFor(m => m.objcalenderevent.DT3Time1, "", new { @class = "text-danger" })
+-                                                    </div>
+-                                                    <div class="col-sm-4">
+-                                                        <div class="form-group no-margin-hr">
+-
+-                                                            <label class="control-label">Time 2:<span style="color: red">*</span></label>
+-                                                                        <div class="input-group timepicker">
+-                                                                            @Html.TextBoxFor(m => m.objcalenderevent.DT3Time2, new { @id = "txtDT2Time2", @class = "form-control input-sm", @MaxLength = "20", @validate = "Required", @data_val_required = "Please Select  Time 2 of Date 3" })
+-                                                                            
+-                                                                <span class="input-group-addon">
+-                                                                    <i class="fa fa-clock-o"></i>
+-                                                                </span>
+-                                                            </div>
+-                                                        </div>
+-                                                                    @Html.ValidationMessageFor(m => m.objcalenderevent.DT3Time2, "", new { @class = "text-danger" })
+-                                                    </div>
+-                                                    <div class="col-sm-4">
+-                                                        <div class="form-group no-margin-hr">
+-
+-                                                            <label class="control-label">Time 3:<span style="color: red">*</span></label>
+-                                                                        <div class="input-group timepicker">
+-                                                                            @Html.TextBoxFor(m => m.objcalenderevent.DT3Time3, new { @id = "txtDT2time3", @class = "form-control input-sm", @MaxLength = "20", @validate = "Required", @data_val_required = "Please Select  Time 3 of Date 3" })
+-                                                                <span class="input-group-addon">
+-                                                                    <i class="fa fa-clock-o"></i>
+-                                                                </span>
+-                                                            </div>
+-                                                                       
+-                                                        </div>
+-                                                                    @Html.ValidationMessageFor(m => m.objcalenderevent.DT3Time3, "", new { @class = "text-danger" })
+-                                                    </div>
+-                                                </div>
+-                                            </div>
+-                                        </div>
+-                                        <div class="row">
+-                                            <div class="col-sm-12">
+-                                                <div class="form-group no-margin-hr">
+-                                                    <label class="control-label">Location :<span style="color: red">*</span></label>
+-                                                    @Html.TextBoxFor(m => m.objcalenderevent.Location, new { @id = "txtLocation", @class = "form-control input-sm", @cols = 38, @rows = 5, @MaxLength = "200", @style = "resize: none;" })
+-                                                    @Html.ValidationMessageFor(m => m.objcalenderevent.Location, "", new { @class = "text-danger" })
+-                                                </div>
+-                                            </div>
+-                                        </div>
+-
+-                                        <div class="row">
+-                                            <div class="col-sm-12">
+-                                                <div class="form-group no-margin-hr">
+-                                                    <label class="control-label">Comment :</label>
+-                                                    @Html.TextAreaFor(m => m.objcalenderevent.Description, new { @id = "txtComment", @class = "form-control input-sm", @cols = 38, @rows = 5, @MaxLength = "200", @style = "resize: none;" })
+-                                                </div>
+-                                            </div>
+-                                        </div>
+-
+-                                    </div>
+-                                    <div class="col-sm-4 ">
+-
+-                                        <div class="row">
+-                                            <div class="col-sm-12">
+-                                                <div class="form-group no-margin-hr">
+-                                                    <label class="control-label">Attendees :<span style="color: red">*</span></label>
+-                                                                @Html.DropDownListFor(m => m.objcalenderevent.MentorsList, new SelectList(Model.listMentors, "MentorId", "Name"), new { @multiple = "multiple", @placeholder = "Please Select Attendee", @class = "ddlMultiSlectBox", @data_val_required ="Please Select Attendees"})
+-                                                            @Html.ValidationMessageFor(m => m.objcalenderevent.MentorsList, "", new { @class = "text-danger" })
+-                                                </div>
+-                                            </div>
+                                         </div>
+ 
+                                     </div>
+ 
+                                 </div>

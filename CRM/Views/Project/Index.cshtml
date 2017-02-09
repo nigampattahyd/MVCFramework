@@ -1,0 +1,405 @@
+﻿@model CRMHub.ViewModel.ProjectModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .DT-search, .DT-search input {
+        width: 0px !important;
+    }
+
+    .DT-per-page {
+        border-right: 0;
+        height: 23px;
+        padding-right: 0px;
+        white-space: nowrap;
+    }
+
+    .DT-search {
+        margin-right: 0px;
+        display: none !important;
+    }
+
+    #tblProject {
+        width: 100% !important;
+    }
+</style>
+
+<div id="content-wrapper">
+    <div id="CustomBootstrapAlertBox">
+    </div>
+    <div class="row">
+        <div class="panel">
+            <div class="panel-heading">
+                <div class="row">
+                    <!-- Page header, center on small screens -->
+                    <h1 class="col-xs-6 col-sm-4 text-left text-left-sm panel-title"><i class="fa fa-user page-header-icon"></i>&nbsp; Projects</h1>
+                </div>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <!-- col-sm-6 -->
+                    <div id="pnlSrchCriteria">
+                        <div class="col-sm-3">
+                            <div class="form-group no-margin-hr">
+                                <label class="control-label">Project Name:</label>
+                                @*<input id="txtProjectname" name="txtProjectname" type="text" value=""  class="form-control"/>*@
+                                @Html.TextBoxFor(m => m.ProjectDetails.Projectname, new { @id = "txtProjectName", @class = "form-control input-sm", @maxlength = "100" })
+                                @*@Html.TextBoxFor(m => m.project, new { @id = "txtProjectname", @class = "form-control input-sm", @maxlength = "100" })*@
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="form-group no-margin-hr">
+                                <label class="control-label">Status :</label>
+                                @Html.DropDownListFor(m => m.ProjectDetails.Status, new List<SelectListItem>
+                                                                    {
+                                                                        new SelectListItem { Text = "Select", Value = "0", Selected=true},
+                                                                    new SelectListItem { Text = "In Progress", Value = "InProgress"},
+                                                                    new SelectListItem { Text = "Not Started", Value = "NotStarted"},
+                                                                    new SelectListItem { Text = "Completed", Value = "Completed"},
+                                                                     new SelectListItem { Text = "Open", Value = "Open", },
+                                                                    new SelectListItem { Text = "Deferred", Value = "Deferred"},
+                                                                    new SelectListItem { Text = "Cancelled", Value = "Cancelled"}
+
+                                                                    }, new { id = "ddl_Status", @class = "form-control input-sm", @TabIndex = "13" })
+
+
+
+
+                                @*@Html.DropDownList(m => m.ProjectDetails.Status, new List<SelectListItem>
+                                      { new SelectListItem { Text = "InProgress", Value = "1", Selected=true},
+                                    new SelectListItem { Text = "Not Started", Value = "2"},
+                                    new SelectListItem { Text = "Completed", Value = "3"},
+                                      }, "Select Status")*@
+                            </div>
+                        </div>
+
+                        <div class="col-xs-12 col-sm-12 text-right text-left-sm " id="search_btn" style="text-align:right;margin-bottom:15px; margin-top:0px; margin-left:-13px;">
+                            <button class="btn btn-flat btn-labeled btn-primary" id="btnSearchProject">
+                                <span class="btn-label icon fa fa-search"></span>Search
+                            </button>
+                        </div>
+                    </div>
+
+                    @*<div class="clearfix"></div>
+                        <div class="col-sm-13" id="filter"></div>*@
+
+                    <!-- col-sm-6 -->
+                    <div class="col-sm-12">
+
+                        <div class="col-xs-12 col-sm-12 text-right text-right-sm" id="white_bg">
+                            <ul class="table-nav-item">
+                                <li class="btn btn-flat btn-labeled btn-primary" style=" float:left; margin-left:3px;">
+
+                                    <a style="color: #fff; text-decoration: none; padding: 0px; font-weight: normal" href="@Url.Action("CreateProject", "Project")">
+                                        <span class="btn-label icon  fa fa-plus-circle" style="margin-right:6px;"> </span>
+                                        Add New
+
+                                    </a>
+
+                                </li>
+                                <li class="btn btn-flat btn-labeled btn-primary" style="float:left; margin-left:3px;">
+
+                                    <a style="color: #fff; text-decoration: none; padding: 0px; font-weight: normal" id="DeleteProjects" onclick="deleteSelectedProject()">
+                                        <span class="btn-label icon  fa  fa-trash-o" style="margin-right:6px;"> </span>
+                                        Delete
+                                    </a>
+
+                                </li>
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                @*</div>*@
+
+
+                <div class="row">
+
+                    <div class="table-primary table-striped">
+                        <table class="table table-striped table-bordered" id="tblProject" style="width:100%;">
+                            <thead>
+                                <tr>
+                                    <th class="no-sort"><input class="fa fa-square-o" type="checkbox" id="chkHeader" /></th>
+                                    <th></th>
+                                    <th data-hide="phone">Project Name</th>
+                                    <th data-class="expand">Contact</th>
+                                    <th data-hide="tablet,tabletlandscape,phone">URL</th>
+                                    <th data-hide="phone">Status</th>
+                                    <th data-hide="tablet,tabletlandscape,phone">Date Created</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @*@foreach (var item in Model)
+                                    {
+                                    <tr>
+                                        <td><input type="checkbox" value="" id="@item.ClientID" data-val-1="@item.ClientID" name="chkItem" /></td>
+                                        <td>
+                                            <span class="fa fa-times" onclick="deleteEachClient('@item.ClientID')"></span>
+                                        </td>
+                                        <td>@Html.DisplayFor(model => item.CompanyName) </td>
+                                        <td>@Html.DisplayFor(model => item.companytype)</td>
+                                        <td>@Html.DisplayFor(model => item.site_type)</td>
+                                        <td>@Html.DisplayFor(model => item.companyphone)</td>
+                                        <td>@Html.DisplayFor(model => item.expirydate)</td>
+                                        @*<td>@Html.DisplayFor(model => item.CompanyLogo)</td>
+                                            <td>@Html.DisplayFor(model => item.CompanyLogo)</td>*@
+
+                                @*</tr>*@
+                                @*}*@
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<script>
+    $(document).ready(function () {
+        $('#loading').css('display', 'block');
+        bindProjectDetails();
+
+
+        $('#tblProject').on('length.dt', function (e, settings, len) {
+
+            $('#loading').css('display', 'block');
+        });
+
+        $('#tblProject').on('page.dt', function () {
+
+            $('#loading').css('display', 'block');
+        });
+
+
+    });
+
+
+    $("#chkHeader").click(function () {
+        $('#tblProject input[name="chkProjectItem"]').prop('checked', this.checked);
+    });
+
+    $('#tblProject input[name="chkProjectItem"]').click(function () {
+        if ($('#tblProject input[name="chkProjectItem"]').length == $('#tblProject input[name="chkProjectItem"]:checked').length) {
+            $("#chkHeader").prop("checked", "checked");
+        }
+        else if ($('#tblProject input[name="chkProjectItem"]').length != $('#tblProject input[name="chkProjectItem"]:checked').length) {
+            $('#chkHeader').prop('checked', false);
+        }
+    });
+
+
+
+
+
+    function bindProjectDetails() {
+
+
+        $('#loading').css('display', 'block');
+        var responsiveHelper = undefined;
+        var breakpointDefinition = {
+            desktop: Infinity,
+            tablet: 1024,
+            tabletlandscape: 768,
+            phone: 480
+        };
+
+        var tableElement = $('#tblProject').dataTable({
+            // autoWidth: false,
+            // "searching": true,
+            preDrawCallback: function () {
+                if (!responsiveHelper) {
+                    responsiveHelper = new ResponsiveDatatablesHelper($('#tblProject'), breakpointDefinition);
+                }
+            },
+            rowCallback: function (nRow) {
+                responsiveHelper.createExpandIcon(nRow);
+            },
+            drawCallback: function (oSettings) {
+                responsiveHelper.respond();
+            },
+            //"order": [[$("#HD_SortValue").val(), "" + $("#HD_SortDirection").val() + ""]],
+            //"aLengthMenu": [[10, 25, 50, 100], [10, 25, 50, 100]],
+            ////"iDisplayStart": parseInt($("#HD_PageIndex").val()),
+            ////"iDisplayLength": parseInt($("#HD_PageSize").val()),
+            ////  "pagingType": "full_numbers",
+            ////"processing": true,
+            "serverSide": true,
+            //"bFilter": true,
+            "sAjaxSource": "Project/getProjectsList",
+            "fnServerParams": function (aoData) {
+                aoData.push(
+                     { "name": "Projectname", "value": "" + $("#txtProjectName").val().trim() + "" },
+                    { "name": "ProStatus", "value": "" + $("#ddl_Status").val() + "" }
+                    );
+            },
+            "fnServerData": function (sSource, aoData, fnCallback) {
+                $.ajax({
+                    "dataType": 'json',
+                    "contentType": "application/json; charset=utf-8",
+                    "type": "GET",
+                    "url": sSource,
+                    "data": aoData,
+                    "success":
+                                function (msg) {
+
+                                    $('#loading').css('display', 'none');
+
+                                    fnCallback(msg);
+
+                                }
+                });
+            },
+            "asStripeClasses": ['odd gradeX', 'even gradeC'],
+            "aoColumnDefs": [
+              {
+                  "targets": [0], "visible": true, "bSortable": false, "mDataProp": "ProjectId",
+                  "render": function (data, type, row) {
+                      return "<input name=\"chkProjectItem\" class =\"Projectcase\" type=\"checkbox\"  id=\"chkRow_" + row["ProjectId"] + "\"data-projectId=\"" + row["ProjectId"] + "\"  />";
+                  }
+              },
+                {
+                    "targets": [1], "visible": true, "bSortable": true,
+                    "render": function (data, type, row) {
+                        return "<span class=\"fa fa-times\" onclick=\"DeleteProjectConfirmation('" + row["ProjectId"] + "');\"></span>";
+                    }
+                },
+                {
+                    "targets": [2], "visible": true, "bSortable": true, "mDataProp": "Projectname",
+                    "render": function (data, type, row) {
+                        return "<a href=\"#\" onclick=\"OpenProjectDetail('" + row["ProjectId"] + "')\">" + row["Projectname"] + "</a>";
+
+                    }
+                },
+                {
+                    "targets": [3], "visible": true, "bSortable": true, "mDataProp": "ContactName",
+
+                },
+                { "targets": [4], "visible": true, "bSortable": true, "mDataProp": "URL" },
+                { "targets": [5], "visible": true, "bSortable": true, "mDataProp": "Status" },
+               {
+                   "targets": [6], "visible": true, "bSortable": true, "mDataProp": "DateCreated",
+                   "render": function (data, type, row) {
+                       var jsDate1 = data;
+                       if (jsDate1 == null) {
+                           return jsDate1 = "";
+                       }
+                       else if (jsDate1.value != "") {
+                           var jsDate = new Date(parseInt(row["DateCreated"].substr(6)));
+                           return (jsDate.getMonth() + 1) + '/' + jsDate.getDate() + '/' + jsDate.getFullYear();
+                       }
+
+                   }
+               }
+
+
+            ],
+            "fnDrawCallback": function (oSettings) {
+
+                $('#loading').css('display', 'none');
+            }
+        }).api();
+    }
+
+    function deleteSelectedProject() {
+        
+
+        //$('#tbllunch input[name="chkItem"]:checked').length
+        //if ($('#tblCompanies').find("input[name='chkItem']:checked") > 0) {
+        if ($('#tblProject input[name="chkProjectItem"]:checked').length > 0) {
+            var flag = confirm('You are about to delete permanently.Are you sure you want to delete these records?');
+            if (flag) {
+
+                var searchIDs = $("#tblProject input:checkbox:checked").map(function () {
+                    return $(this).attr("data-projectId");
+                }).get();
+
+                deleteEachProject(searchIDs)
+            }
+        }
+        else {
+            alert("Please select item(s) to delete.");
+        }
+    }
+
+    function DeleteProjectConfirmation(ProjectId) {
+      
+
+        var flag = confirm('You are about to delete permanently.Are you sure you want to delete this record?');
+        if (flag) {
+            deleteEachProject(ProjectId);
+
+            //alert("Deleted Successfully!!!");
+            //document.location.href = document.location.href;
+        }
+    }
+    function OpenProjectDetail(ProjectId) {
+       
+        //Showloading();
+        window.location = "Project/Editprojectdetails?ProjectId=" + ProjectId;
+    }
+    function deleteEachProject(ProjectId) {
+       
+
+        $.ajax({
+            url: '@Url.Action("DeleteProjects")',
+            type: "POST",
+            async: false,
+            data: { Projids: ProjectId.toString() },
+            success: function (data) {
+                if (data == "True") {
+                    $.growl.notice({ title: "Success", message: "Projects Deleted Successfully.", size: 'large' });
+                    $("#tblProject").dataTable().fnDestroy();
+                    bindProjectDetails();
+                }
+                else {
+                    $.growl.notice({ title: "Fail", message: "Projects Not Deleted .", size: 'large' });
+                }
+            },
+            error: function (request, status, error) {
+            }
+        });
+    }
+    $('#btnSearchProject').click(function () {
+        //alert("Hello");
+
+        $('#loading').css('display', 'block');
+        $("#tblProject").dataTable().fnDestroy();
+        bindProjectDetails();
+
+
+        $('#tblProject').on('length.dt', function (e, settings, len) {
+
+            $('#loading').css('display', 'block');
+        });
+
+        $('#tblProject').on('page.dt', function () {
+
+            $('#loading').css('display', 'block');
+        });
+
+
+
+
+
+
+        //$('#loading').css('display', 'block');
+        //$("#tblActivities").dataTable().fnDestroy();
+        //BindActivitieLists();
+
+        //$('#tblActivities').on('length.dt', function (e, settings, len) {
+
+        //    $('#loading').css('display', 'block');
+        //});
+
+        //$('#tblActivities').on('page.dt', function () {
+
+        //    $('#loading').css('display', 'block');
+        //});
+
+    });
+</script>
+

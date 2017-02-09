@@ -1,0 +1,401 @@
+﻿@model CRMHub.ViewModel.DashboardViewModel
+
+<div id="content-wrapper" style="height:416px">
+  
+   
+    <div id="MainDiv">
+        <div class="panel-body" style="padding-top:0px !important;">
+
+
+            <div class="row">
+
+
+                <div class="col-sm-12">
+
+
+                    <div class="stat-panel" style="height: 148px;">
+                        <div class="stat-row">
+                            <!-- Success darker background -->
+                            <div class="stat-cell bg-success darker">
+                                <!-- Stat panel bg icon -->
+                                <i class="fa fa-lightbulb-o bg-icon" style="font-size: 60px; line-height: 80px; height: 80px;"></i>
+                                <!-- Big text -->
+                                <span class="text-bg">CRM</span><br>
+                                <!-- Small text -->
+                                @*<span class="text-sm">Your CRM statistics</span>*@
+                            </div>
+                        </div>
+
+                        <div class="stat-row">
+                            <!-- Success background, without bottom border, without padding, horizontally centered text -->
+                            <div class="stat-counters bg-success no-border-b no-padding text-center">
+                                <!-- Small padding, without horizontal padding -->
+                                <div class="stat-cell col-xs-4 padding-sm no-padding-hr">
+                                    <!-- Big text -->
+                                    <div>
+                                        <div class="inner">
+                                            <h3>
+                                                @Model.LstActivityDshCount[0].CompanyActCount
+
+                                                @*@Model.companies*@
+                                            </h3>
+                                            <p>
+                                                Companies
+                                            </p>
+                                        </div>
+                                        <div class="icon">
+
+
+                                            <img src="~/Images/sales_icon.png" />
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                                <!-- Small padding, without horizontal padding -->
+                                <div class="stat-cell col-xs-4 padding-sm no-padding-hr">
+                                    <!-- Big text -->
+                                    <div>
+                                        <div class="inner">
+                                            <h3>
+                                                @Model.LstActivityDshCount[0].ContactActCount
+                                                @*@Model.contacts*@
+                                            </h3>
+                                            <p>
+                                                Contacts
+                                            </p>
+                                        </div>
+                                        <div class="icon">
+
+                                            <img src="~/Images/user_icon.png" />
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                                <!-- Small padding, without horizontal padding -->
+                                @*<div class="stat-cell col-xs-4 padding-sm no-padding-hr">
+                                   
+                                    <div>
+                                        <div class="inner">
+                                            <h3>
+                                                @Model.LstActivityDshCount[0].LeadActCount                                              
+                                            </h3>
+                                            <p>
+                                                Leads
+                                            </p>
+                                        </div>
+                                        <div class="icon">
+
+                                            <img src="~/Images/lead_icon.png" />
+                                        </div>
+
+                                    </div>
+                                </div>*@
+                                <!-- Small padding, without horizontal padding -->
+                                <div class="stat-cell col-xs-4 padding-sm no-padding-hr">
+                                    <div>
+                                        <div class="inner">
+                                            <h3>
+                                                @Model.LstActivityDshCount[0].OpportunityActCount
+                                                @*@Model.opportunity*@
+                                            </h3>
+                                            <p>
+                                                Opportunities
+                                            </p>
+                                        </div>
+                                        <div class="icon">
+                                            <img src="~/Images/opportunity_icon.png" />
+                                        </div>
+
+
+
+                                    </div>
+                                </div><!-- end inner row -->
+
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+
+            </div>
+
+
+
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="panel panel-success panel-dark">
+                        <div class="panel-heading">
+                            <span class="panel-title">Activity Summary</span>
+                            <div class="panel-heading-controls">
+                                <div class="panel-heading-icon"><i class="fa fa-inbox"></i></div>
+                            </div>
+                        </div>
+                        <div class="panel-body">
+
+
+                            <div class="col-sm-6">
+                                <div class="form-group no-margin-hr">
+                                    <label class="control-label">Open:</label>
+
+                                    @*<a href="#" id="OpenActivity">@Model.OpenActivity</a>*@
+                                    @Model.OpenActivity
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group no-margin-hr">
+                                    <label class="control-label">Completed:</label>
+
+                                    @*<a href="#" id="CompleteActivity">@Model.CompleteActivity</a>*@
+                                    @Model.CompleteActivity
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+        </div>
+    </div>
+
+
+    <div id="divPartialView">
+        @*Here we Load the Table from Partial View*@
+    </div>
+</div>
+
+@*</div>*@
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+
+        var responsiveHelper_example = undefined;
+        var breakpointDefinition = {
+            desktop: Infinity,
+            tablet: 1024,
+            phone: 480
+        };
+
+        $('#datatables-Sales').dataTable({
+            "autoWidth": false,
+            "searching": true,
+            "preDrawCallback": function () {
+                if (!responsiveHelper_example) {
+                    responsiveHelper_example = new ResponsiveDatatablesHelper($('#datatables-Sales'), breakpointDefinition);
+                }
+            },
+            "rowCallback": function (nRow) {
+                responsiveHelper_example.createExpandIcon(nRow);
+            },
+            "drawCallback": function (oSettings) {
+                responsiveHelper_example.respond();
+            },
+        });
+
+
+
+        $('#datatables-Operations').dataTable({
+            "autoWidth": false,
+            "searching": true,
+            "preDrawCallback": function () {
+                if (!responsiveHelper_example) {
+                    responsiveHelper_example = new ResponsiveDatatablesHelper($('#datatables-Operations'), breakpointDefinition);
+                }
+            },
+            "rowCallback": function (nRow) {
+                responsiveHelper_example.createExpandIcon(nRow);
+            },
+            "drawCallback": function (oSettings) {
+                responsiveHelper_example.respond();
+            },
+        });
+
+
+
+        $('#datatables-Activities').dataTable({
+            "autoWidth": false,
+            "searching": true,
+            "preDrawCallback": function () {
+                if (!responsiveHelper_example) {
+                    responsiveHelper_example = new ResponsiveDatatablesHelper($('#datatables-Activities'), breakpointDefinition);
+                }
+            },
+            "rowCallback": function (nRow) {
+                responsiveHelper_example.createExpandIcon(nRow);
+            },
+            "drawCallback": function (oSettings) {
+                responsiveHelper_example.respond();
+            },
+        });
+
+
+
+    });
+
+</script>
+<script type="text/javascript">
+
+    $(function () {
+
+        $('#txtFromDate').datepicker({
+            format: 'mm/dd/yyyy'
+            //setDate:'currentDate'
+        });
+        $('#txtToDate').datepicker({
+            format: 'mm/dd/yyyy'
+        });
+        $('.DateP').datepicker({
+            format: 'mm/dd/yyyy'
+        })
+    });
+
+
+    $('#btnSearchContacts').click(function () {
+        var ToDate = $('#txtToDate').val();
+       
+       $('#loading').css('display', 'block');
+        if (ToDate != "") {
+
+
+            $('#MainDiv').remove();
+
+            var FromDate = $('#txtFromDate').val();
+            var ToDate = $('#txtToDate').val();
+            var officeLoc = $('#drpOffLoc').val();
+            var Usrid = $('#drpUser').val();
+
+
+            $.ajax({
+                url: '@Url.Action("_ActivityDashBoard", "DashBoard")',
+                //url: "_ActivityDashBoard",
+                dataType: "html",
+                type: "GET",
+                async: false,
+                data: { gFromDate: FromDate, gToDate: ToDate, officeLoc: officeLoc, Usrid: Usrid },
+                success: function (response) {
+                    //alert("Success");
+
+                    $("#divPartialView").html(response);
+                    $('#loading').css('display', 'none');
+
+                },
+                error: function (x, e) {
+
+                    alert("Failed");
+                    alert(x.responseText);
+
+                }
+            });
+        }
+        else {
+            alert("Please Select ToDate !!!!!!!");
+        }
+
+    });
+
+    //$('#OpenActivity').click(function () {
+    //    $('#activityMsg').remove();
+
+    //    var Status = 'Open';
+    //    var fromDate = $('#txtFromDate').val();
+    //    var ToDate = $('#txtToDate').val();
+
+    //    $.ajax({
+    //        url: "_GetOpenCloseActivities",
+    //        dataType: "html",
+    //        type: "GET",
+    //        async: false,
+    //        data: { Status: Status, FromDate: fromDate, ToDate: ToDate },
+    //        success: function (response) {
+    //            //alert("Success");
+    //            $("#getActivity").html(response);
+
+    //        },
+    //        error: function (x, e) {
+
+    //            alert("Failed");
+    //            alert(x.responseText);
+
+    //        }
+    //    });
+
+
+
+
+
+
+
+    //});
+
+
+    //$('#CompleteActivity').click(function () {
+    //    $('#activityMsg').remove();
+
+    //    var Status = 'Completed';
+    //    var fromDate = $('#txtFromDate').val();
+    //    var ToDate = $('#txtToDate').val();
+    //    $.ajax({
+    //        url: "_GetOpenCloseActivities",
+    //        dataType: "html",
+    //        type: "GET",
+    //        async: false,
+    //        data: { Status: Status, FromDate: fromDate, ToDate: ToDate },
+    //        success: function (response) {
+
+    //            $("#getActivity").html(response);
+
+    //        },
+    //        error: function (x, e) {
+
+    //            alert("Failed");
+    //            alert(x.responseText);
+
+    //        }
+    //    });
+    //});
+
+
+
+    @*$('#drpOffLoc').change(function () {
+
+        var drpOfficeid = $('#drpOffLoc').val();
+
+
+        $.ajax({
+            url: "@Url.Action("UsersByBranchId", "Dashboard")",
+            type: "GET",
+            async: false,
+            data: { branchid: drpOfficeid },
+            success: function (data) {
+
+
+
+                if (data != null) {
+                    $("#drpUser").html("");
+                    $("#drpUser").append($("<option></option>").val(0).html("--Select --"));
+                    $.each(data, function (i, users) {
+                        $("#drpUser").append(
+                            $("<option></option>").val(users.UserId).html(users.FirstName));
+                    });
+                }
+                else {
+                    $("#drpUser").html("");
+                    $("#drpUser").append($("<option></option>").val(0).html("--Select --"));
+                }
+            },
+            error: function () {
+            }
+        });
+    });*@
+</script>

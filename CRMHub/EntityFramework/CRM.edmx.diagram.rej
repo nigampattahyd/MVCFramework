@@ -1,0 +1,14 @@
+--- CRM.edmx.diagram
++++ CRM.edmx.diagram
+@@ -53,7 +54,10 @@
+         <EntityTypeShape EntityType="CRMModel.Event1" Width="1.5" PointX="19.375" PointY="3.75" />
+         <EntityTypeShape EntityType="CRMModel.Event" Width="1.5" PointX="17.375" PointY="9.75" />
+         <EntityTypeShape EntityType="CRMModel.VentureDetail" Width="1.5" PointX="9.375" PointY="18.75" />
+-        <EntityTypeShape EntityType="CRMModel.Mentor" Width="1.5" PointX="15.375" PointY="15.75" />
++        <EntityTypeShape EntityType="CRMModel.MentorDetail" Width="1.5" PointX="17.375" PointY="20.75" />
++        <EntityTypeShape EntityType="CRMModel.MentorQuestionary" Width="1.5" PointX="19.375" PointY="3.75" />
++      </Diagram>
++      <Diagram DiagramId="166883b0909c4abbb68e8bfa00892eb8" Name="Diagram2" >
+       </Diagram>
+     </edmx:Diagrams>
+   </edmx:Designer>

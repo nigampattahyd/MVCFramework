@@ -1,0 +1,1758 @@
+﻿@model CRMHub.ViewModel.CompanyModel
+
+@{
+    ViewBag.Title = "EditCompany";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script>
+    init.push(function () {
+        $('ul.bs-tabdrop-example').tabdrop();
+    });
+</script>
+
+<style type="text/css">
+    .DT-search {
+        display: none;
+    }
+
+    .DT-per-page {
+        border-right: none;
+    }
+    .pfi-clear {
+        display: none !important;
+    }
+</style>
+@*<style>
+    .pfi-clear {
+        display: none !important;
+    }
+</style>*@
+
+<script src="~/Scripts/jqte/jquery-te-1.4.0.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $('#txtPhone').bind("cut copy paste", function (e) {
+            e.preventDefault();
+        });
+
+        $('#txtFax').bind("cut copy paste", function (e) {
+            e.preventDefault();
+        });
+
+
+
+
+        $(".textEditor").jqte();
+        $('.DateP').datepicker({
+            format: 'mm/dd/yyyy'
+        });
+
+
+        $("#TAActualColumnName").keypress(function (e) {
+            if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
+                $("#errormsg").html("Digits Only").show().fadeOut("slow");
+                return false;
+            }
+        });
+
+
+
+
+
+        $("#lblErrormessage").hide();
+        BindContacts();
+        BindDocuments();
+        BindCompaniesActivity();
+
+        $('#TabStripAccountDetail_View').css("display", "block");
+        $('#TabStripContacts_View').css("display", "none");
+        $('#TabStripDocument_View').css("display", "none");
+        $('#TabStripOpenActivity_View').css("display", "none");
+
+        $('#TabStripAccountDetail').click(function () {
+            $('#TabStripAccountDetail_View').css("display", "block");
+            $('#TabStripContacts_View').css("display", "none");
+            $('#TabStripDocument_View').css("display", "none");
+            $('#TabStripOpenActivity_View').css("display", "none");
+        });
+
+        $('#TabStripContacts').click(function () {
+            $('#TabStripAccountDetail_View').css("display", "none");
+            $('#TabStripContacts_View').css("display", "block");
+            $('#TabStripDocument_View').css("display", "none");
+            $('#TabStripOpenActivity_View').css("display", "none");
+        });
+
+        $('#TabStripDocument').click(function () {
+            $('#TabStripAccountDetail_View').css("display", "none");
+            $('#TabStripContacts_View').css("display", "none");
+            $('#TabStripDocument_View').css("display", "block");
+            $('#TabStripOpenActivity_View').css("display", "none");
+        });
+
+        $('#TabStripOpenActivity').click(function () {
+            $('#TabStripAccountDetail_View').css("display", "none");
+            $('#TabStripContacts_View').css("display", "none");
+            $('#TabStripDocument_View').css("display", "none");
+            $('#TabStripOpenActivity_View').css("display", "block");
+            $("#jq-datatables-activity").dataTable().fnDestroy();
+            BindCompaniesActivity();
+        });
+
+        $('#btnSearchActivity').click(function () {
+            $("#jq-datatables-activity").dataTable().fnDestroy();
+            BindCompaniesActivity();
+        });
+
+        var actids = '@ViewBag.showActivitiestab';
+
+        if (actids != "") {
+            $('#TabStripAccountDetail_View').css("display", "none");
+            $('#TabStripContacts_View').css("display", "none");
+            $('#TabStripDocument_View').css("display", "none");
+            $('#TabStripOpenActivity_View').css("display", "block");
+            $('#TabStripOpenActivity').addClass('active');
+            $('#TabStripAccountDetail').removeClass("active");
+        }
+        var dataids = '@ViewBag.showdocumentstab';
+
+        if (dataids != "") {
+            //var href = $('.cssbuttongo').attr('href');
+            //window.location.href = href;
+            $('#TabStripAccountDetail_View').css("display", "none");
+            $('#TabStripContacts_View').css("display", "none");
+            $('#TabStripDocument_View').css("display", "block");
+            $('#TabStripOpenActivity_View').css("display", "none");
+            $('#TabStripDocument').addClass('active');
+            $('#TabStripAccountDetail').removeClass("active");
+        }
+        var dids = '@ViewBag.Showconcttab';
+
+
+        if (dids != "") {
+            //var href = $('.cssbuttongo').attr('href');
+            //window.location.href = href;
+            $('#TabStripAccountDetail_View').css("display", "none");
+            $('#TabStripContacts_View').css("display", "block");
+            $('#TabStripDocument_View').css("display", "none");
+            $('#TabStripOpenActivity_View').css("display", "none");
+            $('#TabStripContacts').addClass('active');
+            $('#TabStripAccountDetail').removeClass("active");
+        }
+
+
+
+        var ActivTab = '@ViewBag.ShowActivTab';
+
+        if (ActivTab == "activtab") {
+            //alert(ActivTab);
+            $('#TabStripAccountDetail_View').css("display", "none");
+            $('#TabStripContacts_View').css("display", "none");
+            $('#TabStripDocument_View').css("display", "none");
+            $('#TabStripOpenActivity_View').css("display", "block");
+            $('#TabStripOpenActivity').addClass('active');
+            $('#TabStripAccountDetail').removeClass("active");
+            //$("#jq-datatables-activity").dataTable().fnDestroy();
+            //  BindCompaniesActivity();
+
+        }
+
+        if (actids != "" && dataids != '' && dids != "" && ActivTab == "activtab") {
+            $('#TabMenu a:first').tab('show');
+        }
+        //$(".textEditor").jqte();
+
+        $('.DateP').datepicker({
+            format: 'mm/dd/yyyy'
+        });
+
+    });
+
+    function BindCompaniesActivity() {
+
+        var responsiveHelper = undefined;
+        var breakpointDefinition = {
+            desktop: Infinity,
+            tablet: 1024,
+
+            phone: 480
+        };
+        var tableElement = $('#jq-datatables-activity');
+        tableElement.dataTable({
+            autoWidth: false,
+            preDrawCallback: function () {
+                if (!responsiveHelper) {
+                    responsiveHelper = new ResponsiveDatatablesHelper(tableElement, breakpointDefinition);
+                }
+            },
+            rowCallback: function (nRow) {
+                responsiveHelper.createExpandIcon(nRow);
+            },
+            drawCallback: function (oSettings) {
+                responsiveHelper.respond();
+            },
+            "aLengthMenu": [[10, 25, 50], [10, 25, 50]],
+            // "order": [1, "DESC"],
+            // "iDisplayLength": 10,
+            "pagingType": "full_numbers",
+            "processing": true,
+            "serverSide": true,
+            "sAjaxSource": "getCompanyActivity",
+            "fnServerParams": function (aoData) {
+                aoData.push(
+                    { "name": "CompanyKeyword", "value": "" + $("#txtActivityKeyword").val() + "" },
+                    { "name": "CompanyType", "value": "" + $("#ddlActivityType").val() + "" },
+                    { "name": "CompanyPriority", "value": "" + $("#ddlActivityPriority").val() + "" },
+                    { "name": "CompanyStatus", "value": "" + $("#ddlActivityStatus").val() + "" }
+                    );
+            },
+            "fnServerData": function (sSource, aoData, fnCallback) {
+                $.ajax({
+                    "dataType": 'json',
+                    "contentType": "application/json; charset=utf-8",
+                    "type": "GET",
+                    "url": sSource,
+                    "data": aoData,
+                    "success":
+                                function (msg) {
+                                    //var json = jQuery.parseJSON(msg.d);
+                                    fnCallback(msg);
+                                    // $("#jq-datatables-mails").show();
+                                }
+                });
+            },
+            "asStripeClasses": ['odd gradeX', 'even gradeC'],
+            "aoColumnDefs": [{
+                "targets": [0], "visible": true, "bSortable": false, "mDataProp": "HistoryId", "render": function (data, type, row) {
+                    //return "<input type=\"checkbox\"  data-historyId=" + row["HistoryId"] + " id=\"chkRow_" + row["HistoryId"] + "\"  />";
+                    return "<input class=\"fa  fa-square-o\" type=\"checkbox\"  name=\"chkItem\" class =\"activitiescase\"  id=\"chkRow_" + row["HistoryId"] + "\"  data-historyid=\"" + row["HistoryId"] + "\" />";
+                }
+            },
+
+                { "targets": [1], "visible": true, "bSortable": false, "mDataProp": "createdBy" },
+                {
+                    "targets": [2], "visible": true, "bSortable": true, "mDataProp": "CreatedDate", "render": function (data, type, row) {
+
+                        var jsDate1 = data;
+                        if (jsDate1 == null) {
+                            return jsDate1 = "";
+                        }
+                        else if (jsDate1.value != "") {
+                            var jsDate = new Date(parseInt(row["CreatedDate"].substr(6)));
+                            return (jsDate.getMonth() + 1) + '/' + jsDate.getDate() + '/' + jsDate.getFullYear();
+                        }
+
+                    }
+                },
+                {
+                    "targets": [3], "visible": true, "bSortable": true, "mDataProp": "StartDate",
+                    //"targets": [3], "visible": true, "bSortable": true, "mDataProp": "CompletedDate",
+                    "render": function (data, type, row) {
+                        var jsDate1 = data;
+                        if (jsDate1 == null) {
+                            return jsDate1 = "";
+                        }
+                        else if (jsDate1.value != "") {
+                            var jsDate = new Date(parseInt(row["StartDate"].substr(6)));
+                            return (jsDate.getMonth() + 1) + '/' + jsDate.getDate() + '/' + jsDate.getFullYear();
+                        }
+
+                    }
+                },
+                { "targets": [4], "visible": true, "bSortable": true, "mDataProp": "HistoryType" },
+                { "targets": [5], "visible": true, "bSortable": true, "mDataProp": "ApplicantName" },
+                { "targets": [6], "visible": true, "bSortable": true, "mDataProp": "Status" },
+                { "targets": [7], "visible": true, "bSortable": true, "mDataProp": "CommentedBy" },
+                {
+                    "targets": [8], "visible": true, "bSortable": false, "mDataProp": "HistoryId",
+                    "render": function (data, type, row) {
+                        return "<a href=\"#\" onclick=\"return OpenAttachmentPopUp('" + row["HistoryId"] + "')\">Attachment</a>";
+                    }
+                }
+            ],
+
+        }).api();
+
+
+
+        $('#jq-datatables-activity').on('click', 'th input:checkbox', function () {
+            var that = this;
+            $(this).closest('table').find('tr > td:first-child input:checkbox').each(function () {
+                this.checked = that.checked;
+                $(this).closest('tr').toggleClass('selected');
+            });
+        });
+        $('#jq-datatables-activity tbody').click(function () {
+
+            if ($('#jq-datatables-activity input[name="chkItem"]:checked').length == $('#jq-datatables-activity input[name="chkItem"]').length) {
+                $("#activitiesselectall").prop("checked", true);
+            } else {
+                $("#activitiesselectall").prop("checked", false);
+            }
+        });
+    }
+
+    function OpenAttachmentPopUp(HistoryID) {
+
+        var URL = "AttachmentActivity";
+        $.ajax({
+            url: URL,
+            type: "GET",
+            async: false,
+            data: { HistoryID: HistoryID },
+            success: function (data) {
+
+                if (data != null) {
+                    $('#tblModalAttachment').empty();
+                    $('#tblModalAttachment').empty().append(data);
+                }
+            },
+            error: function (error) {
+
+
+            }
+        });
+        $('#myModalAttachment').modal("show");
+    }
+
+    function BindContacts() {
+        var responsiveHelper = undefined;
+        var breakpointDefinition = {
+            desktop: Infinity,
+            tablet: 1024,
+            tabletlandscape: 768,
+            phone: 480
+        };
+        var tableElement = $('#jq-datatables-contacts');
+        tableElement.dataTable({
+            autoWidth: false,
+            preDrawCallback: function () {
+                if (!responsiveHelper) {
+                    responsiveHelper = new ResponsiveDatatablesHelper(tableElement, breakpointDefinition);
+                }
+            },
+            rowCallback: function (nRow) {
+                responsiveHelper.createExpandIcon(nRow);
+            },
+            drawCallback: function (oSettings) {
+                responsiveHelper.respond();
+            },
+            "aLengthMenu": [[10, 25, 50], [10, 25, 50]],
+            "columnDefs": [{ targets: 'no-sort', orderable: false, targets: [0, 1] }],
+            "pagingType": "full_numbers",
+            "processing": true
+        }).api();
+
+        $('#jq-datatables-contacts').on('click', 'th input:checkbox', function () {
+            var that = this;
+            $(this).closest('table').find('tr > td:first-child input:checkbox').each(function () {
+                this.checked = that.checked;
+                $(this).closest('tr').toggleClass('selected');
+            });
+        });
+        $('#jq-datatables-contacts tbody').click(function () {
+
+            if ($('#jq-datatables-contacts input[name="contactschkItem"]:checked').length == $('#jq-datatables-contacts input[name="contactschkItem"]').length) {
+                $("#contactsselectall").prop("checked", true);
+            } else {
+                $("#contactsselectall").prop("checked", false);
+            }
+        });
+
+
+    }
+
+
+    function BindDocuments() {
+
+        var responsiveHelper = undefined;
+        var breakpointDefinition = {
+            tablet: 1024,
+            tabletlandscape: 768,
+            phone: 480
+        };
+        var tableElement = $('#jq-datatables-documents');
+        tableElement.dataTable({
+            autoWidth: false,
+            preDrawCallback: function () {
+                if (!responsiveHelper) {
+                    responsiveHelper = new ResponsiveDatatablesHelper(tableElement, breakpointDefinition);
+                }
+            },
+            rowCallback: function (nRow) {
+                responsiveHelper.createExpandIcon(nRow);
+            },
+            drawCallback: function (oSettings) {
+                responsiveHelper.respond();
+            },
+            "aLengthMenu": [[10, 25, 50], [10, 25, 50]],
+            "columnDefs": [{ targets: 'no-sort', orderable: false, targets: [0, 1] }],
+            "pagingType": "full_numbers",
+            "processing": true
+        }).api();
+        $('#jq-datatables-documents').on('click', 'th input:checkbox', function () {
+            var that = this;
+            $(this).closest('table').find('tr > td:first-child input:checkbox').each(function () {
+                this.checked = that.checked;
+                $(this).closest('tr').toggleClass('selected');
+            });
+        });
+        $('#jq-datatables-documents tbody').click(function () {
+
+            if ($('#jq-datatables-documents input[name="DocumentchkItem"]:checked').length == $('#jq-datatables-documents input[name="DocumentchkItem"]').length) {
+                $("#Documentselectall").prop("checked", true);
+            } else {
+                $("#Documentselectall").prop("checked", false);
+            }
+        });
+    }
+
+    function onCheckFillAddress() {
+        if (document.getElementById('chkAddress').checked == true) {
+
+            var address1 = document.getElementById('txtAddressMailing').value;
+            var address2 = document.getElementById('txtShippingStreet').value;
+            var city = document.getElementById('txtShippingCity').value;
+            var postal = document.getElementById('txtShippingZip').value;
+            var state = document.getElementById('txtShippingstate').value;
+            var country = document.getElementById('txtShippingCountry').value;
+
+            document.getElementById('txtAddressBilling').value = address1;
+            document.getElementById('txtbillingStreet').value = address2;
+            document.getElementById('txtBillingCity').value = city;
+            document.getElementById('txtBillingZip').value = postal;
+            document.getElementById('txtBillingstate').value = state;
+            document.getElementById('txtBillingCountry').value = country;
+        }
+        else if (document.getElementById('chkAddress').checked == false) {
+            document.getElementById('txtAddressBilling').value = '';
+            document.getElementById('txtbillingStreet').value = '';
+            document.getElementById('txtBillingCity').value = '';
+            document.getElementById('txtBillingZip').value = '';
+            document.getElementById('txtBillingstate').value = '';
+            document.getElementById('txtBillingCountry').value = '';
+        }
+    }
+
+
+
+    function show_NewAccountPopUp() {
+
+        $('#loading').css('display', 'block');
+        $.ajax({
+            //url: "ListParentComp",
+            url:"ListParentCompIndex",
+            type: "GET",
+            async: false,
+            success: function (data) {
+                if (data != null) {
+                    $('#tblCompanyList').empty();
+                    $('#tblCompanyList').empty().append(data);
+                }
+            },
+            error: function () {
+
+            }
+        });
+        $('#myModal').modal("show");
+    }
+
+
+
+
+
+</script>
+
+
+<div id="content-wrapper">
+    <div id="CustomBootstrapAlertBox">
+    </div>
+    <div class="row">
+
+
+
+        <div class="panel">
+
+
+            <div class="panel-heading">
+                <div class="row">
+                    <!-- Page header, center on small screens -->
+                    <h1 class="col-xs-6 col-sm-4 text-left text-left-sm panel-title"><i class="fa fa-user page-header-icon"></i>&nbsp; Company(@Html.DisplayFor(m => m.compnay.Account_Name, new { @id = "txtCompanyName", @class = "form-control", @maxlength = "50" }))</h1>
+                    <div class="col-xs-6 col-sm-8">
+                        <div class="row">
+                            <div class="pull-right">
+                                @*<a href="#" class="btn btn-flat btn-labeled btn-primary" tabindex="-1"
+                                    data-toggle="modal" data-target="#uidemo-modals-alerts-info"><span class="btn-label icon fa fa-question-circle"></span>Help</a>*@
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel-body">
+
+
+                <span id="errorsymbol" style="color:red;display:none;margin-left:5px;" class="fa fa-exclamation-circle"></span><div id="ErrorMessages" style="margin-left:20px;color:red;font-size:15px;margin-top:-19px">
+
+                </div>
+
+                <div class="row">
+
+                    <!-- Tabs -->
+                    <ul class="nav nav-tabs bs-tabdrop-example" id="TabMenu" style="margin-top:20px;">
+                        <li id="TabStripAccountDetail" class="active"><a href="#TabStripAccountDetail_View" data-toggle="tab">Company Detail</a></li>
+                        <li id="TabStripContacts"><a href="#TabStripContacts_View" data-toggle="tab">Contacts</a></li>
+                        <li id="TabStripDocument"><a href="#TabStripDocument_View" data-toggle="tab" class="cssbuttongo">Document</a></li>
+                        <li id="TabStripOpenActivity"><a href="#TabStripOpenActivity_View" data-toggle="tab">Activity</a></li>
+                    </ul>
+                    <div class="tab-content tab-content-bordered">
+                        @using (Html.BeginForm("UpdateCompany", "ManageCompany", FormMethod.Post))
+                        {
+
+                            <div class="row">
+                                <div class="page-header-breadcrumb">
+                                    <div class="col-sm-8">
+                                        <!--<label class="control-label">
+                                            <asp:Label ID="lblMessage" runat="server" ForeColor="Red"></asp:Label>
+                                        </label>-->
+                                    </div>
+
+                                    <div class="col-sm-4" style="text-align:right; margin:0px 0px 10px 0px; padding:0px;">
+                                        <ul class="table-nav-item" style="float: right; margin-bottom:5px;">
+
+
+                                            <li>
+
+                                                <button class="btn btn-flat btn-labeled btn-primary" id="btnSave" style=" margin:0px 3px 0px 10px;">
+                                                    <span class="btn-label icon fa fa-save"></span>Save
+                                                </button>
+                                            </li>
+
+                                            <li>
+                                                <a style="color: #fff; text-decoration: none; padding: 0px; font-weight: normal" class="btn btn-flat btn-labeled btn-primary" href="@Url.Action("Index", "ManageCompany")">
+                                                    <span class="btn-label icon fa fa-backward" style="margin-right:6px;"> </span>
+                                                    Back
+                                                </a>
+                                            </li>
+
+
+
+
+
+                                            @*<li class="btn btn-flat btn-labeled btn-primary" style=" margin:0px 3px 0px 0px;">
+                                                    @Html.ActionLink("Back", "Index", "ManageCompany", new { @style = "color:#fff; text-decoration:none; float:right" })<span class="btn-label icon fa fa-backward" style="margin-right:6px; "> </span>
+
+                                                </li>*@
+                                        </ul>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane" id="TabStripAccountDetail_View">
+                                <div class="row">
+
+                                    <div class="panel-group" id="accordion-example">
+                                        <!-- / .panel -->
+                                        <div class="panel">
+                                            <div class="panel-heading">
+                                                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion-example"
+                                                   href="#collapse2">Company Detail</a>
+                                            </div>
+                                            <!-- / .panel-heading -->
+                                            <div id="collapse2" class="panel-collapse collapse in" style="height: auto;">
+                                                <div class="panel-body">
+                                                    <div class="col-sm-12 no-padding-hr">
+                                                        <div class="row">
+                                                            <div class="col-sm-12" style="text-align: right">
+                                                                <label class="control-label">
+                                                                    Company ID :
+                                                                    @Html.DisplayFor(m => m.compnay.AccountId, new { @id = "txtCompanyId", @class = "form-control input-sm", @maxlength = "50", @readonly = "false" })
+                                                                    @Html.HiddenFor(m => m.compnay.AccountId, new { @id = "hdAccntId" })
+                                                                 </label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+
+                                                            <div class="col-sm-3">
+                                                                <div class="form-group no-margin-hr">
+                                                                    <label class="control-label">Company Name :<span style="color: red">*</span></label>
+                                                                    @*@Html.TextBoxFor(m => m.compnay.Account_Name, new { @id = "txtCompanyName", @class = "form-control input-sm", @maxlength = "50", @validate = "Required", @data_val_required = "Company Name", @onblur = "return Companyexists(this);" })*@
+                                                                    @Html.TextBoxFor(m => m.compnay.Account_Name, new { @id = "txtCompanyName", @class = "form-control input-sm", @maxlength = "50", @validate = "Required", @data_val_required = "Company Name"})
+                                                                    @Html.HiddenFor(m => m.compnay.Account_Name, new { @id = "hdCompanyName" })
+                                                                    @Html.ValidationMessageFor(m => m.compnay.Account_Name, "", new { @class = "text-danger" })
+
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-3">
+                                                                <div class="form-group no-margin-hr">
+                                                                    <label class="control-label">Phone :</label>
+                                                                    @Html.TextBoxFor(m => m.compnay.Phone, new { @id = "txtPhone", @class = "form-control input-sm", @maxlength = "20", onkeypress = "return onlynumbers(event,this);" })
+
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-3">
+                                                                <div class="form-group no-margin-hr">
+                                                                    <label class="control-label">Fax :</label>
+                                                                    @Html.TextBoxFor(m => m.compnay.Fax, new { @id = "txtFax", @class = "form-control input-sm", @maxlength = "20", onkeypress = "return onlynumbers(event,this);" })
+
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-3">
+                                                                <div class="form-group no-margin-hr">
+                                                                    <label class="control-label">Company Site :</label>
+                                                                    @Html.TextBoxFor(m => m.compnay.AccountSite, new { @id = "txtCompanySite", @class = "form-control input-sm", @maxlength = "50" })
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-sm-3">
+                                                                <div class="form-group no-margin-hr">
+                                                                    <label class="control-label">Parent Company :</label>
+                                                                    <div class="input-group">
+                                                                        @Html.TextBoxFor(m => m.compnay.Parent_Account, new { @id = "txtParentAccountName", @class = "form-control input-sm", @maxlength = "30" })
+
+
+                                                                        <span class="input-group-addon" type=" button" style="cursor:pointer;" onclick="return show_NewAccountPopUp(750, 450);">
+                                                                            <i class="fa fa-search"></i>
+
+                                                                            @Html.HiddenFor(m => m.compnay.ParentAccountId, new { @id = "hdParentAccountId" })
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-3">
+                                                                <div class="form-group no-margin-hr">
+                                                                    <label class="control-label">WebSite :</label>
+                                                                    @Html.TextBoxFor(m => m.compnay.Website, new { @id = "txtWebsite", @class = "form-control input-sm", @maxlength = "50" })
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-3">
+                                                                <div class="form-group no-margin-hr">
+                                                                    <label class="control-label">Company Number :</label>
+                                                                    @Html.TextBoxFor(m => m.compnay.AcountNumber, new { @id = "txtCompanyNumber", @class = "form-control input-sm", @maxlength = "50", @readonly = "false" })
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-3">
+                                                                <div class="form-group no-margin-hr">
+                                                                    <label class="control-label">Ownership :</label>
+                                                                    @Html.TextBoxFor(m => m.compnay.Ownership, new { @id = "txtOwnership", @class = "form-control input-sm", @maxlength = "50" })
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-sm-3">
+                                                                <div class="form-group no-margin-hr">
+                                                                    <label class="control-label">Type :</label>
+                                                                    @Html.DropDownListFor(m => m.compnay.Account_type, ViewBag.CompanyType as List<SelectListItem>, new { @id = "ddlType", @class = "form-control input-sm" })
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-3">
+                                                                <div class="form-group no-margin-hr">
+                                                                    <label class="control-label">Employees :</label>
+                                                                    @Html.TextBoxFor(m => m.compnay.Employees, new { @id = "txtEmployees", @class = "form-control numericmask" })
+
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-3">
+                                                                <div class="form-group no-margin-hr">
+                                                                    <label class="control-label">Industry :</label>
+                                                                    @Html.DropDownListFor(m => m.compnay.Account_Industries, ViewBag.IndustryList as List<SelectListItem>, new { @id = "drpIndustry", @class = "form-control input-sm" })
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-3">
+                                                                <div class="form-group no-margin-hr">
+                                                                    <label class="control-label">SIC Code :</label>
+                                                                    @Html.TextBoxFor(m => m.compnay.SicCode, new { @id = "txtSicCode", @class = "form-control input-sm", @maxlength = "50" })
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-sm-3">
+                                                                <div class="form-group no-margin-hr">
+                                                                    <label class="control-label">Annual Revenue :</label>
+                                                                    @Html.TextBoxFor(m => m.compnay.AnnualRevenue, new { @id = "txtAnnualRev", @class = "form-control input-sm", @maxlength = "50" })
+
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-3">
+                                                                <div class="form-group no-margin-hr">
+                                                                    <label class="control-label">NAICS Code :</label>
+                                                                    @Html.TextBoxFor(m => m.compnay.Naicscode, new { @id = "txtNaicsCode", @class = "form-control input-sm", @maxlength = "6" })
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-3">
+                                                                <div class="form-group no-margin-hr">
+                                                                    <label class="control-label">Referred By :</label>
+                                                                    @Html.DropDownListFor(m => m.compnay.ReferredBy, ViewBag.ReferredBy as List<SelectListItem>, new { @id = "ddlTKOInfo", @class = "form-control input-sm" })
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-3">
+                                                                <div class="form-group no-margin-hr">
+                                                                    <label class="control-label">Status :</label>
+                                                                    @Html.DropDownListFor(m => m.compnay.Status, ViewBag.Status as List<SelectListItem>, new { @id = "ddlstatus", @class = "form-control input-sm" })
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- / .panel-body -->
+                                            </div>
+                                            <!-- / .collapse -->
+                                        </div>
+                                        <!-- / .panel -->
+                                        <div class="panel">
+                                            <div class="panel-heading">
+                                                <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion-example"
+                                                   href="#collapse4">Address Detail</a>
+                                            </div>
+                                            <!-- / .panel-heading -->
+                                            <div id="collapse4" class="panel-collapse collapse">
+                                                <div class="panel-body">
+                                                    <div class="col-sm-12 no-padding-hr">
+                                                        <div class="row">
+                                                            <div class="col-sm-3">
+                                                                <div class="form-group no-margin-hr">
+                                                                    <span class="label label-primary label-tag">MAILING</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-sm-3">
+                                                                <div class="form-group no-margin-hr">
+                                                                    <label class="control-label">
+                                                                        Address&nbsp;1 :
+                                                                    </label>
+                                                                    @Html.TextBoxFor(m => m.compnay.MailingAddress, new { @id = "txtAddressMailing", @class = "form-control input-sm", @maxlength = "50" })
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-3">
+                                                                <div class="form-group no-margin-hr">
+                                                                    <label class="control-label">
+                                                                        Address&nbsp;2 :
+                                                                    </label>
+                                                                    @Html.TextBoxFor(m => m.compnay.Shippingstreet, new { @id = "txtShippingStreet", @class = "form-control input-sm", @maxlength = "50" })
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-3">
+                                                                <div class="form-group no-margin-hr">
+                                                                    <label class="control-label">
+                                                                        City :
+                                                                    </label>
+                                                                    @Html.TextBoxFor(m => m.compnay.Shippingcity, new { @id = "txtShippingCity", @class = "form-control input-sm", @maxlength = "50" })
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-3">
+                                                                <div class="form-group no-margin-hr">
+
+                                                                    <label class="control-label">State :</label>
+                                                                    @*@Html.DropDownListFor(m => m.compnay.Shippingstate, ViewBag.StateList as List<SelectListItem>, new { @id = "ddlstatus", @class = "form-control input-sm" })*@
+                                                                    @Html.TextBoxFor(m => m.compnay.Shippingstate, new { @id = "txtShippingstate", @class = "form-control input-sm", @maxlength = "50" })
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-sm-3">
+                                                                <div class="form-group no-margin-hr">
+                                                                    <label class="control-label">Zip Code :</label>
+                                                                    @Html.TextBoxFor(m => m.compnay.Shippingzip, new { @id = "txtShippingZip", @class = "form-control zipmask" })
+
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-3">
+                                                                <div class="form-group no-margin-hr">
+                                                                    <label class="control-label">
+                                                                        Country :
+                                                                    </label>
+                                                                    @Html.TextBoxFor(m => m.compnay.Shippingcountry, new { @id = "txtShippingCountry", @class = "form-control input-sm", @maxlength = "50" })
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-sm-3">
+                                                                <div class="form-group no-margin-hr">
+                                                                    <span class="label label-primary label-tag">BILLING :</span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-3">
+                                                                <div class="form-group no-margin-hr">
+                                                                    <label class="control-label"></label>
+                                                                    <div class="col-sm-12">
+                                                                        <label class="checkbox-inline">
+                                                                            <input type="checkbox" class="px" id="chkAddress" onclick="onCheckFillAddress();"><span class="lbl">Same as Mailing</span>
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-sm-3">
+                                                                <div class="form-group no-margin-hr">
+                                                                    <label class="control-label">
+                                                                        Address&nbsp;1 :
+                                                                    </label>
+                                                                    @Html.TextBoxFor(m => m.compnay.BillingAddress, new { @id = "txtAddressBilling", @class = "form-control input-sm", @maxlength = "50" })
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-3">
+                                                                <div class="form-group no-margin-hr">
+                                                                    <label class="control-label">
+                                                                        Address&nbsp;2 :
+                                                                    </label>
+                                                                    @Html.TextBoxFor(m => m.compnay.Billingstreet, new { @id = "txtbillingStreet", @class = "form-control input-sm", @maxlength = "50" })
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-3">
+                                                                <div class="form-group no-margin-hr">
+                                                                    <label class="control-label">
+                                                                        City :
+                                                                    </label>
+                                                                    @Html.TextBoxFor(m => m.compnay.Billingcity, new { @id = "txtBillingCity", @class = "form-control input-sm", @maxlength = "50" })
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-3">
+                                                                <div class="form-group no-margin-hr">
+                                                                    <label class="control-label">
+                                                                        State :
+                                                                    </label>
+                                                                    @*@Html.DropDownListFor(m => m.compnay.Billingstate, ViewBag.StateList as List<SelectListItem>, new { @id = "ddlstatus", @class = "form-control input-sm" })*@
+                                                                    @Html.TextBoxFor(m => m.compnay.Billingstate, new { @id = "txtBillingstate", @class = "form-control input-sm", @maxlength = "50" })
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-sm-3">
+                                                                <div class="form-group no-margin-hr">
+                                                                    <label class="control-label">
+                                                                        Zip Code :
+                                                                    </label>
+                                                                    @Html.TextBoxFor(m => m.compnay.Billingzip, new { @id = "txtBillingZip", @class = "form-control zipmask" })
+
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-3">
+                                                                <div class="form-group no-margin-hr">
+                                                                    <label class="control-label">
+                                                                        Country :
+                                                                    </label>
+                                                                    @Html.TextBoxFor(m => m.compnay.Billingcountry, new { @id = "txtBillingCountry", @class = "form-control input-sm" })
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- / .panel-body -->
+                                            </div>
+                                            <!-- / .collapse -->
+                                        </div>
+
+                                        <div class="panel">
+                                            <div class="panel-heading">
+                                                <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion-example"
+                                                   href="#collapse8">Administrative Detail</a>
+                                            </div>
+                                            <!-- / .panel-heading -->
+                                            <div id="collapse8" class="panel-collapse collapse">
+                                                <div class="panel-body">
+                                                    <div class="col-sm-12 no-padding-hr">
+                                                        <div class="row">
+                                                            <div class="col-sm-4">
+                                                                <div class="form-group no-margin-hr">
+                                                                    <label class="control-label">Sales Representative :</label>
+                                                                    @Html.DropDownListFor(m => m.compnay.SalesMgr1, ViewBag.SalesList as List<SelectListItem>, new { @id = "drpSalesRepresentative1", @class = "form-control input-sm" })
+                                                                </div>
+                                                            </div>
+                                                            @*<div class="col-sm-4">
+                                                                <div class="form-group no-margin-hr">
+                                                                    <label class="control-label">Sales Representative 2 :</label>
+                                                                    @Html.DropDownListFor(m => m.compnay.SalesMgr2, ViewBag.SalesList as List<SelectListItem>, new { @id = "drpSalesRepresentative2", @class = "form-control input-sm" })
+                                                                </div>
+                                                            </div>*@
+                                                            <div class="col-sm-4">
+                                                                <div class="form-group no-margin-hr">
+                                                                    <label class="control-label">Office / Location :</label>
+                                                                    @Html.DropDownListFor(m => m.compnay.Account_office, ViewBag.BranchList as List<SelectListItem>, new { @id = "drpOffLoc", @class = "form-control input-sm" })
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- / .panel-body -->
+                                            </div>
+                                            <!-- / .collapse -->
+                                        </div>
+                                        <!-- / .panel -->
+                                        <div class="panel">
+                                            <div class="panel-heading">
+                                                <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion-example"
+                                                   href="#collapse10">Description</a>
+                                            </div>
+                                            <!-- / .panel-heading -->
+                                            <div id="collapse10" class="panel-collapse collapse">
+                                                <div class="panel-body">
+                                                    @Html.TextAreaFor(m => m.compnay.Description, new { @id = "txtDescription", @class = "textEditor" })
+                                                </div>
+                                                <!-- / .panel-body -->
+                                            </div>
+                                            <!-- / .collapse -->
+                                        </div>
+                                        <!-- / .panel -->
+                                        <!-- / .panel -->
+                                        @*Binding Custom Fields*@
+                                        <div class="panel">
+                                            <div class="panel-heading">
+                                                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion-example"
+                                                   href="#collapse1c">Custom Fields</a>
+                                            </div>
+                                            <!-- / .panel-heading -->
+                                            <div id="collapse1c" class="panel-collapse collapse" style="height: auto;">
+                                                <div class="panel-body">
+                                                    <div class="col-sm-12 no-padding-hr">
+                                                        <div class="row">
+                                                            @for (int i = 0; i < Model.lstcustomVM.Count; i++)
+                                                            {
+                                                                <div class="col-sm-4">
+                                                                    <div class="form-group no-margin-hr">
+                                                                        @Html.HiddenFor(m => m.lstcustomVM[i].Column_Type)
+                                                                        @Html.HiddenFor(m => m.lstcustomVM[i].FieldId)
+                                                                        @Html.HiddenFor(m => m.lstcustomVM[i].CValueId)
+                                                                        @if (Model.lstcustomVM[i].Column_Type == "textbox")
+                                                                        {
+                                                                            @Html.DisplayFor(m => m.lstcustomVM[i].Column_Label)
+                                                                            if (@Model.lstcustomVM[i].RequiredField == true)
+                                                                            {
+                                                                                <span style="color: red">*</span>
+                                                                                @Html.TextBoxFor(m => m.lstcustomVM[i].CustomFieldvalue, new { @class = "form-control input-sm", @MaxLength = @Model.lstcustomVM[i].MaxLength, @TabIndex = "37", rows = "1", cols = "1", @validate = "Required", @data_val_required = @Model.lstcustomVM[i].Column_Label, @title = @Model.lstcustomVM[i].HoverText, })
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                @*@Html.TextBoxFor(m => m.lstcustomVM[i].CustomFieldvalue, new { @class = "form-control input-sm", @MaxLength = @Model.lstcustomVM[i].MaxLength, @TabIndex = "37", rows = "1", cols = "1", @validate = "Required", @data_val_required = @Model.lstcustomVM[i].Column_Label, @title = @Model.lstcustomVM[i].HoverText, })*@
+                                                                                @Html.TextBoxFor(m => m.lstcustomVM[i].CustomFieldvalue, new { @class = "form-control input-sm", @MaxLength = @Model.lstcustomVM[i].MaxLength, @TabIndex = "37", rows = "1", cols = "1"})
+                                                                            }
+
+                                                                        }
+
+
+                                                                        @if (Model.lstcustomVM[i].Column_Type == "textarea")
+                                                                        {
+                                                                            @Html.DisplayFor(m => m.lstcustomVM[i].Column_Label)
+                                                                            if (@Model.lstcustomVM[i].RequiredField == true)
+                                                                            {
+                                                                                <span style="color: red">*</span>
+                                                                                @Html.TextAreaFor(m => m.lstcustomVM[i].CustomFieldvalue, new { @class = "form-control input-sm", @MaxLength = @Model.lstcustomVM[i].MaxLength, @TabIndex = "37", rows = "1", cols = "1", @validate = "Required", @data_val_required = @Model.lstcustomVM[i].Column_Label, @title = @Model.lstcustomVM[i].HoverText, })
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                @Html.TextAreaFor(m => m.lstcustomVM[i].CustomFieldvalue, new { @class = "form-control input-sm", @MaxLength = @Model.lstcustomVM[i].MaxLength, @TabIndex = "37", rows = "1", cols = "1", @title = @Model.lstcustomVM[i].HoverText })
+                                                                            }
+
+                                                                        }
+                                                                        @if (Model.lstcustomVM[i].Column_Type == "textfield")
+                                                                        {
+
+
+                                                                            @Html.DisplayFor(m => m.lstcustomVM[i].Column_Label)
+                                                                            if (@Model.lstcustomVM[i].RequiredField == true)
+                                                                            {
+                                                                                <span style="color: red">*</span>
+                                                                                @Html.TextBoxFor(m => m.lstcustomVM[i].CustomFieldvalue, new { @id = "TAActualColumnName1", @class = "form-control input-sm ", @title = @Model.lstcustomVM[i].HoverText, @MaxLength = @Model.lstcustomVM[i].MaxLength, @TabIndex = "37", rows = "1", cols = "1", @validate = "Required", @data_val_required = @Model.lstcustomVM[i].Column_Label })
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                @Html.TextBoxFor(m => m.lstcustomVM[i].CustomFieldvalue, new { @id = "TAActualColumnName1", @class = "form-control input-sm ", @title = @Model.lstcustomVM[i].HoverText, @MaxLength = @Model.lstcustomVM[i].MaxLength, @TabIndex = "37", rows = "1", cols = "1" })
+                                                                            }
+
+
+                                                                        }
+                                                                        @if (Model.lstcustomVM[i].Column_Type == "date")
+                                                                        {
+
+                                                                            @Html.DisplayFor(m => m.lstcustomVM[i].Column_Label)
+                                                                            if (@Model.lstcustomVM[i].RequiredField == true)
+                                                                            {
+                                                                                <span style="color: red">*</span>
+                                                                                @Html.TextBoxFor(m => m.lstcustomVM[i].CustomFieldvalue, new { @id = "TAActualDate", @class = "form-control input-sm DateP ", @placeholder = "Select Date", @title = @Model.lstcustomVM[i].HoverText, @MaxLength = @Model.lstcustomVM[i].MaxLength, @TabIndex = "37", rows = "1", cols = "1", @validate = "Required", @data_val_required = @Model.lstcustomVM[i].Column_Label })
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                @Html.TextBoxFor(m => m.lstcustomVM[i].CustomFieldvalue, new { @id = "TAActualDate", @class = "form-control input-sm DateP ", @placeholder = "Select Date", @title = @Model.lstcustomVM[i].HoverText, @MaxLength = @Model.lstcustomVM[i].MaxLength, @TabIndex = "37", rows = "1", cols = "1", })
+                                                                            }
+
+                                                                        }
+                                                                        @if (Model.lstcustomVM[i].Column_Type == "numeric")
+                                                                        {
+
+                                                                            @Html.DisplayFor(m => m.lstcustomVM[i].Column_Label)
+
+                                                                            if (@Model.lstcustomVM[i].RequiredField == true)
+                                                                            {
+                                                                                <span style="color: red">*</span>
+                                                                                @Html.TextBoxFor(m => m.lstcustomVM[i].CustomFieldvalue, new { @id = "TAActualColumnName", @class = "form-control input-sm", @title = @Model.lstcustomVM[i].HoverText, @MaxLength = @Model.lstcustomVM[i].MaxLength, @TabIndex = "37", rows = "1", cols = "1", @validate = "Required", @data_val_required = @Model.lstcustomVM[i].Column_Label })
+
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                @Html.TextBoxFor(m => m.lstcustomVM[i].CustomFieldvalue, new { @id = "TAActualColumnName", @class = "form-control input-sm ", @title = @Model.lstcustomVM[i].HoverText, @MaxLength = @Model.lstcustomVM[i].MaxLength, @TabIndex = "37", rows = "1", cols = "1" })
+                                                                            }
+                                                                        }
+
+                                                                        @if (Model.lstcustomVM[i].Column_Type == "dropdown")
+                                                                        {
+
+                                                                            @Html.DisplayFor(m => m.lstcustomVM[i].Column_Label)
+                                                                            if (@Model.lstcustomVM[i].RequiredField == true)
+                                                                            {
+                                                                                <span style="color: red">*</span>
+                                                                                @Html.DropDownListFor(m => m.lstcustomVM[i].DefaultValue, new SelectList(Model.lstcustomVM[i].lstCustomOptionsVal, "DrpValueId", "DrpValue", Model.lstcustomVM[i].DefaultValue), "Select", new { @class = "form-control input-sm", @id = "dpOptions", @validate = "Required", @data_val_required = @Model.lstcustomVM[i].Column_Label, @title = @Model.lstcustomVM[i].HoverText, })
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                @Html.DropDownListFor(m => m.lstcustomVM[i].DefaultValue, new SelectList(Model.lstcustomVM[i].lstCustomOptionsVal, "DrpValueId", "DrpValue", Model.lstcustomVM[i].DefaultValue), "Select", new { @class = "form-control input-sm", @id = "dpOptions", @title = @Model.lstcustomVM[i].HoverText, })
+                                                                                @*@Html.DropDownListFor(m => m.lstcustomVM[i].CustomFieldvalue, new SelectList(Model.lstcustomVM[i].lstCustomOptionsVal, "DrpValueId", "DrpValue", Model.lstcustomVM[i].CustomFieldvalue), new { @class = "form-control input-sm", @id = "dpOptionsEdit" })*@
+                                                                            }
+
+                                                                        }
+
+                                                                        @if (Model.lstcustomVM[i].Column_Type == "radiobutton")
+                                                                        {
+                                                                            @Html.DisplayFor(m => m.lstcustomVM[i].Column_Label)
+                                                                            if (@Model.lstcustomVM[i].RequiredField == true)
+                                                                            {
+
+                                                                                <span style="color: red">*</span>
+                                                                                <div>
+
+                                                                                    @for (int a = 0; a < Model.lstcustomVM[i].lstCustomOptionsVal.Count; a++)
+                                                                                    {
+                                                                                        @Html.HiddenFor(m => m.lstcustomVM[i].lstCustomOptionsVal[a].DrpValueId)
+                                                                                        @Html.HiddenFor(m => m.lstcustomVM[i].lstCustomOptionsVal[a].FieldId)
+                                                                                        @*@Html.RadioButtonFor(m => m.lstcustomVM[i].CustomFieldvalue, Model.lstcustomVM[i].lstCustomOptionsVal[a].DrpValueId, new { isChecked = Model.lstcustomVM[i].lstCustomOptionsVal[a].IsDefault, @validate = "Required", @data_val_required = @Model.lstcustomVM[i].Column_Label })*@
+                                                                                        if (Model.lstcustomVM[i].lstCustomOptionsVal[a].IsDefault == true)
+                                                                                        {
+                                                                                            @Html.RadioButtonFor(m => m.lstcustomVM[i].DefaultValue, Model.lstcustomVM[i].lstCustomOptionsVal[a].DrpValueId, new { @checked = "checked", @title = @Model.lstcustomVM[i].HoverText, @validate = "Required", @data_val_required = @Model.lstcustomVM[i].Column_Label })
+                                                                                        }
+                                                                                        else
+                                                                                        {
+                                                                                            @Html.RadioButtonFor(m => m.lstcustomVM[i].DefaultValue, Model.lstcustomVM[i].lstCustomOptionsVal[a].DrpValueId, new { @title = @Model.lstcustomVM[i].HoverText, @validate = "Required", @data_val_required = @Model.lstcustomVM[i].Column_Label })
+                                                                                        }
+                                                                                        @Html.DisplayFor(m => m.lstcustomVM[i].lstCustomOptionsVal[a].DrpValue, new { @class = "checkbox-inline" })
+                                                                                    }
+                                                                                </div>
+                                                                            }
+
+                                                                            else
+                                                                            {
+                                                                                <div>
+                                                                                    @for (int a = 0; a < Model.lstcustomVM[i].lstCustomOptionsVal.Count; a++)
+                                                                                    {
+                                                                                        @Html.HiddenFor(m => m.lstcustomVM[i].lstCustomOptionsVal[a].DrpValueId)
+                                                                                        @Html.HiddenFor(m => m.lstcustomVM[i].lstCustomOptionsVal[a].FieldId)
+                                                                                        @*@Html.RadioButtonFor(m => m.lstcustomVM[i].CustomFieldvalue, Model.lstcustomVM[i].lstCustomOptionsVal[a].DrpValueId, new { isChecked = Model.lstcustomVM[i].lstCustomOptionsVal[a].IsDefault })*@
+                                                                                        if (Model.lstcustomVM[i].lstCustomOptionsVal[a].IsDefault == true)
+                                                                                        {
+                                                                                            @Html.RadioButtonFor(m => m.lstcustomVM[i].DefaultValue, Model.lstcustomVM[i].lstCustomOptionsVal[a].DrpValueId, new { @checked = "checked", @title = @Model.lstcustomVM[i].HoverText, })
+                                                                                        }
+                                                                                        else
+                                                                                        {
+                                                                                            @Html.RadioButtonFor(m => m.lstcustomVM[i].DefaultValue, Model.lstcustomVM[i].lstCustomOptionsVal[a].DrpValueId, new { @title = @Model.lstcustomVM[i].HoverText, })
+                                                                                        }
+                                                                                        @Html.DisplayFor(m => m.lstcustomVM[i].lstCustomOptionsVal[a].DrpValue, new { @class = "checkbox-inline" })
+                                                                                    }
+                                                                                </div>
+                                                                            }
+                                                                        }
+                                                                    </div>
+                                                                </div>
+                                                            }
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        @*End Of Binding Custom Fields*@
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
+                        <div class="tab-pane" id="TabStripContacts_View">
+                            <div class="row">
+                                <div class="col-sm-12" style="margin-bottom: 8px; margin-top:5px;">
+                                    <ul class="table-nav-item">
+                                        <li class="btn btn-flat btn-labeled btn-primary" style=" float:left; margin-left:3px;">
+
+                                            <a style="color: #fff; text-decoration: none; padding: 0px; font-weight: normal" id="btnAddContact" href="@Url.Action("Createcontact","Contact", new { firstItem=11})">
+
+                                                Add
+                                                <span class="btn-label icon  fa fa-plus-circle" style="margin-right:6px;"> </span>
+                                            </a>
+                                        </li>
+
+
+
+                                        @*<li class="btn btn-flat btn-labeled btn-primary" style=" float:left; margin-left:3px;">
+                                                <span class="btn-label icon  fa fa fa-share" style="margin-right:6px;"> </span>
+                                                <a style="color: #fff; text-decoration: none; padding: 0px; font-weight: normal" id="btnsendmail" onclick="sendoutlookmail();">
+                                                    Send Email
+                                                </a>
+
+                                            </li>*@
+
+                                    </ul>
+                                </div>
+                                <div class="col-sm-12 col-xs-12">
+                                    <div class="table-primary table-striped">
+                                        <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="jq-datatables-contacts" width="100%">
+                                            <thead>
+                                                <tr>
+                                                    <th>
+                                                        <input type="checkbox" id="contactsselectall" />
+                                                    </th>
+                                                    <th>&nbsp;</th>
+                                                    <th data-hide="phone">Contact ID</th>
+                                                    <th data-class="expand">Contact Name</th>
+                                                    <th data-hide="tablet,tabletlandscape,phone">Contact Title</th>
+                                                    <th data-hide="tablet,phone">Contact Phone</th>
+                                                    <th data-hide="tablet,tabletlandscape,phone">Contact Email</th>
+                                                    <th data-hide="tablet,tabletlandscape,phone">Date Created</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var item in Model.lstGetAllCompanyContacts)
+                                                {
+                                                    <tr>
+                                                        <td><input type="checkbox" class="contactscase" name="contactschkItem" data-contactid="@item.ContactId" /></td>
+                                                        <td>
+                                                            <a class="fa fa-edit" style="cursor:pointer" href="@Url.Action("EditContact", "Contact", new { contactId = @item.ContactId })"></a>
+                                                            <a class="fa fa-times" style="cursor:pointer" onclick="DeleteContactsConfirmation(@item.ContactId)"></a>
+                                                        </td>
+                                                        <td>@item.ContactId</td>
+                                                        <td>@item.Fname</td>
+                                                        <td>@item.Title</td>
+                                                        <td>@item.Phone</td>
+                                                        <td>@item.Email</td>
+                                                        <td>@item.CreatedDate</td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        @using (Html.BeginForm("UploadNewCompDocument", "ManageCompany", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                        {
+                            <div class="tab-pane" id="TabStripDocument_View">
+                                <div class="row">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="col-sm-4">
+                                                <div class="form-group no-margin-hr">
+                                                    <label class="control-label">Upload Document :</label>
+                                                    <input type="file" id="documentUpload" name="file" class="styled-finputs-example" />
+                                                    <script>
+                                                        init.push(function () {
+                                                            $('.styled-finputs-example').pixelFileInput({ placeholder: 'No file selected...' });
+                                                        })
+                                                    </script>
+
+
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <div class="form-group no-margin-hr">
+                                                    <label class="control-label">Description :</label>
+                                                    @Html.TextBoxFor(m => m.acntDocument.DocumentType, new { @id = "txtDocumentType", @class = "form-control input-sm" })
+                                                    <input type="hidden" id="hdndocid" value="" />
+                                                </div>
+
+                                            </div>
+                                            <div class=" col-xs-12 col-sm-4 text-right text-right-sm" id="search_btn" style="padding-left:0px;">
+                                                <div class="form-group no-margin-hr">
+
+
+                                                    <button class="btn btn-flat btn-labeled btn-primary" id="btnAddDocument">
+                                                        <span class="btn-label icon fa fa-plus-circle"></span>Add
+                                                    </button>
+
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12" style="display: none">
+                                        <button type="button" id="fileUploadStart" class="buttonclass">Upload start</button>
+                                        <input type="file" id="fileInput" name="fileInput" />
+                                        <input type="hidden" id="hdnfilepath" />
+                                    </div>
+                                    <div class="col-sm-12 col-xs-12">
+                                        <div class="table-primary table-striped">
+                                            <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="jq-datatables-documents" width="100%">
+                                                <thead>
+                                                    <tr>
+                                                        <th>
+                                                            @*<input type="checkbox" id="Documentselectall" />*@
+                                                        </th>
+                                                        <th>&nbsp;</th>
+                                                        <th data-hide="expand">FileName</th>
+                                                        <th data-hide="tablet,tabletlandscape,phone">Description</th>
+                                                        <th data-hide="tablet,tabletlandscape,phone">Created Date</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach (var item in Model.lstAcntDocumnt)
+                                                    {
+                                                        <tr>
+                                                            <td>
+                                                                @*<input type="checkbox" class="Documentcase" name="DocumentchkItem" data-documentid="@item.DocumentId" />*@
+                                                            </td>
+                                                            <td></td>
+                                                            @*onclick="DeleteDocumentConfirmation(@item.DocumentId)"*@
+                                                            <td style="color:blue" onclick="tbldoc('@item.FileName');">@item.FileName</td>
+                                                            <td>@item.DocumentType</td>
+                                                            <td>@item.CreatedDate</td>
+                                                        </tr>
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
+
+                        <div class="tab-pane" id="TabStripOpenActivity_View">
+                            <div class="row">
+                                <div class="row" style="margin-left:0px;">
+                                    <div class="col-sm-12" style="margin-bottom: 8px;">
+                                        <ul style="padding: 0px; ">
+                                            <!-- <li><a id="SearchActivity" style="padding-left: 0px;" class="fa fa-search" title="Search" onclick="SearchCompanyActivity()"></a></li>-->
+                                            <li class="btn btn-flat btn-labeled btn-primary" id="btnmargin_top">
+
+                                                <a style="color: #fff; text-decoration: none; padding: 0px; font-weight: normal" id="btnSearchActivity">
+                                                    <span class="btn-label icon  fa fa fa-search" style="margin-right:6px;"> </span>
+                                                    Search
+                                                </a>
+
+                                            </li>
+
+
+                                            <li class="btn btn-flat btn-labeled btn-primary" id="btnmargin_top">
+
+                                                <a style="color: #fff; text-decoration: none; padding: 0px; font-weight: normal" id="btnEditactivity" onclick="EditCompany()">
+                                                    <span class="btn-label icon  fa fa-pencil-square-o" style="margin-right:6px;"> </span>
+                                                    Edit
+                                                </a>
+                                            </li>
+
+
+                                            <li class="btn btn-flat btn-labeled btn-primary" id="btnmargin_top">
+
+                                                <a style="color: #fff; text-decoration: none; padding: 0px; font-weight: normal" id="btnDeleteactivity" onclick="deleteSelectedCompany()">
+
+                                                    <span class="btn-label icon  fa fa-trash-o" style="margin-right:6px;"> </span>
+                                                    Delete
+                                                </a>
+                                            </li>
+
+
+                                            <li class="btn btn-flat btn-labeled btn-primary" id="btnmargin_top">
+
+                                                <a style="color: #fff; text-decoration: none; padding: 0px; font-weight: normal" id="btnComplete" onclick="completeActivity();">
+                                                    <span class="btn-label icon  fa fa-check-square-o" style="margin-right:6px;"> </span>
+                                                    Complete
+                                                </a>
+                                            </li>
+                                            <li class="btn btn-flat btn-labeled btn-primary" style=" float:left; margin-left:3px;" id="btnmargin_top">
+
+                                                <a style="color: #fff; text-decoration: none; padding: 0px; font-weight: normal" href="@Url.Action("NewCompanyActivity", "ManageCompany")">
+                                                    <span class="btn-label icon  fa fa-plus-circle" style="margin-right:6px;"> </span>
+                                                    Add
+                                                </a>
+
+                                            </li>
+
+
+
+
+                                            @*<li class="btn btn-flat btn-labeled btn-primary" id="btnmargin_top">
+
+                                                    @Html.ActionLink("Add", "NewCompanyActivity", "ManageCompany", new { @id = "btnAddactivity", @style = "color:#fff; text-decoration:none; float:right; font-weight:normal" })
+                                                    <span class="btn-label icon fa fa-plus-circle"</span>
+                                                </li>*@
+                                        </ul>
+
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <div class="form-group no-margin-hr">
+                                                <label class="control-label">Keyword :</label>
+                                                @Html.TextBoxFor(m => m.history.Keyword, new { @class = "form-control input-sm", @id = "txtActivityKeyword", @maxlength = "100" })
+
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div class="form-group no-margin-hr">
+                                                <label class="control-label">Type :</label>
+                                                @Html.DropDownListFor(m => m.history.HistoryType, ViewBag.HistoryList as List<SelectListItem>, new { @id = "ddlActivityType", @class = "form-control input-sm", @validate = "dropdown", @data_val_required = "Type" })
+
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div class="form-group no-margin-hr">
+                                                <label class="control-label">Priority :</label>
+                                                @Html.DropDownListFor(m => m.history.Priority, new List<SelectListItem> { new SelectListItem { Text = "Select All", Value = "Select All" }, new SelectListItem { Text = "High", Value = "High" }, new SelectListItem { Text = "Medium", Value = "Medium" }, new SelectListItem { Text = "Low", Value = "Low" } }, new { @class = "form-control input-sm", @id = "ddlActivityPriority" })
+
+
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div class="form-group no-margin-hr">
+                                                <label class="control-label">Status :</label>
+                                                @Html.DropDownListFor(m => m.history.Status, new List<SelectListItem> { new SelectListItem { Text = "Select All", Value = "Select All" }, new SelectListItem { Text = "Open", Value = "Open" }, new SelectListItem { Text = "Completed", Value = "Completed" } }, new { @class = "form-control input-sm", @id = "ddlActivityStatus" })
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-xs-12">
+                                    <div class="table-primary table-striped">
+                                        <table cellpadding="0" cellspacing="0"
+                                               border="0" class="table table-striped table-bordered" id="jq-datatables-activity"
+                                               width="100%">
+                                            <thead>
+                                                <tr>
+                                                    <th>
+                                                        <input class="fa fa-square-o" type="checkbox" name="chkItem" id="activitiesselectall" />
+                                                    </th>
+
+                                                    <th data-hide="phone">Created By</th>
+                                                    <th data-class="expand">Created Date</th>
+                                                    <th data-hide="phone">Due Date</th>
+                                                    <th data-hide="tabletlandscape,phone">Type</th>
+                                                    <th data-hide="tablet,tabletlandscape,phone">Applicant Name</th>
+                                                    <th data-hide="tablet,tabletlandscape,phone,desktop">Status</th>
+                                                    <th data-hide="tablet,tabletlandscape,phone,desktop">Comments</th>
+                                                    <th data-hide="tablet,tabletlandscape,phone,desktop">Attachment</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="myModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Company List</h4>
+            </div>
+            <div class="modal-body">
+
+                <div class="row">
+                    <div style="text-align:left;font-size:12px;padding:5px">Note : Click Company Name To Select Record.</div>
+                    <div class="col-sm-12">
+
+                        <div class="table-primary table-striped" id="tblCompanyList">
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+
+    function onlynumbers(evt) {
+        var charCode = (evt.which) ? evt.which : event.keyCode
+        if (charCode == 43 || charCode == 32 || charCode == 40 || charCode == 41)
+            return true;
+        else if (charCode > 31 && (charCode < 45 || charCode > 57 || charCode == 47 || charCode == 46))
+            return false;
+
+        return true;
+    }
+    //function onlynumbers(e, t) {
+    //    try {
+    //        if (window.event) {
+    //            var charCode = window.event.keyCode;
+    //        }
+    //        else if (e) {
+    //            var charCode = e.which;
+    //        }
+    //        else { return true; }
+    //        if ((charCode > 64 && charCode < 91) || (charCode > 96 && charCode < 123))
+    //            return false;
+    //        else
+    //            return true;
+    //    }
+    //    catch (err) {
+    //        alert(err.Description);
+    //    }
+    //}
+
+
+    function tbldoc(filetype) {
+
+        window.location.href = ("../Content/Upload/" + filetype);
+
+    };
+    //function Companyexists(control) {
+
+    //    var AccountName = $("#txtCompanyName").val();
+    //    var HidAccuntName = $('#hdCompanyName').val();
+    //    if ($("#txtCompanyName").val() != "") {
+    //        if (AccountName != HidAccuntName) {
+    //            var Companyname = $("#txtCompanyName").val();
+    //            Companyname = jQuery.trim(Companyname);
+    //            var isValid = true;
+    //            $.ajax({
+    //                url: "IsCompanyExists",
+    //                type: "POST",
+    //                async: false,
+    //                data: { Companyname: Companyname },
+    //                success: function (data) {
+
+    //                    if (data == true) {
+
+    //                        //$("#lblErrormessage").show();
+    //                        alert("This Company Already Exists");
+    //                        $("#txtCompanyName").val('');
+    //                        e.preventDefault();
+    //                        e.stopPropagation();
+    //                        isValid = false;
+
+    //                    }
+    //                    else {
+
+    //                        $("#lblErrormessage").hide();
+    //                        $("#txtCompanyName").removeAttr("style");
+    //                        $("#errorsymbol").hide();
+    //                        $("#ErrorMessages").hide();
+    //                        isValid = true;
+    //                    }
+
+    //                },
+    //                error: function () {
+
+    //                }
+
+    //            });
+    //            return isValid;
+    //        }
+
+    //    }
+
+    //    return isValid;
+    //}
+
+
+    //$('#btnSave').click(function (e) {
+
+    //    var AccountName = $("#txtCompanyName").val();
+    //    var HidAccuntName = $('#hdCompanyName').val();
+        
+    //    if (AccountName != "") {
+
+    //        if (AccountName != HidAccuntName) {
+    //            var Companyname = $("#txtCompanyName").val();
+    //            Companyname = jQuery.trim(Companyname);
+    //            // var isValid = true;
+    //            $.ajax({
+    //                url: "IsCompanyExists",
+    //                type: "POST",
+    //                async: false,
+    //                data: { Companyname: Companyname },
+    //                success: function (data) {
+
+    //                    if (data == true) {
+    //                        // alert("This Company Already Exists");
+    //                        $("#txtCompanyName").val('');
+    //                        Isvalid = false;
+    //                        e.preventDefault();
+    //                        e.stopPropagation();
+    //                    }
+    //                    else {
+    //                        $("#lblErrormessage").hide();
+    //                        $("#txtCompanyName").removeAttr("style");
+    //                        $("#errorsymbol").hide();
+    //                        $("#ErrorMessages").hide();
+    //                        Isvalid = true;
+    //                        validateform();
+    //                    }
+    //                },
+    //            });
+
+    //        }
+
+    //    }
+
+    //    else {
+
+    //        Isvalid = true;
+    //        return Validate(this.form);
+    //    }
+    //});
+    $("#btnSave").click(function (e) {
+        Isvalid = true;
+        return Validate(this.form)
+
+    });
+
+    function validateform() {
+
+
+        return Validate(this.form);
+    }
+    //$("#btnSave").click(function (e) {
+    //
+
+    //    Isvalid = true;
+    //    return Validate(this.form);
+
+
+    //});
+
+
+    //function DeleteDocumentConfirmation(DocumentId) {
+
+    //        ;
+
+    //        var flag = confirm('You are about to delete permanently.Are you sure you want to delete this record?');
+    //        if (flag) {
+    //            deleteEachDocument(DocumentId);
+    //            $('#hdndocid').val(DocumentId);
+    //            // document.location.href = document.location.href;
+    //            alert("Deleted Successfully!!!");
+
+    //            Preventfunction(event);
+    //           //event.preventDefault();
+    //           //event.stopPropagation()
+
+    //        }
+    //    }
+    function Preventfunction(event) {
+
+        event.preventDefault();
+        event.stopPropagation();
+        return false;
+    }
+    function deleteEachDocument(DocumentId) {
+
+        $.ajax({
+            url: "DeleteDocuments",
+            type: "POST",
+            // async: false,
+            data: { Documentids: DocumentId },
+            success: function (data) {
+                location.reload();
+                $('#TabStripDocument_View').css("display", "block");
+                $('#TabStripOpenActivity_View').css("display", "none");
+                $('#TabStripDocument').addClass('active');
+                $('#TabStripAccountDetail').removeClass("active");
+                $('#TabStripAccountDetail_View').css("display", "none");
+                $('#TabStripContacts_View').css("display", "none");
+
+            },
+            error: function () {
+
+            }
+        });
+    }
+    function DeleteContactsConfirmation(ContactId) {
+
+        var flag = confirm('You are about to delete permanently.Are you sure you want to delete this record?');
+        if (flag) {
+            deleteEachContact(ContactId);
+            document.location.href = document.location.href;
+            alert("Deleted Successfully!!!");
+
+        }
+    }
+    function deleteEachContact(ContactId) {
+
+        $.ajax({
+            url: "../Contact/DeleteContacts",
+            type: "POST",
+            async: false,
+            data: { Contactids: ContactId },
+            success: function (data) {
+            },
+            error: function () {
+
+            }
+        });
+    }
+
+    function deleteSelectedCompany() {
+
+        if ($('#jq-datatables-activity input[name="chkItem"]:checked').length > 0) {
+
+            var flag = confirm('You are about to delete permanently.Are you sure you want to delete these records?');
+            if (flag) {
+                $('#jq-datatables-activity input[name="chkItem"]:checked').each(function () {
+
+                    var id = $(this).attr('data-historyid');
+                    deleteEachCompany(id);
+                });
+                document.location.href = document.location.href;
+                alert("Deleted Successfully");
+            }
+        }
+        else
+            alert('Please select atleast one record to delete');
+    }
+
+    function deleteEachCompany(historyId) {
+
+        $.ajax({
+            url: "DeleteCompanyActivity",
+            type: "GET",
+            async: false,
+            data: { historyId: historyId },
+            success: function (data) {
+            },
+            error: function () {
+
+            }
+        });
+    }
+
+    function EditCompany() {
+        if ($('#jq-datatables-activity input[name="chkItem"]:checked').length > 0) {
+            if ($('#jq-datatables-activity input[name="chkItem"]:checked').length > 1) {
+                alert("Please Select One Record Only.");
+            }
+            else {
+                var id = $('#jq-datatables-activity input[name="chkItem"]:checked').attr('data-historyid');
+                window.location.href = "../ManageCompany/EditCompanyActivity?HistoryId=" + id;
+            }
+        }
+        else
+            alert("Please Select atleast One Record Only.");
+    }
+
+    function completeActivity() {
+        if ($('#jq-datatables-activity input[name="chkItem"]:checked').length > 0) {
+            var flag = confirm('Are you sure you want to Complete the Activity?');
+            if (flag) {
+                $('#jq-datatables-activity input[name="chkItem"]:checked').each(function () {
+                    var id = $(this).attr('data-historyid');
+                    completeEachActivity(id);
+                });
+                document.location.href = document.location.href;
+                alert("Activity Updated Successfully");
+            }
+        }
+        else
+            alert("Please Select atleast One Record Only.");
+    }
+
+    function completeEachActivity(historyId) {
+        $.ajax({
+            url: "CompleteCompanyActivity",
+            type: "GET",
+            async: false,
+            data: { historyId: historyId },
+            success: function (data) {
+            },
+            error: function () {
+
+            }
+        });
+    }
+
+    function OpenContactDetail(contactId, email) {
+        window.location = "Contact/EditContact?contactId=" + contactId;
+    }
+
+
+
+    function deleteSelectedContacts() {
+
+        if ($('#tblContacts input[name="chkContactItem"]:checked').length > 0) {
+
+            var flag = confirm('You are about to delete permanently.Are you sure you want to delete these records?');
+            if (flag) {
+                $('#tblContacts input[name="chkContactItem"]:checked').each(function () {
+
+                    var id = $(this).attr('data-ContactId');
+                    deleteEachContact(id);
+                });
+                document.location.href = document.location.href;
+                alert("Deleted Successfully");
+            }
+        }
+        else
+            alert('Please select atleast one record to delete');
+    }
+
+    //function deleteSelectedDocuments() {
+    //    ;
+    //    if ($('#jq-datatables-documents input[name="chkDocumentItem"]:checked').length > 0) {
+
+    //        var flag = confirm('You are about to delete permanently.Are you sure you want to delete these records?');
+    //        if (flag) {
+    //            $('#jq-datatables-documents input[name="chkDocumentItem"]:checked').each(function () {
+
+    //                var id = $(this).attr('data-DocumentId');
+    //                deleteEachDocument(id);
+    //            });
+    //            document.location.href = document.location.href;
+    //            alert("Deleted Successfully");
+    //        }
+    //    }
+    //    else
+    //        alert('Please select atleast one record to delete');
+    //}
+
+</script>
+
+
+<div class="modal fade" id="myModalAttachment">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Attachment</h4>
+            </div>
+            <div class="modal-body">
+
+                <div class="row">
+                    <div style="text-align:left;font-size:12px;padding:5px">
+                    </div>
+                    <div class="col-sm-12">
+
+                        <div class="table-primary table-striped" id="tblModalAttachment">
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

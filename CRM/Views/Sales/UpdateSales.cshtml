@@ -1,0 +1,559 @@
+﻿@model CRMHub.ViewModel.SalesModel
+@{
+    ViewBag.Title = "Update Sales";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<html>
+<head>
+    @*<script type="text/javascript">
+            $(document).ready(function () {
+                $('#tblSales').dataTable();
+            }
+            );
+        </script>*@
+
+    <style>
+        button {
+            background: none !important;
+            border: none;
+            padding: 0 !important;
+            /*optional*/
+            font: bold;
+            color: #069;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    @using (Html.BeginForm("UpdateSales", "Sales", FormMethod.Post))
+    {
+        @*@Html.AntiForgeryToken();*@
+        @Html.ValidationSummary(true)
+        <div id="content-wrapper">
+            <div id="CustomBootstrapAlertBox">
+            </div>
+            <div class="row">
+
+
+
+                <div class="panel">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <!-- Page header, center on small screens -->
+                            <h1 class="col-xs-6 col-sm-4 text-left text-left-sm panel-title"><i class="fa fa-users page-header-icon"></i>&nbsp;Update  Sale</h1>
+                            <div class="col-xs-6 col-sm-8">
+                                <div class="row">
+                                    <div class="pull-right">
+                                        @*<a href="#" class="btn btn-flat btn-labeled btn-primary" tabindex="-1"
+                                            data-toggle="modal" data-target="#uidemo-modals-alerts-info"><span class="btn-label icon fa fa-question-circle"></span>Help</a>*@
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+
+
+
+
+                        <div class="row">
+
+
+
+                            <div class="col-xs-12 col-sm-12 text-right text-right-sm no-padding-hr">
+
+                                <span id="liSaveContainer">
+                                    <button class="btn btn-flat btn-labeled btn-primary" id="btnupdatesale" style="background:#1b80c2 !important; text-decoration:none; "> 
+                                    <span class="btn-label icon fa fa-save"></span> Save</button>
+
+                                </span>
+
+
+                                @*<span class="btn btn-flat btn-labeled btn-primary">
+                                         @Html.ActionLink("Back", "ViewSales", "", new { @style = "color:#fff; text-decoration:none;" })<span class="btn-label icon fa fa-backward" style="margin-right:6px; "> </span>
+                                    </span>*@
+                                <a style="color: #fff; text-decoration: none; padding: 0px; font-weight: normal" class="btn btn-flat btn-labeled btn-primary" href="@Url.Action("ViewSales", "Sales")">
+                                    <span class="btn-label icon fa fa-backward" style="margin-right:6px;"> </span>
+                                    Back
+                                </a>
+                            </div>
+
+
+
+                        </div>
+
+                        <div class="row">
+
+                            <!-- Tabs -->
+                            <div>
+                                <div class="tab-pane" id="Salesdiv">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="panel-group" id="accordion-example">
+                                                <div class="panel">
+                                                    <div class="panel-heading">
+                                                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion-example"
+                                                           href="#collapse2">Sales Detail</a>
+                                                    </div>
+                                                    <!-- / .panel-heading -->
+                                                    <div id="collapse2" class="panel-collapse collapse in" style="height: auto;">
+                                                        <div class="panel-body">
+                                                            <div class="col-sm-12 no-padding-hr">
+                                                                <div class="row">
+                                                                    <div class="col-sm-12" style="text-align: right">
+                                                                        <a id="a1" class="buttonclass" style="text-decoration: none; color: white; cursor: pointer" href="#" title="Get Map" onclick="openMap();return false;">Get Map</a>
+                                                                        &nbsp;
+                                                                        <a id="aMail" class="buttonclass" style="text-decoration: none; color: white; cursor: pointer" href="#" title="Email">Email</a>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="col-sm-3">
+                                                                        <div class="form-group no-margin-hr">
+                                                                            <label class="control-label">Company Name:<span style="color: red">*</span></label>
+                                                                            <div class="input-group">
+                                                                                @Html.TextBoxFor(m => m.SalesEntity.AccountName, new { @class = "form-control input-sm", @id = "txtcompany" })
+                                                                                @Html.ValidationMessageFor(m => m.SalesEntity.AccountName, "", new { @class = "text-danger" })
+
+
+
+                                                                                <span class="input-group-addon" type=" button" style="cursor:pointer;" onclick="return show_NewAccountPopUp(750, 450);">
+                                                                                    <i class="fa fa-search"></i>
+
+                                                                                </span>
+
+
+
+                                                                                @Html.HiddenFor(m => m.SalesEntity.AccountId, new { @id = "hdParentAccountId" })
+
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="col-sm-3">
+                                                                        <div class="form-group no-margin-hr">
+                                                                            <label class="control-label">Sales Name :<span style="color: red">*</span></label>
+                                                                            @Html.TextBoxFor(m => m.SalesEntity.SalesName, new { @id = "txtsalesname", @class = "form-control input-sm" })
+                                                                            @Html.ValidationMessageFor(m => m.SalesEntity.SalesName, "", new { @class = "text-danger" })
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-3">
+                                                                        <div class="form-group no-margin-hr">
+                                                                            <label class="control-label">Billing Contact:</label>
+                                                                            @Html.TextBoxFor(m => m.SalesEntity.BillingContact, new { @id = "txtbillingcontact", @class = "form-control input-sm", @MaxLength = "20", @onkeypress = "return onlynumbers(event,this);" })
+                                                                            @Html.ValidationMessageFor(m => m.SalesEntity.BillingContact, "", new { @class = "text-danger" })
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-3">
+                                                                        <div class="form-group no-margin-hr">
+                                                                            <label class="control-label">Email :</label>
+                                                                            @Html.TextBoxFor(m => m.SalesEntity.Email, new { @id = "txtemail", @class = "form-control input-sm", @type = "email" })
+                                                                            @Html.ValidationMessageFor(m => m.SalesEntity.Email, "", new { @class = "text-danger" })
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row">
+
+                                                                    <div class="col-sm-3">
+                                                                        <div class="form-group no-margin-hr">
+                                                                            <label class="control-label">Website :</label>
+                                                                            @Html.TextBoxFor(m => m.SalesEntity.Website, new { @id = "txtwebsite", @class = "form-control input-sm" })
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-3">
+                                                                        <div class="form-group no-margin-hr">
+                                                                            <label class="control-label">Title :</label>
+                                                                            @Html.TextBoxFor(m => m.SalesEntity.Title, new { @id = "txttitle", @class = "form-control input-sm" })
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-3">
+                                                                        <div class="form-group no-margin-hr">
+                                                                            <label class="control-label">Sales Representative :<span style="color: red">*</span></label>
+
+                                                                            @Html.DropDownListFor(model => model.SalesEntity.SalesRep, new SelectList(Model.userList, "userId", "firstName"), "Choose", new { @class = "form-control", @id = "ddlAdmins" })
+                                                                            @Html.ValidationMessageFor(m => m.SalesEntity.SalesRep, "", new { @class = "text-danger" })
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-3">
+                                                                        <div class="form-group no-margin-hr">
+                                                                            <label class="control-label">Phone :</label>
+                                                                            @Html.TextBoxFor(m => m.SalesEntity.SalesRepPhone, new { @id = "txtsalerepphone", @class = "form-control input-sm", @MaxLength = "20", @onkeypress = "return onlynumbers(event,this);" })
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="col-sm-3">
+                                                                        <div class="form-group no-margin-hr">
+                                                                            <label class="control-label">Office:</label>
+                                                                            @Html.DropDownListFor(model => model.SalesEntity.Office, new SelectList(Model.branchList, "branchid", "branchName"), new { @class = "form-control", @id = "ddlBranches" })
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-3">
+                                                                        <div class="form-group no-margin-hr">
+                                                                            <label class="control-label">BillingEmail :</label>
+                                                                            @Html.TextBoxFor(m => m.SalesEntity.BillingEmail, new { @id = "txtbillingemail", @class = "form-control" })
+                                                                        </div>
+                                                                    </div>
+                                                                    @*<div class="col-sm-3">
+                                                                        <div class="form-group no-margin-hr">
+                                                                            <label class="control-label">Title :</label>
+                                                                            @Html.TextBoxFor(m => m.SalesEntity.Title, new { @id = "txttitle2", @class = "form-control input-sm" })
+                                                                        </div>
+                                                                    </div>*@
+                                                                    <div class="col-sm-3">
+                                                                        <div class="form-group no-margin-hr">
+                                                                            <label class="control-label">Billing Address :</label>
+                                                                            @Html.TextBoxFor(m => m.SalesEntity.BillingAddress, new { @id = "txtbillingaddress", @class = "form-control" })
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-3">
+                                                                        <div class="form-group no-margin-hr">
+                                                                            <label class="control-label">Sales Source :</label>
+                                                                            @Html.DropDownListFor(m => m.SalesEntity.SalesSource, new List<SelectListItem>
+                                                     {
+                                                       new SelectListItem{ Text="Career Builder", Value = "careerbuilder" },
+                                                       new SelectListItem{ Text="Job Fair", Value = "jobfair" },
+                                                       new SelectListItem{ Text="Monster", Value = "monster" },
+                                                       new SelectListItem{ Text="NewsPaper", Value = "newspaper" },
+                                                       new SelectListItem{ Text="Walk In", Value = "walkin" },
+                                                       new SelectListItem{ Text="Word of Mouth", Value = "wordofmouth" },
+                                                       new SelectListItem{ Text="Yellow Pages", Value = "yellowpages" },
+                                                       new SelectListItem{ Text="Dice", Value = "dice" },
+                                                       new SelectListItem{ Text="Online Networking", Value = "onlinenetworking" },
+                                                       new SelectListItem{ Text="Employee Referral", Value = "employeereferral" },
+                                                       new SelectListItem{ Text="Kijiji", Value = "kijiji" },
+                                                       new SelectListItem{ Text="Workopolis", Value = "workopolis" },
+                                                       new SelectListItem{ Text="HRDC", Value = "hrdc" },
+                                                       new SelectListItem{ Text="Networking", Value = "networking" }
+                                                     }, new { @id = "ddlSalesSource", @class = "form-control input-sm" })
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row">
+
+                                                                    
+
+                                                                    <div class="col-sm-3">
+                                                                        <div class="form-group no-margin-hr">
+                                                                            <label class="control-label">Sale Amount :</label>
+                                                                            @Html.TextBoxFor(m => m.SalesEntity.SalesAmount, new { @id = "txtsalesamount", @class = "form-control input-sm decimalmask" })
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-3">
+                                                                        <div class="form-group no-margin-hr">
+                                                                            <label class="control-label">Revenue :</label>
+                                                                            @Html.TextBoxFor(m => m.SalesEntity.Revenue, new { @id = "txtrevenue", @class = "form-control input-sm decimalmask" })
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-3">
+                                                                        <div class="form-group no-margin-hr">
+                                                                            <label class="control-label">Purchase Order :<span style="color: red">*</span></label>
+                                                                            @Html.TextBoxFor(m => m.SalesEntity.PurchaseOrder, new { @id = "txtpurchaseorder", @class = "form-control input-sm numericmask" })
+                                                                            @Html.ValidationMessageFor(m => m.SalesEntity.PurchaseOrder, "", new { @class = "text-danger" })
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-3">
+                                                                        <div class="form-group no-margin-hr">
+                                                                            <label class="control-label">Close Date :</label>
+                                                                            @Html.TextBoxFor(m => m.SalesEntity.SalesCloseDate, new { @id = "DatePickerControl", @class = "form-control input-sm" })
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row">
+                                                                    
+                                                                    <div class="col-sm-3">
+                                                                        <div class="form-group no-margin-hr">
+                                                                            <label class="control-label">GM:</label>
+                                                                            @Html.TextBoxFor(m => m.SalesEntity.GM, new { @id = "txtgm", @class = "form-control input-sm" })
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-3">
+                                                                        <div class="form-group no-margin-hr">
+                                                                            <label class="control-label">Payment Terms :</label>
+                                                                            @Html.TextBoxFor(m => m.SalesEntity.PaymentTerms, new { @id = "txtpaymentterms", @class = "form-control input-sm" })
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-3">
+                                                                        <div class="form-group no-margin-hr">
+                                                                            <label class="control-label">GM% :</label>
+                                                                            @Html.TextBoxFor(m => m.SalesEntity.GMPercentage, new { @id = "txtgmpercentage", @class = "form-control input-sm" })
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="panel">
+                                                    <div class="panel-heading">
+                                                        <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion-example"
+                                                           href="#collapse10">Sales Description</a>
+                                                    </div>
+                                                    <div id="collapse10" class="panel-collapse collapse">
+                                                        <div class="panel-body">
+                                                            @Html.TextAreaFor(m => m.SalesEntity.Description, new { @id = "txtDescription", @class = "textEditor" })
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                @*Binding Custom Fields*@
+                                                @*<div class="panel">
+                                                    <div class="panel-heading">
+                                                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion-example"
+                                                           href="#collapse1c">Custom Fields</a>
+                                                    </div>
+                                                    <div id="collapse1c" class="panel-collapse collapse" style="height: auto;">
+                                                        <div class="panel-body">
+                                                            <div class="col-sm-12 no-padding-hr">
+                                                                <div class="col-sm-12 no-padding-hr">
+                                                                    <div class="row">
+                                                                        @for (int i = 0; i < Model.lstcustomVM.Count; i++)
+                                                                        {
+                                                                            <div class="col-sm-4">
+                                                                                <div class="form-group no-margin-hr">
+                                                                                    @Html.HiddenFor(m => m.lstcustomVM[i].Column_Type)
+                                                                                    @Html.HiddenFor(m => m.lstcustomVM[i].FieldId)
+                                                                                    @Html.HiddenFor(m => m.lstcustomVM[i].CValueId)
+
+                                                                                    @if (Model.lstcustomVM[i].Column_Type == "textarea")
+                                                                                    {
+                                                                                        @Html.DisplayFor(m => m.lstcustomVM[i].Column_Label)
+                                                                                        if (@Model.lstcustomVM[i].RequiredField == true)
+                                                                                        {
+                                                                                            <span style="color: red">*</span>
+                                                                                            @Html.TextAreaFor(m => m.lstcustomVM[i].CustomFieldvalue, new { @class = "form-control input-sm", @MaxLength = @Model.lstcustomVM[i].MaxLength, @TabIndex = "37", rows = "1", cols = "1", @validate = "Required", @data_val_required = @Model.lstcustomVM[i].Column_Label })
+                                                                                        }
+                                                                                        else
+                                                                                        {
+                                                                                            @Html.TextAreaFor(m => m.lstcustomVM[i].CustomFieldvalue, new { @class = "form-control input-sm", @MaxLength = @Model.lstcustomVM[i].MaxLength, @TabIndex = "37", rows = "1", cols = "1" })
+                                                                                        }
+
+                                                                                    }
+                                                                                    @if (Model.lstcustomVM[i].Column_Type == "textfield")
+                                                                                    {
+
+
+                                                                                        @Html.DisplayFor(m => m.lstcustomVM[i].Column_Label)
+                                                                                        if (@Model.lstcustomVM[i].RequiredField == true)
+                                                                                        {
+                                                                                            <span style="color: red">*</span>
+                                                                                            @Html.TextBoxFor(m => m.lstcustomVM[i].CustomFieldvalue, new { @id = "TAActualColumnName1", @class = "form-control input-sm ", @title = @Model.lstcustomVM[i].HoverText, @MaxLength = @Model.lstcustomVM[i].MaxLength, @TabIndex = "37", rows = "1", cols = "1", @validate = "Required", @data_val_required = @Model.lstcustomVM[i].Column_Label })
+                                                                                        }
+                                                                                        else
+                                                                                        {
+                                                                                            @Html.TextBoxFor(m => m.lstcustomVM[i].CustomFieldvalue, new { @id = "TAActualColumnName1", @class = "form-control input-sm ", @title = @Model.lstcustomVM[i].HoverText, @MaxLength = @Model.lstcustomVM[i].MaxLength, @TabIndex = "37", rows = "1", cols = "1" })
+                                                                                        }
+
+
+                                                                                    }
+                                                                                    @if (Model.lstcustomVM[i].Column_Type == "date")
+                                                                                    {
+
+                                                                                        @Html.DisplayFor(m => m.lstcustomVM[i].Column_Label)
+                                                                                        if (@Model.lstcustomVM[i].RequiredField == true)
+                                                                                        {
+                                                                                            <span style="color: red">*</span>
+                                                                                            @Html.TextBoxFor(m => m.lstcustomVM[i].CustomFieldvalue, new { @id = "TAActualDate", @class = "form-control input-sm DateP ", @placeholder = "Select Date", @title = @Model.lstcustomVM[i].HoverText, @MaxLength = @Model.lstcustomVM[i].MaxLength, @TabIndex = "37", rows = "1", cols = "1", @validate = "Required", @data_val_required = @Model.lstcustomVM[i].Column_Label })
+                                                                                        }
+                                                                                        else
+                                                                                        {
+                                                                                            @Html.TextBoxFor(m => m.lstcustomVM[i].CustomFieldvalue, new { @id = "TAActualDate", @class = "form-control input-sm DateP ", @placeholder = "Select Date", @title = @Model.lstcustomVM[i].HoverText, @MaxLength = @Model.lstcustomVM[i].MaxLength, @TabIndex = "37", rows = "1", cols = "1", })
+                                                                                        }
+
+                                                                                    }
+                                                                                    @if (Model.lstcustomVM[i].Column_Type == "numeric")
+                                                                                    {
+
+                                                                                        @Html.DisplayFor(m => m.lstcustomVM[i].Column_Label)
+
+                                                                                        if (@Model.lstcustomVM[i].RequiredField == true)
+                                                                                        {
+                                                                                            <span style="color: red">*</span>
+                                                                                            @Html.TextBoxFor(m => m.lstcustomVM[i].CustomFieldvalue, new { @id = "TAActualColumnName", @class = "form-control input-sm", @title = @Model.lstcustomVM[i].HoverText, @MaxLength = @Model.lstcustomVM[i].MaxLength, @TabIndex = "37", rows = "1", cols = "1", @validate = "Required", @data_val_required = @Model.lstcustomVM[i].Column_Label })
+
+                                                                                        }
+                                                                                        else
+                                                                                        {
+                                                                                            @Html.TextBoxFor(m => m.lstcustomVM[i].CustomFieldvalue, new { @id = "TAActualColumnName", @class = "form-control input-sm ", @title = @Model.lstcustomVM[i].HoverText, @MaxLength = @Model.lstcustomVM[i].MaxLength, @TabIndex = "37", rows = "1", cols = "1" })
+                                                                                        }
+                                                                                    }
+
+                                                                                    @if (Model.lstcustomVM[i].Column_Type == "dropdown")
+                                                                                    {
+
+                                                                                        @Html.DisplayFor(m => m.lstcustomVM[i].Column_Label)
+                                                                                        if (@Model.lstcustomVM[i].RequiredField == true)
+                                                                                        {
+                                                                                            <span style="color: red">*</span>
+                                                                                            @Html.DropDownListFor(m => m.lstcustomVM[i].CustomFieldvalue, new SelectList(Model.lstcustomVM[i].lstCustomOptionsVal, "DrpValueId", "DrpValue", Model.lstcustomVM[i].CustomFieldvalue), new { @class = "form-control input-sm", @id = "dpOptions", @validate = "Required", @data_val_required = @Model.lstcustomVM[i].Column_Label })
+                                                                                        }
+                                                                                        else
+                                                                                        {
+                                                                                            @Html.DropDownListFor(m => m.lstcustomVM[i].CustomFieldvalue, new SelectList(Model.lstcustomVM[i].lstCustomOptionsVal, "DrpValueId", "DrpValue", Model.lstcustomVM[i].CustomFieldvalue), new { @class = "form-control input-sm", @id = "dpOptions" })
+                                                                                          
+                                                                                        }
+
+                                                                                    }
+
+                                                                                    @if (Model.lstcustomVM[i].Column_Type == "radiobutton")
+                                                                                    {
+                                                                                        @Html.DisplayFor(m => m.lstcustomVM[i].Column_Label)
+                                                                                        if (@Model.lstcustomVM[i].RequiredField == true)
+                                                                                        {
+
+                                                                                            <span style="color: red">*</span>
+                                                                                            <div>
+
+                                                                                                @for (int a = 0; a < Model.lstcustomVM[i].lstCustomOptionsVal.Count; a++)
+                                                                                                {
+                                                                                                    @Html.HiddenFor(m => m.lstcustomVM[i].lstCustomOptionsVal[a].DrpValueId)
+                                                                                                    @Html.HiddenFor(m => m.lstcustomVM[i].lstCustomOptionsVal[a].FieldId)
+                                                                                                    @Html.RadioButtonFor(m => m.lstcustomVM[i].CustomFieldvalue, Model.lstcustomVM[i].lstCustomOptionsVal[a].DrpValueId, new { isChecked = Model.lstcustomVM[i].lstCustomOptionsVal[a].IsDefault, @validate = "Required", @data_val_required = @Model.lstcustomVM[i].Column_Label })
+                                                                                                    @Html.DisplayFor(m => m.lstcustomVM[i].lstCustomOptionsVal[a].DrpValue, new { @class = "checkbox-inline" })
+                                                                                                }
+                                                                                            </div>
+                                                                                        }
+                                                                                    }
+                                                                                    else
+                                                                                    {
+                                                                                        <div>
+                                                                                            @for (int a = 0; a < Model.lstcustomVM[i].lstCustomOptionsVal.Count; a++)
+                                                                                            {
+                                                                                                @Html.HiddenFor(m => m.lstcustomVM[i].lstCustomOptionsVal[a].DrpValueId)
+                                                                                                @Html.HiddenFor(m => m.lstcustomVM[i].lstCustomOptionsVal[a].FieldId)
+                                                                                                @Html.RadioButtonFor(m => m.lstcustomVM[i].CustomFieldvalue, Model.lstcustomVM[i].lstCustomOptionsVal[a].DrpValueId, new { isChecked = Model.lstcustomVM[i].lstCustomOptionsVal[a].IsDefault })
+                                                                                                @Html.DisplayFor(m => m.lstcustomVM[i].lstCustomOptionsVal[a].DrpValue, new { @class = "checkbox-inline" })
+                                                                                            }
+                                                                                        </div>
+                                                                                    }
+
+                                                                                </div>
+                                                                            </div>
+                                                                        }
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>*@
+
+                                                @*End Of Binding Custom Fields*@
+
+
+                                                @Html.HiddenFor(m => m.SalesEntity.SalesId)
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    }
+</body>
+</html>
+<div class="modal fade" id="myModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Company List</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div style="text-align:left;font-size:12px;padding:5px">Note : Click Company Name To Select Record.</div>
+                    <div class="col-sm-12">
+                        <div class="table-primary table-striped" id="tblCompanyList">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts/jqte/jquery-te-1.4.0.min.js"></script>
+<script src="~/Scripts/DateTimePicker/bootstrap-timepicker.min.js"></script>
+<script src="~/Scripts/DateTimePicker/bootstrap-datetimepicker.min.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+
+
+        $('#txtsalerepphone').bind("cut copy paste", function (e) {
+            e.preventDefault();
+        });
+        $('#txtbillingcontact').bind("cut copy paste", function (e) {
+            e.preventDefault();
+        });
+
+
+        $(".textEditor").jqte();
+        $('.DateP').datepicker({
+            format: 'mm/dd/yyyy'
+        });
+
+
+        $("#TAActualColumnName").keypress(function (e) {
+            if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
+                $("#errormsg").html("Digits Only").show().fadeOut("slow");
+                return false;
+            }
+        });
+    });
+</script>
+
+<script type="text/javascript">
+    $(function () {
+        $('#timepickercontrol').timepicker({
+            format: 'h:mm:ss'
+        });
+    });
+    $(function () {
+        $('#DatePickerControl').datepicker({
+            format: 'mm/dd/yyyy'
+        })
+    });
+</script>
+<script type="text/javascript">
+    function show_NewAccountPopUp() {
+
+        $.ajax({
+            url: "SelectCompany",
+            type: "GET",
+            async: false,
+            success: function (data) {
+
+                if (data != null) {
+
+                    $('#tblCompanyList').empty();
+                    $('#tblCompanyList').empty().append(data);
+                }
+            },
+            error: function () {
+            }
+        });
+        $('#myModal').modal("show");
+    }
+
+    function onlynumbers(evt) {
+        var charCode = (evt.which) ? evt.which : event.keyCode
+        if (charCode == 43 || charCode == 32 || charCode == 40 || charCode == 41)
+            return true;
+        else if (charCode > 31 && (charCode < 45 || charCode > 57 || charCode == 47 || charCode == 46))
+            return false;
+
+        return true;
+    }
+</script>
+
+

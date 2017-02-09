@@ -1,0 +1,343 @@
+﻿@model CRMHub.EntityFramework.CalendarEventRequest
+
+
+ 
+    <div class="row">
+        <div class="col-sm-2">
+            <div class="form-group">
+                <label class="control-label">Title :</label>
+            </div>
+        </div>
+            <div class="col-sm-4">
+                <div class="form-group">
+                    @Html.TextBoxFor(m => m.Title, new { @class = "form-control input-sm", @id = "txtTile", @disabled = "disabled" })
+                    @Html.HiddenFor(m => m.ID)
+                    </div>
+                </div>
+              
+ 
+        </div>
+
+    <div class="row" style="margin: 0px;">
+
+        <div class=" col-sm-12" style=" border-top:1px solid #ccc; padding-top:15px; margin-bottom:15px;">
+    <div class="row">
+        <div class="col-sm-4">
+            <div class="row">
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label>
+                            Date1:<span style="color: red">*</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="col-sm-1">
+                    <div class="form-group">
+                        @Html.CheckBoxFor(m => m.RdAcceptedDate1, new { @class = "form-control", name = "form-field-radio", @id = "RdDate1", @disabled = "disabled" })
+                    </div>
+                </div>
+
+                <div class="col-sm-7">
+                    <div class="form-group">
+                        @Html.TextBoxFor(m => m.Date1, "{0:MM/d/yyyy}", new { @id = "txtDate11", @class = "form-control input-sm", @disabled = "disabled" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-4">
+            <div class="row">
+                <div class="col-sm-3">
+                    <div class="form-group">
+
+                        <label>
+                            <span class="text">Time1:<span style="color: red">*</span></span>
+                        </label>
+                    </div>
+                </div>
+                <div class="col-sm-1">
+                    <div class="form-group">
+                        @Html.CheckBoxFor(m => m.chkDT1Time1, new { @class = "form-control input-sm", name = "form-field-radio", @id = "RdD1Time1", @disabled = "disabled" })
+                    </div>
+                </div>
+
+                <div class="col-sm-7">
+                    <div class="form-group">
+                        @Html.TextBoxFor(m => m.DT1Time1, new { @id = "txtD1T1", @class = "form-control input-sm", @disabled = "disabled" })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="row">
+                <div class="col-sm-3">
+                    <div class="form-group"> <span class="text">Time2:<span style="color: red">*</span></span> </div>
+                </div>
+                <div class="col-sm-1">
+                    <div class="form-group">
+                        @Html.CheckBoxFor(m => m.chkDT1Time2, new { @class = "form-control input-sm", name = "form-field-radio", @id = "RdD1Time2", @disabled = "disabled" })
+                    </div>
+                </div>
+                <div class="col-sm-7">
+                    <div class="form-group">
+                        @Html.TextBoxFor(m => m.DT1Time2, new { @id = "txtD1T2", @class = "form-control input-sm", @disabled = "disabled" })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="row">
+                <div class="col-sm-3">
+                    <div class="form-group"> <span class="text">Time3:<span style="color: red">*</span></span> </div>
+                </div>
+                <div class="col-sm-1">
+                    <div class="form-group">
+                        @Html.CheckBoxFor(m => m.chkDT1Time3, new { @class = "form-control input-sm", name = "form-field-radio", @id = "RdD1Time3", @disabled = "disabled" })
+                    </div>
+                </div>
+
+                <div class="col-sm-7">
+                    <div class="form-group">
+
+                        @Html.TextBoxFor(m => m.DT1Time3, new { @id = "txtD1T3", @class = "form-control input-sm", @disabled = "disabled" })
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+    </div>
+</div>
+
+        
+        <div class="col-sm-12" style="border-top:1px solid #ccc; border-bottom:1px solid #ccc; padding-top:15px; margin-bottom:15px;">
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label>
+                                    Date2:<span style="color: red">*</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-sm-1">
+                            <div class="form-group">
+                                @Html.CheckBoxFor(m => m.RdAcceptedDate2, new { @class = "form-control input-sm", name = "form-field-radio", @id = "RdDate2", @disabled = "disabled" })
+                            </div>
+                        </div>
+                        <div class="col-sm-7">
+                            <div class="form-group">
+                                @Html.TextBoxFor(m => m.Date2, "{0:MM/dd/yyyy}", new { @id = "txtDate2", @class = "form-control input-sm", @disabled = "disabled" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label>
+                                    <span class="text">Time1:<span style="color: red">*</span></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-sm-1">
+                            <div class="form-group">
+                                @Html.CheckBoxFor(m => m.chkDT2Time1, new { @class = "form-control input-sm", name = "form-field-radio", @id = "RdD2Time1", @disabled = "disabled" })
+                            </div>
+                        </div>
+
+                        <div class="col-sm-7">
+                            <div class="form-group">
+                                @Html.TextBoxFor(m => m.DT2Time1, new { @id = "txtD2T1", @class = "form-control input-sm", @disabled = "disabled" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label>
+                                    <span class="text">Time2:<span style="color: red">*</span></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-sm-1">
+                            <div class="form-group">
+                                @Html.CheckBoxFor(m => m.chkDT2Time2, new { @class = "form-control input-sm", name = "form-field-radio", @id = "RdD2Time2", @disabled = "disabled" })
+                            </div>
+                        </div>
+
+                        <div class="col-sm-7">
+                            <div class="form-group">
+
+                                @Html.TextBoxFor(m => m.DT2Time2, new { @id = "txtD2T2", @class = "form-control input-sm", @disabled = "disabled" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label>
+                                    Time3:<span style="color: red">*</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-sm-1">
+                            <div class="form-group">
+                                @Html.CheckBoxFor(m => m.chkDT2Time3, new { @class = "form-control input-sm", name = "form-field-radio", @id = "RdD2Time3", @disabled = "disabled" })
+                            </div>
+                        </div>
+                        <div class="col-sm-7">
+                            <div class="form-group">
+                                @Html.TextBoxFor(m => m.DT2Time3, new { @id = "txtD2T3", @class = "form-control input-sm", @disabled = "disabled" })
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12" style=" border-bottom:1px solid #ccc; padding-top:15px; margin-bottom:15px;">
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label>
+                                    Date3:<span style="color: red">*</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-sm-1">
+                            <div class="form-group">
+                                @Html.CheckBoxFor(m => m.RdAcceptedDate3, new { @class = "form-control input-sm", name = "form-field-radio", @id = "RdDate3", @disabled = "disabled" })
+                            </div>
+                        </div>
+
+
+                        <div class="col-sm-7">
+                            <div class="form-group">
+                                @Html.TextBoxFor(m => m.Date3, "{0:MM/dd/yyyy}", new { @id = "txtDate3", @class = "form-control input-sm", @disabled = "disabled" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label>
+                                    <span class="text">Time1:<span style="color: red">*</span></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-sm-1">
+                            <div class="form-group">
+                                @Html.CheckBoxFor(m => m.chkDT3Time1, new { @class = "form-control input-sm", name = "form-field-radio", @id = "RdD3Time1", @disabled = "disabled" })
+                            </div>
+                        </div>
+
+                        <div class="col-sm-7">
+                            <div class="form-group">
+                                @Html.TextBoxFor(m => m.DT3Time1, new { @id = "txtD3T1", @class = "form-control input-sm", @disabled = "disabled" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label>
+                                    <span class="text">Time2:<span style="color: red">*</span></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-sm-1">
+                            <div class="form-group">
+                                @Html.CheckBoxFor(m => m.chkDT3Time2, new { @class = "form-control input-sm", name = "form-field-radio", @id = "RdD3Time2", @disabled = "disabled" })
+                            </div>
+                        </div>
+
+                        <div class="col-sm-7">
+                            <div class="form-group">
+                                @Html.TextBoxFor(m => m.DT3Time2, new { @id = "txtD3T2", @class = "form-control input-sm", @disabled = "disabled" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label>
+                                    <span class="text">Time3:<span style="color: red">*</span></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-sm-1">
+                            <div class="form-group">
+                                @Html.CheckBoxFor(m => m.chkDT3Time3, new { @class = "form-control input-sm", name = "form-field-radio", @id = "RdD3Time3", @disabled = "disabled" })
+                            </div>
+                        </div>
+
+                        <div class="col-sm-7">
+                            <div class="form-group">
+                                @Html.TextBoxFor(m => m.DT3Time3, new { @id = "txtD3T3", @class = "form-control input-sm", @disabled = "disabled" })
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+</div>
+<div class="row" style="margin-top:20px;">
+    <div class="col-sm-6">
+        <div class="row">
+        <div class="col-sm-4">
+            <div class="form-group">
+                <label class="control-label">Location :</label>
+            </div>
+        </div>
+            <div class="col-sm-8">
+                <div class="form-group">
+                    @Html.TextBoxFor(m => m.Location, new { @class = "form-control input-sm", @id = "txtlocation", @disabled = "disabled" })
+                </div>
+            </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label class="control-label">Description :</label>
+                    </div>
+                </div>
+                <div class="col-sm-8">
+                    <div class="form-group">
+                        @Html.TextBoxFor(m => m.Description, new { @class = "form-control input-sm", @id = "txtdescription", @disabled = "disabled" })
+                    </div>
+                     
+                </div>
+            </div>
+            </div>
+
+
+        </div>
+

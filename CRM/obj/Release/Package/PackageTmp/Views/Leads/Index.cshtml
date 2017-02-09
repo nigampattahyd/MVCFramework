@@ -1,0 +1,600 @@
+﻿@*@model CRMHub.ViewModel.LeadModel*@
+@model CRMHub.EntityFramework.Account
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .Overlay {
+        display: block;
+        position: fixed;
+        top: 0px;
+        bottom: 0px;
+        left: 0px;
+        right: 0px;
+        overflow: hidden;
+        padding: 0;
+        margin: 0;
+        background-color: #000;
+        filter: alpha(opacity=50);
+        opacity: 0.5;
+        z-index: 1049;
+    }
+</style>
+
+<div id="content-wrapper">
+    <div id="CustomBootstrapAlertBox">
+    </div>
+    <div class="row">
+
+        <div class="panel">
+            <div class="panel-heading">
+                <div class="row">
+                    <!-- Page header, center on small screens -->
+                    <h1 class="col-xs-6 col-sm-4 text-left text-left-sm panel-title"><i class="fa fa-user page-header-icon"></i>&nbsp; Leads</h1>
+                    <div class="col-xs-6 col-sm-8">
+                        <div class="row">
+                            <div class="pull-right">
+                                @*<a href="#" class="btn btn-flat btn-labeled btn-primary" tabindex="-1"
+                                    data-toggle="modal" data-target="#uidemo-modals-alerts-info"><span class="btn-label icon fa fa-question-circle"></span>Help</a>*@
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel-body">
+
+                <div class="row">
+
+                    <!-- Tabs -->
+                    <div class="tab-pane" id="bs-tabdrop-tab3">
+                        @*<div class="row">*@
+
+                        <div class="row" id="pnlSrchCriteria">
+                            <div class="col-sm-3">
+                                <div class="form-group no-margin-hr">
+                                    <label class="control-label">Keyword :</label>
+                                    @Html.TextBoxFor(m => m.Keyword, new { @id = "txtKeyWord", @class = "form-control input-sm", @maxlength = "100" })
+                                </div>
+                            </div>
+
+
+                            @*<div class="col-sm-3">
+                                <div class="form-group no-margin-hr">
+                                    <label class="control-label">Company Name :</label>
+                                    @Html.TextBoxFor(m => m.CompanyName, new { @id = "txtCompanyName", @class = "form-control input-sm", @maxlength = "100" })
+                                </div>
+                            </div>*@
+
+                            <div class="col-sm-3">
+                                <div class="form-group no-margin-hr">
+                                    <label class="control-label">Owner Name :</label>
+                                    @Html.TextBoxFor(m => m.Owner, new { @id = "txtOwnerName", @class = "form-control input-sm", @maxlength = "100" })
+                                </div>
+                            </div>
+
+
+
+
+                            <div class="col-sm-6">
+
+
+
+                                <div class="col-xs-12 col-sm-12 text-right text-right-sm" id="white_bg">
+                                    <ul class="table-nav-item">
+                                        <li class="btn btn-flat btn-labeled btn-primary" id="btnmargin_top">
+
+                                            <a style="color: #fff; text-decoration: none; padding: 0px; font-weight: normal" id="btnClear">
+                                                <span class="btn-label icon fa fa-eraser" style="margin-right:6px;"> </span>
+                                                Clear
+                                            </a>
+
+
+                                        </li>
+
+                                        <li class="btn btn-flat btn-labeled btn-primary" id="btnmargin_top">
+                                           
+
+                                            <a style="color: #fff; text-decoration: none; padding: 0px; font-weight: normal" id="btnSearch" >
+                                                <span class="btn-label icon fa fa-search" style="margin-right:6px;"> </span>
+                                                Search
+                                            </a>
+                                        </li>
+
+                                    </ul>
+
+                                </div>
+                            </div>
+
+
+
+
+                            @*<div class="col-sm-6">
+                                <div class="col-sm-6">
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="col-xs-12 col-sm-12 text-right text-left-sm " id="Clear_btn" style="text-align:right;margin-bottom:15px; margin-top:25px;padding-right:26px;">
+                                        <button class="btn btn-flat btn-labeled btn-primary" id="btnClear">
+                                            <span class="btn-label icon fa fa-search"></span>Clear
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-3">
+                                    <div class="col-xs-12 col-sm-12 text-right text-left-sm " id="search_btn" style="text-align:right;margin-bottom:15px; margin-top:25px;padding-right:26px;">
+                                        <button class="btn btn-flat btn-labeled btn-primary" id="btnSearch">
+                                            <span class="btn-label icon fa fa-search"></span>Search
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>*@
+                            
+                          
+                            <div class="row">
+                                <div class="col-sm-12">
+                                
+                                </div>
+                            </div>
+
+                        </div>
+
+
+
+
+
+                        <div class="clearfix"></div>
+                        <div class="col-sm-13" id="filter"></div>
+
+
+                        <div class="col-sm-12">
+
+
+
+                            <div class="col-xs-12 col-sm-12 text-right text-right-sm" id="white_bg">
+                                <ul class="table-nav-item">
+                                    <li class="btn btn-flat btn-labeled btn-primary" id="btnmargin_top">
+
+                                        <a style="color: #fff; text-decoration: none; padding: 0px; font-weight: normal" href="@Url.Action("CreateNewLead","Leads")">
+                                            <span class="btn-label icon  fa  fa-plus-circle" style="margin-right:6px;"> </span>
+                                            Add New
+                                        </a>
+
+
+                                    </li>
+
+                                    <li class="btn btn-flat btn-labeled btn-primary" id="btnmargin_top">
+
+                                        <a style="color: #fff; text-decoration: none; padding: 0px; font-weight: normal" id="btndelete" onclick="deleteSelectedLead();">
+                                            <span class="btn-label icon  fa   fa-trash-o" style="margin-right:6px;"> </span>
+                                            Delete
+                                        </a>
+                                    </li>
+                                   
+                                </ul>
+
+
+
+
+
+
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12 col-xs-12">
+                            <div class="table-primary table-striped">
+                                <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="tblLeads" width="100%">
+                                    <thead>
+                                        <tr>
+                                            <th width="30px">
+                                                <input class="fa fa-square-o" type="checkbox" id="chkLeadsHeader" />
+                                            </th>
+                                            <th>&nbsp;</th>
+
+                                            <th data-hide="tabletlandscape,phone">Lead Name</th>
+                                            <th data-class="expand">Company</th>
+                                            <th data-hide="tablet,tabletlandscape,phone,desktop">Email</th>
+                                            <th data-hide="phone">Phone</th>
+                                            <th data-hide="phone">Lead Source</th>
+                                            <th data-hide="tabletlandscape,phone">Lead Owner</th>
+
+
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        @*</div>*@
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<div id="MdlAlert" class="modal" tabindex="-1" role="dialog" style="display: none; overflow: hidden; padding-top: 0px; width: 100%; height: 100%;">
+    <div class="modal-dialog" style="width: 99%; margin-left: 537px; margin-top: 219px;">
+        <div class="modal-content" style="width: 22%; height:15%">
+            <div class="modal-header">
+
+                <span style="float:right;margin-top:3px"><label id="XbtnClose">X</label></span>
+
+                <h4 class="modal-title">Delete Lead?</h4>
+
+            </div>
+            <div class="modal-body" style="display: inline-block; height: 73px">
+                <p>Are you sure you want to delete selected records? </p>
+
+            </div>
+
+            <div class="modal-footer">
+
+
+                <span><button id="btnCancel">Cancel</button></span>
+                <span><button id="btnok">OK</button></span>
+
+            </div>
+        </div>
+
+    </div>
+
+</div>
+<div id="overlaydiv" class="Overlay" style="display: none; overflow: hidden"></div>
+@*<div class="ExportSection" style="visibility:hidden">
+        <a id="linkExportCsv" href="/Leads/ExportToCsv">Export to Csv</a>
+        <a id="linkExportExcel" href="/Leads/ExportToExcel">Export to Excel</a>
+    </div>*@
+<div class="ExportSection" style="visibility:hidden">
+
+    <a id="linkExportCsv" href="@Url.Action("ExportToCsv", "Leads")"<span>Export to Csv</span></a>
+    <a id="linkExportExcel" href="@Url.Action("ExportToExcel", "Leads")"<span>Export to Excel</span></a>
+</div>
+<style>
+    .DT-search, .DT-search input {
+        display: none;
+    }
+
+    .DT-per-page {
+        border-right: 1px solid #eee;
+        margin-right: -1px;
+        height: 23px;
+        padding-right: 15px;
+        white-space: nowrap;
+    }
+</style>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+     
+
+        var CreateLeads = '@ViewBag.CreateLeads';
+        if (CreateLeads != "") {
+            //$('#ErrorMessages').html('Lead Details Updated Successfully.');
+            $.growl.notice({ title: "Success", message: "Lead Details Created Successfully.", size: 'large' });
+           
+        }
+        var ConvertLead = '@ViewBag.ConvertLead';
+        if (ConvertLead != "") {
+            //$('#ErrorMessages').html('Lead Details Updated Successfully.');
+            $.growl.notice({ title: "Success", message: "Lead Converted to Successfully.", size: 'large' });
+
+        }
+
+        $('#loading').css('display', 'block');
+
+        BindLeads();
+        $('#tblLeads').on('length.dt', function (e, settings, len) {
+
+            $('#loading').css('display', 'block');
+
+        });
+
+        $('#tblLeads').on('page.dt', function () {
+
+            $('#loading').css('display', 'block');
+        });
+
+        $('#loading').css('display', 'none');
+
+    });
+
+
+
+
+    function BindLeads() {
+
+        var responsiveHelper = undefined;
+        var breakpointDefinition = {
+            desktop: Infinity,
+            tablet: 1024,
+            tabletlandscape: 768,
+            phone: 480
+        };
+        var tableElement = $('#tblLeads');
+        tableElement.dataTable({
+            autoWidth: false,
+            preDrawCallback: function () {
+                if (!responsiveHelper) {
+                    responsiveHelper = new ResponsiveDatatablesHelper(tableElement, breakpointDefinition);
+                }
+            },
+            rowCallback: function (nRow) {
+                responsiveHelper.createExpandIcon(nRow);
+            },
+            drawCallback: function (oSettings) {
+                responsiveHelper.respond();
+            },
+            //"order": [[$("#HD_SortValue").val(), "" + $("#HD_SortDirection").val() + ""]],
+            "aLengthMenu": [[10, 25, 50], [10, 25, 50]],
+            //"iDisplayStart": parseInt($("#HD_PageIndex").val()),
+            //"iDisplayLength": parseInt($("#HD_PageSize").val()),
+            "pagingType": "full_numbers",
+            "bFilter": false,
+            // "processing": true,
+            "serverSide": true,
+            //"sAjaxSource": "Leads/GetallLeads",
+            "sAjaxSource": '@Url.Content("~/Leads/GetallLeads")',
+            "fnServerParams": function (aoData) {
+
+                aoData.push(
+                         { "name": "Leadkeyword", "value": "" + $("#txtKeyWord").val().trim() + "" },
+                         { "name": "OwnerName", "value": "" + $("#txtOwnerName").val().trim() + "" }
+                    );
+            },
+            "fnServerData": function (sSource, aoData, fnCallback) {
+                $.ajax({
+                    "dataType": 'json',
+                    "contentType": "application/json; charset=utf-8",
+                    "type": "GET",
+                    "url": sSource,
+                    "data": aoData,
+                    "success":
+                                function (msg) {
+                                    //var json = jQuery.parseJSON(msg.d);
+                                    fnCallback(msg);
+                                    //$("#jq-datatables-example").show();
+                                }
+                });
+            },
+            "asStripeClasses": ['odd gradeX', 'even gradeC'],
+            "aoColumnDefs": [
+
+                {
+                    "targets": [0], "visible": true, "bSortable": false, "mDataProp": "ID",
+                    "render": function (data, type, row) {
+                        return "<input class=\"Leadscase\" type=\"checkbox\" name=\"chkItem\" id=\"chkRow_" + row["ID"] + "\"data-LeadId=\"" + row["ID"] + "\"   />";
+                    }
+                },
+                                {
+                                    "targets": [1], "visible": true, "bSortable": false, "mDataProp": "ID",
+                                    "render": function (data, type, row) {
+                                        return "<span class=\"fa fa-times\" onclick=\"DeleteConfirmation('" + row["ID"] + "');\"></span>";
+                                    }
+                                },
+                                {
+                                    "targets": [2], "visible": true, "bSortable": true, "mDataProp": "LeadName",
+                                    "render": function (data, type, row) {
+                                        return "<a style=\"cursor:pointer\"  onclick=\"OpenLeadDetail('" + row["ID"] + "')\">" + row["LeadName"] + "</a>";
+                                    }
+                                },
+                                {
+                                    "targets": [3], "visible": true, "bSortable": true, "mDataProp": "CompanyName"
+                                },
+                                    { "targets": [4], "visible": true, "bSortable": true, "mDataProp": "Email" },
+                                    { "targets": [5], "visible": true, "bSortable": true, "mDataProp": "Phone" },
+                                    { "targets": [6], "visible": true, "bSortable": true, "mDataProp": "LeadSource" },
+                                    { "targets": [7], "visible": true, "bSortable": true, "mDataProp": "Ownership" },
+
+
+
+
+            ],
+
+            "fnDrawCallback": function (oSettings) {
+                //$("#HD_PageIndex").val(oSettings._iDisplayStart);
+                //$("#HD_PageSize").val(oSettings._iDisplayLength);
+                //if ($("#HD_IsFromBack").val() == 'YES') {
+                //    $("#HD_IsFromBack").val('NO');
+                //}
+                $('#loading').css('display', 'none');
+            }
+        }).api();
+
+
+        $('#tblLeads_wrapper .table-caption').text('');
+
+        $('#tblLeads_wrapper .dataTables_filter input').attr('placeholder', 'Search...');
+
+
+    }
+    $("#chkLeadsHeader").click(function () {
+
+        $('.Leadscase').prop("checked", this.checked);
+    });
+    // if all checkbox are selected, check the selectall checkbox
+    // and viceversa
+    $('#tblLeads tbody').click(function () {
+
+        if ($('#tblLeads input[name="chkItem"]:checked').length == $('#tblLeads input[name="chkItem"]').length) {
+            $("#chkLeadsHeader").prop("checked", true);
+        } else {
+            $("#chkLeadsHeader").prop("checked", false);
+        }
+    });
+
+    $('#btnSearch').click(function () {
+
+        $('#loading').css('display', 'block');
+        $("#tblLeads").dataTable().fnDestroy();
+        BindLeads();
+
+        $('#tblLeads').on('length.dt', function (e, settings, len) {
+
+            $('#loading').css('display', 'block');
+        });
+
+        $('#tblLeads').on('page.dt', function () {
+
+            $('#loading').css('display', 'block');
+        });
+
+    });
+
+
+
+
+    $('#btnClear').click(function () {
+
+        $('#txtOwnerName').val('');
+        $('#txtKeyWord').val('');
+
+        $('#loading').css('display', 'block');
+        $("#tblLeads").dataTable().fnDestroy();
+        BindLeads();
+
+
+    });
+
+
+    function ClearSelection() {
+
+        $('#drpOffice option:first-child').attr("selected", "selected");
+        $('#drpSalesRep option:first-child').attr("selected", "selected");
+        // $('#jq-datatables-example_wrapper .dataTables_filter input').val('');
+        $('#txtEmail').val('');
+        $('#txtKeyWord').val('');
+        //$("#filter").html('');
+        //Get_LeadFilterString();
+        $('#tblLeads').dataTable().fnDestroy();
+        BindLeads();
+    }
+
+
+    function DeleteConfirmation(LeadId) {
+
+        var flag = confirm('You are about to delete permanently.Are you sure you want to delete this record?');
+        if (flag) {
+            deleteEachLead(LeadId);
+        }
+    }
+
+
+    function deleteSelectedLead() {
+
+        if ($('#tblLeads input[name="chkItem"]:checked').length > 0) {
+            var flag = confirm('You are about to delete permanently.Are you sure you want to delete these records?');
+            if (flag) {
+
+                var searchIDs = $("#tblLeads input:checkbox:checked").map(function () {
+                    return $(this).attr("data-LeadId");
+                }).get();
+
+                deleteEachLead(searchIDs)
+            }
+        }
+        else {
+            // alert("Please select item(s) to delete.");
+            $.growl.notice({ title: "Fail", message: "Please select item(s) to delete.", size: 'large' });
+        }
+    }
+
+
+    function deleteEachLead(AccountId) {
+
+        $.ajax({
+
+            url: "Leads/DeleteLeadsbyId",
+            type: "POST",
+            cache: "false",
+            data: { leadid: AccountId.toString() },
+            success: function (data) {
+
+                if (data == "True") {
+
+                    // window.location.href = document.location.href;;
+
+                    $.growl.notice({ title: "Success", message: "Lead Deleted Successfully.", size: 'large' });
+                    $('#tblLeads').dataTable().fnDestroy();
+
+                    BindLeads();
+                }
+                else {
+                    $.growl.notice({ title: "Fail", message: "Lead Not Deleted .", size: 'large' });
+                }
+            },
+            error: function (request, status, error) {
+            }
+        });
+
+    }
+
+
+
+    function OpenLeadDetail(LeadId) {
+
+        var param = LeadId;
+        var url = '@Url.Action("getLeaddetails", "Leads", new { LeadId = "__param__" })';
+        window.location.href = url.replace('__param__', encodeURIComponent(param));
+
+    }
+
+
+    function ConvertLeadtoOpportunity() {
+        if ($('#tblLeads input[name="chkItem"]:checked').length > 0) {
+            var flag = confirm('You are trying to convert the Leads to Opportunities ? Are you Sure?');
+            if (flag) {
+                $('#tblLeads input[name="chkItem"]:checked').each(function () {
+                    var ldid = $(this).attr('data-LeadId');
+                    ConvertLead(ldid);
+                });
+                document.location.href = document.location.href;
+                alert("Lead Converted Successfully");
+            }
+        }
+        else {
+            alert("Please select Lead to Convert.");
+        }
+
+    }
+    function ConvertLead(LeadId) {
+
+
+        $.ajax({
+            url: "Leads/ConvertToOpportunity",
+            type: "POST",
+            async: false,
+            data: { convtoOppr: LeadId },
+            success: function (data) {
+            },
+            error: function () {
+            }
+        });
+    }
+
+
+    //function ExportCsv() {
+
+    //    $('#loading').css('display', 'block');
+    //    $("#linkExportCsv")[0].click();
+    //    alert("Leads Exported succesfully");
+    //    $('#loading').css('display', 'none');
+    //}
+
+    //function ExportExcel() {
+
+    //    $('#loading').css('display', 'block');
+    //    $("#linkExportExcel")[0].click();
+    //    alert("Leads Exported succesfully");
+    //    $('#loading').css('display', 'none');
+
+    //}
+
+
+
+
+</script>
